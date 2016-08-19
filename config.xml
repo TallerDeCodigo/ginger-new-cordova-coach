@@ -22,5 +22,8 @@
     <platform name="ios">
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
+        <allow-navigation href="http://*" />
+        <allow-navigation href="https://gingerservice.azure-mobile.net/*" />
+        <allow-intent href="https://gingerservice.azure-mobile.net/*" />
     </platform>
 </widget>

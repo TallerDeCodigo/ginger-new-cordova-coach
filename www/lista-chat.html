@@ -26,86 +26,47 @@
 	</head>
 	<body class="has-chat-list">
 	<div id="container" class="list-chat">
-		<header class="hwhite2">
-			<div class="toolbar">
-				<h2 class="titulo">Chat</h2>
-			</div>
-		</header>
 		
 		<ul class="lista_chat" id="dialogs-list">
+			
 		</ul>
-		
-		<!-- <div class="content list-group pre-scrollable nice-scroll" id="messages-list"> -->
-		<!-- list of chat messages will be here -->
-		<!-- </div> -->
 
 		<div id="" class="chat">
+
 			<header class="hwhite2">
 				<div class="toolbar">
-					<a href="lista-chat.html" class="back"><img src="images/back.svg"></a>
+					<a class="back"><img src="images/back.svg"></a>
 					<!--agregar nombre del coach-->
 					<h2 class="titulo">Chat</h2>
 					<!-- <a class="add">Guardar</a> -->
 				</div>
 			</header>
+
 			<div class="content list-group pre-scrollable nice-scroll" id="messages-list">
 				<!-- list of chat messages will be here -->
 			</div>
-			<!-- <div><img src="images/ajax-loader.gif" class="load-msg"></div> -->
-
-            <!-- <form class="form-inline" role="form" method="POST" action="" onsubmit="return submit_handler(this)" style="border:1px solid red;">
-              <div class="input-group">
-                  <span class="input-group-btn input-group-btn_change_load">
-	              <input id="load-img" type="file">
-	                <button type="button" id="attach_btn" class="btn btn-default" onclick="$('#load-img').click();">
-		              <i class="icon-photo"></i>
-	                </button>
-                  </span>
-                  <span class="input-group-btn input-group-btn_change_load">
-	                <button type="button" id="stickers_btn" class="btn btn-default" onclick="">
-		              <i class="icon-sticker"></i>
-	                </button>
-                  </span>
-
-                  <span class="input-group-btn" style="width: 100%;">
-	                 <input type="text" class="form-control" id="message_text" placeholder="Enter message">
-                  </span>
-
-                  <span class="input-group-btn">
-	                <button  type="submit" id="send_btn" class="btn btn-default" onclick="clickSendMessage()">Send</button>
-                  </span>
-                </div>
-              <img src="images/ajax-loader.gif" id="progress">
-            </form> -->
-
-			<!-- <footer class="foot-chat opciones">
-				<a href="#" class="attach"><img src="images/attach.svg"></a>
-				<textarea id="mensaje-chat" rows="1" onfocus="if(this.innerHTML=='Mensaje') {this.innerHTML='';}">Mensaje</textarea>
-				<a class="send cpur" href="#">Enviar</a>
-			</footer> -->
-
 		</div>
-                   
 
 	<footer class="menu-bar hwhite2">
 		<a href="#">
 			<img src="images/menu/chat.svg">
 			<span>chat</span>
 		</a>
-		<a href="#">
+		<a href="lista-usuarios.html">
 			<img src="images/menu/contacts.svg">
 			<span>contactos</span>
 		</a>
 	</footer>
+	
 	<footer class="foot-chat escribir" style="display:none;">
-				<form class="form-inline" role="form" method="POST" action="" onsubmit="return submit_handler(this)">
-					<input type="file" name="galeria" style="z-index:-1; position:absolute; ">
-					<a href="#" class="attach"><img src="images/attach.svg"></a>
-					<textarea id="mensaje-chat" rows="1" onfocus="if(this.innerHTML=='Mensaje') {this.innerHTML='';}">Mensaje</textarea>
-					<input type="submit" class="send cpur" value="Enviar" onclick="clickSendMessage()">
-					<!-- <button  type="submit" id="send_btn" class="btn btn-default send cpur" onclick="clickSendMessage()">Enviar</button> -->
-				</form>
-			</footer>
+		<form class="form-inline" role="form" method="POST" action="" onsubmit="return submit_handler(this)">
+			<input type="file" name="galeria" style="z-index:-1; position:absolute; ">
+			<a href="#" class="attach"><img src="images/attach.svg"></a>
+			<textarea id="mensaje-chat" rows="1" onfocus="if(this.innerHTML=='Mensaje') {this.innerHTML='';}">Mensaje</textarea>
+			<input type="submit" class="send cpur" value="Enviar" onclick="clickSendMessage()">
+			<!-- <button  type="submit" id="send_btn" class="btn btn-default send cpur" onclick="clickSendMessage()">Enviar</button> -->
+		</form>
+	</footer>
 	
 	</body>
 	<script src="js/chat-config.js"></script>

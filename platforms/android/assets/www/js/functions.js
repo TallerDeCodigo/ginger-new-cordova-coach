@@ -1541,6 +1541,8 @@ $('.platillo').each(function() {
 	        		$(".discount").show();
 	        		$(".discount").animate({opacity:"1",left:"0px"}, 200);
 	            }, 250);
+			}else if( $('#dialogs-list').is(':visible') ){
+				window.location.assign('index.html');
 			}
 		});
 

@@ -529,7 +529,6 @@ $(window).load(function(){
 
 		}
 
-
 		if($('body').hasClass('has-ingredients') ){
 			
 			$( ".accordion1" ).accordion({collapsible:true,active:false,animate:200,heightStyle:"content"});
@@ -862,6 +861,13 @@ $(window).load(function(){
 				$('.list-gorup-item').click(function(){
 					$('#dialog-list').hide();$('.menu-bar').hide();$('.escribir').show();
 				});
+
+				$('.back').click(function(){
+					// if($('')is(':visible') ){
+						
+					// }
+				});
+
 
 		}//end IF body has class
 		
