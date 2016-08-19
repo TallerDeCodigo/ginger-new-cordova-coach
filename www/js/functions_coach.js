@@ -863,8 +863,18 @@ $(window).load(function(){
 				});
 
 				$('.back').click(function(){
-					// if($('')is(':visible') ){
-						
+
+					if($('#messages-list').is(':visible') ){
+						console.log('lista_chat visible');
+						$('.lista_chat').show();
+						$('#messages-list').hide();
+					}else if($('.lista_chat').is(':visible') ) {
+						window.location.assign('index.html');
+					}
+
+
+					// if($('.lista_chat').is(':visible')){
+					// 	window.location.assign('index.html');
 					// }
 				});
 

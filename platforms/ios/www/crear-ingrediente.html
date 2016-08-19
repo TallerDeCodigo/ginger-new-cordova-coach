@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Ginger Coach</title>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, maximum-scale=1, minimum-scale=1, height=device-height">
+		<meta http-equiv="cleartype" content="on">
+		<link rel="stylesheet" type="text/css" href="css/style.css">
+	    <script type="text/javascript" src="cordova.js"></script>
+	    <script type="text/javascript" src="js/bower_components/handlebars/handlebars.runtime.min.js"></script>
+	    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+	    <script src="js/jquery-touch.min.js"></script>
+	    <script type="text/javascript" src="js/functions_coach.js"></script>
+		<script type='text/javascript' src='js/plugins.js'></script>
+		<script type='text/javascript' src='js/api-sdk-1.0.js'></script>
+		<script type="text/javascript" src="js/oauth.js"></script>
+		<script src="js/main.js"></script>
+	</head>
+	<body class="has-create-ingredient">
+	<div id="container" class="create-ingrediente">
+		<header class="hwhite2">
+			<div class="toolbar">
+				<a class="back" href="ingredientes.html"><img src="images/back.svg"></a>
+				<h2 class="titulo">Crear Ingrediente</h2>
+				<a class="add">Guardar</a>
+			</div>
+		</header>
+		<div class="name_ingrediente">
+			<input type="text" name="name_ingrediente" placeholder="Nombre del Ingrediente">
+		</div>
+		<div class="ing-categorias">
+			<h3>Categoría</h3>
+			<div class="ing-category" value="0">
+				<img src="images/ingredientes/nueces.png">
+				<h5>Granos y cereales</h5>
+			</div>
+			<div class="ing-category active" value="1">
+				<img src="images/ingredientes/nueces.png">
+				<h5>Verduras</h5>
+			</div>
+			<div class="ing-category" value="2">
+				<img src="images/ingredientes/nueces.png">
+				<h5>Grasas</h5>
+			</div>
+			<div class="ing-category" value="3">
+				<img src="images/ingredientes/nueces.png">
+				<h5>Lácteos</h5>
+			</div>
+			<div class="ing-category" value="4">
+				<img src="images/ingredientes/nueces.png">
+				<h5>Proteína animal </h5>
+			</div>
+			<div class="ing-category" value="5">
+				<img src="images/ingredientes/nueces.png">
+				<h5>Leguminosas</h5>
+			</div>
+			<div class="ing-category" value="6">
+				<img src="images/ingredientes/nueces.png">
+				<h5>Nueces y semillas</h5>
+			</div>
+			<div class="ing-category" value="7">
+				<img src="images/ingredientes/nueces.png">
+				<h5>Frutas</h5>
+			</div>
+			<div class="ing-category" value="8">
+				<img src="images/ingredientes/nueces.png">
+				<h5>Endulzantes</h5>
+			</div>
+			<div class="ing-category" value="9">
+				<img src="images/ingredientes/nueces.png">
+				<h5>Aderezos y condimentos</h5>
+			</div>
+			<div class="ing-category" value="10">
+				<img src="images/ingredientes/nueces.png">
+				<h5>Supoerfoods </h5>
+			</div>
+			<div class="ing-category" value="11">
+				<img src="images/ingredientes/nueces.png">
+				<h5>Líquidos</h5>
+			</div>
+			<h3>Tipo</h3>
+			<div  class="btn-state" data="0">Sólido</div>
+			<div  class="btn-state" data="1">Líquido</div>
+			<h3>Requiere medida</h3>
+			<div class="siono yes" data="1">Sí</div>
+			<div class="siono not" data="0">No</div>
+		</div>
+	</div>
+	</body>
+	<script type="text/javascript">
+		/* Initialize app object and perform initial login check */
+		window.is_home = false;
+		app.initialize();
+	</script>
+</html>
+
