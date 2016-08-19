@@ -40,7 +40,7 @@ function buildMessageHTML(messageText, messageSenderId, messageDateSent, attachm
 		// 	'</div>';
 
 
-  var sender = (localStorage.getItem('idSender') == messageSenderId)?'outgoing':'incoming';  
+  var sender = (localStorage.getItem('idSender') == messageSenderId)?'incoming':'outgoing';  
   console.log('Mensaje ID SENDER: ' + messageSenderId);
   console.log( localStorage.getItem('idSender') );
   console.log(sender);
