@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+	<head>
+		<meta charset="utf-8">
+		<title>Ginger Cliente</title>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, maximum-scale=1, minimum-scale=1, height=device-height">
+		<meta http-equiv="cleartype" content="on">
+		<link rel="stylesheet" type="text/css" href="css/style.css">
+
+		<script type="text/javascript" src="cordova.js"></script>
+	    <script type="text/javascript" src="js/bower_components/handlebars/handlebars.runtime.min.js"></script>
+	    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+	    <script src="js/jquery-touch.min.js"></script>
+	    <script type="text/javascript" src="js/functions.js"></script>
+		<script type='text/javascript' src='js/plugins.js'></script>
+		<script type='text/javascript' src='js/api-sdk-1.0.js'></script>
+		<script type="text/javascript" src="js/oauth.js"></script>
+		<script src="js/main.js"></script>
+	</head>
+	<body>
+	<div id="container" class="login">
+		<img class="logo" src="images/logo.svg">
+
+		<h4>INICIAR SESIÓN</h4>
+		<form id="login_form" name="login_form" method="post">
+			<input id="mail" 		 type="email" 	 name="mail" placeholder="Correo electrónico">
+			<input id="pass" 		 type="password" name="pass" placeholder="Contraseña">
+			<input id="enviar_login" type="submit" 	 name="enviar_login" value="">
+		</form>
+		
+	</div>
+	<div class="overscreen2" style="display:none">
+		<div class="ov-filler2"></div>
+		<div class="dialog">
+			<h5>Error al iniciar sesión</h5>
+			<p>No se ha podido inciar sesión. Nombre de usuario o<br>contraseña incorrectos.</p>
+			<div class="di-options">
+				<a class="cancel">Aceptar</a>
+			</div>
+		</div>
+	</div>
+	</body>
+	<script type="text/javascript">
+		/* Initialize app object and perform initial login check */
+		window.is_home = false;
+		app.initialize();
+	</script>
+</html>
+

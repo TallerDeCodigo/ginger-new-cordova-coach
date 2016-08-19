@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+	<head>
+		<meta charset="utf-8">
+		<title>Ginger Coach</title>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, maximum-scale=1, minimum-scale=1, height=device-height">
+		<meta http-equiv="cleartype" content="on">
+		<link rel="stylesheet" type="text/css" href="css/style.css">
+	    <script type="text/javascript" src="cordova.js"></script>
+	    <script type="text/javascript" src="js/bower_components/handlebars/handlebars.runtime.min.js"></script>
+	    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+	    <script src="js/jquery-touch.min.js"></script>
+	    <script type="text/javascript" src="js/functions_coach.js"></script>
+		<script type='text/javascript' src='js/plugins.js'></script>
+		<script type='text/javascript' src='js/api-sdk-1.0.js'></script>
+		<script type="text/javascript" src="js/oauth.js"></script>
+		<script src="js/main.js"></script>
+	</head>
+	<body class="has-ingredients">
+	<div id="container" class="list-ingredientes">
+		<header class="hwhite2">
+			<div class="toolbar">
+				<a href="crear-platillo.html" class="back"><img src="images/back.svg"></a>
+				<h2 class="titulo">Ingredientes</h2>
+				<a class="add">Agregar</a>
+			</div>
+		</header>
+		<div class="accordion1">
+			<div class="acc1-selector">
+				<img src="images/ingredientes/nueces.png">
+				<h5>Granos y cereales</h5>
+			</div>
+			<div class="acc1-content">
+				<ul class="lista_ingredientes granosycereales">
+					<!--<li>
+						<span class="cantidad">7</span>
+						<span class="ingred-name">Pan Integral</span>
+						<input type="checkbox" name="pan" value="pan">
+					</li>
+					<li>
+						<span class="cantidad">7</span>
+						<span class="ingred-name">Pan Integral</span>
+						<input type="checkbox" name="pan" value="pan">
+					</li>
+					<li>
+						<span class="cantidad">7</span>
+						<span class="ingred-name">Pan Integral</span>
+						<input type="checkbox" name="pan" value="pan">
+					</li> -->
+				</ul>
+			</div>
+			<div class="acc1-selector">
+				<img src="images/ingredientes/nueces.png">
+				<h5>Verduras</h5>
+			</div>
+			<div class="acc1-content">
+				<ul class="lista_ingredientes verduras">
+				</ul>
+			</div>
+			<div class="acc1-selector">
+				<img src="images/ingredientes/nueces.png">
+				<h5>Grasas</h5>
+			</div>
+			<div class="acc1-content">
+				<ul class="lista_ingredientes grasas">
+				</ul>
+			</div>
+			<div class="acc1-selector">
+				<img src="images/ingredientes/nueces.png">
+				<h5>Lácteos</h5>
+			</div>
+			<div class="acc1-content">
+				<ul class="lista_ingredientes lacteos">
+				</ul>
+			</div>
+			<div class="acc1-selector">
+				<img src="images/ingredientes/nueces.png">
+				<h5>Proteína Animal</h5>
+			</div>
+			<div class="acc1-content">
+				<ul class="lista_ingredientes proteinaanimal">
+				</ul>
+			</div>
+			<div class="acc1-selector">
+				<img src="images/ingredientes/nueces.png">
+				<h5>Leguminosas</h5>
+			</div>
+			<div class="acc1-content">
+				<ul class="lista_ingredientes leguminosas">
+				</ul>
+			</div>
+			<div class="acc1-selector">
+				<img src="images/ingredientes/nueces.png">
+				<h5>Nueces y semillas</h5>
+			</div>
+			<div class="acc1-content">
+				<ul class="lista_ingredientes nuecesysemillas">
+				</ul>
+			</div>
+			<div class="acc1-selector">
+				<img src="images/ingredientes/nueces.png">
+				<h5>Frutas</h5>
+			</div>
+			<div class="acc1-content">
+				<ul class="lista_ingredientes frutas">
+				</ul>
+			</div>
+			<div class="acc1-selector">
+				<img src="images/ingredientes/nueces.png">
+				<h5>Endulzantes</h5>
+			</div>
+			<div class="acc1-content">
+				<ul class="lista_ingredientes endulzantes">
+				</ul>
+			</div>
+			<div class="acc1-selector">
+				<img src="images/ingredientes/nueces.png">
+				<h5>Aderezos y condimentos</h5>
+			</div>
+			<div class="acc1-content">
+				<ul class="lista_ingredientes aderezosycondimentos">
+				</ul>
+			</div>
+			<div class="acc1-selector">
+				<img src="images/ingredientes/nueces.png">
+				<h5>Superfoods</h5>
+			</div>
+			<div class="acc1-content">
+				<ul class="lista_ingredientes superfoods">
+				</ul>
+			</div>
+			<div class="acc1-selector">
+				<img src="images/ingredientes/nueces.png">
+				<h5>Líquidos</h5>
+			</div>
+			<div class="acc1-content">
+				<ul class="lista_ingredientes liquidos">
+				</ul>
+			</div>
+		</div>
+		<a href="crear-ingrediente.html" class="boton-under">Crear Ingrediente</a>
+	</div>
+	<script type='text/javascript' src='js/plugins.js'></script>
+	</body>
+	<script type="text/javascript">
+		/* Initialize app object and perform initial login check */
+		window.is_home = false;
+		app.initialize();
+	</script>
+</html>
+
