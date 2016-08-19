@@ -97,6 +97,20 @@ h4 {margin:10px 0px 12px;font-weight:700;font-size:130%;color:#333;}
 
 .btn-gre {position:relative;display:inline-block;border-radius:2px;text-align:center;color:#FFF;font-weight:800;background:#43c2a7;font-size:125%;letter-spacing:0.035em;padding:6px 13px;margin:0px 0px 0px;}
 
+/*
+
+		IOS 	*
+
+*/
+body.iosm header {height:70px;}
+body.iosm header .toolbar {top:20px;}
+body.dieta.iosm #scroller {top:183px;height:calc(100% - 265px);}
+body.iosm #container {padding-top:70px;}
+body.iosm .month {top:70px;}
+body.iosm .week {top:107px;}
+
+body.iosm div.boxx-top {height:70px;}
+body.iosm div.boxx-top div {top:20px;}
 /* COLORS */ 
 
 .bpur, .desayuno {background:#8041b7;}

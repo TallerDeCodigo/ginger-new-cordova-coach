@@ -38,8 +38,17 @@
     <dict>
       <key>NSExceptionDomains</key>
       <dict>
+        <key>sketchfab.com</key>
+        <dict/>
         <key>gingerservice.azure-mobile.net</key>
         <dict/>
+        <key>googleapis.com/*</key>
+        <dict>
+          <key>NSIncludesSubdomains</key>
+          <true/>
+          <key>NSExceptionAllowsInsecureHTTPLoads</key>
+          <true/>
+        </dict>
       </dict>
       <key>NSAllowsArbitraryLoads</key>
       <true/>
