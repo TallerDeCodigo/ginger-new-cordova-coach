@@ -4,12 +4,42 @@
         <param name="android-package" value="org.apache.cordova.whitelist.WhitelistPlugin" />
         <param name="onload" value="true" />
     </feature>
-    <name>HelloCordova</name>
+    <feature name="InAppBrowser">
+        <param name="android-package" value="org.apache.cordova.inappbrowser.InAppBrowser" />
+    </feature>
+    <access origin="https://oauth.io" />
+    <feature name="Device">
+        <param name="android-package" value="org.apache.cordova.device.Device" />
+    </feature>
+    <feature name="BackgroundMode">
+        <param name="android-package" value="de.appplant.cordova.plugin.background.BackgroundMode" />
+    </feature>
+    <feature name="Camera">
+        <param name="android-package" value="org.apache.cordova.camera.CameraLauncher" />
+    </feature>
+    <feature name="File">
+        <param name="android-package" value="org.apache.cordova.file.FileUtils" />
+        <param name="onload" value="true" />
+    </feature>
+    <feature name="FileTransfer">
+        <param name="android-package" value="org.apache.cordova.filetransfer.FileTransfer" />
+    </feature>
+    <feature name="Geolocation">
+        <param name="android-package" value="org.apache.cordova.geolocation.Geolocation" />
+    </feature>
+    <feature name="SplashScreen">
+        <param name="android-package" value="org.apache.cordova.splashscreen.SplashScreen" />
+        <param name="onload" value="true" />
+    </feature>
+    <feature name="Toast">
+        <param name="android-package" value="nl.xservices.plugins.Toast" />
+    </feature>
+    <name>Ginger Coach</name>
     <description>
-        A sample Apache Cordova application that responds to the deviceready event.
+        Nutrición en la palma de tu mano.
     </description>
-    <author email="dev@cordova.apache.org" href="http://cordova.io">
-        Apache Cordova Team
+    <author email="john@tallerdecodigo.com" href="http://tallerdecodigo.com">
+        John Falcon for TDC
     </author>
     <content src="index.html" />
     <access origin="*" />
@@ -19,6 +49,18 @@
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
+    <access origin="https://*/*" />
+    <access origin="https://*.google.com" />
+    <access origin="https://*.googleapis.com" />
+    <access origin="https://*.gstatic.com" />
     <allow-intent href="market:*" />
+    <allow-navigation href="http://*" />
+    <allow-navigation href="https://gingerservice.azure-mobile.net/*" />
+    <allow-intent href="https://gingerservice.azure-mobile.net/*" />
     <preference name="loglevel" value="DEBUG" />
+    <preference name="KeepRunning" value="true" />
+    <preference name="Orientation" value="portrait" />
+    <preference name="SplashMaintainAspectRatio" value="true" />
+    <preference name="FadeSplashScreenDuration" value="1500" />
+    <preference name="SplashScreenDelay" value="3500" />
 </widget>

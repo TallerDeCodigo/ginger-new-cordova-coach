@@ -4,11 +4,16 @@
     <description>
         Nutrición en la palma de tu mano.
     </description>
-    <author email="dev@cordova.apache.org" href="http://cordova.io">
-        Apache Cordova Team
+    <author email="john@tallerdecodigo.com" href="http://tallerdecodigo.com">
+        John Falcon for TDC
     </author>
     <content src="index.html" />
     <plugin name="cordova-plugin-whitelist" spec="1" />
+    <plugin name="com.oauthio.plugins.oauthio" spec="0.2.4" source="pgb" />
+  <!--   <gap:plugin name="de.appplant.cordova.plugin.background-mode" version="0.6.3" /> -->
+    <feature name="App">
+        <param name="android-package" value="org.ginger.coach" />
+    </feature>
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
@@ -16,8 +21,16 @@
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
+    <access origin="https://*/*" />
+    <access origin="https://*.google.com" />
+    <access origin="https://*.googleapis.com" />
+    <access origin="https://*.gstatic.com" />
+
     <platform name="android">
         <allow-intent href="market:*" />
+        <allow-navigation href="http://*" />
+        <allow-navigation href="https://gingerservice.azure-mobile.net/*" />
+        <allow-intent href="https://gingerservice.azure-mobile.net/*" />
     </platform>
     <platform name="ios">
         <allow-intent href="itms:*" />
@@ -29,4 +42,56 @@
         <allow-navigation href="https://gingerservice.azure-mobile.net/*" />
         <allow-navigation href="*://*.googleapis.com/*"/>
     </platform>
+
+    <platform name="android">
+        <splash src="res/screen/android/splash-hdpi.png" density="port-hdpi"/>
+        <splash src="res/screen/android/splash-ldpi.png" density="port-ldpi"/>
+        <splash src="res/screen/android/splash-mdpi.png" density="port-mdpi"/>
+        <splash src="res/screen/android/splash-xhdpi.png" density="port-xhdpi"/>
+    </platform>
+
+    <platform name="android">
+        <icon src="res/screen/android/icon_ldpi.png" density="ldpi" />
+        <icon src="res/screen/android/icon_mdpi.png" density="mdpi" />
+        <icon src="res/screen/android/icon_hdpi.png" density="hdpi" />
+        <icon src="res/screen/android/icon_xhdpi.png" density="xhdpi" />
+        <icon src="res/screen/android/icon_xxhdpi.png" density="xxhdpi" />
+     </platform>
+
+    <platform name="ios">
+        <!-- images are determined by width and height. The following are supported -->
+       <splash src="res/screen/ios/Default-Portrait@2x~ipad.png" width="320" height="480"/>
+        <splash src="res/screen/ios/Default-Portrait@2x~ipad.png" width="640" height="960"/>
+        <splash src="res/screen/ios/Default-Portrait@2x~ipad.png" width="768" height="1024"/>
+        <splash src="res/screen/ios/Default-Portrait@2x~ipad.png" width="1536" height="2048"/>
+        <splash src="res/screen/ios/Default-568h@2x~iphone.png" width="640" height="1136"/>
+        <splash src="res/screen/ios/Default-667h.png" width="750" height="1334"/>
+        <splash src="res/screen/ios/Default-736h.png" width="1242" height="2208"/>
+    </platform>
+
+    <platform name="ios">
+        <icon src="res/screen/ios/icon-60@3x.png"    width="180"    height="180" />
+        <icon src="res/screen/ios/icon-76@2x.png"    width="152"    height="152" />
+        <icon src="res/screen/ios/icon-72@2x.png"    width="144"    height="144" />
+        <icon src="res/screen/ios/icon-60@2x.png"    width="120"    height="120" />
+        <icon src="res/screen/ios/icon@2x.png"       width="114"    height="114" />
+        <icon src="res/screen/ios/icon-50@2x.png"    width="100"    height="100" />
+        <icon src="res/screen/ios/icon-40@2x.png"    width="80"     height="80"  />
+        <icon src="res/screen/ios/icon-76.png"       width="76"     height="76"  />
+        <icon src="res/screen/ios/icon-48.png"       width="48"     height="48"  />
+        <icon src="res/screen/ios/icon-60.png" width="60" height="60" />
+        <icon src="res/screen/ios/icon-76.png" width="76" height="76" />
+        <icon src="res/screen/ios/icon-40.png" width="40" height="40" />
+        <icon src="res/screen/ios/icon.png" width="57" height="57" />
+        <icon src="res/screen/ios/icon-72.png" width="72" height="72" />
+        <icon src="res/screen/ios/icon-small.png" width="29" height="29" />
+        <icon src="res/screen/ios/icon-small@2x.png" width="58" height="58" />
+        <icon src="res/screen/ios/icon-50.png" width="50" height="50" />
+       
+    </platform>
+    
+    <preference name="Orientation" value="portrait" />
+    <preference name="SplashMaintainAspectRatio" value="true" />
+    <preference name="FadeSplashScreenDuration" value="1500"/>
+    <preference name="SplashScreenDelay" value="3500" />
 </widget>

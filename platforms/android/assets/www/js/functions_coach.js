@@ -529,7 +529,6 @@ $(window).load(function(){
 
 		}
 
-
 		if($('body').hasClass('has-ingredients') ){
 			
 			$( ".accordion1" ).accordion({collapsible:true,active:false,animate:200,heightStyle:"content"});
@@ -862,6 +861,23 @@ $(window).load(function(){
 				$('.list-gorup-item').click(function(){
 					$('#dialog-list').hide();$('.menu-bar').hide();$('.escribir').show();
 				});
+
+				$('.back').click(function(){
+
+					if($('#messages-list').is(':visible') ){
+						console.log('lista_chat visible');
+						$('.lista_chat').show();
+						$('#messages-list').hide();
+					}else if($('.lista_chat').is(':visible') ) {
+						window.location.assign('index.html');
+					}
+
+
+					// if($('.lista_chat').is(':visible')){
+					// 	window.location.assign('index.html');
+					// }
+				});
+
 
 		}//end IF body has class
 		
