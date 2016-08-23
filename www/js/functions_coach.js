@@ -410,10 +410,10 @@ $(window).load(function(){
 												} else {
 													$(masadentro+'p.receta').hide();
 												}
-												if (losplatos[i][4]!="") {
+												if (losplatos[i][4]!=" ") {
 													$(masadentro+' p.comentario').html(losplatos[i][4]);
 												} else {
-													$(masadentro+' p.comentario').hide();
+													$(masadentro+' p.comentario').show();
 												}
 											}
 										}
@@ -846,9 +846,8 @@ $(window).load(function(){
 
 
 		if($('body').hasClass('has-chat-list') ){
-				console.log(currentUser);
+				
 				var userLog = JSON.parse(localStorage.getItem('user'));
-
 
 				var user = { login : userLog.mail, pass : userLog.chatPassword};
 				
