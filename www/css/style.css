@@ -355,7 +355,7 @@ a.create-diet {position:fixed;width:100%;height:45px;bottom:0px;z-index:9999999;
 .platillos-wrapper {position:absolute;width:100%;height:100%;overflow-y:scroll;left:0px;top:0px;}
 
 .platillos-wrapper ul {margin:0;}
-.platillos-wrapper ul li.platillo-item {list-style:none;border-bottom:1px solid #cfcfcf;text-align:left;height:70px;position:relative;padding:5px 15px;}
+.platillos-wrapper ul li.platillo-item {list-style:none;border-bottom:1px solid #cfcfcf;text-align:left;min-height:50px;position:relative;padding:5px 15px;}
 .platillos-wrapper ul li.platillo-item.active {background:#43c2a7;color:#FFF;}
 .platillos-wrapper ul li:last-of-type {border:none;}
 .platillos-wrapper ul li h2 {margin-top:0px;}
@@ -439,6 +439,7 @@ body.coperfil .la_img {width:100%;height:auto;margin-top:2px;}
 .overscreen2 {position:fixed;width:100%;height:100%;top:0px;left:0px;z-index:999999999999;}
 .ov-filler2 {position:absolute;left:0px;top:0px;width:100%;height:100%;background:rgba(0,0,0,0.4);opacity:0;-webkit-transition:.15s ease-in-out;transition:.15s ease-in-out;}
 .active .ov-filler2 {opacity:1;}
+.alert_meal_description{position:fixed;width:100%;height:100%;top:0px;left:0px;z-index:999999999999;}
 
 .dialog {background:rgba(255,255,255,0.9);box-shadow:0px 0px 2px #666;border-radius:4px;overflow:hidden;padding:11px 0px 0px 0px;color:#3f3f3f;width:70%;height:auto;position:relative;left:15%;top:55%;transform:translateY(-50%);-webkit-transform:translateY(-50%);opacity:0;-webkit-transition:.2s ease-in-out;transition:.2s ease-in-out;}
 .active  .dialog {top:50%;opacity:1;}

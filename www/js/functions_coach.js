@@ -225,6 +225,8 @@ $(window).load(function(){
 
 			});
 
+
+
 		}
 
 		
@@ -465,7 +467,7 @@ $(window).load(function(){
 
 			$.each(dish, function( key, value ) {
 
-				$('.list-dish').append('<li class="platillo-item"><h2>' + dish[i].descripcion + '</h2><p>' + dish[i].receta + '</p></li>');	
+				$('.list-dish').append('<li class="platillo-item" data=" ' + dish[i]._id + ' " > <h2 class="hache" data="'+ dish[i].descripcion +'">' + dish[i].descripcion + '</h2><p>' + dish[i].receta + '</p></li>');	
 
 				i++;	
 
@@ -480,7 +482,7 @@ $(window).load(function(){
 				var i = 0;
 				$('.list-dish').html('');
 				$.each(responsedata, function( key, value ) {
-					$('.list-dish').append('<li class="platillo-item" data="' + dish[i] + '"><h2>' + dish[i].descripcion + '</h2><p>' + dish[i].receta + '</p></li>');	
+					$('.list-dish').append('<li class="platillo-item" data="' + dish[i]._id + '"><h2 class="hache" data="'+ dish[i].descripcion +'" >' + dish[i].descripcion + '</h2><p>' + dish[i].receta + '</p></li>');	
 
 					i++;	
 
@@ -491,6 +493,29 @@ $(window).load(function(){
 				
 				localStorage.setItem('dishSelected', '');
 
+			});
+
+			$('.platillo-item').click(function(){
+				var data = $(this).find($('.hache').attr('data') );
+				var i=0;
+				data = data.selector;
+				console.log(data);
+
+				if(!$('.alert_meal_description').is(':visible')){
+					$('.alert_meal_description').show();
+					// $('#meal_name').html(data)
+					setTimeout(function() {$('.alert_meal_description').addClass('active');}, 200);
+				} else {
+					$('.alert_meal_description').removeClass('active');
+					setTimeout(function() {$('.alert_meal_description').hide();}, 800);
+				}
+				$('#container').toggleClass('blurred');
+			})
+
+			$('.accept').click(function(){
+				console.log('click');
+				$('.alert_meal_description').hide();
+				$('#container').toggleClass('blurred');
 			});
 
 		}
@@ -549,8 +574,7 @@ $(window).load(function(){
 
 			$.each(ingrediente, function( key, value ) {
 
-
-			   $('.' + tipo_de_ingredientes[value.categoria] + '').append('<li><span class="cantidad"></span><span class="ingred-name">'+ value.nombre +'</span><input type="checkbox" name="pan" value=""></li>');	
+			   $('.' + tipo_de_ingredientes[value.categoria] + '').append('<li><span class="cantidad"></span><span class="ingred-name">'+ value.nombre +'</span><input type="checkbox" name="pan" value="'+ value.nombre +'"></li>');	
 				 
 							
 				console.log(tipo_de_ingredientes[value.categoria]);
@@ -560,6 +584,20 @@ $(window).load(function(){
 				
 				j++;	
 
+			});
+
+			$('input[type="checkbox"]').click(function(){
+				var value = $(this).val()
+				arrAux.push(value);
+
+				console.log(arrAux);
+			});
+
+			$('.add ').click(function(){
+				localStorage.setItem('ingredientes', arrAux);
+				var ingredientes = localStorage.getItem('ingredientes');
+
+				console.log(ingredientes);
 			});
 		}
 
@@ -649,7 +687,7 @@ $(window).load(function(){
 
 			$.each(diet, function( key, value ) {
 
-				$('.list-diets').append('<li class="dieta-item"><h2>' +  diet[i].nombre + '</h2><p>' + diet[i].descripcion + '</p><div class="columna"><h3 class="cgre">100%</h3><a href="#" class="btn-pur" data-id="' +  diet[i]._id + '">Cambiar Dieta</a></div></li>');	
+				$('.list-diets').append('<li class="dieta-item"><h2>' +  diet[i].nombre + '</h2><p>' + diet[i].descripcion + '</p><div class="columna"><a href="#" class="btn-pur" data-id="' +  diet[i]._id + '">Cambiar Dieta</a></div></li>');	
 
 				i++;	
 
@@ -771,8 +809,11 @@ $(window).load(function(){
 				totalDays= totalDays+finanzas[i].days_since_subscription;
 
 				console.log( totalAmount + ' - ' +  totalDays);
-
 				i++;
+			});
+
+			$('.btn-gre').click(function(){
+				console.log('click');
 
 			});
 
@@ -826,7 +867,6 @@ $(window).load(function(){
 		});
 
 		$('h6.ingred').click(function() {
-			$(this).parent().find('.los_ing').toggle();
 			if ($(this).find('a').html()=="+") {
 				$(this).find('a').html('-');
 			} else {
@@ -897,22 +937,18 @@ $(window).load(function(){
 		});
 
 		$('.bt-review').click(function(){
+			var user_selected = localStorage.getItem('user-selected');
+			user_selected = JSON.parse(user_selected)._id;
+			console.log(user_selected);
+
 			window.location.assign('lista-dietas.html');
-		});
 
-		// $('.bt-review').click(function(){
-		// 	window.location.assign('dietas.html');
-		// });	
-
+		});//end click
 
 		$('.btn-pur').click(function(){
 			var dietSelected = $(this).attr("data-id");
 			console.log('CLICK CHANGE: ' + dietSelected);
-
-			//REQUEST TO CHANGE DIET
-
-
-		});	
+		});//end click
 		
 
 	});
