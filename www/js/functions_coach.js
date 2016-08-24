@@ -526,39 +526,60 @@ $(window).load(function(){
 
 		}
 
+
+
+		/*
+			HAS CREAR PLATILLO
+		*/
+
 		if($('body').hasClass('has-create-platillo')){
 				var is_public;
 				var has_name;
 				var has_receta;
 				var has_comentarios;
 				var has_ingredients;
+
 			$('input[type="checkbox"]').click(function(){
-				$(this).attr("value", "0");
-				console.log( $(this).val() );  
+				if($(this).val() == 1){
+					$(this).attr("value", "0");
+				}else{
+					$(this).attr("value", "1");
+				}
+				is_public = $(this).val();
+				console.log(is_public);
 			});
 
+
+			/*
+				MANDA LOS DATOS DE ESTA PANTALLA A LA SIGUIENTE.
+			*/
 			$('.ingred').click(function(){
-				console.log('click');
-				localStorage.setItem('es_publico', $('checkbox').val() );
+				console.log(is_public);
+				localStorage.setItem('_public', is_public);
+				localStorage.setItem('recipe_name', $('textarea[name="descripcion"]').val() );
+				localStorage.setItem('recipe_recipe', $('textarea[name="receta"]').val() );
+				localStorage.setItem('recipe_comment', $('textarea[name="comentario"]').val() );
 
 				window.location.assign('ingredientes.html');
-			});
+			});//end click
 
 			var arrIngredientes;
 
 			$('.add').click(function () {
-				console.log('click');
-				arrIngredientes = localStorage.getItem('ingredientes');
-				// arrIngredientes = JSON.parse(arrIngredientes)
-				console.log(arrIngredientes);
 
-				is_public 			= $('').attr('');
+
+				arrIngredientes = localStorage.getItem('ingredientes');
+				console.log(JSON.stringify(arrIngredientes) );
+
+				is_public 			= $('input[type="checkbox"]').val();
 				has_name 			= $('textarea[name="descripcion"]').val();
 				has_receta 			= $('textarea[name="receta"]').val();
 				has_comentarios 	= $('textarea[name="comentario"]').val();
-				has_ingredients 	= '';
+				has_ingredients 	= arrIngredientes;
 
-				console.log(has_name+" "+ has_receta +" "+ has_comentarios +" "+ arrIngredientes);
+
+
+				console.log(is_public+" "+has_name+" "+ has_receta +" "+ has_comentarios +" "+ arrIngredientes);
 
 				var json = {
 					"descripcion" : has_name,
@@ -567,17 +588,39 @@ $(window).load(function(){
 					"autorizado" : 0,
 					"publico" : is_public,
 					"comentarios" : has_comentarios,
-					"ingredientes" : JSON.parse(arrIngredientes)
+					"ingredientes" : "[\"Mantequilla\"]"
 				};
 
 				var response = apiRH.newDish(json);
 
-				if(response)
+				if(response){
 					alert(response);
-				else
+				}
+				else{
 					alert('error new dish');
+				}
+					window.location.assign('crear-platillo.html');
 
-			});
+
+			});//end click
+
+				var _public = localStorage.getItem('_public');
+				var recipe_name = localStorage.getItem('recipe_name');
+				var recipe_recipe = localStorage.getItem('recipe_recipe');
+				var recipe_comment = localStorage.getItem('recipe_comment');
+			if(recipe_name != "" || recipe_name != null || recipe_name !== undefined){
+				if (_public=="1") {
+					$('input[type="checkbox"]').prop('checked', false);
+				} else {
+					$('input[type="checkbox"]').prop('checked', true);
+				}
+				$('textarea[name="descripcion"]').html(recipe_name);
+				$('textarea[name="receta"]').html(recipe_recipe);
+				$('textarea[name="comentario"]').html(recipe_comment);
+				console.log(recipe_name +" "+ recipe_recipe +" "+ recipe_comment);
+			}else{
+				console.log('nimadres');
+			}
 
 
 		}
@@ -627,9 +670,8 @@ $(window).load(function(){
 				console.log(arrAux);
 
 				localStorage.setItem('ingredientes', arrAux);
-				var ingredientes = localStorage.getItem('ingredientes');
-				ingredientes = JSON.parse(ingredientes);
-				console.log(typeof ingredientes);
+
+				window.location.assign('crear-platillo.html');
 			});
 		}
 
@@ -1019,6 +1061,7 @@ $(window).load(function(){
 
 	});
 
+
 })(jQuery); //End function
 
 $(document).on('click', '.platillo-item', function() {
@@ -1042,5 +1085,7 @@ $(document).on('click', '.platillo-item', function() {
     	$('#container').toggleClass('blurred');
 
 });
+
+
 
 
