@@ -467,7 +467,7 @@ $(window).load(function(){
 
 			$.each(dish, function( key, value ) {
 
-				$('.list-dish').append('<li class="platillo-item" data=" ' + dish[i]._id + ' " > <h2 class="hache" data="'+ dish[i].descripcion +'">' + dish[i].descripcion + '</h2><p>' + dish[i].receta + '</p></li>');	
+				$('.list-dish').append('<li class="platillo-item" data=" ' + dish[i]._id + ' " > <h2 class="hache" data="'+ dish[i].descripcion +'">' + dish[i].descripcion + '</h2><p class="description">' + dish[i].receta + '</p></li>');	
 
 				i++;	
 
@@ -482,7 +482,7 @@ $(window).load(function(){
 				var i = 0;
 				$('.list-dish').html('');
 				$.each(responsedata, function( key, value ) {
-					$('.list-dish').append('<li class="platillo-item" data="' + dish[i]._id + '"><h2 class="hache" data="'+ dish[i].descripcion +'" >' + dish[i].descripcion + '</h2><p>' + dish[i].receta + '</p></li>');	
+					$('.list-dish').append('<li class="platillo-item" data="' + dish[i]._id + '"><h2 class="hache" data="'+ dish[i].descripcion +'" >' + dish[i].descripcion + '</h2><p class="description">' + dish[i].receta + '</p></li>');	
 
 					i++;	
 
@@ -491,47 +491,74 @@ $(window).load(function(){
 
 			$('.add').click(function () {
 				
-				localStorage.setItem('dishSelected', '');
+				//localStorage.setItem('dishSelected', '');
 
 			});
 
-			$('.platillo-item').click(function(){
-				var data = $(this).find($('.hache').attr('data') );
-				var i=0;
-				data = data.selector;
-				console.log(data);
+			// $('.platillo-item').click(function(){
+			// 	var data = $(this).find($('.hache').attr('data') );
+			// 	var i=0;
+			// 	data = data.selector;
+			// 	console.log(data);
 
-				if(!$('.alert_meal_description').is(':visible')){
-					$('.alert_meal_description').show();
-					// $('#meal_name').html(data)
-					setTimeout(function() {$('.alert_meal_description').addClass('active');}, 200);
-				} else {
-					$('.alert_meal_description').removeClass('active');
-					setTimeout(function() {$('.alert_meal_description').hide();}, 800);
-				}
-				$('#container').toggleClass('blurred');
-			})
+			// 	if(!$('.alert_meal_description').is(':visible')){
+			// 		$('.alert_meal_description').show();
+			// 		$('#meal_name').html(data)
+			// 		setTimeout(function() {$('.alert_meal_description').addClass('active');}, 200);
+			// 	} else {
+			// 		$('.alert_meal_description').removeClass('active');
+			// 		setTimeout(function() {$('.alert_meal_description').hide();}, 800);
+			// 	}
+			// 	$('#container').toggleClass('blurred');
+			// })
 
 			$('.accept').click(function(){
-				console.log('click');
+			 	localStorage.setItem('id_new_added',$(this).attr('data') );
+
+				$('.alert_meal_description').hide();
+				$('#container').toggleClass('blurred');
+			});
+
+			$('.cancel').click(function(){
 				$('.alert_meal_description').hide();
 				$('#container').toggleClass('blurred');
 			});
 
 		}
 
-
 		if($('body').hasClass('has-create-platillo')){
+				var is_public;
+				var has_name;
+				var has_receta;
+				var has_comentarios;
+				var has_ingredients;
+			$('input[type="checkbox"]').click(function(){
+				$(this).attr("value", "0");
+				console.log( $(this).val() );  
+			});
+
+			$('.ingred').click(function(){
+				console.log('click');
+				localStorage.setItem('es_publico', $('checkbox').val() );
+
+				window.location.assign('ingredientes.html');
+			});
 
 			var arrIngredientes;
 
-			$('add').click(function () {
-				
-				var is_public 		= $('').attr('');
-				var has_name 		= $('textarea#descripcion').val();
-				var has_receta 		= $('textarea#receta').val();
-				var has_comentarios 	= $('textarea#comentario').val();
-				var has_ingredients 	= '';
+			$('.add').click(function () {
+				console.log('click');
+				arrIngredientes = localStorage.getItem('ingredientes');
+				// arrIngredientes = JSON.parse(arrIngredientes)
+				console.log(arrIngredientes);
+
+				is_public 			= $('').attr('');
+				has_name 			= $('textarea[name="descripcion"]').val();
+				has_receta 			= $('textarea[name="receta"]').val();
+				has_comentarios 	= $('textarea[name="comentario"]').val();
+				has_ingredients 	= '';
+
+				console.log(has_name+" "+ has_receta +" "+ has_comentarios +" "+ arrIngredientes);
 
 				var json = {
 					"descripcion" : has_name,
@@ -540,7 +567,7 @@ $(window).load(function(){
 					"autorizado" : 0,
 					"publico" : is_public,
 					"comentarios" : has_comentarios,
-					"ingredientes" : arrIngredientes 
+					"ingredientes" : JSON.parse(arrIngredientes)
 				};
 
 				var response = apiRH.newDish(json);
@@ -590,14 +617,19 @@ $(window).load(function(){
 				var value = $(this).val()
 				arrAux.push(value);
 
+				console.log(arrAux[0]);
 				console.log(arrAux);
 			});
 
 			$('.add ').click(function(){
+
+				arrAux = JSON.stringify(arrAux);
+				console.log(arrAux);
+
 				localStorage.setItem('ingredientes', arrAux);
 				var ingredientes = localStorage.getItem('ingredientes');
-
-				console.log(ingredientes);
+				ingredientes = JSON.parse(ingredientes);
+				console.log(typeof ingredientes);
 			});
 		}
 
@@ -988,5 +1020,27 @@ $(window).load(function(){
 	});
 
 })(jQuery); //End function
+
+$(document).on('click', '.platillo-item', function() {
+
+    	var data_name = $(this).find('.hache').html();
+    	var data_description = $(this).find('p').html();
+    	var _id = $(this).attr('data');
+
+    	if(!$('.alert_meal_description').is(':visible')){
+    		$('.alert_meal_description').show();
+
+    		$(".accept").attr('data', _id);
+
+    		$('#meal_name').html(data_name);
+    		$('#meal_description').html(data_description);
+    		setTimeout(function() {$('.alert_meal_description').addClass('active');}, 200);
+    	} else {
+    		$('.alert_meal_description').removeClass('active');
+    		setTimeout(function() {$('.alert_meal_description').hide();}, 800);
+    	}
+    	$('#container').toggleClass('blurred');
+
+});
 
 
