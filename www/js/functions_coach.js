@@ -214,16 +214,37 @@ $(window).load(function(){
 
 			$('.btn_delete').click(function () {
 				console.log('delete');
-				var idDelete = $(this).attr('data');
-				var response = apiRH.deleteDiet(idDelete);
 
-				alert(response);
-
-				if(response){
-					console.log('DELETE OK: ' + response);
+				// alert(response);
+				if(!$('.overscreen4').is(':visible')){
+					$('.overscreen4').show();
+					setTimeout(function() {$('.overscreen4').addClass('active');}, 200);
+				} else {
+					$('.overscreen4').removeClass('active');
+					setTimeout(function() {$('.overscreen4').hide();}, 800);
 				}
-
+				$('#container').toggleClass('blurred');
 			});
+
+				$('#aceptar').click(function(){
+					console.log('click');
+					console.log(response);
+					var idDelete = $(this).attr('data');
+					var response = apiRH.deleteDiet(idDelete);
+					
+					if(response){
+						console.log('DELETE OK: ' + response);
+					}
+
+					$('.overscreen4').hide();
+					$('#container').toggleClass('blurred');
+				});
+
+				$('#cancelar').click(function(){
+					console.log('click');
+					$('.overscreen4').hide();
+					$('#container').toggleClass('blurred');
+				});
 
 
 
@@ -467,7 +488,7 @@ $(window).load(function(){
 
 			$.each(dish, function( key, value ) {
 
-				$('.list-dish').append('<li class="platillo-item" data=" ' + dish[i]._id + ' " > <h2 class="hache" data="'+ dish[i].descripcion +'">' + dish[i].descripcion + '</h2><p class="description">' + dish[i].receta + '</p></li>');	
+				$('.list-dish').append('<li class="platillo-item" data="'+ dish[i]._id +'" > <h2 class="hache" data="'+ dish[i].descripcion +'">' + dish[i].descripcion + '</h2><p class="description">' + dish[i].receta + '</p></li>');	
 
 				i++;	
 
@@ -482,7 +503,7 @@ $(window).load(function(){
 				var i = 0;
 				$('.list-dish').html('');
 				$.each(responsedata, function( key, value ) {
-					$('.list-dish').append('<li class="platillo-item" data="' + dish[i]._id + '"><h2 class="hache" data="'+ dish[i].descripcion +'" >' + dish[i].descripcion + '</h2><p class="description">' + dish[i].receta + '</p></li>');	
+					$('.list-dish').append('<li class="platillo-item" data="'+ dish[i]._id +'"><h2 class="hache" data="'+ dish[i].descripcion +'" >' + dish[i].descripcion + '</h2><p class="description">' + dish[i].receta + '</p></li>');	
 
 					i++;	
 
@@ -549,6 +570,15 @@ $(window).load(function(){
 				console.log(is_public);
 			});
 
+			var ingredientes_list = localStorage.getItem('ingredientes');
+
+			console.log(ingredientes_list);
+			if(!ingredientes_list ){
+				console.log('no tiene ingredientes');
+			}else{
+				console.log('tiene ingredientes');
+				$('#lista_de_ingredientes').html(JSON.parse(ingredientes_list).join(", ") );
+			}
 
 			/*
 				MANDA LOS DATOS DE ESTA PANTALLA A LA SIGUIENTE.
@@ -640,11 +670,12 @@ $(window).load(function(){
 			var j = 0;
 
 			var arrAux = [];
+			var arrAux_id = [];
 
 
 			$.each(ingrediente, function( key, value ) {
 
-			   $('.' + tipo_de_ingredientes[value.categoria] + '').append('<li><span class="cantidad"></span><span class="ingred-name">'+ value.nombre +'</span><input type="checkbox" name="pan" value="'+ value.nombre +'"></li>');	
+			   $('.' + tipo_de_ingredientes[value.categoria] + '').append('<li><span class="cantidad"></span><span class="ingred-name" >'+ value.nombre +'</span><input type="checkbox" name="pan" value="'+ value.nombre +'" data="'+value._id+'"></li>');	
 				 
 							
 				console.log(tipo_de_ingredientes[value.categoria]);
@@ -656,20 +687,31 @@ $(window).load(function(){
 
 			});
 
-			$('input[type="checkbox"]').click(function(){
-				var value = $(this).val()
-				arrAux.push(value);
+			var countChecked = function() {
+			  var n = $( "input:checked" );
+			  console.log(n);
+			};
 
-				console.log(arrAux[0]);
-				console.log(arrAux);
+			$('input[type="checkbox"]').click(function(){
+				countChecked();
+				var value = $(this).val();
+				var aidi = $(this).attr("data");
+
+				arrAux.push(value);
+				arrAux_id.push(aidi);
+
+				console.log(arrAux_id);
 			});
 
 			$('.add ').click(function(){
 
 				arrAux = JSON.stringify(arrAux);
-				console.log(arrAux);
+				arrAux_id = JSON.stringify(arrAux_id);
+
+				console.log(arrAux+" "+arrAux_id );
 
 				localStorage.setItem('ingredientes', arrAux);
+				localStorage.setItem('aidi_ingrediente', arrAux_id);
 
 				window.location.assign('crear-platillo.html');
 			});
@@ -993,6 +1035,8 @@ $(window).load(function(){
 				});
 
 
+
+
 		}//end IF body has class
 		
 
@@ -1070,6 +1114,11 @@ $(document).on('click', '.platillo-item', function() {
     	var data_description = $(this).find('p').html();
     	var _id = $(this).attr('data');
 
+
+    	localStorage.setItem('dish_nombre', data_name);
+    	localStorage.setItem('dish_aidi', _id);
+
+
     	if(!$('.alert_meal_description').is(':visible')){
     		$('.alert_meal_description').show();
 
@@ -1078,6 +1127,11 @@ $(document).on('click', '.platillo-item', function() {
     		$('#meal_name').html(data_name);
     		$('#meal_description').html(data_description);
     		setTimeout(function() {$('.alert_meal_description').addClass('active');}, 200);
+    		/*Anade el platillo a la lista de platillos en el dia*/
+
+
+
+
     	} else {
     		$('.alert_meal_description').removeClass('active');
     		setTimeout(function() {$('.alert_meal_description').hide();}, 800);
