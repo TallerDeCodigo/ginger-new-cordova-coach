@@ -368,7 +368,7 @@ a.create-diet {position:fixed;width:100%;height:45px;bottom:0px;z-index:9999999;
 .accordion1 {text-align:left;margin-bottom:45px;}
 
 .acc1-selector {height:50px;position:relative;line-height:50px;padding-left:60px;font-size:105%;background:#FFF;outline:none;}
-.acc1-selector img {position:absolute;left:13px;top:15%;height:70%;width:auto;}
+.acc1-selector img {position:absolute;left:13px;top:15%;height:60%;width:auto;}
 .acc1-selector h5 {position:relative;display:inline-block;}
 .acc1-selector h5:after {content:"";position:absolute;width:10px;height:10px;background:url(../images/rightarrow.png) no-repeat;transform:rotate(0deg);-webkit-transform:rotate(0deg);background-size:auto 100%;right:-20px;top:20px;-webkit-transition:.15s ease-in-out;transition:.15s ease-in-out;}
 .acc1-selector.ui-state-active h5:after {transform:rotate(90deg);-webkit-transform:rotate(90deg);top:22px;}
