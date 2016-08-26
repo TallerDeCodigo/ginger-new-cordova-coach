@@ -376,25 +376,15 @@ $(window).load(function(){
 				*/
 			if(window.location.href.search('create') != -1 || localStorage.getItem('jsonNewDiet')){
 
-				var creado = new Date();
-				console.log(creado);
-				var object = {
-			  _v: 0,
-			  _id: '',
+			var object = {
 			  aprobada: false,
 			  calificaciones: 0,
 			  coach: localStorage.getItem('userId'),
-			  comentarios: {
-			    
-			  },
-			  comodin: false,
-			  creado: creado,
-			  custom: false,
 			  duracion: 7,
 			  estructura: {
 			    domingo: {
 			      desayuno: {
-			        
+						        
 			      },
 			      snack1: {
 			        
@@ -512,26 +502,7 @@ $(window).load(function(){
 			      }
 			    }
 			  },
-			  id: '',
-			  nombre: localStorage.getItem('d_nombre'),
-			  perfil: {
-			    
-			  },
-			  platillos: {
-			    
-			  },
-			  publica: false,
-			  puntos: 10,
-			  rating: 5,
-			  restricciones: [
-			    0,
-			    1,
-			    2,
-			    3,
-			    4,
-			    5
-			  ],
-			  softdelete: false
+			  nombre: localStorage.getItem('d_nombre')
 			};
 				localStorage.setItem('jsonNewDiet', object);
 				$('.platillo').hide();
@@ -678,8 +649,6 @@ $(window).load(function(){
 			if ($(this).parent().hasClass('desayuno')) {
 				console.log('desayuno');
 			}
-
-			console.log($(this).parent().attr("class"));
 			console.log($(this).parent().parent().parent().parent().attr("class"));
 			window.location.assign('platillos.html');
 		});
