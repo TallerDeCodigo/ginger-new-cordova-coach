@@ -196,6 +196,8 @@ function requestHandlerAPI(){
 
 		};
 
+
+
 		/**
 		 *
 		 * Update Diet
@@ -415,6 +417,36 @@ function requestHandlerAPI(){
 
 			return (response) ? response : false;
 
+		};
+
+		/**\
+		 **
+		 ** Update Client Diet
+		 **
+		\**/
+
+		this.updateClientDiet = function (data){
+			
+			var req = {
+				method : 'PATCH',
+				url : api_base_url + 'tables/dieta/',
+				headers: {
+					'X-ZUMO-APPLICATION': 'ideIHnCMutWTPsKMBlWmGVtIPXROdc92',
+					'X-ZUMO-AUTH': localStorage.getItem('token'),
+					'Content-Type': 'application/json'
+				},
+				data : data
+			}
+
+			console.log(JSON.stringify(req));
+
+			var response = this.makePatchRequest('tables/dieta/', data);
+
+			console.log("Request Path Data Dieta");
+
+			console.log(response);  //llega aqui con la respuesta del servidor
+
+			return (response) ? response : false;
 		};
 
 		this.getFinanzas = function(mes){

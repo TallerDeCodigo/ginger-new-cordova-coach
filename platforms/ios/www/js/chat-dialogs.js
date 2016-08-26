@@ -35,37 +35,20 @@ function retrieveChatDialogs() {
     if (err) {
       console.log(err);
     } else {
+
+      console.log('aca 2');
       // repackage dialogs data and collect all occupants ids
       var occupantsIds = [];
-      var i=0;
-
-      console.log(resDialogs);
-      console.log(currentUser);
-
+      var i = 0;
       var nombre_del_usuario = currentUser.id;
       var time;
       var hours;
       var minutes;
       var message_time;
-
-      $.each(resDialogs, function( key, value ){
-        console.log('for> '+resDialogs.items[i].name);
-        
-        var date_millis = resDialogs.items[i].last_message_date_sent;
-        var secs = date_millis*1000;
-        
-        time = new Date(secs)
-        //console.log(time);
-        hours = time.getHours();
-        minutes = time.getMinutes();
-        message_time = hours+ ":"+minutes;
-
-        //console.log(hours+ ":"+minutes);
-          //$('.lista_chat').append('<li class="persona"><div class="circle-frame"><img src="images/muestra.png"></div><h5>'+ resDialogs.items[i].name+'</h5><p>'+ resDialogs.items[i].last_message +'</p><div class="no-leido">'+message_time+'</div></li>');
-
-        i++;
-
-      });
+       console.log('aca 3');
+       console.log(resDialogs);
+      
+      console.log('456465456456456456');
 
       if(resDialogs.items.length === 0){
 
@@ -141,6 +124,8 @@ function showOrUpdateDialogInUI(itemRes, updateHtml) {
   var dialogLastMessage = itemRes.last_message;
   var dialogUnreadMessagesCount = itemRes.unread_messages_count;
   var dialogIcon = getDialogIcon(itemRes.type);
+  var dialogTime = itemRes.updated_at;
+  console.log(JSON.stringify(itemRes));
 
   if (dialogType == 3) {
     opponentId    = QB.chat.helpers.getRecipientId(itemRes.occupants_ids, currentUser.id);
@@ -149,12 +134,13 @@ function showOrUpdateDialogInUI(itemRes, updateHtml) {
   }
 
   if (updateHtml === true) {
-  	var updatedDialogHtml = buildDialogHtml(dialogId, dialogUnreadMessagesCount, dialogIcon, dialogName, dialogLastMessage);
+
+  	var updatedDialogHtml = buildDialogHtml(dialogId, dialogUnreadMessagesCount, dialogIcon, dialogName, dialogLastMessage, dialogTime);
   	$('#dialogs-list').prepend(updatedDialogHtml);
   	$('.list-group-item.active .badge').text(0).hide(0);
 	} else {
 
-    var dialogHtml = buildDialogHtml(dialogId, dialogUnreadMessagesCount, dialogIcon, dialogName, dialogLastMessage);
+    var dialogHtml = buildDialogHtml(dialogId, dialogUnreadMessagesCount, dialogIcon, dialogName, dialogLastMessage, dialogTime);
     $('#dialogs-list').append(dialogHtml);
 	
   }
@@ -202,7 +188,7 @@ function updateDialogsList(dialogId, text){
 // Choose dialog
 function triggerDialog(dialogId){
   
-  console.log("Select a dialog with id: " + dialogId + ", name: " + dialogs[dialogId].name);
+  //console.log("Select a dialog with id: " + dialogId + ", name: " + dialogs[dialogId].name);
   // deselect
 
   var kids = $('#dialogs-list').children();
