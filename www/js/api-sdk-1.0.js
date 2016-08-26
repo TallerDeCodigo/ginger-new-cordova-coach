@@ -338,6 +338,53 @@ function requestHandlerAPI(){
 			return (response) ? response : false;
 		};
 
+		this.makeDiet = function(data){
+			var req = {
+				method : 'POST',
+				url : api_base_url + 'tables/dieta/',   //ESTO NO ES CORRECTO
+				headers: {
+					'X-ZUMO-APPLICATION': 'ideIHnCMutWTPsKMBlWmGVtIPXROdc92',
+					'X-ZUMO-AUTH': localStorage.getItem('token'),
+					'Content-Type': 'application/json'
+				},
+				data: JSON.parse(data)
+			}
+
+			console.log(JSON.stringify(req));
+
+			var response = this.makeRequest('tables/dieta/', req);
+
+			console.log("Request Copy Data Dieta");
+
+			console.log(response);  //llega aqui con la respuesta del servidor
+
+			return (response) ? response : false;
+		};
+
+		this.saveDiet = function(data){
+
+			var req = {
+				method : 'PATCH',
+				url : api_base_url + 'tables/dieta/'+ data._id,   //ESTO NO ES CORRECTO
+				headers: {
+					'X-ZUMO-APPLICATION': 'ideIHnCMutWTPsKMBlWmGVtIPXROdc92',
+					'X-ZUMO-AUTH': localStorage.getItem('token'),
+					'Content-Type': 'application/json'
+				},
+				data: data
+			}
+
+			console.log(JSON.stringify(req));
+
+			var response = this.patchRequest('tables/dieta'+ data._id, req);
+
+			console.log("Request PATCH Data Dieta");
+
+			console.log(response);  //llega aqui con la respuesta del servidor
+
+			return (response) ? response : false;
+		};
+
 		/**
 		 *
 		 * Platillos

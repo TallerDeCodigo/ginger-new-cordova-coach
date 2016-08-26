@@ -11,11 +11,17 @@ $( function() {
 	  	$( ".accordion1" ).accordion({collapsible:true,active:false,animate:200,heightStyle:"content"});
 
 	  	var idDelete;
-	  	$('.delete').click(function (e) {
-	  		console.log('borrar');
-	  		idDelete = JSON.parse($(this).attr('data'));
-	  		idDelete = idDelete[0];
-	  		console.log(idDelete);
+	  	var diaDelete;
+	  	var mealDelete;
+	  	$('.delete').click(function () {
+	  		idDelete = $(this).attr('data');
+	  		diaDelete = $(this).parent().parent().parent().parent().parent().parent().attr('class');
+	  		if ($(this).parent().parent().parent().hasClass('desayuno')) {mealDelete='desayuno'}
+	  		if ($(this).parent().parent().parent().hasClass('snack1')) {mealDelete='snack1'}
+	  		if ($(this).parent().parent().parent().hasClass('comida')) {mealDelete='comida'}
+	  		if ($(this).parent().parent().parent().hasClass('snack2')) {mealDelete='snack2'}
+	  		if ($(this).parent().parent().parent().hasClass('cena')) {mealDelete='cena'}
+	  		console.log(idDelete+" "+diaDelete+" "+mealDelete);
 
   			if(!$('.overscreen5').is(':visible')){
   				console.log('entra popup');
@@ -30,12 +36,30 @@ $( function() {
 
   			$('#aceptar').click(function(){
   				console.log('aceptar borrar');
-  				var response = apiRH.deleteDiet(idDelete);
-  				console.log(response);
-  				console.log(idDelete);
-  				if(response){
-  					console.log('DELETE OK: ' + response);
-  				}
+
+  				var modify = JSON.parse(localStorage.getItem('dietaEdit'));
+  				var contar, letoca;
+
+  				$.each( modify["estructura"][diaDelete][mealDelete], function( key, value ) {
+					contar = key;
+  					$.each( value, function( key, value ) {
+  						$.each( value, function( key, value ) {
+  							if (key=="platillo" && value==idDelete) {
+  								letoca = contar;
+  							}
+  						});
+  					});
+  				});
+
+  				// console.log("le toca a "+letoca);
+
+  				delete modify["estructura"][diaDelete][mealDelete][letoca];
+
+  				// console.log(JSON.stringify(modify));
+
+  				$('li.'+diaDelete+' .'+mealDelete+' .platillo[data='+idDelete+']').remove();
+
+  				localStorage.setItem('dietaEdit', JSON.stringify(modify));
 
   				$('.overscreen5').hide();
   				$('#container').toggleClass('blurred');
@@ -236,7 +260,7 @@ $(window).load(function(){
 					
 				});
 
-				$('.list-diet').append('<li class="elemento-dieta" data="' + _id + '"><h2> ' + nombre + ' </h2><p>' + descripcion + '</p><nav><a href="copiar-dieta.html"><img class="btn_copy" data="' + _id + '" src="images/copy.png"></a><a href="dieta.html"><img class="btn_edit" data="' + _id + '" src="images/edit.png"></a><a href="#"><img class="btn_delete" data="' + _id + '" src="images/delete.png"></a></nav></li>');
+				$('.list-diet').append('<li class="elemento-dieta" data="' + _id + '"><h2> ' + nombre + ' </h2><p>' + descripcion + '</p><nav><a href="copiar-dieta.html"><img class="btn_copy" data="' + _id + '" src="images/copy.png"></a><a href="dieta.html"><img class="btn_edit" data="' + _id + '" src="images/edit.png"></a><a><img class="btn_delete" data="' + _id + '" src="images/delete.png"></a></nav></li>');
 
 				i++;
 			});
@@ -281,10 +305,12 @@ $(window).load(function(){
 					console.log(idDelete);
 					if(response){
 						console.log('DELETE OK: ' + response);
+						$('li.elemento-dieta[data='+idDelete+']').remove();
 					}
 
 					$('.overscreen4').hide();
 					$('#container').toggleClass('blurred');
+
 				});
 
 				$('#cancelar').click(function(){
@@ -371,6 +397,7 @@ $(window).load(function(){
 
 		if($('body').hasClass('dieta')){
 				
+<<<<<<< HEAD
 				/*
 					CREANDO DIETA CULEROS!!
 				*/
@@ -505,11 +532,235 @@ $(window).load(function(){
 			  nombre: localStorage.getItem('d_nombre')
 			};
 				localStorage.setItem('jsonNewDiet', object);
+=======
+			/*
+				CREANDO DIETA CULEROS!!
+			*/
+
+			//{"nombre": "Hola","descripcion":"Hola", "estructura":{"domingo":{"desayuno":{"1":{"a":{"platillo":"54f3c3cf4b6614a8119e7061"}}},"snack1":{},"comida":{},"snack2":{},"cena":{}}},"perfil":{"sexo":0,"edad":0,"bmi":0,"objetivo":0}}
+			var dietaNew = {};
+
+			var jsonNew = '{"nombre": "' +localStorage.getItem('d_nombre') + '","descripcion":"' + localStorage.getItem('d_comentario') + '", "estructura":{"domingo":{"desayuno":{},"snack1":{},"comida":{},"snack2":{},"cena":{}},"lunes":{"desayuno":{},"snack1":{},"comida":{},"snack2":{},"cena":{}},"martes":{"desayuno":{},"snack1":{},"comida":{},"snack2":{},"cena":{}},"miercoles":{"desayuno":{},"snack1":{},"comida":{},"snack2":{},"cena":{}},"jueves":{"desayuno":{},"snack1":{},"comida":{},"snack2":{},"cena":{}},"viernes":{"desayuno":{},"snack1":{},"comida":{},"snack2":{},"cena":{}},"sabado":{"desayuno":{},"snack1":{},"comida":{},"snack2":{},"cena":{}}},"perfil":{"sexo":0,"edad":0,"bmi":0,"objetivo":0}}';
+			
+			if(window.location.href.search('create') != -1 ){
+
+				console.log(jsonNew);
+				
+				console.log('PARSE: ' + JSON.parse(jsonNew));	
+
+				dietaNew = JSON.parse(jsonNew);
+
+				localStorage.setItem('dietaEdit', JSON.stringify(dietaNew));
+
+				console.log('Todo: ' + dietaNew);
+
+>>>>>>> 5730d51a7bd9eee852e1f810e4a0ce38b69503af
 				$('.platillo').hide();
+
+				//console.log('Objeto: ' + dietaNew.estructura.domingo.desayuno[1].a.platillos);
+				//console.log('Objeto: ' + dietaNew.estructura.domingo.desayuno[1]);
+				//console.log('Array: ' + dietaNew["estructura"]["domingo"]["desayuno"]["1"]["a"][0]["platillo"]);
+				//Agrega un platillo a la opción a
+				
+				// var arrDieta =  dietaNew["estructura"]["domingo"]["desayuno"]["1"]["a"];
+				// arrDieta.push({"platillo":"bbbbb"});
+				// dietaNew["estructura"]["domingo"]["desayuno"]["1"]["a"] = arrDieta;
+				
+				// console.log(dietaNew);
+				// console.log(JSON.stringify(dietaNew));
+
+				// var k = 0;
+
+				// $.each(dietaNew.estructura.domingo.desayuno, function( key, value ) {
+					
+				// 	console.log(key + " ++++ " + value);
+
+				// 	$.each(value, function( key, value ) {
+
+				// 		console.log(key + " ---- " + value);
+				// 		$.each(value, function( key, value ) {
+							
+				// 			console.log(key + " **** " + value);
+
+				// 		});
+
+				// 	});
+				// 	k++;
+				// });	
+					
+				// localStorage.setItem('jsonNewDiet', jsonNew);
+			} else if (localStorage.getItem('idDishSelected') || localStorage.getItem('dietaEdit')) {
+					dietaNew = JSON.parse(localStorage.getItem('dietaEdit'));
+
+				if (localStorage.getItem('idDishSelected')) {
+					var i = 0;
+					var guardar1 = [];
+					var guardar2 = [];
+
+					$.each(dietaNew["estructura"][localStorage.getItem('d_date')][localStorage.getItem('d_time')], function( key, value ) {
+						guardar1[i] = key;
+						guardar2[i] = value;
+						i++;
+					});
+					// var masone = i+1;
+					guardar1[i] = i;
+					guardar2[i] = {"a":{"platillo":localStorage.getItem('idDishSelected'),"descripcion":localStorage.getItem('desDishSelected'),"receta":localStorage.getItem('recetaDishSelected')}};
+					var rv = {};
+					for (var j = 0; j < guardar1.length; ++j) {
+						var agregar = j+1;
+					    rv[agregar] = guardar2[j];
+					}
+					dietaNew["estructura"][localStorage.getItem('d_date')][localStorage.getItem('d_time')]= rv;
+					localStorage.setItem('dietaEdit', JSON.stringify(dietaNew));
+
+					localStorage.removeItem('idDishSelected');
+					
+					console.log(JSON.stringify(dietaNew));					
+				}
+
+				var vienede = false;
+
+				if (dietaNew._id) {
+					vienede = true;
+					var comm_id;
+					var platillo_id;
+					var comentarios = dietaNew.comentarios;
+					var comments;
+					var platillos = dietaNew.platillos;
+					var receta;
+					var nombre_receta;
+					var ingredientes;
+					var losplatos = [];
+					var i=0;
+
+					$.each( dietaNew.platillos, function( key, value ) {
+						losplatos[i]=[];
+						$.each( value, function( key, value ) {
+							// console.log(key+":::"+value);
+							if (key=="_id") {
+							 	losplatos[i][0]=value;
+							}
+							if (key=="descripcion") {
+							 	losplatos[i][1]=value;
+							}
+							if (key=="receta") {
+							 	losplatos[i][2]=value;
+							}
+							if (key=="ingredientes") {
+							 	losplatos[i][3]=value;
+							}
+						});
+						i++;
+					});
+
+					var loscomentarios = [];
+					var i=0;
+					var j=0;
+
+					$.each( dietaNew.comentarios, function( key, value ) {
+						loscomentarios[i]=[];
+						j=0;
+						$.each( value, function( key, value ) {
+							loscomentarios[i][j]=value;
+							j++;
+						});
+						i++;
+					});
+
+					// console.log(loscomentarios);
+
+
+					for (var i=0; i<losplatos.length; i++) {
+						losplatos[i][4]="";
+						for (var j = 0; j < loscomentarios.length; j++) {
+							if (losplatos[i][0]==loscomentarios[j][2]&&losplatos[i][4]=="") {
+								losplatos[i][4]=loscomentarios[j][1];
+							}
+						}
+					}
+				}
+
+				$.each( dietaNew.estructura, function( key, value ) {
+					// los dias de la semana
+					if(key=="domingo"){dia_prueba=1;} else if (key=="lunes") {dia_prueba=2;} else if (key=="martes") {dia_prueba=3;} else if (key=="miercoles") {dia_prueba=4;} else if (key=="jueves") {dia_prueba=5;} else if (key=="viernes") {dia_prueba=6;} else if (key=="sabado") {dia_prueba=7;}
+					
+					var estoyen = '#toda_la_dieta li:nth-of-type('+dia_prueba+') ';
+					
+					$.each( value, function( key, value ) {
+						// desayuno, snack, comida,...
+						var dentrode = estoyen+'.acc-content.'+key+' ';
+						
+						var i=1;
+
+						$.each( value, function( key, value ) {
+							// tiempos (1,2,3..)
+							// console.log(key + " :::: 0" +value);
+							var masadentro = dentrode+'div.platillo:nth-of-type('+i+')';
+							i++;	
+							$.each( value, function( key, value ) {
+
+								$.each( value, function( key, value ) {
+									// id_platillo, id_comentario
+									// console.log(key + " :::: " +value);
+									if (key=="platillo") {
+										$(masadentro).attr("data", value);
+										$(masadentro + ' nav svg').attr("data", value);
+
+										if(vienede){
+											for (var i = 0; i < losplatos.length; i++) {
+												if (value==losplatos[i][0]) {
+
+													$(masadentro).attr("data", losplatos[i][0]);
+													
+													$(masadentro + ' nav svg').attr("data", losplatos[i][0]);
+
+													$(masadentro+' h5').html(losplatos[i][1]);
+													
+													if (losplatos[i][2]!="") {
+														$(masadentro+' p.receta').html(losplatos[i][2]);
+													} else {
+														$(masadentro+'p.receta').hide();
+													}
+													if (losplatos[i][4]!=" ") {
+														$(masadentro+' p.comentario').html(losplatos[i][4]);
+													} else {
+														$(masadentro+' p.comentario').show();
+													}
+												}
+											}
+										}	
+									}
+
+									if (key=="descripcion") {
+										$(masadentro+' h5').html(value);
+									}
+
+									if (key=="receta") {
+										$(masadentro+' p.receta').html(value);
+										if (value=="") {
+											$(masadentro+' p.receta').hide();
+										}
+									}
+
+									$(masadentro+' p.comentario').hide();
+
+								});	
+
+							});
+						});
+					});
+				});
+
+				$('.platillo').each(function() {
+				    if ($(this).attr('data') === undefined) {
+				      $(this).remove();
+				    }
+				});
 
 			}else{
 				var dieta = app.get_diet('?_id='+ localStorage.getItem('dOperator'));
 				console.log('ID DIET: ' + dieta._id);
+				localStorage.setItem('dietaEdit', JSON.stringify(dieta));
 
 				if(dieta){
 					var comm_id;
@@ -611,7 +862,7 @@ $(window).load(function(){
 
 													$(masadentro).attr("data", losplatos[i][0]);
 													
-													$(masadentro + ' nav svg').attr("data", JSON.stringify(losplatos[i]));
+													$(masadentro + ' nav svg').attr("data", losplatos[i][0]);
 
 													$(masadentro+' h5').html(losplatos[i][1]);
 													
@@ -643,13 +894,51 @@ $(window).load(function(){
 					});
 				
 			}//end if
+
+
+		}
+
+		$('.btn_add').click(function(){
+
+			console.log('Click here!');
+
+			var dieta = localStorage.getItem('dietaEdit');
+			console.log('ID DIETA DEFINIDO: ' +JSON.parse(dieta)._id);
+			if(JSON.parse(dieta)._id){
+				var response = apiRH.saveDiet(dieta);
+			}
+			else{
+				var response = apiRH.makeDiet(dieta);	
 			}
 
-		$('.add_dish').click(function(){
-			if ($(this).parent().hasClass('desayuno')) {
-				console.log('desayuno');
+			if(response){
+				window.location.assign('dietas.html');
+			}else{
+				alert('Error al guardar dieta');
 			}
+<<<<<<< HEAD
 			console.log($(this).parent().parent().parent().parent().attr("class"));
+=======
+
+
+
+		});
+
+		$('.add_dish').click(function(){
+			// if ($(this).parent().hasClass('desayuno')) {
+			// 	console.log('desayuno');
+			// }
+
+			// console.log($(this).parent().attr("class"));
+			// console.log($(this).parent().parent().parent().parent().attr("class"));
+
+			localStorage.setItem('d_time', $(this).attr('data'));
+			localStorage.setItem('d_date', $(this).attr('date'));
+
+			console.log($(this).attr('data'));
+			console.log($(this).attr('date'));
+
+>>>>>>> 5730d51a7bd9eee852e1f810e4a0ce38b69503af
 			window.location.assign('platillos.html');
 		});
 
@@ -678,7 +967,7 @@ $(window).load(function(){
 
 			$.each(dish, function( key, value ) {
 
-				$('.list-dish').append('<li class="platillo-item" data="'+ dish[i]._id +'" > <h2 class="hache" data="'+ dish[i].descripcion +'">' + dish[i].descripcion + '</h2><p class="description">' + dish[i].receta + '</p></li>');	
+				$('.list-dish').append('<li class="platillo-item" data="'+ dish[i]._id +'" descripcion="' +  dish[i].descripcion + '" receta="' + dish[i].receta + '" > <h2 class="hache" data="'+ dish[i].descripcion +'">' + dish[i].descripcion + '</h2><p class="description">' + dish[i].receta + '</p></li>');	
 
 				i++;	
 
@@ -691,13 +980,15 @@ $(window).load(function(){
 				var responsedata = apiRH.listDishes(is_public);
 
 				var i = 0;
-				$('.list-dish').html('');
+				
+				$('.list-dish.public').html('');
 				$.each(responsedata, function( key, value ) {
-					$('.list-dish').append('<li class="platillo-item" data="'+ dish[i]._id +'"><h2 class="hache" data="'+ dish[i].descripcion +'" >' + dish[i].descripcion + '</h2><p class="description">' + dish[i].receta + '</p></li>');	
+					$('.list-dish.public').append('<li class="platillo-item" data="'+ responsedata[i]._id +'"><h2 class="hache" data="'+ responsedata[i].descripcion +'" >' + responsedata[i].descripcion + '</h2><p class="description">' + responsedata[i].receta + '</p></li>');	
 
 					i++;	
 
 				});
+
 			});
 
 			$('.add').click(function () {
@@ -723,11 +1014,19 @@ $(window).load(function(){
 			// 	$('#container').toggleClass('blurred');
 			// })
 
+			/*
+				Este agrega el platillo
+			*/
+
 			$('.accept').click(function(){
-			 	localStorage.setItem('id_new_added',$(this).attr('data') );
+			 	localStorage.setItem('idDishSelected',$(this).attr('data') );
+			 	localStorage.setItem('desDishSelected',$(this).parent().parent().find('h5').html() );
+			 	localStorage.setItem('recetaDishSelected',$(this).parent().parent().find('p').html() );
 
 				$('.alert_meal_description').hide();
 				$('#container').toggleClass('blurred');
+
+				window.location.assign('dieta.html');
 			});
 
 			$('.cancel').click(function(){
@@ -783,22 +1082,37 @@ $(window).load(function(){
 				window.location.assign('ingredientes.html');
 			});//end click
 
-			var arrIngredientes = [];
+			
 
 			$('.add').click(function () {
 
 
-				arrIngredientes = JSON.parse(localStorage.getItem('ingredientes'));
+				var arrIngredientes = localStorage.getItem('aidi_ingrediente');
+
 				console.log(typeof arrIngredientes);
-				console.log( JSON.stringify(arrIngredientes) );
+				console.log(" --- "+ JSON.parse(arrIngredientes) );
 
 				is_public 			= $('input[type="checkbox"]').val();
 				has_name 			= $('textarea[name="descripcion"]').val();
 				has_receta 			= $('textarea[name="receta"]').val();
 				has_comentarios 	= $('textarea[name="comentario"]').val();
-				has_ingredients 	= arrIngredientes;
+				has_ingredients 	= JSON.parse(arrIngredientes);
 
+				console.log(typeof has_ingredients);
 
+				var sIngredientes = '[';
+				for (var i = 0; i < has_ingredients.length; i++) {
+					console.log(has_ingredients[i]);
+					if(i < has_ingredients.length-1)
+						sIngredientes = sIngredientes + '{"_id" :"' + has_ingredients[i] + '"},';
+					else
+						sIngredientes = sIngredientes + '{"_id" : "'  + has_ingredients[i] + '"}';
+
+				}
+
+				sIngredientes = eval(sIngredientes + ']');
+
+				console.log('CADENA: ' + JSON.stringify(sIngredientes));
 
 				console.log(is_public+" "+has_name+" "+ has_receta +" "+ has_comentarios +" "+ arrIngredientes);
 
@@ -809,18 +1123,26 @@ $(window).load(function(){
 					"autorizado" : 0,
 					"publico" : is_public,
 					"comentarios" : has_comentarios,
-					"ingredientes" : "jamon"
+					"ingredientes" : sIngredientes
 				};
+
+				console.log('Id User ' + localStorage.getItem('userId'));
+
+				console.log(JSON.stringify(json));
 
 				var response = apiRH.newDish(json);
 
 				if(response){
-					alert(response);
+					localStorage.removeItem('d_nombre');
+					localStorage.removeItem('d_comentario');
+					localStorage.removeItem('ingredientes');
+					
+					window.location.assign('platillos.html');
 				}
 				else{
 					alert('error new dish');
 				}
-					window.location.assign('crear-platillo.html');
+				
 
 
 			});//end click
@@ -847,6 +1169,8 @@ $(window).load(function(){
 		}
 
 		if($('body').hasClass('has-ingredients') ){
+
+			var spinner = $( "#spinner" ).spinner();
 			
 			$( ".accordion1" ).accordion({collapsible:true,active:false,animate:200,heightStyle:"content"});
 
@@ -862,7 +1186,8 @@ $(window).load(function(){
 
 			var arrAux = [];
 			var arrAux_id = [];
-
+			var arrIng = [];
+			var arrCantidad = [];
 
 			$.each(ingrediente, function( key, value ) {
 
@@ -883,15 +1208,82 @@ $(window).load(function(){
 			  console.log(n);
 			};
 
-			$('input[type="checkbox"]').click(function(){
+
+			var picker;
+
+			$("#picker-up").bind('touchstart', function(){
+				timeout = setInterval(function(){
+					picker = Number($("#picker-up").parent().parent().find('input').val());
+					if (picker<99) {
+						picker=picker+1;
+			        	$("#picker-up").parent().parent().find('input').val(picker.toFixed(0));
+			        	$('input[name="picker"]').attr("value", picker);
+					}
+			    }, 100);
+			    return false;
+			});
+
+			$("#picker-up").bind('touchend', function(){
+			    clearInterval(timeout);
+			    return false;
+			});
+
+			$("#picker-dw").bind('touchstart', function(){
+				timeout = setInterval(function(){
+					picker = Number($("#picker-dw").parent().parent().find('input').val());
+					if (picker>1) {
+						picker=picker-1;
+						$("#picker-dw").parent().parent().find('input').val(picker.toFixed(0));
+						$('input[name="picker"]').attr("value", picker);
+					}
+			    }, 100);
+			    return false;
+			});
+
+			$("#picker-dw").bind('touchend', function(){
+			    clearInterval(timeout);
+			    return false;
+			});
+
+			var almacen;
+			var temp;
+
+			$('input[type="checkbox"]').change(function(){
 				countChecked();
-				var value = $(this).val();
-				var aidi = $(this).attr("data");
+				var value 	= $(this).val();
+				var aidi 	= $(this).attr("data");
 
-				arrAux.push(value);
-				arrAux_id.push(aidi);
+				if(!$(this).is(':checked')){
+					// arrAux_id.splice(aidi);
+					// arrCantidad.splice(aidi);
+					arrCantidad.indexOf(aidi);
+					console.log(arrCantidad.indexOf(aidi));
+					$(this).parent().find('.cantidad').html('');
+					$(this).parent().find('.cantidad').hide();	
 
+				}else{
+					temp = aidi;
+					 arrAux.push(value);
+					 arrCantidad.indexOf(aidi);
+					 console.log(arrCantidad.indexOf(aidi));
+					// arrAux_id.push(aidi);
+					$('.overscreen2').show();
+				}
+				almacen = $(this).parent().find('.cantidad');	
+				
 				console.log(arrAux_id);
+			});
+
+			$('.establish').click(function(){
+				$('.overscreen2').hide();
+				almacen.show();
+				var v =  $('input[name=picker]').val();
+				almacen.html(v);
+				picker = 1;
+				$('input[name=picker]').val('1');
+				arrAux_id.push(temp);
+				arrCantidad.push({id: temp, cantidad: v});
+				// console.log(arrCantidad);
 			});
 
 			$('.add ').click(function(){
@@ -902,6 +1294,7 @@ $(window).load(function(){
 				console.log(arrAux+" "+arrAux_id );
 
 				localStorage.setItem('ingredientes', arrAux);
+
 				localStorage.setItem('aidi_ingrediente', arrAux_id);
 
 				window.location.assign('crear-platillo.html');
