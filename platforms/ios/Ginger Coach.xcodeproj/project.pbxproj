@@ -298,6 +298,11 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 510;
+				TargetAttributes = {
+					1D6058900D05DD3D006BFB54 = {
+						DevelopmentTeam = AZC9Q526PS;
+					};
+				};
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "Ginger Coach" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -420,7 +425,7 @@
 				INFOPLIST_FILE = "Ginger Coach/Ginger Coach-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.cliente.coach;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ginger.coach;
 				PRODUCT_NAME = "Ginger Coach";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -443,7 +448,7 @@
 				GCC_VERSION = "";
 				INFOPLIST_FILE = "Ginger Coach/Ginger Coach-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
-				PRODUCT_BUNDLE_IDENTIFIER = com.cliente.coach;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ginger.coach;
 				PRODUCT_NAME = "Ginger Coach";
 				TARGETED_DEVICE_FAMILY = 1;
 			};

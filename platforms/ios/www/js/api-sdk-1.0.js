@@ -76,6 +76,7 @@ function requestHandlerAPI(){
 					"password" : pass
 				}
 			}
+			console.log(api_base_url);
 			var response = this.makeRequest('api/login', req);
 
 			console.log(JSON.stringify(response));
@@ -247,7 +248,32 @@ function requestHandlerAPI(){
 
 			var response = this.makeDeleteRequest('tables/dieta/' + diet, req);
 
-			console.log("Request Delete Data Dieta");
+			console.log(response);  //llega aqui con la respuesta del servidor
+
+			return (response) ? response : false;
+		};
+
+
+
+				/*Holkan*/
+		/**
+		 * DELETE DISH
+		 * */
+
+		this.deleteDish = function(diet){
+			var req = {
+				method : 'DELETE',
+				url : api_base_url + 'tables/dieta/' + diet,
+				headers: {
+					'X-ZUMO-APPLICATION': 'ideIHnCMutWTPsKMBlWmGVtIPXROdc92',
+					'X-ZUMO-AUTH': localStorage.getItem('token'),
+					'Content-Type': 'application/json'
+				}
+			}
+
+			console.log(JSON.stringify(req));
+
+			var response = this.makeDeleteRequest('tables/dieta/' + diet, req);
 
 			console.log(response);  //llega aqui con la respuesta del servidor
 
@@ -276,6 +302,83 @@ function requestHandlerAPI(){
 			var response = this.makeRequest('api/duplicate', req);
 
 			console.log("Request Copy Data Dieta");
+
+			console.log(response);  //llega aqui con la respuesta del servidor
+
+			return (response) ? response : false;
+		};
+
+
+
+			/*holkan*/
+		/**
+		 * CREATE DIET
+		 * */
+
+		 this.createDiet = function(data){
+			var req = {
+				method : 'POST',
+				url : api_base_url + 'api/create',   //ESTO NO ES CORRECTO
+				headers: {
+					'X-ZUMO-APPLICATION': 'ideIHnCMutWTPsKMBlWmGVtIPXROdc92',
+					'X-ZUMO-AUTH': localStorage.getItem('token'),
+					'Content-Type': 'application/json'
+				},
+				data: data
+			}
+
+			console.log(JSON.stringify(req));
+
+			var response = this.makeRequest('api/duplicate', req);
+
+			console.log("Request Copy Data Dieta");
+
+			console.log(response);  //llega aqui con la respuesta del servidor
+
+			return (response) ? response : false;
+		};
+
+		this.makeDiet = function(data){
+			var req = {
+				method : 'POST',
+				url : api_base_url + 'tables/dieta/',   //ESTO NO ES CORRECTO
+				headers: {
+					'X-ZUMO-APPLICATION': 'ideIHnCMutWTPsKMBlWmGVtIPXROdc92',
+					'X-ZUMO-AUTH': localStorage.getItem('token'),
+					'Content-Type': 'application/json'
+				},
+				data: JSON.parse(data)
+			}
+
+			console.log(JSON.stringify(req));
+
+			var response = this.makeRequest('tables/dieta/', req);
+
+			console.log("Request Copy Data Dieta");
+
+			console.log(response);  //llega aqui con la respuesta del servidor
+
+			return (response) ? response : false;
+		};
+
+		this.saveDiet = function(data){
+
+			var req = {
+				method : 'PATCH',
+				url : api_base_url + 'tables/dieta/'+ data._id,   //ESTO NO ES CORRECTO
+				headers: {
+					'X-ZUMO-APPLICATION': 'ideIHnCMutWTPsKMBlWmGVtIPXROdc92',
+					'X-ZUMO-AUTH': localStorage.getItem('token'),
+					'Content-Type': 'application/json'
+				},
+				data: data
+			}
+
+			console.log(JSON.stringify(req));
+
+			var response = this.patchRequest('tables/dieta'+ data._id, req);
+
+			console.log("Request PATCH Data Dieta");
 
 			console.log(response);  //llega aqui con la respuesta del servidor
 

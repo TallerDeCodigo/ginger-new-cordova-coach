@@ -16,13 +16,13 @@
 		<script type="text/javascript" src="js/oauth.js"></script>
 		<script src="js/main.js"></script>
 	</head>
-	<body class="has-dishes">
-	<div id="container" class="list-platos iosm">
+	<body class="has-dishes iosm">
+	<div id="container" class="list-platos">
 		<header class="hwhite2">
 			<div class="toolbar">
 				<a href="dieta.html" class="back"><img src="images/back.svg"></a>
 				<h2 class="titulo">Lista de Platillos</h2>
-				<a class="add">Agregar</a>
+				<!-- <a class="add">Agregar</a> -->
 			</div>
 		</header>
 		<div class="priv-public">
@@ -34,26 +34,29 @@
 				<li style="display:block">
 					<div class="platillos-wrapper">
 						<ul class="list-dish">
-							<li class="platillo-item active">
-								<h2>Frutos rojos con yogurt</h2>
-								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dignissim sem</p>
-							</li>
 						</ul>
 					</div>
 				</li>
 				<li style="display:none">
 					<div class="platillos-wrapper">
 						<ul class="list-dish public">
-							<li class="platillo-item">
-								<h2>Frutos rojos con yogurt</h2>
-								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dignissim sem</p>
-							</li>
 						</ul>
 					</div>
 				</li>
 			</ul>
 		</div>		
 		<a href="crear-platillo.html" class="boton-under">Crear Platillo</a>
+	</div>
+	<div class="alert_meal_description" style="display:none">
+		<div class="ov-filler2"></div>
+		<div class="dialog">
+			<h5 id="meal_name">Ginger</h5>
+			<p id="meal_description">Descripcción de la receta</p>
+			<div class="di-options">
+				<a class="accept" data="">Aceptar</a>
+				<a class="cancel">Cancelar</a>
+			</div>
+		</div>
 	</div>
 	<script type='text/javascript' src='js/plugins.js'></script>
 	</body>

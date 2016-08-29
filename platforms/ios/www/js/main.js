@@ -223,367 +223,372 @@
 				for (var key in obj) 
 					if (hasOwnProperty.call(obj, key)) return false;
 				return true;
-		},								/*SE PUEDE BORRAR A PARTIR DE ESTE PUNTO*/
-		render_feed : function(offset, filter){
-			app.showLoader();
-			$.getJSON(api_base_url+'feed/'+offset+'/'+filter , function(response){
-			})
-			 .fail(function(err){
-				console.log(JSON.stringify(err));
-				app.hideLoader();
-				app.toast("Failed connecting to our servers, please check your Internet connection.")
-			})
-			 .done(function(response){
-				var data = app.gatherEnvironment(response);
-					data.home_active = true;
-				var feed_tpl = Handlebars.templates['feed'];
-				console.log(data);
-				var html 	 = feed_tpl(data);
-				$('.main').html( html );
-				setTimeout(function(){	
-					app.hideLoader();
-					if(!loggedIn)
-						$('#account1').trigger('click');
-				}, 2000);
-			});
-			
-		},
-		render_search_composite : function(){
-			user = (user) ? user : "not_logged";
-			$.getJSON(api_base_url+user+'/content/search-composite/')
-			 .done(function(response){
-				console.log(JSON.stringify(response));
-				response.search_active =  true;
-				var data 	 = app.gatherEnvironment(response);
-					data.search_active = true;
-				var template = Handlebars.templates['search'];
-				$('.main').html( template(data) );
-			})
-			 .fail(function(error){
-				console.log(JSON.stringify(error));
-			 });
-		},
-		render_search_results : function(search_term){
-			$.getJSON(api_base_url+'content/search/'+search_term)
-			 .done(function(response){
-				console.log(response);
-				var data 	 = app.gatherEnvironment(response);
-					data.search_active = true;
-					data.search_term = search_term;
-					console.log(data);
-				var template = Handlebars.templates['search_results'];
-				$('.main').html( template(data) );
-			})
-			 .fail(function(error){
-				console.log(error);
-			 });
-		},
-		initMakersMap : function(){
+		},								
 
-			var map;
-			var mapOptions = {
-				zoom: 15,
-				disableDefaultUI: true,
-				zoomControl: true,
-				mapTypeId: google.maps.MapTypeId.ROADMAP
-			};
+
+
+
+		/*SE PUEDE BORRAR A PARTIR DE ESTE PUNTO*/
+		// render_feed : function(offset, filter){
+		// 	app.showLoader();
+		// 	$.getJSON(api_base_url+'feed/'+offset+'/'+filter , function(response){
+		// 	})
+		// 	 .fail(function(err){
+		// 		console.log(JSON.stringify(err));
+		// 		app.hideLoader();
+		// 		app.toast("Failed connecting to our servers, please check your Internet connection.")
+		// 	})
+		// 	 .done(function(response){
+		// 		var data = app.gatherEnvironment(response);
+		// 			data.home_active = true;
+		// 		var feed_tpl = Handlebars.templates['feed'];
+		// 		console.log(data);
+		// 		var html 	 = feed_tpl(data);
+		// 		$('.main').html( html );
+		// 		setTimeout(function(){	
+		// 			app.hideLoader();
+		// 			if(!loggedIn)
+		// 				$('#account1').trigger('click');
+		// 		}, 2000);
+		// 	});
 			
-			setTimeout(function(){
-				if(!loggedIn){
-					$(".wrapper").show();
-					setTimeout(function() {$("#user").animate({"right":"0%"}, 300)}, 10);
-				}
-			}, 2000);
-			map = new google.maps.Map(document.getElementById('map'), mapOptions);
-			navigator.geolocation.getCurrentPosition(function(position) {
+		// },
+		// render_search_composite : function(){
+		// 	user = (user) ? user : "not_logged";
+		// 	$.getJSON(api_base_url+user+'/content/search-composite/')
+		// 	 .done(function(response){
+		// 		console.log(JSON.stringify(response));
+		// 		response.search_active =  true;
+		// 		var data 	 = app.gatherEnvironment(response);
+		// 			data.search_active = true;
+		// 		var template = Handlebars.templates['search'];
+		// 		$('.main').html( template(data) );
+		// 	})
+		// 	 .fail(function(error){
+		// 		console.log(JSON.stringify(error));
+		// 	 });
+		// },
+		// render_search_results : function(search_term){
+		// 	$.getJSON(api_base_url+'content/search/'+search_term)
+		// 	 .done(function(response){
+		// 		console.log(response);
+		// 		var data 	 = app.gatherEnvironment(response);
+		// 			data.search_active = true;
+		// 			data.search_term = search_term;
+		// 			console.log(data);
+		// 		var template = Handlebars.templates['search_results'];
+		// 		$('.main').html( template(data) );
+		// 	})
+		// 	 .fail(function(error){
+		// 		console.log(error);
+		// 	 });
+		// },
+		// initMakersMap : function(){
+
+		// 	var map;
+		// 	var mapOptions = {
+		// 		zoom: 15,
+		// 		disableDefaultUI: true,
+		// 		zoomControl: true,
+		// 		mapTypeId: google.maps.MapTypeId.ROADMAP
+		// 	};
+			
+		// 	setTimeout(function(){
+		// 		if(!loggedIn){
+		// 			$(".wrapper").show();
+		// 			setTimeout(function() {$("#user").animate({"right":"0%"}, 300)}, 10);
+		// 		}
+		// 	}, 2000);
+		// 	map = new google.maps.Map(document.getElementById('map'), mapOptions);
+		// 	navigator.geolocation.getCurrentPosition(function(position) {
 
 				
-				var geolocate = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-				var printer = [];
-				var scanner = [];
-				var witship = [];
-				user_first = (user_first) ? user_first : "Guest";
-				var infowindow = new google.maps.InfoWindow({
-					map: map,
-					position: geolocate,
-					content: '<div class="geoloc_me"><h3>'+user_first+'</h3></div>',
-					buttons: { close: { visible: false } }
-				});
+		// 		var geolocate = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+		// 		var printer = [];
+		// 		var scanner = [];
+		// 		var witship = [];
+		// 		user_first = (user_first) ? user_first : "Guest";
+		// 		var infowindow = new google.maps.InfoWindow({
+		// 			map: map,
+		// 			position: geolocate,
+		// 			content: '<div class="geoloc_me"><h3>'+user_first+'</h3></div>',
+		// 			buttons: { close: { visible: false } }
+		// 		});
 
-				var allBtn = document.getElementById("allBtn");
-				var printBtn = document.getElementById("printBtn");
-				var scanBtn = document.getElementById("scanBtn");
-				var shipBtn = document.getElementById("shipBtn");
+		// 		var allBtn = document.getElementById("allBtn");
+		// 		var printBtn = document.getElementById("printBtn");
+		// 		var scanBtn = document.getElementById("scanBtn");
+		// 		var shipBtn = document.getElementById("shipBtn");
 
-				google.maps.event.addDomListener(printBtn, "click", function(){ app.onlyprint(position, map) });
-				google.maps.event.addDomListener(scanBtn, "click", function(){ app.onlyscan(position, map) });
-				google.maps.event.addDomListener(shipBtn, "click", function(){ app.onlyship(position, map)});
-				// google.maps.event.addDomListener(allBtn, "click", function(){ app.showall(position, map)});
+		// 		google.maps.event.addDomListener(printBtn, "click", function(){ app.onlyprint(position, map) });
+		// 		google.maps.event.addDomListener(scanBtn, "click", function(){ app.onlyscan(position, map) });
+		// 		google.maps.event.addDomListener(shipBtn, "click", function(){ app.onlyship(position, map)});
+		// 		// google.maps.event.addDomListener(allBtn, "click", function(){ app.showall(position, map)});
 
-				map.setCenter(geolocate);
+		// 		map.setCenter(geolocate);
 
-				app.hideLoader();
-			});  
+		// 		app.hideLoader();
+		// 	});  
 		
-		},
-		initPrinterMap : function(file_carried){
+		// },
+		// initPrinterMap : function(file_carried){
 
-			var map;
-			var mapOptions = {
-				zoom: 15,
-				disableDefaultUI: true,
-				zoomControl: true,
-				mapTypeId: google.maps.MapTypeId.ROADMAP
-			};
-			var file_carried = (file_carried) ? file_carried : null;
+		// 	var map;
+		// 	var mapOptions = {
+		// 		zoom: 15,
+		// 		disableDefaultUI: true,
+		// 		zoomControl: true,
+		// 		mapTypeId: google.maps.MapTypeId.ROADMAP
+		// 	};
+		// 	var file_carried = (file_carried) ? file_carried : null;
 			
-			map = new google.maps.Map(document.getElementById('map'), mapOptions);
-			navigator.geolocation.getCurrentPosition(function(position) {
-				var geolocate = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-				var printer = [];
+		// 	map = new google.maps.Map(document.getElementById('map'), mapOptions);
+		// 	navigator.geolocation.getCurrentPosition(function(position) {
+		// 		var geolocate = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+		// 		var printer = [];
 
-				var infowindow = new google.maps.InfoWindow({
-					map: map,
-					position: geolocate,
-					content: '<div class="geoloc_me"><h3>'+user_first+'</h3></div>',
-					buttons: { close: { visible: false } }
-				});
-				app.onlyprint(position, map, file_carried);
-				map.setCenter(geolocate);
-				app.hideLoader();
-			});  
+		// 		var infowindow = new google.maps.InfoWindow({
+		// 			map: map,
+		// 			position: geolocate,
+		// 			content: '<div class="geoloc_me"><h3>'+user_first+'</h3></div>',
+		// 			buttons: { close: { visible: false } }
+		// 		});
+		// 		app.onlyprint(position, map, file_carried);
+		// 		map.setCenter(geolocate);
+		// 		app.hideLoader();
+		// 	});  
 		
-		}, 
-		onlyprint: function(position, map, file_carried) {
-			app.showLoader();
-			var theResponse = null;
-			var image = 'images/marker.png';
-			var printer = [];
-			if(app.marker2.length)
-				for(var j = 0; j<app.marker2.length; j++){
-					app.marker2[j].setMap(null);
-				}
-			if(app.marker3.length)
-				for(var k = 0; k<app.marker3.length; k++){
-					app.marker3[k].setMap(null);
-				}
+		// }, 
+		// onlyprint: function(position, map, file_carried) {
+		// 	app.showLoader();
+		// 	var theResponse = null;
+		// 	var image = 'images/marker.png';
+		// 	var printer = [];
+		// 	if(app.marker2.length)
+		// 		for(var j = 0; j<app.marker2.length; j++){
+		// 			app.marker2[j].setMap(null);
+		// 		}
+		// 	if(app.marker3.length)
+		// 		for(var k = 0; k<app.marker3.length; k++){
+		// 			app.marker3[k].setMap(null);
+		// 		}
 
-			$.getJSON(api_base_url+'around/'+user+'/makers/printer'+'?@='+position.coords.latitude+','+position.coords.longitude , function(response){
-			})
-			 .fail(function(err){
-				app.hideLoader();
-				if(!loggedIn){
-					$(".wrapper").show();
-					setTimeout(function() {$("#user").animate({"right":"0%"}, 300)}, 10);
-					app.toast("Please log in to locate printers and makers around you.");
-				}else{
-					app.toast("Couldn't locate printers around you, please check your GPS settings and try again.");
-				}
-			})
-			 .done(function(response){	
-				theResponse = response;
-				var i;		 	
-				for(i = 0; i<response.count-1; i++){
-					printer.push(new google.maps.LatLng(response.pool[i].latitude, response.pool[i].longitude));
-					app.marker1.push(new google.maps.Marker({ position: printer[i], map: map, icon: image }));
-					app.marker1[i].ref_id = parseInt(theResponse.pool[i].ID);
-					app.marker1[i].distance_to = theResponse.pool[i].distance;
-					app.marker1[i].addListener('click', 
-												function() {
-													app.showLoader();
-													var context = this;
-													$.getJSON(api_base_url+'min/'+user+'/maker/'+context.ref_id)
-													 .done(function(response){
-														var data = {profile: response.profile, ref_id: file_carried, distance: context.distance_to};
-														var template = (file_carried) 
-																			? Handlebars.templates['maker_map_select'] 
-																			: Handlebars.templates['maker_map'];
-														data.file_reference = (file_carried) ? file_carried : null;
-														$('#insert_info').html( template(data) );
-														$("#info-maker").fadeIn();
-														app.hideLoader();
-													})
-													 .fail(function(error){
-														app.toast("Oops! couldn't get maker details");
-														app.hideLoader();
-													 });
-												});
-					app.marker1[i].setVisible(true);
-				}
+		// 	$.getJSON(api_base_url+'around/'+user+'/makers/printer'+'?@='+position.coords.latitude+','+position.coords.longitude , function(response){
+		// 	})
+		// 	 .fail(function(err){
+		// 		app.hideLoader();
+		// 		if(!loggedIn){
+		// 			$(".wrapper").show();
+		// 			setTimeout(function() {$("#user").animate({"right":"0%"}, 300)}, 10);
+		// 			app.toast("Please log in to locate printers and makers around you.");
+		// 		}else{
+		// 			app.toast("Couldn't locate printers around you, please check your GPS settings and try again.");
+		// 		}
+		// 	})
+		// 	 .done(function(response){	
+		// 		theResponse = response;
+		// 		var i;		 	
+		// 		for(i = 0; i<response.count-1; i++){
+		// 			printer.push(new google.maps.LatLng(response.pool[i].latitude, response.pool[i].longitude));
+		// 			app.marker1.push(new google.maps.Marker({ position: printer[i], map: map, icon: image }));
+		// 			app.marker1[i].ref_id = parseInt(theResponse.pool[i].ID);
+		// 			app.marker1[i].distance_to = theResponse.pool[i].distance;
+		// 			app.marker1[i].addListener('click', 
+		// 										function() {
+		// 											app.showLoader();
+		// 											var context = this;
+		// 											$.getJSON(api_base_url+'min/'+user+'/maker/'+context.ref_id)
+		// 											 .done(function(response){
+		// 												var data = {profile: response.profile, ref_id: file_carried, distance: context.distance_to};
+		// 												var template = (file_carried) 
+		// 																	? Handlebars.templates['maker_map_select'] 
+		// 																	: Handlebars.templates['maker_map'];
+		// 												data.file_reference = (file_carried) ? file_carried : null;
+		// 												$('#insert_info').html( template(data) );
+		// 												$("#info-maker").fadeIn();
+		// 												app.hideLoader();
+		// 											})
+		// 											 .fail(function(error){
+		// 												app.toast("Oops! couldn't get maker details");
+		// 												app.hideLoader();
+		// 											 });
+		// 										});
+		// 			app.marker1[i].setVisible(true);
+		// 		}
 
-				setTimeout(function(){
-					app.hideLoader();
-				}, 2000);
-				$("#info-maker").hide();
-			});
-		}, 
-		onlyscan: function(position, map) {
-			app.showLoader();
-			var image = 'images/marker.png';
-			var theResponse = null;
-			var scanner = [];
-			if(app.marker1.length)
-				for(var j = 0; j<app.marker1.length; j++){
-					app.marker1[j].setMap(null);
-				}
-			if(app.marker3.length)
-				for(var k = 0; k<app.marker3.length; k++){
-					app.marker3[k].setMap(null);
-				}
-			$.getJSON(api_base_url+'around/'+user+'/makers/scanner'+'?@='+position.coords.latitude+','+position.coords.longitude , function(response){
-			})
-			 .fail(function(err){
-				console.log(JSON.stringify(err));
-				app.hideLoader();
-				app.toast("Couldn't locate scanners around you, please check your GPS settings and try again.")
-			})
-			 .done(function(response){
-				theResponse = response;
-				var i;					
-				for( i = 0; i<response.count-1; i++){
-					scanner.push(new google.maps.LatLng(response.pool[i].latitude, 
-														response.pool[i].longitude));
-					app.marker2[i].ref_id = parseInt(theResponse.pool[i].ID);
-					app.marker2[i].distance_to = theResponse.pool[i].distance;
-					app.marker2.push(new google.maps.Marker({ position: scanner[i], map: map, icon: image }));
-					app.marker2[i].addListener('click', 
-												function() { 
-													app.showLoader();
-													var context = this;
-													$.getJSON(api_base_url+'min/'+user+'/maker/'+context.ref_id)
-													 .done(function(response){
-														var data = {profile: response.profile, distance: context.distance_to};
-														var template = Handlebars.templates['maker_map'];
-														$('#insert_info').html( template(data) );
-														$("#info-maker").fadeIn();
-														app.hideLoader();
-													})
-													 .fail(function(error){
-														app.toast("Oops! couldn't get maker details");
-														app.hideLoader();
-													 });
-												});
-					app.marker2[i].setVisible(true);
-				}
-				setTimeout(function(){
-					app.hideLoader();
-				}, 2000);
-				$("#info-maker").hide();
-			});
-		},
-		onlyship: function(position, map) {
-			app.showLoader();
-			app.registerTemplate('partials/maker_map');
-			var theResponse = null;
-			var image = 'images/marker.png';
-			var witship = [];
-			if(app.marker1.length)
-				for(var j = 0; j<app.marker1.length; j++){
-					app.marker1[j].setMap(null);
-				}
-			if(app.marker2.length)
-				for(var k = 0; k<app.marker2.length; k++){
-					app.marker2[k].setMap(null);
-				}
+		// 		setTimeout(function(){
+		// 			app.hideLoader();
+		// 		}, 2000);
+		// 		$("#info-maker").hide();
+		// 	});
+		// }, 
+		// onlyscan: function(position, map) {
+		// 	app.showLoader();
+		// 	var image = 'images/marker.png';
+		// 	var theResponse = null;
+		// 	var scanner = [];
+		// 	if(app.marker1.length)
+		// 		for(var j = 0; j<app.marker1.length; j++){
+		// 			app.marker1[j].setMap(null);
+		// 		}
+		// 	if(app.marker3.length)
+		// 		for(var k = 0; k<app.marker3.length; k++){
+		// 			app.marker3[k].setMap(null);
+		// 		}
+		// 	$.getJSON(api_base_url+'around/'+user+'/makers/scanner'+'?@='+position.coords.latitude+','+position.coords.longitude , function(response){
+		// 	})
+		// 	 .fail(function(err){
+		// 		console.log(JSON.stringify(err));
+		// 		app.hideLoader();
+		// 		app.toast("Couldn't locate scanners around you, please check your GPS settings and try again.")
+		// 	})
+		// 	 .done(function(response){
+		// 		theResponse = response;
+		// 		var i;					
+		// 		for( i = 0; i<response.count-1; i++){
+		// 			scanner.push(new google.maps.LatLng(response.pool[i].latitude, 
+		// 												response.pool[i].longitude));
+		// 			app.marker2[i].ref_id = parseInt(theResponse.pool[i].ID);
+		// 			app.marker2[i].distance_to = theResponse.pool[i].distance;
+		// 			app.marker2.push(new google.maps.Marker({ position: scanner[i], map: map, icon: image }));
+		// 			app.marker2[i].addListener('click', 
+		// 										function() { 
+		// 											app.showLoader();
+		// 											var context = this;
+		// 											$.getJSON(api_base_url+'min/'+user+'/maker/'+context.ref_id)
+		// 											 .done(function(response){
+		// 												var data = {profile: response.profile, distance: context.distance_to};
+		// 												var template = Handlebars.templates['maker_map'];
+		// 												$('#insert_info').html( template(data) );
+		// 												$("#info-maker").fadeIn();
+		// 												app.hideLoader();
+		// 											})
+		// 											 .fail(function(error){
+		// 												app.toast("Oops! couldn't get maker details");
+		// 												app.hideLoader();
+		// 											 });
+		// 										});
+		// 			app.marker2[i].setVisible(true);
+		// 		}
+		// 		setTimeout(function(){
+		// 			app.hideLoader();
+		// 		}, 2000);
+		// 		$("#info-maker").hide();
+		// 	});
+		// },
+		// onlyship: function(position, map) {
+		// 	app.showLoader();
+		// 	app.registerTemplate('partials/maker_map');
+		// 	var theResponse = null;
+		// 	var image = 'images/marker.png';
+		// 	var witship = [];
+		// 	if(app.marker1.length)
+		// 		for(var j = 0; j<app.marker1.length; j++){
+		// 			app.marker1[j].setMap(null);
+		// 		}
+		// 	if(app.marker2.length)
+		// 		for(var k = 0; k<app.marker2.length; k++){
+		// 			app.marker2[k].setMap(null);
+		// 		}
 
-			$.getJSON(api_base_url+'around/'+user+'/makers/shipping'+'?@='+position.coords.latitude+','+position.coords.longitude , function(response){
-			})
-			 .fail(function(err){
-				app.hideLoader();
-				app.toast("Couldn't locate printers around you, please check your GPS settings and try again.");
-			})
-			 .done(function(response){	
-				theResponse = response;
-				var i;		 	
-				for(i = 0; i<response.count-1; i++){
-					witship.push(new google.maps.LatLng(response.pool[i].latitude, response.pool[i].longitude));
-					app.marker3.push(new google.maps.Marker({ position: witship[i], map: map, icon: image }));
-					app.marker3[i].ref_id = parseInt(theResponse.pool[i].ID);
-					app.marker3[i].distance_to = theResponse.pool[i].distance;
-					app.marker3[i].addListener('click', 
-												function() {
-													app.showLoader();
-													var context = this;
-													$.getJSON(api_base_url+'min/'+user+'/maker/'+context.ref_id)
-													 .done(function(response){
-														var data = {profile: response.profile, distance: context.distance_to};
-														var template = Handlebars.templates['maker_map'];
-														$('#insert_info').html( template(data) );
-														$("#info-maker").fadeIn();
-														app.hideLoader();
-													})
-													 .fail(function(error){
-														app.toast("Oops! couldn't get maker details");
-														app.hideLoader();
-													 });
-												});
-					app.marker3[i].setVisible(true);
-				}
+		// 	$.getJSON(api_base_url+'around/'+user+'/makers/shipping'+'?@='+position.coords.latitude+','+position.coords.longitude , function(response){
+		// 	})
+		// 	 .fail(function(err){
+		// 		app.hideLoader();
+		// 		app.toast("Couldn't locate printers around you, please check your GPS settings and try again.");
+		// 	})
+		// 	 .done(function(response){	
+		// 		theResponse = response;
+		// 		var i;		 	
+		// 		for(i = 0; i<response.count-1; i++){
+		// 			witship.push(new google.maps.LatLng(response.pool[i].latitude, response.pool[i].longitude));
+		// 			app.marker3.push(new google.maps.Marker({ position: witship[i], map: map, icon: image }));
+		// 			app.marker3[i].ref_id = parseInt(theResponse.pool[i].ID);
+		// 			app.marker3[i].distance_to = theResponse.pool[i].distance;
+		// 			app.marker3[i].addListener('click', 
+		// 										function() {
+		// 											app.showLoader();
+		// 											var context = this;
+		// 											$.getJSON(api_base_url+'min/'+user+'/maker/'+context.ref_id)
+		// 											 .done(function(response){
+		// 												var data = {profile: response.profile, distance: context.distance_to};
+		// 												var template = Handlebars.templates['maker_map'];
+		// 												$('#insert_info').html( template(data) );
+		// 												$("#info-maker").fadeIn();
+		// 												app.hideLoader();
+		// 											})
+		// 											 .fail(function(error){
+		// 												app.toast("Oops! couldn't get maker details");
+		// 												app.hideLoader();
+		// 											 });
+		// 										});
+		// 			app.marker3[i].setVisible(true);
+		// 		}
 
-				setTimeout(function(){
-					app.hideLoader();
-				}, 2000);
-				$("#info-maker").hide();
-			});
-		}, 
-		showall: function() {
-			for (var i = 0; i < marker1.length; i++) { marker1[i].setVisible(true) }
-			for (var i = 0; i < marker2.length; i++) { marker2[i].setVisible(true) }
-			for (var i = 0; i < marker3.length; i++) { marker3[i].setVisible(true) }
-			$("#info-maker").hide();
-		},
-		render_map : function(){
+		// 		setTimeout(function(){
+		// 			app.hideLoader();
+		// 		}, 2000);
+		// 		$("#info-maker").hide();
+		// 	});
+		// }, 
+		// showall: function() {
+		// 	for (var i = 0; i < marker1.length; i++) { marker1[i].setVisible(true) }
+		// 	for (var i = 0; i < marker2.length; i++) { marker2[i].setVisible(true) }
+		// 	for (var i = 0; i < marker3.length; i++) { marker3[i].setVisible(true) }
+		// 	$("#info-maker").hide();
+		// },
+		// render_map : function(){
 			
-			var data = {explore_active: true};
-			var map_template = Handlebars.templates['map'];
-			$('.main').html( map_template(data) );
-			app.showLoader();
-			app.initMakersMap();
-		},
-		render_file_map : function(ref_id){
-			/** Render map when printing a file **/
-			var reference = ref_id;
-			var data = app.gatherEnvironment(null, "Select a printer")
-			data['explore_active'] =  true;
+		// 	var data = {explore_active: true};
+		// 	var map_template = Handlebars.templates['map'];
+		// 	$('.main').html( map_template(data) );
+		// 	app.showLoader();
+		// 	app.initMakersMap();
+		// },
+		// render_file_map : function(ref_id){
+		// 	/** Render map when printing a file **/
+		// 	var reference = ref_id;
+		// 	var data = app.gatherEnvironment(null, "Select a printer")
+		// 	data['explore_active'] =  true;
 
-			var template = Handlebars.templates['file_map'];
-			$('.main').html( template(data) );
-			app.showLoader();
-			app.initPrinterMap(reference);
-		},
-		render_detail : function(product_id){
+		// 	var template = Handlebars.templates['file_map'];
+		// 	$('.main').html( template(data) );
+		// 	app.showLoader();
+		// 	app.initPrinterMap(reference);
+		// },
+		// render_detail : function(product_id){
 
-			$.getJSON(api_base_url+'products/'+product_id)
-			 .done(function(response){
-				var data = app.gatherEnvironment(response, "Printables");
+		// 	$.getJSON(api_base_url+'products/'+product_id)
+		// 	 .done(function(response){
+		// 		var data = app.gatherEnvironment(response, "Printables");
 
-				var template = Handlebars.templates['detail'];
-				$('.main').html( template(data) );
-				setTimeout(function(){
-					app.hideLoader();
-				}, 2000);
-			})
-			 .fail(function(error){
-				console.log(error);
-			 });
-		},
-		render_post : function(post_id){
+		// 		var template = Handlebars.templates['detail'];
+		// 		$('.main').html( template(data) );
+		// 		setTimeout(function(){
+		// 			app.hideLoader();
+		// 		}, 2000);
+		// 	})
+		// 	 .fail(function(error){
+		// 		console.log(error);
+		// 	 });
+		// },
+		// render_post : function(post_id){
 
-			/* Send header_title for it renders history_header */
-			$.getJSON(api_base_url+'content/'+post_id)
-			 .done(function(response){
-				var data = app.gatherEnvironment(response, "Now reading");
+		// 	/* Send header_title for it renders history_header */
+		// 	$.getJSON(api_base_url+'content/'+post_id)
+		// 	 .done(function(response){
+		// 		var data = app.gatherEnvironment(response, "Now reading");
 
-				var template = Handlebars.templates['post'];
-				$('.main').html( template(data) );
-				setTimeout(function(){
-					app.hideLoader();
-				}, 2000);
-			})
-			 .fail(function(error){
-				console.log(error);
-			 });
-		},
+		// 		var template = Handlebars.templates['post'];
+		// 		$('.main').html( template(data) );
+		// 		setTimeout(function(){
+		// 			app.hideLoader();
+		// 		}, 2000);
+		// 	})
+		// 	 .fail(function(error){
+		// 		console.log(error);
+		// 	 });
+		// },
 		render_create_user : function(){
 
 			/* Send header_title for it renders history_header */
@@ -915,7 +920,10 @@
 			/* Requesting logout from server */
 			//var response = apiRH.logOut({user_login : user, request_token : apiRH.get_request_token() });
 			//if(response.success){
-				app.toast('Has cerrado la sesión, hasta pronto');
+
+				
+				
+				//app.toast('Has cerrado la sesión, hasta pronto');
 					localStorage.clear();
 				window.location.assign('login.html');
 				return;

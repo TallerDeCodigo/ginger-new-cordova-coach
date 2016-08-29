@@ -61,11 +61,11 @@
     <splash density="port-ldpi" src="res/screen/android/splash-ldpi.png" />
     <splash density="port-mdpi" src="res/screen/android/splash-mdpi.png" />
     <splash density="port-xhdpi" src="res/screen/android/splash-xhdpi.png" />
-    <icon density="ldpi" src="res/screen/android/icon_ldpi.png" />
-    <icon density="mdpi" src="res/screen/android/icon_mdpi.png" />
-    <icon density="hdpi" src="res/screen/android/icon_hdpi.png" />
-    <icon density="xhdpi" src="res/screen/android/icon_xhdpi.png" />
-    <icon density="xxhdpi" src="res/screen/android/icon_xxhdpi.png" />
+    <icon density="ldpi" src="res/screen/android/Icon-Small@2x.png" />
+    <icon density="mdpi" src="res/screen/android/Icon-Small@3x.png" />
+    <icon density="hdpi" src="res/screen/android/Icon-40@2x.png" />
+    <icon density="xhdpi" src="res/screen/android/Icon-60@2x.png" />
+    <icon density="xxhdpi" src="res/screen/android/Icon-60@3x.png" />
     <preference name="loglevel" value="DEBUG" />
     <preference name="KeepRunning" value="true" />
     <preference name="Orientation" value="portrait" />
