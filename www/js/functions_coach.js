@@ -1476,12 +1476,47 @@ $(window).load(function(){
 				
 				connectToChat(user);
 
+				var responsedata = apiRH.getUsuarios();
+
+				console.log(JSON.stringify(responsedata));
+
+				var user = responsedata;
+
+				//Loop the feed
+
+				var i = 0;
+
+				$.each(user, function( key, value ) {
+					
+					console.log(i + " - " + value);
+					
+					$('#contacts-list').append("<a class='btnDialogs' data='" + JSON.stringify(user[i].jid) + "'><li class='persona' ><div class='circle-frame'><img src='images/Icon-60@3x.png'></div><h5 style='margin-top:10px'>" + user[i].nombre + " " + user[i].apellido + "</h5></li>");
+
+					i++;
+				});
+
+
+				$('.btnDialogs').click(function () {
+					
+					console.log($(this).attr('data'));
+
+					localStorage.setItem('idQBOX', $(this).attr('data'));
+
+					if ($(this).attr('data')==$('.los_chats:nth-of-type(1)').attr('data')) {
+						console.log('ya existe');
+					} else {
+						createNewDialog();
+					}
+
+				});
+
 				$('.attach').click(function(){
 					$('input[name="galeria"]').trigger('click');
 
 				});
 
-				$('.list-gorup-item').click(function(){
+				$('.list-group-item').click(function(){
+					console.log("aqui ");
 					$('#dialog-list').hide();$('.menu-bar').hide();$('.escribir').show();
 				});
 
@@ -1489,8 +1524,10 @@ $(window).load(function(){
 
 					if($('#messages-list').is(':visible') ){
 						console.log('lista_chat visible');
-						$('.lista_chat').show();
+						$('#dialogs-list').show();
 						$('#messages-list').hide();
+						$('.escribir').hide();
+						$('.menu-bar').show();
 					}else if($('.lista_chat').is(':visible') ) {
 						window.location.assign('index.html');
 					}
@@ -1501,8 +1538,15 @@ $(window).load(function(){
 					// }
 				});
 
+				$('#btn_contacts').click(function(){
+					$('#dialogs-list').hide();
+					$('#contacts-list').show();
+				});
 
-
+				$('#btn_chats').click(function(){
+					$('#dialogs-list').show();
+					$('#contacts-list').hide();
+				});
 
 		}//end IF body has class
 		

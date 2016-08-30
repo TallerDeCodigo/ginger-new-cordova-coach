@@ -135,15 +135,17 @@ function showOrUpdateDialogInUI(itemRes, updateHtml) {
 
   if (updateHtml === true) {
 
-  	var updatedDialogHtml = buildDialogHtml(dialogId, dialogUnreadMessagesCount, dialogIcon, dialogName, dialogLastMessage, dialogTime);
-  	$('#dialogs-list').prepend(updatedDialogHtml);
+  	var updatedDialogHtml = buildDialogHtml(dialogId, dialogUnreadMessagesCount, dialogIcon, dialogName, dialogLastMessage, dialogTime, opponentId);
+    $('#dialogs-list').prepend(updatedDialogHtml);
   	$('.list-group-item.active .badge').text(0).hide(0);
 	} else {
 
-    var dialogHtml = buildDialogHtml(dialogId, dialogUnreadMessagesCount, dialogIcon, dialogName, dialogLastMessage, dialogTime);
+    var dialogHtml = buildDialogHtml(dialogId, dialogUnreadMessagesCount, dialogIcon, dialogName, dialogLastMessage, dialogTime, opponentId);
     $('#dialogs-list').append(dialogHtml);
 	
   }
+
+  console.log('opponentId <<<<<<'+opponentId);
 }
 
 // add photo to dialogs
@@ -202,6 +204,7 @@ function triggerDialog(dialogId){
   $('#messages-list').html('');
 
   $('#dialogs-list').hide();
+  $('#messages-list').show();
   $('.menu-bar').hide();
   $('.escribir').show();
 
@@ -266,10 +269,24 @@ function createNewDialog() {
   var usersIds = [];
   var usersNames = [];
 
-  $('#users_list .users_form.active').each(function(index) {
-    usersIds[index] = $(this).attr('id');
-    usersNames[index] = $(this).text();
-  });
+  // $('#users_list .users_form.active').each(function(index) {
+
+
+    var qbUser = localStorage.getItem('idQBOX');
+
+    qbUser = qbUser.split('-');
+    qbUser = qbUser[0].replace('"',''); 
+
+    console.log(qbUser);
+    //usersIds[0] = qbUser[0];
+
+    // var Coach = JSON.parse(localStorage.getItem('user'));
+    // var aux = Coach.jid;
+    // var qCoach = aux.split('-');
+
+    usersIds[0] = qbUser;
+    //usersIds[1] = qCoach[0];
+  // });
 
   //$("#add_new_dialog").modal("hide");
   $('#add_new_dialog .progress').show();
@@ -319,7 +336,8 @@ function createNewDialog() {
 
       triggerDialog(createdDialog._id);
 
-      $('a.users_form').removeClass('active');
+      //$('a.users_form').removeClass('active');
+
     }
   });
 }
@@ -341,7 +359,7 @@ function joinToNewDialogAndShow(itemDialog) {
   } else {
     opponentId = QB.chat.helpers.getRecipientId(itemDialog.occupants_ids, currentUser.id);
     opponentLogin = getUserLoginById(opponentId);
-    dialogName = chatName = 'Dialog -  with ' + dialogName;
+    dialogName = chatName = 'Dialog -  with ' + dialogName + 'with id '+opponentId;
   }
 
   // show it
