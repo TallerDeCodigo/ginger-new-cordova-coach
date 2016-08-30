@@ -1319,6 +1319,48 @@ $(window).load(function(){
 
 			});
 
+			$('.btn-pur').click(function(){
+				var dietSelected = $(this).attr("data-id");
+
+				if(!$('.overscreen5').is(':visible')){
+					console.log('entra popup');
+					$('.overscreen5').show();
+					setTimeout(function() {$('.overscreen5').addClass('active');}, 200);
+				} else {
+					$('.overscreen5').removeClass('active');
+					setTimeout(function() {$('.overscreen5').hide();}, 800);
+				}
+				$('#container').toggleClass('blurred');
+
+				$('#aceptar').click(function(){
+					
+					console.log( $(this).parent().html() );
+					console.log('CLICK CHANGE: ' + dietSelected);
+
+					var user = JSON.parse(localStorage.getItem('user-selected'));
+
+					console.log(user._id);
+
+					var data = {
+							dieta : dietSelected,
+							coach : localStorage.getItem('userId')
+					};
+
+					var response = apiRH.updateClientDiet(user._id, data);
+
+					if(response){
+						window.location.assign('usuario.html');
+					}
+				});
+
+				$('#cancelar').click(function(){
+					$('.overscreen5').hide();
+					$('#container').toggleClass('blurred');
+				});
+
+				
+
+			});//end click
 
 		}
 
@@ -1622,26 +1664,7 @@ $(window).load(function(){
 
 		});//end click
 
-		$('.btn-pur').click(function(){
-			var dietSelected = $(this).attr("data-id");
-			
-			console.log('CLICK CHANGE: ' + dietSelected);
 
-			var user = JSON.parse(localStorage.getItem('user-selected'));
-
-			console.log(user._id);
-
-			var data = {
-					dieta : dietSelected,
-					coach : localStorage.getItem('userId')
-			};
-
-			var response = apiRH.updateClientDiet(user._id, data);
-
-			if(response)
-				window.location.assign('usuario.html');
-
-		});//end click
 		
 
 	});
