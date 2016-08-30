@@ -100,7 +100,7 @@ $(window).load(function(){
 	$(function() {
 
 		var coach_type 		= [ 'Estricto','Innovador', 'Animador', 'Tradicional'];
-		var restricciones 	= [ 'Huevos', 'Pollo', 'Pescado', 'Mariscos', 'Lacteos', 'Carne' ];
+		var restricciones 	= [ 'Huevo', 'Pollo', 'Pescado', 'Mariscos', 'Lacteos', 'Carne' ];
 		var objetivo 		= [ 'adelgazar','detox','bienestar','rendimiento' ];
 		var sex 			= ['Hombre','Mujer'];
 		var tipo_de_ingredientes = [ 'granosycereales', 'verduras', 'grasas', 'lacteos', 'proteinaanimal', 'leguminosas', 'nuecesysemillas', 'frutas', 'endulzantes', 'aderezosycondimentos', 'superfoods', 'liquidos'];
@@ -152,28 +152,19 @@ $(window).load(function(){
 
 		if($('body').hasClass('has-user') ){
 
-			// var item = localStorage.getItem('user-selected');
-			//console.log(item);
-
 			var item = apiRH.getUserId();
-
 			var user = item;
-			//console.log(user);
-
 			var fecha = new Date();
+			var fecha2 = fecha.getFullYear();
+			var fecha3 = user.perfil.fechaNacimiento;
 
-			console.log(user.perfil.fechaNacimiento + '::::' + fecha.toString());
-
-			var edad = app.restaFechas(user.perfil.fechaNacimiento, fecha.toString());
-
-			console.log('Edad: ' + edad);			
+			var edad=fecha2-fecha3.slice(0, 4);
+			console.log( edad.toString());			
 
 			$('.cpur').html(user.nombre + ' ' + user.apellido);	
-			
 			$('.user_dieta').html(user.dieta.nombre);
-			
 			$('.user_sexo').html(sex[user.perfil.sexo]);
-			$('.user_edad').html('');
+			$('.user_edad').html(edad + " años");
 			$('.user_cp').html(user.cp);
 			$('.user_estatura').html(user.perfil.estatura + ' m');
 			$('.user_peso').html(user.perfil.peso + ' kg.');
@@ -183,15 +174,18 @@ $(window).load(function(){
 
 			var separador = '';
 
+			
+			$('.user_restricciones').html('');
 			for (var i = 0; i < user.perfil.restricciones.length; i++) {
-				user.perfil.restricciones[i]
+			
 				if(i == user.perfil.restricciones.length -1){
 					separador = '';	
 				}else{
 					separador = ', ';
 				}
+				console.log(restricciones[user.perfil.restricciones[i]]);
 
-				$('.user_restricciones').html(restricciones[user.perfil.restricciones[i]] + separador);
+				$('.user_restricciones').append(restricciones[user.perfil.restricciones[i]] + separador);
 			};
 			
 			
@@ -204,8 +198,7 @@ $(window).load(function(){
 				}else{
 					separador = ', ';
 				}
-
-				$('.user_plan').html(objetivo[user.perfil.objetivo[i]] + separador);
+				$('.user_plan').append(objetivo[user.perfil.objetivo[i]] + separador);
 			};
 
 		}
@@ -514,7 +507,7 @@ $(window).load(function(){
 							 	var ing = '';
 							 	$.each(value, function(key, value){
 							 		ing = ing + value._id.nombre;
-							 		console.log(value._id.nombre);	
+							 		//console.log(value._id.nombre);	
 							 	});
 
 							 	losplatos[i][3]=ing;
@@ -669,7 +662,15 @@ $(window).load(function(){
 							 	losplatos[i][2]=value;
 							}
 							if (key=="ingredientes") {
-							 	losplatos[i][3]=value;
+							 	
+							 	var ing = '';
+							 	$.each(value, function(key, value){
+							 		ing = ing + value._id.nombre;
+							 		console.log(value._id.nombre);	
+							 	});
+
+							 	losplatos[i][3]=ing;
+							 	console.log(losplatos[i][3]);
 							}
 						});
 						i++;
