@@ -166,10 +166,7 @@ $(window).load(function(){
 
 			var edad = app.restaFechas(user.perfil.fechaNacimiento, fecha.toString());
 
-			
-
-			console.log(edad);
-			
+			console.log('Edad: ' + edad);			
 
 			$('.cpur').html(user.nombre + ' ' + user.apellido);	
 			
