@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="io.cordova.hellocordova" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.ginger.coach" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Ginger Coach</name>
     <description>
         Nutrición en la palma de tu mano.
@@ -12,6 +12,15 @@
     <plugin name="cordova-plugin-whitelist" spec="1" />
     <plugin name="com.oauthio.plugins.oauthio" spec="0.2.4" source="pgb" />
   <!--   <gap:plugin name="de.appplant.cordova.plugin.background-mode" version="0.6.3" /> -->
+    
+    <gap:platform name="ios" />
+    <gap:platform name="android" />
+
+    <preference name="fullscreen" value="false" />
+    <preference name="webviewbounce" value="false" />
+    <preference name="orientation" value="portrait" />
+    <preference name="KeyboardShrinksView" value="false" />
+    
     <feature name="App">
         <param name="android-package" value="org.ginger.coach" />
     </feature>

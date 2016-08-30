@@ -212,7 +212,7 @@ function triggerDialog(dialogId){
   //
   retrieveChatMessages(dialogs[dialogId], null);
 
-  //$('#messages-list').scrollTop($('#messages-list').prop('scrollHeight'));
+  $('#messages-list').scrollTop($('#messages-list').prop('scrollHeight'));
   
 }
 
