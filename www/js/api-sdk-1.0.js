@@ -528,11 +528,11 @@ function requestHandlerAPI(){
 		 **
 		\**/
 
-		this.updateClientDiet = function (data){
+		this.updateClientDiet = function (client_id, data){
 			
 			var req = {
 				method : 'PATCH',
-				url : api_base_url + 'tables/dieta/',
+				url : api_base_url + 'tables/cliente/'+client_id,
 				headers: {
 					'X-ZUMO-APPLICATION': 'ideIHnCMutWTPsKMBlWmGVtIPXROdc92',
 					'X-ZUMO-AUTH': localStorage.getItem('token'),
@@ -541,9 +541,11 @@ function requestHandlerAPI(){
 				data : data
 			}
 
+			console.log(data);
+
 			console.log(JSON.stringify(req));
 
-			var response = this.makePatchRequest('tables/dieta/', data);
+			var response = this.makePatchRequest('tables/cliente/'+client_id, data);
 
 			console.log("Request Path Data Dieta");
 
@@ -624,6 +626,9 @@ function requestHandlerAPI(){
 
 			return (response) ? response : false;
 		};
+
+
+
 
 	
 		//Conekta
@@ -913,7 +918,7 @@ function requestHandlerAPI(){
 			  type: 'PATCH',
 			  headers: data.headers,
 			  url: window.api_base_url+endpoint,
-			  data: JSON.stringify(data.data),
+			  data: JSON.stringify(data),
 			  dataType: 'json',
 			  async: false
 			})

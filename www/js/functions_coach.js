@@ -823,33 +823,38 @@ $(window).load(function(){
 
 			var i = 0;
 
-
-
 			$.each(dish, function( key, value ) {
 
-				$('.list-dish').append('<li class="platillo-item" data="'+ dish[i]._id +'" descripcion="' +  dish[i].descripcion + '" receta="' + dish[i].receta + '" > <h2 class="hache" data="'+ dish[i].descripcion +'">' + dish[i].descripcion + '</h2><p class="description">' + dish[i].receta + '</p></li>');	
+				$('.list-dish.private').append('<li class="platillo-item" data="'+ dish[i]._id +'" descripcion="' +  dish[i].descripcion + '" receta="' + dish[i].receta + '" > <h2 class="hache" data="'+ dish[i].descripcion +'">' + dish[i].descripcion + '</h2><p class="description">' + dish[i].receta + '</p></li>');	
 
 				i++;	
 
 			});
 
-			$('.btn-platillo').click(function(){
+			var responsedata = apiRH.listDishes(1);
 
-				var is_public = $(this).attr('data');
+			var i = 0;
 
-				var responsedata = apiRH.listDishes(is_public);
+			$('.list-dish.public').html('');
 
-				var i = 0;
-				
-				$('.list-dish').html('');
-				$.each(responsedata, function( key, value ) {
-					$('.list-dish').append('<li class="platillo-item" data="'+ responsedata[i]._id +'"><h2 class="hache" data="'+ responsedata[i].descripcion +'" >' + responsedata[i].descripcion + '</h2><p class="description">' + responsedata[i].receta + '</p></li>');	
+			$.each(responsedata, function( key, value ) {
+				$('.list-dish.public').append('<li class="platillo-item" data="'+ responsedata[i]._id +'"><h2 class="hache" data="'+ responsedata[i].descripcion +'" >' + responsedata[i].descripcion + '</h2><p class="description">' + responsedata[i].receta + '</p></li>');	
 
-					i++;	
-
-				});
+				i++;	
 
 			});
+
+			// $('.btn-platillo').click(function(){
+
+			// 	var is_public = $(this).attr('data');
+
+			// 	var responsedata = apiRH.listDishes(is_public);
+
+			// 	var i = 0;
+				
+				
+
+			// });
 
 			$('.add').click(function () {
 				
@@ -1247,13 +1252,25 @@ $(window).load(function(){
 
 			$.each(diet, function( key, value ) {
 
-				$('.list-diets').append('<li class="dieta-item"><h2>' +  diet[i].nombre + '</h2><p>' + diet[i].descripcion + '</p><div class="columna"><a href="#" class="btn-pur" data-id="' +  diet[i]._id + '">Cambiar Dieta</a></div></li>');	
+				$('.list-diets').append('<li class="dieta-item"><h2>' +  diet[i].nombre + '</h2><p></p><div class="columna"><a href="#" class="btn-pur" data-id="' +  diet[i]._id + '">Cambiar Dieta</a></div></li>');	
 
 				i++;	
 
 			});
 
 			
+			$('.dieta-item h2').click(function () {
+				
+				var idDietax = $(this).parent().find('.btn-pur').attr('data-id');
+
+				console.log('ID DIET: ' + idDietax);
+
+				localStorage.setItem('dOperator', idDietax);
+
+				window.location.assign('dieta.html');
+
+			});
+
 
 		}
 
@@ -1379,6 +1396,7 @@ $(window).load(function(){
 
 			$('.btn-gre').click(function(){
 				console.log('click');
+				app.get_file_from_device('search', 'camera');
 
 			});
 
@@ -1514,7 +1532,22 @@ $(window).load(function(){
 
 		$('.btn-pur').click(function(){
 			var dietSelected = $(this).attr("data-id");
+			
 			console.log('CLICK CHANGE: ' + dietSelected);
+
+			var user = JSON.parse(localStorage.getItem('user-selected'));
+
+			console.log(user._id);
+
+			var data = {
+					dieta : dietSelected
+			};
+
+			var response = apiRH.updateClientDiet(user._id, data);
+
+			if(response)
+				window.location.assign('usuario.html');
+
 		});//end click
 		
 

@@ -74,8 +74,13 @@
 				}	
 				return;
 			}else{
-				//window.location.assign('feed.html');
-				return;
+				if(window.is_login){
+					return;
+				}else{
+					window.location.assign('login.html');
+					return;
+				}
+				
 			}
 			/* Copiado de ondeviceready ----- QUITAR ----- */
 			// var backButtonElement = document.getElementById("backBtn");
