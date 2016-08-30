@@ -799,7 +799,7 @@ $(window).load(function(){
 				localStorage.removeItem('dietaEdit');
 				window.location.assign('dietas.html');
 			}else{
-				alert('Error al guardar dieta');
+				alert('La dieta está incompleta. Favor de verificar.');
 			}
 
 
@@ -1216,48 +1216,63 @@ $(window).load(function(){
 	CREAR INGREDIENTES
 */
 		if($('body').hasClass('has-create-ingredient') ){
-
 			var i_nombre;
 			var category = -1;
 			var tipo = -1;	
 			var medida = -1;
 			
 			$('.add').click(function(){
-				console.log('add ingrediente');
-				
-				i_nombre 	= $('input[name="name_ingrediente"]').val();
-				
-				if(i_nombre.length < 2) 
-					return;
-				if(category == -1) 
-					return;
-				if(tipo == -1) 
-					return;
-				if(medida  == -1) 
-					return;
 
-				console.log('REQUEST');
-
-				json = {	
-					"nombre" : i_nombre,
-					"categoria" : category,
-					"tipo" 	 : tipo,
-					"contable" : medida
-				};
-
-				var response = apiRH.newIngredient(json);
-
-				if(response){
-					alert(response);
-					window.location.assign('ingredientes.html');
-
+				if(!$('.overscreen5').is(':visible')){
+					console.log('entra popup');
+					$('.overscreen5').show();
+					setTimeout(function() {$('.overscreen5').addClass('active');}, 200);
+				} else {
+					$('.overscreen5').removeClass('active');
+					setTimeout(function() {$('.overscreen5').hide();}, 800);
 				}
-				else
-					alert('error');
-
-
+				$('#container').toggleClass('blurred');
 			});
 
+				$('#aceptar').click(function(){
+					console.log('add ingrediente');
+					
+					i_nombre 	= $('input[name="name_ingrediente"]').val();
+					
+					if(i_nombre.length < 2) 
+						return;
+					if(category == -1) 
+						return;
+					if(tipo == -1) 
+						return;
+					if(medida  == -1) 
+						return;
+
+					console.log('REQUEST');
+
+					json = {	
+						"nombre" : i_nombre,
+						"categoria" : category,
+						"tipo" 	 : tipo,
+						"contable" : medida
+					};
+
+					var response = apiRH.newIngredient(json);
+
+					if(response){
+						window.location.assign('ingredientes.html');
+
+					}
+					else{
+						alert('error');
+					}
+				});
+
+				$('#cancelar').click(function(){
+					$('.overscreen5').hide();
+					$('#container').toggleClass('blurred');
+				});
+				
 			$('.ing-category').click(function(){
 				category = $(this).attr('value');
 				console.log(category);
