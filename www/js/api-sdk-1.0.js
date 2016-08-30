@@ -363,9 +363,19 @@ function requestHandlerAPI(){
 
 		this.saveDiet = function(data){
 
+			var aux = JSON.parse(data);
+
+			console.log(aux.__v);
+
+			delete aux.__v;
+
+			data = JSON.stringify(aux);
+
+			//console.log(JSON.stringify(aux));
+
 			var req = {
 				method : 'PATCH',
-				url : api_base_url + 'tables/dieta/'+ data._id,   //ESTO NO ES CORRECTO
+				url : api_base_url + 'tables/dieta/'+ JSON.parse(data)._id,   //ESTO NO ES CORRECTO
 				headers: {
 					'X-ZUMO-APPLICATION': 'ideIHnCMutWTPsKMBlWmGVtIPXROdc92',
 					'X-ZUMO-AUTH': localStorage.getItem('token'),
@@ -374,13 +384,15 @@ function requestHandlerAPI(){
 				data: data
 			}
 
-			console.log(JSON.stringify(req));
 
-			var response = this.patchRequest('tables/dieta'+ data._id, req);
+			console.log(req.data);
+			console.log(req);
+
+			var response = this.makePatchRequest('tables/dieta/'+ JSON.parse(data)._id, req);
 
 			console.log("Request PATCH Data Dieta");
 
-			console.log(response);  //llega aqui con la respuesta del servidor
+			console.log('RESPUESTA DEL SERVIDOR: ' + JSON.stringify(response));  //llega aqui con la respuesta del servidor
 
 			return (response) ? response : false;
 		};
@@ -546,7 +558,7 @@ function requestHandlerAPI(){
 
 			console.log(JSON.stringify(req));
 
-			var response = this.makePatchRequest('tables/cliente/'+client_id, req);
+			var response = this.makePatch2Request('tables/cliente/'+client_id, req);
 
 			console.log("Request Path Data Dieta CLiente");
 
@@ -928,12 +940,46 @@ function requestHandlerAPI(){
 
 		this.makePatchRequest = function(endpoint, data){
 			
+			console.log("----------------------------"); //llega a makerequest
 			console.log(data.data); //llega a makerequest
-
+			console.log("----------------------------"); //llega a makerequest
 			sdk_app_context.showLoader();
 			var result = {};
 
-			console.log('datos: ' + data.data);
+			//console.log('datos: ' + data.data);
+
+			$.ajax({
+			  type: 'PATCH',
+			  headers: data.headers,
+			  url: window.api_base_url+endpoint,
+			  data: data.data,
+			  dataType: 'json',
+			  async: false
+			})
+			 .done(function(response){
+				result = response;
+				sdk_app_context.hideLoader(response);
+			})
+			 .fail(function(e){
+				result = false;
+				console.log(JSON.stringify(e));
+			});
+			return result;
+		};
+
+		this.makePatch2Request = function(endpoint, data){
+			
+			console.log("----------------------------"); //llega a makerequest
+
+			console.log(data.data); //llega a makerequest
+
+			console.log("----------------------------"); //llega a makerequest
+			
+			sdk_app_context.showLoader();
+			
+			var result = {};
+
+			//console.log('datos: ' + data.data);
 
 			$.ajax({
 			  type: 'PATCH',

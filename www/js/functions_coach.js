@@ -10,6 +10,11 @@ $( function() {
 	  	var idDelete;
 	  	var diaDelete;
 	  	var mealDelete;
+
+	  	$('.ingred').click(function(){
+	  		$(this).parent().find('.los_ing').toggle();
+	  	});
+
 	  	$('.delete').click(function () {
 	  		idDelete = $(this).attr('data');
 	  		diaDelete = $(this).parent().parent().parent().parent().parent().parent().attr('class');
@@ -66,6 +71,11 @@ $( function() {
   				console.log('cancelado');
   				$('.overscreen5').hide();
   				$('#container').toggleClass('blurred');
+  			});
+
+  			$('.back').click(function(){
+  				localStorage.removeItem('dietaEdit');
+  				window.location.assign('dietas.html');
   			});
 
 	} //End Has Class DIETA -> dieta.html
@@ -500,7 +510,15 @@ $(window).load(function(){
 							 	losplatos[i][2]=value;
 							}
 							if (key=="ingredientes") {
-							 	losplatos[i][3]=value;
+							 	
+							 	var ing = '';
+							 	$.each(value, function(key, value){
+							 		ing = ing + value._id.nombre;
+							 		console.log(value._id.nombre);	
+							 	});
+
+							 	losplatos[i][3]=ing;
+							 	console.log(losplatos[i][3]);
 							}
 						});
 						i++;
@@ -579,6 +597,14 @@ $(window).load(function(){
 													} else {
 														$(masadentro+' p.comentario').show();
 													}
+
+													if(losplatos[i][3]!= ''){
+														$(masadentro+' p.los_ing').html(losplatos[i][3]);
+														console.log('plato '+i+' sus ing'+losplatos[i][3]);
+													}else{
+														;	
+													}
+													
 												}
 											}
 										}	
@@ -613,6 +639,8 @@ $(window).load(function(){
 			}else{
 				var dieta = app.get_diet('?_id='+ localStorage.getItem('dOperator'));
 				console.log('ID DIET: ' + dieta._id);
+
+				console.log(JSON.stringify(dieta));
 				localStorage.setItem('dietaEdit', JSON.stringify(dieta));
 
 				if(dieta){
@@ -753,18 +781,21 @@ $(window).load(function(){
 
 		$('.btn_add').click(function(){
 
-			console.log('Click here!');
-
 			var dieta = localStorage.getItem('dietaEdit');
+			
 			console.log('ID DIETA DEFINIDO: ' +JSON.parse(dieta)._id);
+			
 			if(JSON.parse(dieta)._id){
+
 				var response = apiRH.saveDiet(dieta);
+				console.log(response);
 			}
 			else{
 				var response = apiRH.makeDiet(dieta);	
 			}
 
 			if(response){
+				localStorage.removeItem('dietaEdit');
 				window.location.assign('dietas.html');
 			}else{
 				alert('Error al guardar dieta');
@@ -848,7 +879,7 @@ $(window).load(function(){
 			// });
 
 			$('.add').click(function () {
-				
+				console.log('click');
 				//localStorage.setItem('dishSelected', '');
 
 			});
@@ -899,11 +930,19 @@ $(window).load(function(){
 		*/
 
 		if($('body').hasClass('has-create-platillo')){
+
 				var is_public;
 				var has_name;
 				var has_receta;
 				var has_comentarios;
 				var has_ingredients;
+
+			var tiempo = localStorage.getItem('d_time');
+			
+			$('.meal-name').removeClass('snack1');
+			$('.meal-name').addClass(tiempo);
+
+			$('.meal-name').find('h1').html(' + ' + tiempo);
 
 			$('input[type="checkbox"]').click(function(){
 				if($(this).val() == 1){
@@ -1144,18 +1183,33 @@ $(window).load(function(){
 
 			$('.add ').click(function(){
 
+				if(!$('.overscreen5').is(':visible')){
+					console.log('entra popup');
+					$('.overscreen5').show();
+					setTimeout(function() {$('.overscreen5').addClass('active');}, 200);
+				} else {
+					$('.overscreen5').removeClass('active');
+					setTimeout(function() {$('.overscreen5').hide();}, 800);
+				}
+				$('#container').toggleClass('blurred');
+
+				
+			});
+
+			$('#aceptar').click(function(){
 				arrAux = JSON.stringify(arrAux);
 				arrAux_id = JSON.stringify(arrAux_id);
-
 				console.log(arrAux+" "+arrAux_id );
-
 				localStorage.setItem('ingredientes', arrAux);
-
 				localStorage.setItem('aidi_ingrediente', arrAux_id);
-
 				window.location.assign('crear-platillo.html');
 			});
-		}
+
+			$('#cancelar').click(function(){
+				$('.overscreen5').hide();
+				$('#container').toggleClass('blurred');
+			});
+		}//END IF BODY HAS CLASS HAS INGREDIENTES
 
 /*
 	CREAR INGREDIENTES
