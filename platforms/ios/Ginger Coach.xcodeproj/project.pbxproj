@@ -19,7 +19,6 @@
 		51D4410B39684865BA096460 /* Toast.m in Sources */ = {isa = PBXBuildFile; fileRef = 98AE27241E6749A6BBA5FF4E /* Toast.m */; };
 		6FC4AB53835D4471B427842C /* CDVLocalFilesystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AEBD20C55B460ABFCC3539 /* CDVLocalFilesystem.m */; };
 		764EA7D3DD134C90B5578217 /* APPBackgroundMode.m in Sources */ = {isa = PBXBuildFile; fileRef = C88C7AAB203C4A37860CC69B /* APPBackgroundMode.m */; };
-		90656BF9BE9B45C2BE22FEB0 /* CDVLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = AAC7AE15A5AD4DFC92742B01 /* CDVLocation.m */; };
 		91EC1078FD4447A98E544393 /* Toast+UIView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D3303073086470AAC2F3275 /* Toast+UIView.m */; };
 		A8050CA54F8744AC91CA04B7 /* UIImage+CropScaleOrientation.m in Sources */ = {isa = PBXBuildFile; fileRef = A038D0BC3A4E4393A9626BBA /* UIImage+CropScaleOrientation.m */; };
 		B08D7DE46684485CA3813E78 /* CDVFile.m in Sources */ = {isa = PBXBuildFile; fileRef = E7520D76203F45F4BA10F8B2 /* CDVFile.m */; };
@@ -109,7 +108,6 @@
 		36499B625D204F0F833EF708 /* CDVLogger.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = CDVLogger.m; path = "cordova-plugin-console/CDVLogger.m"; sourceTree = "<group>"; };
 		418B3A83142D42CE81F2C20D /* CDVCamera.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = CDVCamera.h; path = "cordova-plugin-camera/CDVCamera.h"; sourceTree = "<group>"; };
 		46AEBD20C55B460ABFCC3539 /* CDVLocalFilesystem.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = CDVLocalFilesystem.m; path = "cordova-plugin-file/CDVLocalFilesystem.m"; sourceTree = "<group>"; };
-		52CD88E1C84B42578CF19540 /* CDVLocation.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = CDVLocation.h; path = "cordova-plugin-geolocation/CDVLocation.h"; sourceTree = "<group>"; };
 		55DD24E45ED6408BADA4E7B3 /* CDVAssetLibraryFilesystem.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = CDVAssetLibraryFilesystem.h; path = "cordova-plugin-file/CDVAssetLibraryFilesystem.h"; sourceTree = "<group>"; };
 		75E7AAFBAC934410998931D4 /* ImageIO.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		843C2E9391AA4A9098662441 /* CDVViewController+SplashScreen.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = "CDVViewController+SplashScreen.h"; path = "cordova-plugin-splashscreen/CDVViewController+SplashScreen.h"; sourceTree = "<group>"; };
@@ -121,7 +119,6 @@
 		A038D0BC3A4E4393A9626BBA /* UIImage+CropScaleOrientation.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = "UIImage+CropScaleOrientation.m"; path = "cordova-plugin-camera/UIImage+CropScaleOrientation.m"; sourceTree = "<group>"; };
 		A4537A5285D9410F860D1CEB /* CDVJpegHeaderWriter.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = CDVJpegHeaderWriter.m; path = "cordova-plugin-camera/CDVJpegHeaderWriter.m"; sourceTree = "<group>"; };
 		A6CC94A3A5CA4DF393DD06C5 /* APPBackgroundMode.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = APPBackgroundMode.h; path = "cordova-plugin-background-mode/APPBackgroundMode.h"; sourceTree = "<group>"; };
-		AAC7AE15A5AD4DFC92742B01 /* CDVLocation.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = CDVLocation.m; path = "cordova-plugin-geolocation/CDVLocation.m"; sourceTree = "<group>"; };
 		AE79D9D0DF804931AFA4E0D1 /* CDVInAppBrowser.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = CDVInAppBrowser.h; path = "cordova-plugin-inappbrowser/CDVInAppBrowser.h"; sourceTree = "<group>"; };
 		B109FA82587748EDB1F0F100 /* CDVFile.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = CDVFile.h; path = "cordova-plugin-file/CDVFile.h"; sourceTree = "<group>"; };
 		B7CE6DF67DCC45C1B156F6BC /* Toast.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = Toast.h; path = "cordova-plugin-x-toast/Toast.h"; sourceTree = "<group>"; };
@@ -381,8 +378,6 @@
 				55DD24E45ED6408BADA4E7B3 /* CDVAssetLibraryFilesystem.h */,
 				87C6CBE677954D13A167CF3E /* CDVFileTransfer.m */,
 				D8B99DE47B5F4B50B74ECB2F /* CDVFileTransfer.h */,
-				AAC7AE15A5AD4DFC92742B01 /* CDVLocation.m */,
-				52CD88E1C84B42578CF19540 /* CDVLocation.h */,
 				1D54AFF72FD94BEFB6296189 /* CDVSplashScreen.m */,
 				13AB0D073F7F4708A844F259 /* CDVViewController+SplashScreen.m */,
 				C147E8E7F36C435BB9BE9F7F /* CDVSplashScreen.h */,
@@ -541,7 +536,6 @@
 				6FC4AB53835D4471B427842C /* CDVLocalFilesystem.m in Sources */,
 				0F112A8CF30D440BAFA0E460 /* CDVAssetLibraryFilesystem.m in Sources */,
 				B7F843E17F124064857574E2 /* CDVFileTransfer.m in Sources */,
-				90656BF9BE9B45C2BE22FEB0 /* CDVLocation.m in Sources */,
 				C285572AD4884F4091D979C9 /* CDVSplashScreen.m in Sources */,
 				C0EC59282D684707BCAE8199 /* CDVViewController+SplashScreen.m in Sources */,
 				91EC1078FD4447A98E544393 /* Toast+UIView.m in Sources */,
