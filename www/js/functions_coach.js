@@ -142,10 +142,12 @@ $(window).load(function(){
 
 		if($('body').hasClass('has-user') ){
 
-			var item = localStorage.getItem('user-selected');
+			// var item = localStorage.getItem('user-selected');
 			//console.log(item);
 
-			var user = JSON.parse(item);
+			var item = apiRH.getUserId();
+
+			var user = item;
 			//console.log(user);
 
 			var fecha = new Date();
@@ -198,14 +200,6 @@ $(window).load(function(){
 
 				$('.user_plan').html(objetivo[user.perfil.objetivo[i]] + separador);
 			};
-
-			
-
-			console.log(JSON.parse(item));
-
-			//Acceder a los elementos para poder x
-
-			//$('').append('');
 
 		}
 
@@ -1584,7 +1578,8 @@ $(window).load(function(){
 			console.log(user._id);
 
 			var data = {
-					dieta : dietSelected
+					dieta : dietSelected,
+					coach : localStorage.getItem('userId')
 			};
 
 			var response = apiRH.updateClientDiet(user._id, data);

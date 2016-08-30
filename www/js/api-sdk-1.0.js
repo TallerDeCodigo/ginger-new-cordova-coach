@@ -509,7 +509,7 @@ function requestHandlerAPI(){
 					'X-ZUMO-AUTH': localStorage.getItem('token'),
 					'Content-Type': 'application/json'
 				}
-			}
+			};
 			//console.log(req);
 
 			var response = this.getRequest('tables/cliente/?coach=' + localStorage.getItem('userId'), req);
@@ -521,6 +521,7 @@ function requestHandlerAPI(){
 			return (response) ? response : false;
 
 		};
+
 
 		/**\
 		 **
@@ -545,11 +546,13 @@ function requestHandlerAPI(){
 
 			console.log(JSON.stringify(req));
 
-			var response = this.makePatchRequest('tables/cliente/'+client_id, data);
+			var response = this.makePatchRequest('tables/cliente/'+client_id, req);
 
-			console.log("Request Path Data Dieta");
+			console.log("Request Path Data Dieta CLiente");
 
-			console.log(response);  //llega aqui con la respuesta del servidor
+			console.log('Response: ' + JSON.stringify(response));  //llega aqui con la respuesta del servidor
+
+			localStorage.setItem('user-selected', JSON.stringify(response));
 
 			return (response) ? response : false;
 		};
@@ -731,14 +734,32 @@ function requestHandlerAPI(){
 			return (response) ? response : false;
 		};
 
-		/* 
-		 * Log Out from the API and disable token server side
-		 * @param user_data JSON {user_login : 'username', request_token : 'XY0XXX0Y0XYYYXXX'}
-		 * @return status Bool true is successfully logged in; false if an error ocurred
-		 */
-		this.logOut =  function(user_data){
-								return this.makeRequest('api/'+user_data.user_login+'/logout/', { request_token: user_data.request_token });
-							};
+		this.getUserId = function(){
+
+			var users = JSON.parse(localStorage.getItem('user-selected'));
+
+			var req = {
+				method : 'get',
+				url : api_base_url + 'tables/cliente?_id='  + users._id,	//definitr tabla
+				headers: {
+					'X-ZUMO-APPLICATION': 'ideIHnCMutWTPsKMBlWmGVtIPXROdc92',
+					'X-ZUMO-AUTH': localStorage.getItem('token'),
+					'Content-Type': 'application/json'
+				}
+			}
+			//console.log(req);
+
+			var response = this.getRequest('tables/cliente?_id=' + users._id, req);
+
+			console.log("Request Data Clientes");
+
+			console.log('Response: ' + response);  //llega aqui con la respuesta del servidor
+
+			return (response) ? response : false;
+
+		};
+
+		
 		/* 
 		 * Creates an internal user to make calls to the API
 		 * @param username String
@@ -912,13 +933,13 @@ function requestHandlerAPI(){
 			sdk_app_context.showLoader();
 			var result = {};
 
-			console.log('datos' + data.data);
+			console.log('datos: ' + data.data);
 
 			$.ajax({
 			  type: 'PATCH',
 			  headers: data.headers,
 			  url: window.api_base_url+endpoint,
-			  data: JSON.stringify(data),
+			  data: JSON.stringify(data.data),
 			  dataType: 'json',
 			  async: false
 			})
