@@ -8,6 +8,7 @@
         John Falcon for TDC
     </author>
     <content src="index.html" />
+    <hook type="before_build" src="js/copy_resource_files.js" />
     <plugin name="cordova-plugin-whitelist" spec="1" />
     <plugin name="com.oauthio.plugins.oauthio" spec="0.2.4" source="pgb" />
   <!--   <gap:plugin name="de.appplant.cordova.plugin.background-mode" version="0.6.3" /> -->
