@@ -138,6 +138,16 @@
                         }
                     ]
                 }
+            },
+            "config.xml": {
+                "parents": {
+                    "/*": [
+                        {
+                            "xml": "<feature name=\"Keyboard\"><param name=\"android-package\" onload=\"true\" value=\"org.apache.cordova.labs.keyboard.Keyboard\" /></feature>",
+                            "count": 1
+                        }
+                    ]
+                }
             }
         }
     },
@@ -180,6 +190,9 @@
         },
         "phonegap-plugin-push": {
             "SENDER_ID": "XXXXXXX",
+            "PACKAGE_NAME": "io.cordova.hellocordova"
+        },
+        "cordova-plugin-keyboard": {
             "PACKAGE_NAME": "io.cordova.hellocordova"
         }
     },
@@ -468,6 +481,14 @@
             "clobbers": [
                 "PushNotification"
             ]
+        },
+        {
+            "id": "cordova-plugin-keyboard.keyboard",
+            "file": "plugins/cordova-plugin-keyboard/www/keyboard.js",
+            "pluginId": "cordova-plugin-keyboard",
+            "clobbers": [
+                "window.Keyboard"
+            ]
         }
     ],
     "plugin_metadata": {
@@ -483,6 +504,7 @@
         "cordova-plugin-file-transfer": "1.5.1",
         "cordova-plugin-splashscreen": "3.2.2",
         "cordova-plugin-x-toast": "2.5.2",
-        "phonegap-plugin-push": "1.8.1"
+        "phonegap-plugin-push": "1.8.1",
+        "cordova-plugin-keyboard": "1.1.4"
     }
 }

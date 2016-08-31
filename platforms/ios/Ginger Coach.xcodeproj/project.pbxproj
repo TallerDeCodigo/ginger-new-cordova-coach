@@ -20,6 +20,7 @@
 		1D3623260D0F684500981E51 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* AppDelegate.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		1D7D536807D3481890C24561 /* libGTM_GTMURLBuilder.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 087BBF9DF66F432CB8BB0CFC /* libGTM_GTMURLBuilder.a */; };
+		1FF961E9CDFF4D1B88BF29DD /* CDVKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 71F938B36A0B442C8734D1FD /* CDVKeyboard.m */; };
 		277D8A26B15E44C2BFC0CEBC /* libGTM_RoundedRectPath.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65035C8C26AC4BEFB5C19BE5 /* libGTM_RoundedRectPath.a */; };
 		28652A1FE2694F939ADEC07A /* libGTM_SystemVersion.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 07C1A6A1A43D4989A6D3C5DE /* libGTM_SystemVersion.a */; };
 		301BF552109A68D80062928A /* libCordova.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 301BF535109A57CC0062928A /* libCordova.a */; };
@@ -135,6 +136,7 @@
 		68618CDCFA2C4DB3B16E6656 /* PushPlugin.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = PushPlugin.h; path = "phonegap-plugin-push/PushPlugin.h"; sourceTree = "<group>"; };
 		6A6AB74DDF964A50A71627B3 /* libGGLCloudMessaging.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; name = libGGLCloudMessaging.a; path = "Ginger Coach/Plugins/phonegap-plugin-push/GCM/Libraries/libGGLCloudMessaging.a"; sourceTree = "<group>"; };
 		6DD8B19D28604323A74AFAF6 /* libGTM_core.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; name = libGTM_core.a; path = "Ginger Coach/Plugins/phonegap-plugin-push/GCM/Libraries/libGTM_core.a"; sourceTree = "<group>"; };
+		71F938B36A0B442C8734D1FD /* CDVKeyboard.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = CDVKeyboard.m; path = "cordova-plugin-keyboard/CDVKeyboard.m"; sourceTree = "<group>"; };
 		738B97D6A61E43A5BD350E7C /* libGIP_Reachability.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; name = libGIP_Reachability.a; path = "Ginger Coach/Plugins/phonegap-plugin-push/GCM/Libraries/libGIP_Reachability.a"; sourceTree = "<group>"; };
 		74C4F8500645416CA2994AB0 /* GoogleCloudMessaging.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = GoogleCloudMessaging.h; path = "phonegap-plugin-push/GCM/Headers/GoogleCloudMessaging.h"; sourceTree = "<group>"; };
 		74FEA49D02A94DB6BFB7B37D /* GGLInstanceID.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = GGLInstanceID.h; path = "phonegap-plugin-push/GCM/Headers/GGLInstanceID.h"; sourceTree = "<group>"; };
@@ -163,6 +165,7 @@
 		BE39B71AA64A4806A4DC83F3 /* QuartzCore.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		BEC5B163E5E04CB98358B167 /* AVFoundation.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		C147E8E7F36C435BB9BE9F7F /* CDVSplashScreen.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = CDVSplashScreen.h; path = "cordova-plugin-splashscreen/CDVSplashScreen.h"; sourceTree = "<group>"; };
+		C700560E741F498CA1AEE6E8 /* CDVKeyboard.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = CDVKeyboard.h; path = "cordova-plugin-keyboard/CDVKeyboard.h"; sourceTree = "<group>"; };
 		C88C7AAB203C4A37860CC69B /* APPBackgroundMode.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = APPBackgroundMode.m; path = "cordova-plugin-background-mode/APPBackgroundMode.m"; sourceTree = "<group>"; };
 		CAAC1C4330F542879526820B /* libProtocolBuffers.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; name = libProtocolBuffers.a; path = "Ginger Coach/Plugins/phonegap-plugin-push/GCM/Libraries/libProtocolBuffers.a"; sourceTree = "<group>"; };
 		D3ED4EC601224E16B2564C60 /* libGTM_NSData+zlib.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; name = "libGTM_NSData+zlib.a"; path = "Ginger Coach/Plugins/phonegap-plugin-push/GCM/Libraries/libGTM_NSData+zlib.a"; sourceTree = "<group>"; };
@@ -406,6 +409,8 @@
 				880C3D994E214B9E9DD7E8E6 /* GCMReceiverDelegate.h */,
 				DDEB38FA950147C4AE34A2F0 /* GCMService.h */,
 				74C4F8500645416CA2994AB0 /* GoogleCloudMessaging.h */,
+				71F938B36A0B442C8734D1FD /* CDVKeyboard.m */,
+				C700560E741F498CA1AEE6E8 /* CDVKeyboard.h */,
 			);
 			name = Plugins;
 			path = "Ginger Coach/Plugins";
@@ -449,11 +454,6 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 510;
-				TargetAttributes = {
-					1D6058900D05DD3D006BFB54 = {
-						DevelopmentTeam = AZC9Q526PS;
-					};
-				};
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "Ginger Coach" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -543,6 +543,7 @@
 				51D4410B39684865BA096460 /* Toast.m in Sources */,
 				BE6911CD7C414EF1BE3A1EDB /* AppDelegate+notification.m in Sources */,
 				06142E5D8F804212A8941255 /* PushPlugin.m in Sources */,
+				1FF961E9CDFF4D1B88BF29DD /* CDVKeyboard.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

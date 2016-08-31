@@ -40,6 +40,9 @@
         "phonegap-plugin-push": {
             "SENDER_ID": "XXXXXXX",
             "PACKAGE_NAME": "$(PRODUCT_BUNDLE_IDENTIFIER)"
+        },
+        "cordova-plugin-keyboard": {
+            "PACKAGE_NAME": "com.ginger.coach"
         }
     },
     "dependent_plugins": {

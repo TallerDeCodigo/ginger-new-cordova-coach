@@ -897,7 +897,7 @@
 		restaFechas: function(f1,f2)
 		{
 			var aFecha1 = f1.split('-'); 
-			var aFecha2 = f2.split('/'); 
+			var aFecha2 = f2.split('-'); 
 			var fFecha1 = Date.UTC(aFecha1[2],aFecha1[1]-1,aFecha1[0]); 
 			var fFecha2 = Date.UTC(aFecha2[2],aFecha2[1]-1,aFecha2[0]); 
 			var dif = fFecha2 - fFecha1;
@@ -920,22 +920,37 @@
 
 		*/
 
-		/* Log Out from the API */
-		$('#logout').on('click', function(e){
-			/* Requesting logout from server */
-			//var response = apiRH.logOut({user_login : user, request_token : apiRH.get_request_token() });
-			//if(response.success){
+		if($('body').hasClass('coperfil') ){
 
-				
-				
+			/* Log Out from the API */
+			$('#logout').on('click', function(e){
+				/* Requesting logout from server */
+				//var response = apiRH.logOut({user_login : user, request_token : apiRH.get_request_token() });
+				//if(response.success){
+
+					if($('.overscreen2').is(':visible') ){
+
+					}else{
+						$('.overscreen2').addClass('active');
+						$('.overscreen2').show();
+						$('#container').toggleClass('blurred');
+					}
+
+					
+			});
+			$('#accept').click(function(){
 				//app.toast('Has cerrado la sesión, hasta pronto');
-					localStorage.clear();
-				window.location.assign('login.html');
+						localStorage.clear();
+					window.location.assign('login.html');
+					return;
+				//}
+				app.toast('No ha sido posible crear tu cuenta, inténtalo de nuevo por favor.');
 				return;
-			//}
-			app.toast('No ha sido posible crear tu cuenta, inténtalo de nuevo por favor.');
-			return;
-		});
+			});
+			$('.cancel').click(function(){
+				$('#container').toggleClass('blurred');
+			});
+		}
 
 
 // ----------------------------------------------------------------------

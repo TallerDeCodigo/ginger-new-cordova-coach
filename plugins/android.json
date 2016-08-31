@@ -40,6 +40,9 @@
         "phonegap-plugin-push": {
             "SENDER_ID": "XXXXXXX",
             "PACKAGE_NAME": "io.cordova.hellocordova"
+        },
+        "cordova-plugin-keyboard": {
+            "PACKAGE_NAME": "io.cordova.hellocordova"
         }
     },
     "dependent_plugins": {
