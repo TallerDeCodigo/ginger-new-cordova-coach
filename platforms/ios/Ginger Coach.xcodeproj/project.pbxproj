@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		004E9463E586494EBDE5173A /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75E7AAFBAC934410998931D4 /* ImageIO.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		0207DA581B56EA530066E2B4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0207DA571B56EA530066E2B4 /* Images.xcassets */; };
@@ -65,6 +64,7 @@
 		EEF6CB0FB37149658EAC3882 /* libGTM_UIFont+LineHeight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AE1A591CE6EF499A8DCE5BD1 /* libGTM_UIFont+LineHeight.a */; };
 		F1E7E766DF3E4EF58DE16221 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FD8DA515B0D42DABD7CCE57 /* libsqlite3.tbd */; };
 		FCD13A32B1CE498295576F21 /* CDVLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 36499B625D204F0F833EF708 /* CDVLogger.m */; };
+		C36DF73047E14C95B4E19A2D /* IonicKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 7591B40785FA4ABF93217F0D /* IonicKeyboard.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -190,6 +190,8 @@
 		F840E1F0165FE0F500CFE078 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = "Ginger Coach/config.xml"; sourceTree = "<group>"; };
 		FA8453C3DA6F4CE88F7C6AAB /* CDVAssetLibraryFilesystem.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = CDVAssetLibraryFilesystem.m; path = "cordova-plugin-file/CDVAssetLibraryFilesystem.m"; sourceTree = "<group>"; };
 		FC6FBA4FD19A4968AB370EA4 /* libGTMStackTrace.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; name = libGTMStackTrace.a; path = "Ginger Coach/Plugins/phonegap-plugin-push/GCM/Libraries/libGTMStackTrace.a"; sourceTree = "<group>"; };
+		7591B40785FA4ABF93217F0D /* IonicKeyboard.m */ = {isa = PBXFileReference; name = "IonicKeyboard.m"; path = "ionic-plugin-keyboard/IonicKeyboard.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		9F636E1903D24745B55A1054 /* IonicKeyboard.h */ = {isa = PBXFileReference; name = "IonicKeyboard.h"; path = "ionic-plugin-keyboard/IonicKeyboard.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -411,6 +413,8 @@
 				74C4F8500645416CA2994AB0 /* GoogleCloudMessaging.h */,
 				71F938B36A0B442C8734D1FD /* CDVKeyboard.m */,
 				C700560E741F498CA1AEE6E8 /* CDVKeyboard.h */,
+				7591B40785FA4ABF93217F0D /* IonicKeyboard.m */,
+				9F636E1903D24745B55A1054 /* IonicKeyboard.h */,
 			);
 			name = Plugins;
 			path = "Ginger Coach/Plugins";
@@ -549,6 +553,7 @@
 				BE6911CD7C414EF1BE3A1EDB /* AppDelegate+notification.m in Sources */,
 				06142E5D8F804212A8941255 /* PushPlugin.m in Sources */,
 				1FF961E9CDFF4D1B88BF29DD /* CDVKeyboard.m in Sources */,
+				C36DF73047E14C95B4E19A2D /* IonicKeyboard.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

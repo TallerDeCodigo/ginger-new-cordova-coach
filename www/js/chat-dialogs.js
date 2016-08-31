@@ -213,9 +213,9 @@ function triggerDialog(dialogId){
   retrieveChatMessages(dialogs[dialogId], null);
 
   // $('#messages-list').scrollTop($('#messages-list').prop('scrollHeight'));
-  $('#mensaje-chat').focus();
+  // $('#mensaje-chat').focus();
 
-  window.scrollTo(0,document.body.scrollHeight);
+  // window.scrollTo(0,0);
   
 }
 
