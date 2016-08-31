@@ -765,31 +765,32 @@ $(window).load(function(){
 		}
 
 		$('.btn_add').click(function(){
+			console.log('guardar dieta');
+			var localStorage.getItem('');
+			if(){
 
-			var dieta = localStorage.getItem('dietaEdit');
+			}//endif condicional para no guardar dieta vacia
+
+			// var dieta = localStorage.getItem('dietaEdit');
 			
-			console.log('ID DIETA DEFINIDO: ' +JSON.parse(dieta)._id);
+			// console.log('ID DIETA DEFINIDO: ' +JSON.parse(dieta)._id);
 			
-			if(JSON.parse(dieta)._id){
+			// if(JSON.parse(dieta)._id){
 
-				var response = apiRH.saveDiet(dieta);
-				console.log(response);
-			}
-			else{
-				var response = apiRH.makeDiet(dieta);	
-			}
+			// 	var response = apiRH.saveDiet(dieta);
+			// 	console.log(response);
+			// }
+			// else{
+			// 	var response = apiRH.makeDiet(dieta);	
+			// }
 
-			if(response){
-				localStorage.removeItem('dietaEdit');
-				window.location.assign('dietas.html');
-			}else{
-				alert('La dieta está incompleta. Favor de verificar.');
-			}
-
-
-
-
-		});
+			// if(response){
+			// 	localStorage.removeItem('dietaEdit');
+			// 	window.location.assign('dietas.html');
+			// }else{
+			// 	alert('La dieta está incompleta. Favor de verificar.');
+			// }
+		});//end click btn-add
 
 		$('.add_dish').click(function(){
 			// if ($(this).parent().hasClass('desayuno')) {
