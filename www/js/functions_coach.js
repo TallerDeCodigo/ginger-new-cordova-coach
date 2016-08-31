@@ -822,7 +822,22 @@ $(window).load(function(){
 		        	 	}
 		        	}
 			}else{
-				alert('La dieta está incompleta. Favor de verificar.');
+
+				if(!$('.overscreen_error').is(':visible')){
+					console.log('entra popup');
+					$('.overscreen_error').show();
+					setTimeout(function() {$('.overscreen_error').addClass('active');}, 200);
+				} else {
+					$('.overscreen_error').removeClass('active');
+					setTimeout(function() {$('.overscreen_error').hide();}, 800);
+				}
+				$('#container').toggleClass('blurred');
+
+				$('#aceptar_error').click(function(){
+					$('.overscreen_error').hide();
+					$('#container').toggleClass('blurred');
+				})
+				//alert('La dieta está incompleta. Favor de verificar.');
 			}
 	});//end click btn-add
 
