@@ -59,6 +59,10 @@
                         {
                             "xml": "<feature name=\"Keyboard\"><param name=\"ios-package\" onload=\"true\" value=\"CDVKeyboard\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Keyboard\"><param name=\"ios-package\" onload=\"true\" value=\"IonicKeyboard\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -139,6 +143,9 @@
             "PACKAGE_NAME": "$(PRODUCT_BUNDLE_IDENTIFIER)"
         },
         "cordova-plugin-keyboard": {
+            "PACKAGE_NAME": "com.ginger.coach"
+        },
+        "ionic-plugin-keyboard": {
             "PACKAGE_NAME": "com.ginger.coach"
         }
     },
@@ -451,6 +458,15 @@
             "clobbers": [
                 "window.Keyboard"
             ]
+        },
+        {
+            "id": "ionic-plugin-keyboard.keyboard",
+            "file": "plugins/ionic-plugin-keyboard/www/ios/keyboard.js",
+            "pluginId": "ionic-plugin-keyboard",
+            "clobbers": [
+                "cordova.plugins.Keyboard"
+            ],
+            "runs": true
         }
     ],
     "plugin_metadata": {
@@ -467,6 +483,7 @@
         "cordova-plugin-splashscreen": "3.2.2",
         "cordova-plugin-x-toast": "2.5.2",
         "phonegap-plugin-push": "1.8.1",
-        "cordova-plugin-keyboard": "1.1.4"
+        "cordova-plugin-keyboard": "1.1.4",
+        "ionic-plugin-keyboard": "2.2.1"
     }
 }

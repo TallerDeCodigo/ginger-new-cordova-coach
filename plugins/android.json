@@ -43,6 +43,9 @@
         },
         "cordova-plugin-keyboard": {
             "PACKAGE_NAME": "io.cordova.hellocordova"
+        },
+        "ionic-plugin-keyboard": {
+            "PACKAGE_NAME": "io.cordova.hellocordova"
         }
     },
     "dependent_plugins": {

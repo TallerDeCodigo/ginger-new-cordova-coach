@@ -43,6 +43,9 @@
         },
         "cordova-plugin-keyboard": {
             "PACKAGE_NAME": "com.ginger.coach"
+        },
+        "ionic-plugin-keyboard": {
+            "PACKAGE_NAME": "com.ginger.coach"
         }
     },
     "dependent_plugins": {
