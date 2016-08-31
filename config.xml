@@ -99,7 +99,7 @@
         <icon src="res/screen/ios/icon-50.png" width="50" height="50" />
        
     </platform>
-    
+    <preference name="KeyboardShrinksView" value="true" /> 
     <preference name="Orientation" value="portrait" />
     <preference name="SplashMaintainAspectRatio" value="true" />
     <preference name="FadeSplashScreenDuration" value="1500"/>

@@ -102,7 +102,7 @@ $(window).load(function(){
 		var coach_type 		= [ 'Estricto','Innovador', 'Animador', 'Tradicional'];
 		var restricciones 	= [ 'Huevo', 'Pollo', 'Pescado', 'Mariscos', 'Lacteos', 'Carne' ];
 		var objetivo 		= [ 'adelgazar','detox','bienestar','rendimiento' ];
-		var sex 			= ['Hombre','Mujer'];
+		var sex 			= [ 'Hombre', 'Mujer'];
 		var tipo_de_ingredientes = [ 'granosycereales', 'verduras', 'grasas', 'lacteos', 'proteinaanimal', 'leguminosas', 'nuecesysemillas', 'frutas', 'endulzantes', 'aderezosycondimentos', 'superfoods', 'liquidos'];
 
 
@@ -413,40 +413,12 @@ $(window).load(function(){
 
 				$('.platillo').hide();
 
-				//console.log('Objeto: ' + dietaNew.estructura.domingo.desayuno[1].a.platillos);
-				//console.log('Objeto: ' + dietaNew.estructura.domingo.desayuno[1]);
-				//console.log('Array: ' + dietaNew["estructura"]["domingo"]["desayuno"]["1"]["a"][0]["platillo"]);
-				//Agrega un platillo a la opción a
-				
-				// var arrDieta =  dietaNew["estructura"]["domingo"]["desayuno"]["1"]["a"];
-				// arrDieta.push({"platillo":"bbbbb"});
-				// dietaNew["estructura"]["domingo"]["desayuno"]["1"]["a"] = arrDieta;
-				
-				// console.log(dietaNew);
-				// console.log(JSON.stringify(dietaNew));
+				//Si viene de platillos o de un refresh
 
-				// var k = 0;
-
-				// $.each(dietaNew.estructura.domingo.desayuno, function( key, value ) {
-					
-				// 	console.log(key + " ++++ " + value);
-
-				// 	$.each(value, function( key, value ) {
-
-				// 		console.log(key + " ---- " + value);
-				// 		$.each(value, function( key, value ) {
-							
-				// 			console.log(key + " **** " + value);
-
-				// 		});
-
-				// 	});
-				// 	k++;
-				// });	
-					
-				// localStorage.setItem('jsonNewDiet', jsonNew);
 			} else if (localStorage.getItem('idDishSelected') || localStorage.getItem('dietaEdit')) {
-					dietaNew = JSON.parse(localStorage.getItem('dietaEdit'));
+				dietaNew = JSON.parse(localStorage.getItem('dietaEdit'));
+
+				console.log(JSON.stringify(dietaNew));
 
 				if (localStorage.getItem('idDishSelected')) {
 					var i = 0;
@@ -506,12 +478,13 @@ $(window).load(function(){
 							 	
 							 	var ing = '';
 							 	$.each(value, function(key, value){
-							 		ing = ing + value._id.nombre;
-							 		//console.log(value._id.nombre);	
+							 		if(value._id != null){
+							 			ing = ing + value._id.nombre;
+							 			console.log(value._id.nombre);	
+							 		}
 							 	});
 
 							 	losplatos[i][3]=ing;
-							 	console.log(losplatos[i][3]);
 							}
 						});
 						i++;
@@ -585,10 +558,10 @@ $(window).load(function(){
 													} else {
 														$(masadentro+'p.receta').hide();
 													}
-													if (losplatos[i][4]!=" ") {
+													if (losplatos[i][4]!="") {
 														$(masadentro+' p.comentario').html(losplatos[i][4]);
 													} else {
-														$(masadentro+' p.comentario').show();
+														$(masadentro+' p.comentario').hide();
 													}
 
 													if(losplatos[i][3]!= ''){
@@ -614,7 +587,9 @@ $(window).load(function(){
 										}
 									}
 
-									$(masadentro+' p.comentario').hide();
+									if ($(masadentro+' p.comentario').html()=="") {
+										$(masadentro+' p.comentario').hide();
+									}
 
 								});	
 
@@ -630,6 +605,7 @@ $(window).load(function(){
 				});
 
 			}else{
+				console.log('Llegamos');
 				var dieta = app.get_diet('?_id='+ localStorage.getItem('dOperator'));
 				console.log('ID DIET: ' + dieta._id);
 
@@ -665,8 +641,10 @@ $(window).load(function(){
 							 	
 							 	var ing = '';
 							 	$.each(value, function(key, value){
-							 		ing = ing + value._id.nombre;
-							 		console.log(value._id.nombre);	
+							 		if(value._id != null){
+							 			ing = ing + value._id.nombre;
+							 			console.log('fghfghfghfgh <<<<<<'+ value._id.nombre);	
+							 		}	
 							 	});
 
 							 	losplatos[i][3]=ing;
@@ -753,10 +731,16 @@ $(window).load(function(){
 													} else {
 														$(masadentro+'p.receta').hide();
 													}
-													if (losplatos[i][4]!=" ") {
+													if (losplatos[i][4]!="") {
 														$(masadentro+' p.comentario').html(losplatos[i][4]);
 													} else {
-														$(masadentro+' p.comentario').show();
+														$(masadentro+' p.comentario').hide();
+													}
+													if(losplatos[i][3]!= ''){
+														$(masadentro+' p.los_ing').html(losplatos[i][3]);
+														console.log('plato '+i+' sus ing'+losplatos[i][3]);
+													}else{
+														;	
 													}
 												}
 											}
@@ -827,6 +811,7 @@ $(window).load(function(){
 
 
 		}// end if has class
+		
 		////////////////////////////////////////////////////////////
 		//
 		//  PLATILLOS FUNCTIONS
@@ -915,6 +900,7 @@ $(window).load(function(){
 				$('#container').toggleClass('blurred');
 
 				window.location.assign('dieta.html');
+
 			});
 
 			$('.cancel').click(function(){
@@ -1455,6 +1441,39 @@ $(window).load(function(){
 			var meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
 			$('.mes').html(meses[month]);
 
+
+			var finanzas = responsedata;
+			console.log(finanzas);
+
+			var i = 0;
+
+			$.each(finanzas, function( key, value ){
+
+				$('.record').append('<tr><td>' + finanzas[i].name + '</td><td>' + finanzas[i].days_since_subscription + '</td><td>' + finanzas[i].days_since_subscription + '</td><td>$' + number_format(finanzas[i].amount_this_month, 2) + '</td></tr>');	
+
+				totalAmount = totalAmount + finanzas[i].amount_this_month;
+
+				totalDays= totalDays+finanzas[i].days_since_subscription;
+
+				console.log( totalAmount + ' - ' +  totalDays);
+				i++;
+			});
+
+
+			//TOTALES
+			$('.totalAcumulado').html(number_format(totalAmount,2));
+			$('.total').html(totalDays);
+
+			//FECHAS DE INICIO
+			$('.inicio').html(pdia);
+			$('.final').html(dia + ' de ' + meses[month] );
+
+			$('.btn-gre').click(function(){
+				console.log('click');
+				app.get_file_from_device('search', 'camera');
+
+			});
+
 			$('.btn_right').click(function(){
 				month++;
 
@@ -1479,38 +1498,6 @@ $(window).load(function(){
 				responsedata = apiRH.getFinanzas(month + 1);
 
 			});
-
-			var finanzas = responsedata;
-			console.log(finanzas);
-
-			var i = 0;
-
-			$.each(finanzas, function( key, value ){
-
-				$('.record').append('<tr><td>' + finanzas[i].name + '</td><td>' + finanzas[i].days_since_subscription + '</td><td>' + finanzas[i].days_since_subscription + '</td><td>$' + number_format(finanzas[i].amount_this_month, 2) + '</td></tr>');	
-
-				totalAmount = totalAmount + finanzas[i].amount_this_month;
-
-				totalDays= totalDays+finanzas[i].days_since_subscription;
-
-				console.log( totalAmount + ' - ' +  totalDays);
-				i++;
-			});
-
-			$('.btn-gre').click(function(){
-				console.log('click');
-				app.get_file_from_device('search', 'camera');
-
-			});
-
-			//TOTALES
-			$('.totalAcumulado').html(number_format(totalAmount,2));
-			$('.total').html(totalDays);
-
-			//FECHAS DE INICIO
-			$('.inicio').html(pdia);
-			$('.final').html(dia + ' de ' + meses[month] );
-
 		}//	END HAS CLASS FINANZAS
 
 
