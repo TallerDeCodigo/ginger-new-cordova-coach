@@ -1023,6 +1023,22 @@ function requestHandlerAPI(){
 			 .fail(function(e){
 				result = false;
 				console.log(JSON.stringify(e));
+
+				if(!$('.overscreen_err').is(':visible')){
+					console.log('entra popup');
+					$('.overscreen_err').show();
+					setTimeout(function() {$('.overscreen_err').addClass('active');}, 200);
+				} else {
+					$('.overscreen_err').removeClass('active');
+					setTimeout(function() {$('.overscreen_err').hide();}, 800);
+				}
+				$('#container').toggleClass('blurred');
+
+				$('#aceptar_err').click(function(){
+					$('.overscreen_err').hide();
+					$('#container').toggleClass('blurred');
+				});
+
 			});
 			return result;
 
