@@ -920,22 +920,37 @@
 
 		*/
 
-		/* Log Out from the API */
-		$('#logout').on('click', function(e){
-			/* Requesting logout from server */
-			//var response = apiRH.logOut({user_login : user, request_token : apiRH.get_request_token() });
-			//if(response.success){
+		if($('body').hasClass('coperfil') ){
 
-				
-				
+			/* Log Out from the API */
+			$('#logout').on('click', function(e){
+				/* Requesting logout from server */
+				//var response = apiRH.logOut({user_login : user, request_token : apiRH.get_request_token() });
+				//if(response.success){
+
+					if($('.overscreen2').is(':visible') ){
+
+					}else{
+						$('.overscreen2').addClass('active');
+						$('.overscreen2').show();
+						$('#container').toggleClass('blurred');
+					}
+
+					
+			});
+			$('#accept').click(function(){
 				//app.toast('Has cerrado la sesión, hasta pronto');
-					localStorage.clear();
-				window.location.assign('login.html');
+						localStorage.clear();
+					window.location.assign('login.html');
+					return;
+				//}
+				app.toast('No ha sido posible crear tu cuenta, inténtalo de nuevo por favor.');
 				return;
-			//}
-			app.toast('No ha sido posible crear tu cuenta, inténtalo de nuevo por favor.');
-			return;
-		});
+			});
+			$('.cancel').click(function(){
+				$('#container').toggleClass('blurred');
+			});
+		}
 
 
 // ----------------------------------------------------------------------

@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<title>Ginger Coach</title>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, maximum-scale=1, minimum-scale=1">
+		<meta name="viewport" content="initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=0, height=device-height, width=device-width"/>
 		<meta http-equiv="cleartype" content="on">
 		<link rel="stylesheet" type="text/css" href="css/style.css">
 	    <script type="text/javascript" src="cordova.js"></script>
@@ -22,7 +22,15 @@
 		<script src="libs/stickerpipe/js/stickerpipe.js"></script>
 	</head>
 	<body class="has-chat-list iosm">
-	<div id="container" class="list-chat">
+	<header class="hwhite2">
+		<div class="toolbar">
+			<a class="back"><img src="images/back.svg"></a>
+			<!--agregar nombre del coach-->
+			<h2 class="titulo">Chat</h2>
+			<!-- <a class="add">Guardar</a> -->
+		</div>
+	</header>
+	<div id="container" class="list-chat" style>
 		
 		<ul class="lista_chat" id="dialogs-list">
 
@@ -32,21 +40,11 @@
 
 		</ul>
 
-		<div id="" class="chat">
-
-			<header class="hwhite2">
-				<div class="toolbar">
-					<a class="back"><img src="images/back.svg"></a>
-					<!--agregar nombre del coach-->
-					<h2 class="titulo">Chat</h2>
-					<!-- <a class="add">Guardar</a> -->
-				</div>
-			</header>
-
-			<div class="content list-group pre-scrollable nice-scroll" id="messages-list">
-				<!-- list of chat messages will be here -->
-			</div>
+		<div class="content list-group pre-scrollable nice-scroll" id="messages-list">
+			<!-- list of chat messages will be here -->
 		</div>
+
+	</div>
 
 	<footer class="menu-bar hwhite2">
 		<a id="btn_chats">
