@@ -74,8 +74,14 @@ $( function() {
   			});
 
   			$('.back').click(function(){
-  				localStorage.removeItem('dietaEdit');
-  				window.location.assign('dietas.html');
+  				if (localStorage.getItem('proviene')=="lista") {
+  					localStorage.removeItem('dietaEdit');
+  					localStorage.removeItem('proviene');
+	  				window.location.assign('lista-dietas.html');
+  				} else {
+  					localStorage.removeItem('dietaEdit');
+	  				window.location.assign('dietas.html');
+  				}
   			});
 
 	} //End Has Class DIETA -> dieta.html
@@ -780,8 +786,14 @@ $(window).load(function(){
 			}
 
 			if(response){
-				localStorage.removeItem('dietaEdit');
-				window.location.assign('dietas.html');
+  				if (localStorage.getItem('proviene')=="lista") {
+  					localStorage.removeItem('dietaEdit');
+  					localStorage.removeItem('proviene');
+	  				window.location.assign('lista-dietas.html');
+  				} else {
+  					localStorage.removeItem('dietaEdit');
+	  				window.location.assign('dietas.html');
+  				}
 			}else{
 				alert('La dieta está incompleta. Favor de verificar.');
 			}
@@ -1313,6 +1325,8 @@ $(window).load(function(){
 				console.log('ID DIET: ' + idDietax);
 
 				localStorage.setItem('dOperator', idDietax);
+
+				localStorage.setItem('proviene', 'lista');
 
 				window.location.assign('dieta.html');
 
