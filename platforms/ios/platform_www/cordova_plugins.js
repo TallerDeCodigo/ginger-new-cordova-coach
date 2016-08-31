@@ -299,6 +299,14 @@ module.exports = [
         "clobbers": [
             "PushNotification"
         ]
+    },
+    {
+        "id": "cordova-plugin-keyboard.keyboard",
+        "file": "plugins/cordova-plugin-keyboard/www/keyboard.js",
+        "pluginId": "cordova-plugin-keyboard",
+        "clobbers": [
+            "window.Keyboard"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -316,7 +324,8 @@ module.exports.metadata =
     "cordova-plugin-file-transfer": "1.5.1",
     "cordova-plugin-splashscreen": "3.2.2",
     "cordova-plugin-x-toast": "2.5.2",
-    "phonegap-plugin-push": "1.8.1"
+    "phonegap-plugin-push": "1.8.1",
+    "cordova-plugin-keyboard": "1.1.4"
 };
 // BOTTOM OF METADATA
 });

@@ -48,6 +48,9 @@
     <feature name="PushNotification">
         <param name="ios-package" value="PushPlugin" />
     </feature>
+    <feature name="Keyboard">
+        <param name="ios-package" onload="true" value="CDVKeyboard" />
+    </feature>
     <name>Ginger Coach</name>
     <description>
         Nutrición en la palma de tu mano.
