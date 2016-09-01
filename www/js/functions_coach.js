@@ -410,6 +410,10 @@ $(window).load(function(){
 
 			var jsonNew = '{"nombre": "' +localStorage.getItem('d_nombre') + '","descripcion":"' + localStorage.getItem('d_comentario') + '", "estructura":{"domingo":{"desayuno":{},"snack1":{},"comida":{},"snack2":{},"cena":{}},"lunes":{"desayuno":{},"snack1":{},"comida":{},"snack2":{},"cena":{}},"martes":{"desayuno":{},"snack1":{},"comida":{},"snack2":{},"cena":{}},"miercoles":{"desayuno":{},"snack1":{},"comida":{},"snack2":{},"cena":{}},"jueves":{"desayuno":{},"snack1":{},"comida":{},"snack2":{},"cena":{}},"viernes":{"desayuno":{},"snack1":{},"comida":{},"snack2":{},"cena":{}},"sabado":{"desayuno":{},"snack1":{},"comida":{},"snack2":{},"cena":{}}},"perfil":{"sexo":0,"edad":0,"bmi":0,"objetivo":0}}';
 			
+			if(window.location.href.search('editar') != -1){
+				localStorage.setItem('contador_platillos', 1);
+			}
+
 			if(window.location.href.search('create') != -1 ){
 
 				localStorage.setItem('contador_platillos', 0);
@@ -790,7 +794,7 @@ $(window).load(function(){
 			var dieta_added = localStorage.getItem('idDishSelected');
 			console.log(dieta_added);
 
-			if(localStorage.getItem('contador_platillos')>=35 ){
+			if(localStorage.getItem('contador_platillos')>=3 ){
 
 					var dieta = localStorage.getItem('dietaEdit');
 					
