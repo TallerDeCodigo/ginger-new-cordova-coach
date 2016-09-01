@@ -173,7 +173,7 @@ function clickSendMessage() {
   $('#mensaje-chat').val('').focus();
 
   sendMessage(currentText, null);
-  window.scrollTo(0,document.body.scrollHeight);
+  $('#container').scrollTop($('#container').prop("scrollHeight"));
 }
 
 function clickSendAttachments(inputFile) {
