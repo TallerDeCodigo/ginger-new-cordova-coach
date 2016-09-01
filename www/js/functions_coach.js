@@ -1689,18 +1689,25 @@ $(window).load(function(){
 
 				$('#mensaje-chat').focus(function() {
   					if(this.innerHTML=='Mensaje') {this.innerHTML='';}
-  					$('#container').addClass('conteclado');
-					$('#container').css('height',document.documentElement.clientHeight+"px");
-					var calulitio = document.documentElement.clientHeight-40;
-					$('.escribir').css('top',calulitio+"px");
+  			// 		$('#container').addClass('conteclado');
+					// $('#container').css('height',document.documentElement.clientHeight+"px");
+					// var calulitio = document.documentElement.clientHeight-40;
+					// $('.escribir').css('top',calulitio+"px");
 				});
 
+				var nuevo = 0;
+
 				$('h2.titulo').click(function(){
+					$(window).resize();
+					$(document).resize();
+					nuevo++;
 					$('#container').addClass('conteclado');
 					$('#container').css('height',document.documentElement.clientHeight+"px");
-					var calulitio = document.documentElement.clientHeight-40;
+					var calulitio = document.documentElement.clientHeight-43;
 					$('.escribir').css('top',calulitio+"px");
 					$('#mensaje-chat').focus();
+					console.log(nuevo+" "+document.documentElement.clientHeight);
+					$('#container').scrollTop($('#container').prop("scrollHeight"));
 				});
 
 		}//end IF body has class
@@ -1804,6 +1811,12 @@ $(document).on('click', '.platillo-item', function() {
 $(document).on('deviceready', function(){ 
 	Keyboard.shrinkView(true);
 	Keyboard.hideFormAccessoryBar(true);
+	Keyboard.disableScrollingInShrinkView(true);
 });
 
+window.addEventListener('keyboardDidShow', function () {
+    console.log('keyboard '+document.documentElement.clientHeight);
+    $(window).resize();
+    $(document).resize();
+});
 

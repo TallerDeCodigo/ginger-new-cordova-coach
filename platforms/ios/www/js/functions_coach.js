@@ -41,6 +41,11 @@ $( function() {
   				console.log('aceptar borrar');
 
   				var modify = JSON.parse(localStorage.getItem('dietaEdit'));
+  				if(localStorage.getItem('contador_platillos') ){
+  					var count_less = localStorage.getItem('contador_platillos');
+  					count_less--;
+  					localStorage.setItem('contador_platillos', count_less);
+  				}
   				var contar, letoca;
 
   				$.each( modify["estructura"][diaDelete][mealDelete], function( key, value ) {
@@ -75,12 +80,16 @@ $( function() {
   			});
 
   			$('.back').click(function(){
+
   				if (localStorage.getItem('proviene')=="lista") {
   					localStorage.removeItem('dietaEdit');
   					localStorage.removeItem('proviene');
 	  				window.location.assign('lista-dietas.html');
   				} else {
   					localStorage.removeItem('dietaEdit');
+  					if(localStorage.getItem('contador_platillos') ){
+	  					localStorage.removeItem('contador_platillos');
+  					}
 	  				window.location.assign('dietas.html');
   				}
   			});
@@ -403,6 +412,8 @@ $(window).load(function(){
 			
 			if(window.location.href.search('create') != -1 ){
 
+				localStorage.setItem('contador_platillos', 0);
+
 				console.log(jsonNew);
 				
 				console.log('PARSE: ' + JSON.parse(jsonNew));	
@@ -445,6 +456,12 @@ $(window).load(function(){
 					localStorage.setItem('dietaEdit', JSON.stringify(dietaNew));
 
 					localStorage.removeItem('idDishSelected');
+
+					var contador_platillos = localStorage.getItem('contador_platillos');
+
+					contador_platillos++;
+					
+					localStorage.setItem('contador_platillos', contador_platillos);
 					
 					console.log(JSON.stringify(dietaNew));					
 				}
@@ -769,53 +786,55 @@ $(window).load(function(){
 
 		$('.btn_add').click(function(){
 			console.log('guardar dieta');
-			//var localStorage.getItem('');
-			// if(){
 
-			// }//endif condicional para no guardar dieta vacia
+			var dieta_added = localStorage.getItem('idDishSelected');
+			console.log(dieta_added);
 
-			// var dieta = localStorage.getItem('dietaEdit');
-			
-			// console.log('ID DIETA DEFINIDO: ' +JSON.parse(dieta)._id);
-			
-			if(JSON.parse(dieta)._id){
+			if(localStorage.getItem('contador_platillos')>=35 ){
 
-				var response = apiRH.saveDiet(dieta);
-				console.log(response);
-			}
-			else{
-				var response = apiRH.makeDiet(dieta);	
-			}
+					var dieta = localStorage.getItem('dietaEdit');
+					
+					console.log('ID DIETA DEFINIDO: ' +JSON.parse(dieta)._id);
+					
+					if(JSON.parse(dieta)._id){
 
-			if(response){
-  				if (localStorage.getItem('proviene')=="lista") {
-  					localStorage.removeItem('dietaEdit');
-  					localStorage.removeItem('proviene');
-	  				window.location.assign('lista-dietas.html');
-  				} else {
-  					localStorage.removeItem('dietaEdit');
-	  				window.location.assign('dietas.html');
-  				}
+						var response = apiRH.saveDiet(dieta);
+						console.log(response);
+					}
+					else{
+						var response = apiRH.makeDiet(dieta);	
+					}
+
+					if(response){			
+		  				if (localStorage.getItem('proviene')=="lista") {
+		  					localStorage.removeItem('dietaEdit');
+		  					localStorage.removeItem('proviene');
+			 	 		window.location.assign('lista-dietas.html');
+		        		} else {
+		        			localStorage.removeItem('dietaEdit');
+			     		window.location.assign('dietas.html');
+		        	 	}
+		        	}
 			}else{
-				alert('La dieta está incompleta. Favor de verificar.');
+
+				if(!$('.overscreen_error').is(':visible')){
+					console.log('entra popup');
+					$('.overscreen_error').show();
+					setTimeout(function() {$('.overscreen_error').addClass('active');}, 200);
+				} else {
+					$('.overscreen_error').removeClass('active');
+					setTimeout(function() {$('.overscreen_error').hide();}, 800);
+				}
+				$('#container').toggleClass('blurred');
+
+				$('#aceptar_error').click(function(){
+					$('.overscreen_error').hide();
+					$('#container').toggleClass('blurred');
+				})
+				//alert('La dieta está incompleta. Favor de verificar.');
 			}
+	});//end click btn-add
 
-
-
-			// 	var response = apiRH.saveDiet(dieta);
-			// 	console.log(response);
-			// }
-			// else{
-			// 	var response = apiRH.makeDiet(dieta);	
-			// }
-
-			// if(response){
-			// 	localStorage.removeItem('dietaEdit');
-			// 	window.location.assign('dietas.html');
-			// }else{
-			// 	alert('La dieta está incompleta. Favor de verificar.');
-			// }
-		});//end click btn-add
 
 		$('.add_dish').click(function(){
 			// if ($(this).parent().hasClass('desayuno')) {
@@ -921,6 +940,8 @@ $(window).load(function(){
 			 	localStorage.setItem('idDishSelected',$(this).attr('data') );
 			 	localStorage.setItem('desDishSelected',$(this).parent().parent().find('h5').html() );
 			 	localStorage.setItem('recetaDishSelected',$(this).parent().parent().find('p').html() );
+
+			 	console.log( localStorage.getItem('idDishSelected') );
 
 				$('.alert_meal_description').hide();
 				$('#container').toggleClass('blurred');
@@ -1668,18 +1689,25 @@ $(window).load(function(){
 
 				$('#mensaje-chat').focus(function() {
   					if(this.innerHTML=='Mensaje') {this.innerHTML='';}
-  					$('#container').addClass('conteclado');
-					$('#container').css('height',document.documentElement.clientHeight+"px");
-					var calulitio = document.documentElement.clientHeight-40;
-					$('.escribir').css('top',calulitio+"px");
+  			// 		$('#container').addClass('conteclado');
+					// $('#container').css('height',document.documentElement.clientHeight+"px");
+					// var calulitio = document.documentElement.clientHeight-40;
+					// $('.escribir').css('top',calulitio+"px");
 				});
 
+				var nuevo = 0;
+
 				$('h2.titulo').click(function(){
+					$(window).resize();
+					$(document).resize();
+					nuevo++;
 					$('#container').addClass('conteclado');
 					$('#container').css('height',document.documentElement.clientHeight+"px");
-					var calulitio = document.documentElement.clientHeight-40;
+					var calulitio = document.documentElement.clientHeight-43;
 					$('.escribir').css('top',calulitio+"px");
 					$('#mensaje-chat').focus();
+					console.log(nuevo+" "+document.documentElement.clientHeight);
+					$('#container').scrollTop($('#container').prop("scrollHeight"));
 				});
 
 		}//end IF body has class
@@ -1783,6 +1811,12 @@ $(document).on('click', '.platillo-item', function() {
 $(document).on('deviceready', function(){ 
 	Keyboard.shrinkView(true);
 	Keyboard.hideFormAccessoryBar(true);
+	Keyboard.disableScrollingInShrinkView(true);
 });
 
+window.addEventListener('keyboardDidShow', function () {
+    console.log('keyboard '+document.documentElement.clientHeight);
+    $(window).resize();
+    $(document).resize();
+});
 

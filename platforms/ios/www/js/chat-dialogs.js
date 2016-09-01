@@ -213,7 +213,27 @@ function triggerDialog(dialogId){
   retrieveChatMessages(dialogs[dialogId], null);
 
   // $('#messages-list').scrollTop($('#messages-list').prop('scrollHeight'));
-  // $('#mensaje-chat').focus();
+  $('#mensaje-chat').focus();
+  setTimeout(function() {
+    $('#mensaje-chat').focusout();
+    $('h2.titulo').trigger('click');
+  }, 1000);
+  setTimeout(function() {
+    $('#mensaje-chat').focusout();
+    $('h2.titulo').trigger('click');
+  }, 2000);
+  setTimeout(function() {
+    $('#mensaje-chat').focusout();
+    $('h2.titulo').trigger('click');
+  }, 3000);
+  setTimeout(function() {
+    $('#mensaje-chat').focusout();
+    $('h2.titulo').trigger('click');
+  }, 3000);
+  setTimeout(function() {
+    $('#messages-list').css('opacity','1');
+    $('.escribir').css('opacity','1');
+  }, 3000);
 
   // window.scrollTo(0,0);
   
