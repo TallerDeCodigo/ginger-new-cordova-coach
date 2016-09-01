@@ -158,7 +158,7 @@ $(window).load(function(){
 				
 				console.log(i + " - " + value);
 				
-				$('.list-users').append("<li class='usuario-item' data='" + JSON.stringify(user[i]) + "'><h2>" + user[i].nombre + " " + user[i].apellido + "</h2><a class='bubble notificaciones' style='display:none'>0</a><a class='bubble mensajes' style='display:none'>0</a></li>");
+				$('.list-users').append("<li class='usuario-item' data='" + JSON.stringify(user[i]) + "'><h2>" + user[i].nombre + " " + user[i].apellido + "</h2><a class='bubble notificaciones' >0</a><a class='bubble mensajes'>0</a></li>");
 
 				i++;
 			});
