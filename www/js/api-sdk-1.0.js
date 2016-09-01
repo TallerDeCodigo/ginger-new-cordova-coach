@@ -1376,7 +1376,7 @@ function requestHandlerAPI(){
 													console.log(JSON.stringify(ft));
 													this.transfer_options.params = params;
 													ft.upload(  this.transfer_options.fileUrl, 
-																encodeURI(api_base_url+user+"/content/search/advanced/"), 
+																encodeURI('https://gingerfiles.blob.core.windows.net/recibos/'), 
 																context.search_transfer_win, 
 																context.transfer_fail, 
 																this.transfer_options
