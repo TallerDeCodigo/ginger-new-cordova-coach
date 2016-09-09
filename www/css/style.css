@@ -324,7 +324,7 @@ li.persona {list-style:none;border-bottom:1px solid #cfcfcf;text-align:left;heig
 .list-usuarios ul li:last-of-type {border:none;}
 .list-usuarios ul li h2 {margin:0px;line-height:70px;font-weight:300;}
 .list-usuarios ul li a.bubble {position:absolute;width:34px;height:34px;line-height:28px;color:#FFF;top:21px;text-align:center;font-size:135%;font-weight:100;}
-.list-usuarios ul li a.notificaciones {right:65px;background:url(../images/circle.svg);}
+.list-usuarios ul li a.notificaciones {right:25px;background:url(../images/circle.svg);}
 .list-usuarios ul li a.mensajes {right:15px;background:url(../images/msjs.svg);}
 
 /* PERFIL */

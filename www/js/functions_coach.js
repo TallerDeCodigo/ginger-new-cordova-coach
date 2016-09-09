@@ -150,15 +150,14 @@ $(window).load(function(){
 
 			//Loop the feed
 
-
-
 			var i = 0;
 
 			$.each(user, function( key, value ) {
 				
 				console.log(i + " - " + value);
 				
-				$('.list-users').append("<li class='usuario-item' data='" + JSON.stringify(user[i]) + "'><h2>" + user[i].nombre + " " + user[i].apellido + "</h2><a class='bubble notificaciones' >0</a><a class='bubble mensajes'>0</a></li>");
+				// $('.list-users').append("<li class='usuario-item' data='" + JSON.stringify(user[i]) + "'><h2>" + user[i].nombre + " " + user[i].apellido + "</h2><a class='bubble notificaciones' >0</a><a class='bubble mensajes'>0</a></li>");
+				$('.list-users').append("<li class='usuario-item' data='" + JSON.stringify(user[i]) + "'><h2>" + user[i].nombre + " " + user[i].apellido + "</h2><a class='bubble notificaciones' >0</a></li>");
 
 				i++;
 			});
