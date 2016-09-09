@@ -53,12 +53,41 @@ figure {margin:0;}
 
 
 /*** FONT FACE ***/
-@font-face {font-family:'Kohi';src:url('fonts/font-Bold.ttf');font-weight:900;font-style:normal;}
-@font-face {font-family:'Kohi';src:url('fonts/font-Book.ttf');font-weight:300;font-style:normal;}
-@font-face {font-family:'Kohi';src:url('fonts/font-Demi.ttf');font-weight:800;font-style:normal;}
-@font-face {font-family:'Kohi';src:url('fonts/font-Light.ttf');font-weight:100;font-style:normal;}
-@font-face {font-family:'Kohi';src:url('fonts/font-Medium.ttf');font-weight:700;font-style:normal;}
-
+@font-face {
+	font-family: 'Kohi';
+	src: url('fonts/Khinoor-Bold.eot');
+	src: local('☺'), url('fonts/Khinoor-Bold.woff') format('woff'), url('fonts/Khinoor-Bold.ttf') format('truetype'), url('fonts/Khinoor-Bold.svg') format('svg');
+	font-weight: 900;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'Kohi';
+	src: url('fonts/Khinoor-Demi.eot');
+	src: local('☺'), url('fonts/Khinoor-Demi.woff') format('woff'), url('fonts/Khinoor-Demi.ttf') format('truetype'), url('fonts/Khinoor-Demi.svg') format('svg');
+	font-weight: 800;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'Kohi';
+	src: url('fonts/Khinoor-Medium.eot');
+	src: local('☺'), url('fonts/Khinoor-Medium.woff') format('woff'), url('fonts/Khinoor-Medium.ttf') format('truetype'), url('fonts/Khinoor-Medium.svg') format('svg');
+	font-weight: 700;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'Kohi';
+	src: url('fonts/Khinoor-Book.eot');
+	src: local('☺'), url('fonts/Khinoor-Book.woff') format('woff'), url('fonts/Khinoor-Book.ttf') format('truetype'), url('fonts/Khinoor-Book.svg') format('svg');
+	font-weight: 300;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'Kohi';
+	src: url('fonts/Khinoor-Light.eot');
+	src: local('☺'), url('fonts/Khinoor-Light.woff') format('woff'), url('fonts/Khinoor-Light.ttf') format('truetype'), url('fonts/Khinoor-Light.svg') format('svg');
+	font-weight: 100;
+	font-style: normal;
+}
 
 /*** SIZING WITH REM ***/
 html { font-size:62.5%; } 

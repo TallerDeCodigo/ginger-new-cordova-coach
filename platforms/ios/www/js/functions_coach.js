@@ -1551,6 +1551,7 @@ $(window).load(function(){
 				responsedata = apiRH.getFinanzas(month + 1);
 
 			});
+			app.hideLoader();
 		}//	END HAS CLASS FINANZAS
 
 

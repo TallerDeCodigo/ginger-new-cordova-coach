@@ -234,6 +234,9 @@
 		},
 		render_chat : function(){
 			return app.showLoader();
+		},
+		render_finanzas : function(){
+			return app.showLoader();
 		},								
 		render_create_user : function(){
 
