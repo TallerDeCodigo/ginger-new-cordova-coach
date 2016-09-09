@@ -234,6 +234,9 @@
 		},
 		render_chat : function(){
 			return app.showLoader();
+		},
+		render_finanzas : function(){
+			return app.showLoader();
 		},								
 		render_create_user : function(){
 
@@ -600,26 +603,31 @@
 		//-----------------------------
 		console.log("Initializing events");
 		var initialViewHeight = document.documentElement.clientHeight;
-
+		var calculate = null;
 		var fixWithKeyboard = function(){
 
-			Keyboard.disableScrollingInShrinkView(false);
-			Keyboard.shrinkView(false);
 			$(window).resize();
 			$(document).resize();
 			$('body').addClass("openkeyboard");
 			if($('#container').hasClass("chat")){
+				Keyboard.disableScrollingInShrinkView(true);
+				Keyboard.shrinkView(true);
 				console.log("container has chat");
 				// $('#container').addClass('conteclado');
 				// $('#container').css('height',document.documentElement.clientHeight+"px");
-				var calculate = document.documentElement.clientHeight-43;
-				console.log(calculate);
-				// $('#mensaje-chat').focus();
+				calculate = (!calculate) ? document.documentElement.clientHeight : calculate;
+				var topKeyboard = initialViewHeight-calculate;
+				var scroll =  $('#messages-list').prop('scrollHeight');
+				$('body').scrollTop($('#messages-list').prop('scrollHeight'));
+				$('.hwhite2').css('top',(scroll-topKeyboard-43)+"px");
+				$('#mensaje-chat').focus();
 				// $('#container').scrollTop($('#container').prop("scrollHeight"));
 				// $('body').scrollTop(0);
 				// $('#messages-list').trigger("click");
-				// $('.escribir').css('top',calculate+"px");
+				return;
 			}
+			Keyboard.disableScrollingInShrinkView(false);
+			Keyboard.shrinkView(false);
 		}
 
 		window.openKeyboard = false;
@@ -636,12 +644,11 @@
 		window.addEventListener('keyboardDidHide', function () {
 			console.log('keyboard did hide');
 			window.openKeyboard = false;
-			$('#container').removeClass('conteclado');
 			$('body').removeClass("openkeyboard");
-			$('#container').css('height', document.documentElement.clientHeight+"px");
-			$('.escribir').css('top',"initial");
+			$('.hwhite2').css('top', "0px");
+			// $('#container').css('height', document.documentElement.clientHeight+"px");
+			$('.escribir').css('bottom', 0);
 		});
-
 
 // ----------------------------------------------------------------------
 

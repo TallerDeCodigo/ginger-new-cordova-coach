@@ -17,47 +17,48 @@
 		<script type="text/javascript" src="js/oauth.js"></script>
 		<script src="js/main.js"></script>		
 	</head>
-	<body class="has-finanzas iosm" onload="document.getElementById('container').style.display ='block';document.getElementById('spinner').style.display ='none';">
-	<div id="spinner">
-		<img src="images/loader.gif" loop=infinite>
-	</div>
-	<div id="container" class="finanzas" style="display:none">
-		<header class="hwhite">
-			<div class="toolbar">
-				<a class="back" href="index.html"><img src="images/back.svg"></a>
-				<h2 class="titulo">Finanzas</h2>
+	<body class="has-finanzas iosm" onload="document.getElementById('container').style.display ='block';">
+		<div id="container" class="finanzas" style="display:none">
+			<header class="hwhite">
+				<div class="toolbar">
+					<a class="back" href="index.html"><img src="images/back.svg"></a>
+					<h2 class="titulo">Finanzas</h2>
+				</div>
+			</header>
+			<a class="btn-gre">Recibo de honorarios</a>
+			<p class="acumulado">Saldo acumulado del <span class="inicio"></span> al <span class="final"></span></p>
+			<p class="cantidad">$ <span class="totalAcumulado">0</span> MXN</p>
+			<p class="status">PAGADO</p>
+			<p class="diasac">Total de días acumulados<br><span class="total">0</span></p>
+			<div class="changer">
+				<a class="btn_left" href="#"><img src="images/leftarrow.png"></a>
+				<span class="mes"></span>
+				<a class="btn_right" href="#"><img src="images/rightarrow.png"></a>
 			</div>
-		</header>
-		<a class="btn-gre">Recibo de honorarios</a>
-		<p class="acumulado">Saldo acumulado del <span class="inicio"></span> al <span class="final"></span></p>
-		<p class="cantidad">$ <span class="totalAcumulado">0</span> MXN</p>
-		<p class="status">PAGADO</p>
-		<p class="diasac">Total de días acumulados<br><span class="total">0</span></p>
-		<div class="changer">
-			<a class="btn_left" href="#"><img src="images/leftarrow.png"></a>
-			<span class="mes"></span>
-			<a class="btn_right" href="#"><img src="images/rightarrow.png"></a>
+			<table class="record">
+				<tr>
+					<th>Nombre</th>
+					<th>Inicio</th>
+					<th>Días</th>
+					<th>Saldo</th>
+				</tr>
+				<!-- <tr>
+					<td>Raúl H.</td>
+					<td>15 Ago</td>
+					<td>15</td>
+					<td>$ 320.50</td>
+				</tr> -->
+			</table>
 		</div>
-		<table class="record">
-			<tr>
-				<th>Nombre</th>
-				<th>Inicio</th>
-				<th>Días</th>
-				<th>Saldo</th>
-			</tr>
-			<!-- <tr>
-				<td>Raúl H.</td>
-				<td>15 Ago</td>
-				<td>15</td>
-				<td>$ 320.50</td>
-			</tr> -->
-		</table>
-	</div>
+		<div class="loader_container" id="spinner">
+			<div class="loading"></div>
+		</div>
 	</body>
 	<script type="text/javascript">
 		/* Initialize app object and perform initial login check */
 		window.is_home = false;
 		app.initialize();
+		app.render_finanzas();
 	</script>
 </html>
 

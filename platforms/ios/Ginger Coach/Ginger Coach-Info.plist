@@ -26,23 +26,11 @@
     <string>????</string>
     <key>CFBundleVersion</key>
     <string>1.0.0</string>
-    <key>LSRequiresIPhoneOS</key>
+    <key>GCM_SENDER_ID</key>
+    <string>XXXXXXX</string>
+    <key>IS_GCM_ENABLED</key>
     <true/>
-    <key>NSMainNibFile</key>
-    <string/>
-    <key>NSMainNibFile~ipad</key>
-    <string/>
-    <key>UISupportedInterfaceOrientations</key>
-    <array>
-      <string>UIInterfaceOrientationPortrait</string>
-      <string>UIInterfaceOrientationPortraitUpsideDown</string>
-    </array>
-    <key>UISupportedInterfaceOrientations~ipad</key>
-    <array>
-      <string>UIInterfaceOrientationPortrait</string>
-      <string>UIInterfaceOrientationPortraitUpsideDown</string>
-    </array>
-    <key>UIRequiresFullScreen</key>
+    <key>LSRequiresIPhoneOS</key>
     <true/>
     <key>NSAppTransportSecurity</key>
     <dict>
@@ -80,20 +68,32 @@
       <key>NSAllowsArbitraryLoads</key>
       <true/>
     </dict>
-    <key>UIInterfaceOrientation</key>
-    <array>
-      <string>UIInterfaceOrientationPortrait</string>
-    </array>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string/>
+    <key>NSMainNibFile</key>
+    <string/>
+    <key>NSMainNibFile~ipad</key>
+    <string/>
     <key>UIBackgroundModes</key>
     <array>
       <string>audio</string>
       <string>remote-notification</string>
     </array>
-    <key>NSLocationWhenInUseUsageDescription</key>
-    <string/>
-    <key>GCM_SENDER_ID</key>
-    <string>XXXXXXX</string>
-    <key>IS_GCM_ENABLED</key>
+    <key>UIInterfaceOrientation</key>
+    <array>
+      <string>UIInterfaceOrientationPortrait</string>
+    </array>
+    <key>UIRequiresFullScreen</key>
     <true/>
+    <key>UISupportedInterfaceOrientations</key>
+    <array>
+      <string>UIInterfaceOrientationPortrait</string>
+      <string>UIInterfaceOrientationPortraitUpsideDown</string>
+    </array>
+    <key>UISupportedInterfaceOrientations~ipad</key>
+    <array>
+      <string>UIInterfaceOrientationPortrait</string>
+      <string>UIInterfaceOrientationPortraitUpsideDown</string>
+    </array>
   </dict>
 </plist>
