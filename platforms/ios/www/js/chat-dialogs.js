@@ -112,6 +112,7 @@ function retrieveChatDialogs() {
 
           clickSendAttachments(inputFile);
         });
+        app.hideLoader();
       });
     }
   });
@@ -144,7 +145,7 @@ function showOrUpdateDialogInUI(itemRes, updateHtml) {
     $('#dialogs-list').append(dialogHtml);
 	
   }
-
+  app.hideLoader();
   console.log('opponentId <<<<<<'+opponentId);
 }
 

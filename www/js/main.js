@@ -230,10 +230,7 @@
 				return true;
 		},
 		render_home : function(){
-			app.showLoader();
-			$(document).ready(function(){
-				return app.hideLoader();
-			});
+			return;
 		},
 		render_chat : function(){
 			return app.showLoader();

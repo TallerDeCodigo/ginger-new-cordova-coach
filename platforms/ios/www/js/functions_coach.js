@@ -158,7 +158,7 @@ $(window).load(function(){
 				
 				console.log(i + " - " + value);
 				
-				$('.list-users').append("<li class='usuario-item' data='" + JSON.stringify(user[i]) + "'><h2>" + user[i].nombre + " " + user[i].apellido + "</h2><a class='bubble notificaciones' style='display:none'>0</a><a class='bubble mensajes' style='display:none'>0</a></li>");
+				$('.list-users').append("<li class='usuario-item' data='" + JSON.stringify(user[i]) + "'><h2>" + user[i].nombre + " " + user[i].apellido + "</h2><a class='bubble notificaciones' >0</a><a class='bubble mensajes'>0</a></li>");
 
 				i++;
 			});
@@ -410,6 +410,10 @@ $(window).load(function(){
 
 			var jsonNew = '{"nombre": "' +localStorage.getItem('d_nombre') + '","descripcion":"' + localStorage.getItem('d_comentario') + '", "estructura":{"domingo":{"desayuno":{},"snack1":{},"comida":{},"snack2":{},"cena":{}},"lunes":{"desayuno":{},"snack1":{},"comida":{},"snack2":{},"cena":{}},"martes":{"desayuno":{},"snack1":{},"comida":{},"snack2":{},"cena":{}},"miercoles":{"desayuno":{},"snack1":{},"comida":{},"snack2":{},"cena":{}},"jueves":{"desayuno":{},"snack1":{},"comida":{},"snack2":{},"cena":{}},"viernes":{"desayuno":{},"snack1":{},"comida":{},"snack2":{},"cena":{}},"sabado":{"desayuno":{},"snack1":{},"comida":{},"snack2":{},"cena":{}}},"perfil":{"sexo":0,"edad":0,"bmi":0,"objetivo":0}}';
 			
+			if(window.location.href.search('editar') != -1){
+				localStorage.setItem('contador_platillos', 1);
+			}
+
 			if(window.location.href.search('create') != -1 ){
 
 				localStorage.setItem('contador_platillos', 0);
@@ -790,7 +794,7 @@ $(window).load(function(){
 			var dieta_added = localStorage.getItem('idDishSelected');
 			console.log(dieta_added);
 
-			if(localStorage.getItem('contador_platillos')>=35 ){
+			if(localStorage.getItem('contador_platillos')>=3 ){
 
 					var dieta = localStorage.getItem('dietaEdit');
 					
@@ -1460,9 +1464,9 @@ $(window).load(function(){
 				$('#coach_type_perfil').append(coach_type[p] + separador);
 			}
 
-			$('#blog').click(function(){
-				cordova.InAppBrowser.open('http://apache.org', '_blank', 'location=yes');
-			});
+			// $('#blog').click(function(){
+			// 	cordova.InAppBrowser.open('http://apache.org', '_blank', 'location=yes');
+			// });
 
 			$('').click(function(){
 
@@ -1695,21 +1699,21 @@ $(window).load(function(){
 					// $('.escribir').css('top',calulitio+"px");
 				});
 
-				var nuevo = 0;
+				// var nuevo = 0;
 
-				$('h2.titulo').click(function(){
-					$(window).resize();
-					$(document).resize();
-					nuevo++;
-					$('#container').addClass('conteclado');
-					$('#container').css('height',document.documentElement.clientHeight+"px");
-					var calulitio = document.documentElement.clientHeight-43;
-					$('.escribir').css('top',calulitio+"px");
-					$('#mensaje-chat').focus();
-					console.log(nuevo+" "+document.documentElement.clientHeight);
-					$('#container').scrollTop($('#container').prop("scrollHeight"));
-				});
-
+				// $('h2.titulo').click(function(){
+				// 	$(window).resize();
+				// 	$(document).resize();
+				// 	nuevo++;
+				// 	$('#container').addClass('conteclado');
+				// 	$('#container').css('height',document.documentElement.clientHeight+"px");
+				// 	var calulitio = document.documentElement.clientHeight-43;
+				// 	$('.escribir').css('top',calulitio+"px");
+				// 	$('#mensaje-chat').focus();
+				// 	console.log(nuevo+" "+document.documentElement.clientHeight);
+				// 	$('#container').scrollTop($('#container').prop("scrollHeight"));
+				// });
+				app.hideLoader();
 		}//end IF body has class
 		
 

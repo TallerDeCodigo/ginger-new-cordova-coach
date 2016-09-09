@@ -112,6 +112,7 @@ function retrieveChatDialogs() {
 
           clickSendAttachments(inputFile);
         });
+        app.hideLoader();
       });
     }
   });

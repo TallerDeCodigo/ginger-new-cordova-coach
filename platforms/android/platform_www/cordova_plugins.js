@@ -291,15 +291,6 @@ module.exports = [
         "clobbers": [
             "window.Keyboard"
         ]
-    },
-    {
-        "id": "ionic-plugin-keyboard.keyboard",
-        "file": "plugins/ionic-plugin-keyboard/www/android/keyboard.js",
-        "pluginId": "ionic-plugin-keyboard",
-        "clobbers": [
-            "cordova.plugins.Keyboard"
-        ],
-        "runs": true
     }
 ];
 module.exports.metadata = 
@@ -318,8 +309,7 @@ module.exports.metadata =
     "cordova-plugin-splashscreen": "3.2.2",
     "cordova-plugin-x-toast": "2.5.2",
     "phonegap-plugin-push": "1.8.1",
-    "cordova-plugin-keyboard": "1.1.4",
-    "ionic-plugin-keyboard": "2.2.1"
+    "cordova-plugin-keyboard": "1.1.4"
 };
 // BOTTOM OF METADATA
 });

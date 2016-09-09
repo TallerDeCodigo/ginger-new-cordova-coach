@@ -49,7 +49,6 @@ function connectToChat(user) {
           // load chat dialogs
           //
           retrieveChatDialogs();
-
           // setup message listeners
           //
           setupAllListeners();
@@ -57,6 +56,7 @@ function connectToChat(user) {
           // setup scroll events handler
           //
           setupMsgScrollHandler();
+
         }
       });
     }

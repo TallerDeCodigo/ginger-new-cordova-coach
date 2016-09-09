@@ -140,8 +140,6 @@ function retrieveChatMessages(dialog, beforeDateSent){
 
           $('#messages-list').prepend(messageHtml);
 
-
-          app.hideLoader();
           // Show delivered statuses
           if (item.read_ids.length > 1 && messageSenderId === currentUser.id) {
             $('#delivered_'+messageId).fadeOut(100);
@@ -151,16 +149,21 @@ function retrieveChatMessages(dialog, beforeDateSent){
             $('#read_'+messageId).fadeOut(200);
           }
 
-          if (i > 5) {$('#messages-list').scrollTop($('#messages-list').prop('scrollHeight'));}
+          if (i > 5) {$('body').scrollTop($('#messages-list').prop('scrollHeight'));}
         });
       }
+      setTimeout(function(){
+        app.hideLoader();
+        $('body').scrollTop($('#messages-list').prop('scrollHeight'));
+      }, 2400);
     }else{
       console.log(err);
     }
+
   });
   
   $(".load-msg").delay(100).fadeOut(500);
-  setTimeout(function(){ window.scrollTo(0,document.body.scrollHeight); }, 1);
+  // setTimeout(function(){ window.scrollTo(0,document.body.scrollHeight);  }, 1);
 }//end retrieveChatMessages
 
 
@@ -242,12 +245,13 @@ function sendMessage(text, attachmentFileId) {
 function showMessage(userId, msg, attachmentFileId) {
   // add a message to list
   var userLogin = getUserLoginById(userId);
-  var messageHtml = buildMessageHTML(msg.body, userLogin, new Date(), attachmentFileId, msg.id);
+  var messageHtml = buildMessageHTML(msg.body, userId, new Date(), attachmentFileId, msg.id);
 
   $('#messages-list').append(messageHtml);
 
   // scroll to bottom
   var mydiv = $('#messages-list');
+  console.log("Scrollheight ::: "+mydiv.prop('scrollHeight'));
   mydiv.scrollTop(mydiv.prop('scrollHeight'));
 }
 

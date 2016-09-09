@@ -7,53 +7,50 @@
         "files": {}
     },
     "installed_plugins": {
-        "cordova-plugin-whitelist": {
-            "PACKAGE_NAME": "io.cordova.hellocordova"
-        },
         "com.oauthio.plugins.oauthio": {
-            "PACKAGE_NAME": "io.cordova.hellocordova"
+            "PACKAGE_NAME": "com.ginger.coach"
         },
         "cordova-plugin-background-mode": {
-            "PACKAGE_NAME": "io.cordova.hellocordova"
+            "PACKAGE_NAME": "com.ginger.coach"
         },
         "cordova-plugin-camera": {
-            "PACKAGE_NAME": "io.cordova.hellocordova"
+            "PACKAGE_NAME": "com.ginger.coach"
         },
         "cordova-plugin-console": {
-            "PACKAGE_NAME": "io.cordova.hellocordova"
+            "PACKAGE_NAME": "com.ginger.coach"
         },
         "cordova-plugin-file": {
-            "PACKAGE_NAME": "io.cordova.hellocordova"
+            "PACKAGE_NAME": "com.ginger.coach"
         },
         "cordova-plugin-file-transfer": {
-            "PACKAGE_NAME": "io.cordova.hellocordova"
+            "PACKAGE_NAME": "com.ginger.coach"
         },
         "cordova-plugin-inappbrowser": {
-            "PACKAGE_NAME": "io.cordova.hellocordova"
-        },
-        "cordova-plugin-splashscreen": {
-            "PACKAGE_NAME": "io.cordova.hellocordova"
-        },
-        "cordova-plugin-x-toast": {
-            "PACKAGE_NAME": "io.cordova.hellocordova"
-        },
-        "phonegap-plugin-push": {
-            "SENDER_ID": "XXXXXXX",
-            "PACKAGE_NAME": "$(PRODUCT_BUNDLE_IDENTIFIER)"
+            "PACKAGE_NAME": "com.ginger.coach"
         },
         "cordova-plugin-keyboard": {
             "PACKAGE_NAME": "com.ginger.coach"
         },
-        "ionic-plugin-keyboard": {
+        "cordova-plugin-splashscreen": {
+            "PACKAGE_NAME": "com.ginger.coach"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "com.ginger.coach"
+        },
+        "cordova-plugin-x-toast": {
+            "PACKAGE_NAME": "com.ginger.coach"
+        },
+        "phonegap-plugin-push": {
+            "SENDER_ID": "XXXXXXX",
             "PACKAGE_NAME": "com.ginger.coach"
         }
     },
     "dependent_plugins": {
         "cordova-plugin-device": {
-            "PACKAGE_NAME": "io.cordova.hellocordova"
+            "PACKAGE_NAME": "com.ginger.coach"
         },
         "cordova-plugin-compat": {
-            "PACKAGE_NAME": "io.cordova.hellocordova"
+            "PACKAGE_NAME": "com.ginger.coach"
         }
     }
 }
