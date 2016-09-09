@@ -191,18 +191,20 @@ $(window).load(function(){
 			var separador = '';
 
 			
-			$('.user_restricciones').html('');
-			for (var i = 0; i < user.perfil.restricciones.length; i++) {
 			
-				if(i == user.perfil.restricciones.length -1){
-					separador = '';	
-				}else{
-					separador = ', ';
-				}
-				console.log(restricciones[user.perfil.restricciones[i]]);
-
-				$('.user_restricciones').append(restricciones[user.perfil.restricciones[i]] + separador);
-			};
+			if(user.perfil.restricciones){
+				$('.user_restricciones').html('');
+				for (var i = 0; i < user.perfil.restricciones.length; i++) {
+				
+					if(i == user.perfil.restricciones.length -1){
+						separador = '';	
+					}else{
+						separador = ', ';
+					}
+					console.log(restricciones[user.perfil.restricciones[i]]);
+					$('.user_restricciones').append(restricciones[user.perfil.restricciones[i]] + separador);
+				};
+			}
 			
 			
 			$('.user_comentario').html(user.comentarios);
@@ -1464,14 +1466,7 @@ $(window).load(function(){
 				$('#coach_type_perfil').append(coach_type[p] + separador);
 			}
 
-			// $('#blog').click(function(){
-			// 	cordova.InAppBrowser.open('http://apache.org', '_blank', 'location=yes');
-			// });
-
-			$('').click(function(){
-
-			});
-			
+			app.hideLoader();
 
 		}
 

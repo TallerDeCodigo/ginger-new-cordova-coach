@@ -1464,14 +1464,7 @@ $(window).load(function(){
 				$('#coach_type_perfil').append(coach_type[p] + separador);
 			}
 
-			// $('#blog').click(function(){
-			// 	cordova.InAppBrowser.open('http://apache.org', '_blank', 'location=yes');
-			// });
-
-			$('').click(function(){
-
-			});
-			
+			app.hideLoader();
 
 		}
 

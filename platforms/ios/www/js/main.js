@@ -237,6 +237,9 @@
 		},
 		render_finanzas : function(){
 			return app.showLoader();
+		},
+		render_myProfile : function(){
+			return app.showLoader();
 		},								
 		render_create_user : function(){
 
