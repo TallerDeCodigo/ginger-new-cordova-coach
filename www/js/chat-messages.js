@@ -72,7 +72,7 @@ function onReadStatusListener(messageId) {
 }
 
 function retrieveChatMessages(dialog, beforeDateSent){
-
+  app.showLoader();
   console.log('retrieveChatMessages');
   // Load messages history
   //
@@ -141,6 +141,7 @@ function retrieveChatMessages(dialog, beforeDateSent){
           $('#messages-list').prepend(messageHtml);
 
 
+          app.hideLoader();
           // Show delivered statuses
           if (item.read_ids.length > 1 && messageSenderId === currentUser.id) {
             $('#delivered_'+messageId).fadeOut(100);

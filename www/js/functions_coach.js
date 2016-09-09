@@ -1699,21 +1699,21 @@ $(window).load(function(){
 					// $('.escribir').css('top',calulitio+"px");
 				});
 
-				var nuevo = 0;
+				// var nuevo = 0;
 
-				$('h2.titulo').click(function(){
-					$(window).resize();
-					$(document).resize();
-					nuevo++;
-					$('#container').addClass('conteclado');
-					$('#container').css('height',document.documentElement.clientHeight+"px");
-					var calulitio = document.documentElement.clientHeight-43;
-					$('.escribir').css('top',calulitio+"px");
-					$('#mensaje-chat').focus();
-					console.log(nuevo+" "+document.documentElement.clientHeight);
-					$('#container').scrollTop($('#container').prop("scrollHeight"));
-				});
-
+				// $('h2.titulo').click(function(){
+				// 	$(window).resize();
+				// 	$(document).resize();
+				// 	nuevo++;
+				// 	$('#container').addClass('conteclado');
+				// 	$('#container').css('height',document.documentElement.clientHeight+"px");
+				// 	var calulitio = document.documentElement.clientHeight-43;
+				// 	$('.escribir').css('top',calulitio+"px");
+				// 	$('#mensaje-chat').focus();
+				// 	console.log(nuevo+" "+document.documentElement.clientHeight);
+				// 	$('#container').scrollTop($('#container').prop("scrollHeight"));
+				// });
+				app.hideLoader();
 		}//end IF body has class
 		
 

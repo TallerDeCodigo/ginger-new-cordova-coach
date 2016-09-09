@@ -144,7 +144,7 @@ function showOrUpdateDialogInUI(itemRes, updateHtml) {
     $('#dialogs-list').append(dialogHtml);
 	
   }
-
+  app.hideLoader();
   console.log('opponentId <<<<<<'+opponentId);
 }
 
