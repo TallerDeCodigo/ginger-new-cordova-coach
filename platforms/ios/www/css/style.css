@@ -126,6 +126,14 @@ h4 {margin:10px 0px 12px;font-weight:700;font-size:130%;color:#333;}
 
 .btn-gre {position:relative;display:inline-block;border-radius:2px;text-align:center;color:#FFF;font-weight:800;background:#43c2a7;font-size:125%;letter-spacing:0.035em;padding:6px 13px;margin:0px 0px 0px;}
 
+.openkeyboard .htrans{position: absolute; top: 0;}
+.openkeyboard .hwhite2{position: absolute!important;}
+.openkeyboard .escribir.foot-chat{position: absolute;}
+.openkeyboard #container.chat_container{display: block; overflow: hidden;}
+.openkeyboard #messages-list.content.list-group{position: absolute; bottom: 0; padding-bottom: 8rem;}
+.openkeyboard .overscreen3.active{position: absolute;}
+
+
 /*
 
 		IOS 	*
@@ -324,7 +332,7 @@ li.persona {list-style:none;border-bottom:1px solid #cfcfcf;text-align:left;heig
 .list-usuarios ul li:last-of-type {border:none;}
 .list-usuarios ul li h2 {margin:0px;line-height:70px;font-weight:300;}
 .list-usuarios ul li a.bubble {position:absolute;width:34px;height:34px;line-height:28px;color:#FFF;top:21px;text-align:center;font-size:135%;font-weight:100;}
-.list-usuarios ul li a.notificaciones {right:65px;background:url(../images/circle.svg);}
+.list-usuarios ul li a.notificaciones {right:25px;background:url(../images/circle.svg);}
 .list-usuarios ul li a.mensajes {right:15px;background:url(../images/msjs.svg);}
 
 /* PERFIL */

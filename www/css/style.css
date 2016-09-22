@@ -126,6 +126,14 @@ h4 {margin:10px 0px 12px;font-weight:700;font-size:130%;color:#333;}
 
 .btn-gre {position:relative;display:inline-block;border-radius:2px;text-align:center;color:#FFF;font-weight:800;background:#43c2a7;font-size:125%;letter-spacing:0.035em;padding:6px 13px;margin:0px 0px 0px;}
 
+.openkeyboard .htrans{position: absolute; top: 0;}
+.openkeyboard .hwhite2{position: absolute!important;}
+.openkeyboard .escribir.foot-chat{position: absolute;}
+.openkeyboard #container.chat_container{display: block; overflow: hidden;}
+.openkeyboard #messages-list.content.list-group{position: absolute; bottom: 0; padding-bottom: 8rem; background-color: #e9ebee;}
+.openkeyboard .overscreen3.active{position: absolute;}
+
+
 /*
 
 		IOS 	*
@@ -208,6 +216,8 @@ input.send {position:absolute;border-style:none; outline:none;background:none;ri
 
 .foot-chat textarea {width:100%;resize:none;outline:none;border:1px solid #CCC;border-radius:3px;padding:4px 5px 1px;}
 
+.incoming,
+.outgoing {-webkit-box-shadow: 2px 0px 7px 0px rgba(168,168,168,0.35); -moz-box-shadow: 2px 0px 7px 0px rgba(168,168,168,0.35); box-shadow: 2px 0px 7px 0px rgba(168,168,168,0.35);}
 .incoming {float:left;background:#42c2a7;width:75%;color:#FFF;text-align:left;border-radius:10px;margin:12px 0px 0px 13px;position:relative;}
 .outgoing {float:right;background:#7f4ab8;width:75%;color:#FFF;text-align:left;border-radius:10px;margin:12px 13px 0px 0px;position:relative;}
 .incoming:after {content:"";position:absolute;left:-11px;bottom:0px;width:11px;height:14px;background:url('../images/incom.svg');}
@@ -220,7 +230,7 @@ input.send {position:absolute;border-style:none; outline:none;background:none;ri
 
 .chat section {padding-bottom:50px;}
 .content.list-group .list-group-item:last-of-type div{margin-bottom: 50px}
-.content.list-group{padding-bottom: 7rem; position: relative; z-index: 5; min-height: 80vh;}
+.content.list-group{padding-bottom: 7rem; position: relative; z-index: 5; min-height: 80vh; background-color: #e9ebee;}
 
 /* DIETA */
 

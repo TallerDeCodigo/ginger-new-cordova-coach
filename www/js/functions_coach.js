@@ -465,7 +465,7 @@ $(window).load(function(){
 					var contador_platillos = localStorage.getItem('contador_platillos');
 
 					contador_platillos++;
-					
+					console.log(contador_platillos);
 					localStorage.setItem('contador_platillos', contador_platillos);
 					
 					console.log(JSON.stringify(dietaNew));					
@@ -794,7 +794,7 @@ $(window).load(function(){
 
 			var dieta_added = localStorage.getItem('idDishSelected');
 			console.log(dieta_added);
-
+			console.log("contador :: "+localStorage.getItem('contador_platillos'));
 			if(localStorage.getItem('contador_platillos')>=3 ){
 
 					var dieta = localStorage.getItem('dietaEdit');
@@ -942,6 +942,8 @@ $(window).load(function(){
 			*/
 
 			$('.accept').click(function(){
+				console.log("Accept");
+				$(this);
 			 	localStorage.setItem('idDishSelected',$(this).attr('data') );
 			 	localStorage.setItem('desDishSelected',$(this).parent().parent().find('h5').html() );
 			 	localStorage.setItem('recetaDishSelected',$(this).parent().parent().find('p').html() );
@@ -1807,15 +1809,15 @@ $(document).on('click', '.platillo-item', function() {
 
 });
 
-$(document).on('deviceready', function(){ 
-	Keyboard.shrinkView(true);
-	Keyboard.hideFormAccessoryBar(true);
-	Keyboard.disableScrollingInShrinkView(true);
-});
+// $(document).on('deviceready', function(){ 
+// 	Keyboard.shrinkView(true);
+// 	Keyboard.hideFormAccessoryBar(true);
+// 	Keyboard.disableScrollingInShrinkView(true);
+// });
 
-window.addEventListener('keyboardDidShow', function () {
-    console.log('keyboard '+document.documentElement.clientHeight);
-    $(window).resize();
-    $(document).resize();
-});
+// window.addEventListener('keyboardDidShow', function () {
+//     console.log('keyboard '+document.documentElement.clientHeight);
+//     $(window).resize();
+//     $(document).resize();
+// });
 

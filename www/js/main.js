@@ -607,52 +607,55 @@
 		console.log("Initializing events");
 		var initialViewHeight = document.documentElement.clientHeight;
 		var calculate = null;
-		var fixWithKeyboard = function(){
 
-			$(window).resize();
-			$(document).resize();
-			$('body').addClass("openkeyboard");
-			if($('#container').hasClass("chat")){
-				Keyboard.disableScrollingInShrinkView(true);
-				Keyboard.shrinkView(true);
-				console.log("container has chat");
-				// $('#container').addClass('conteclado');
-				// $('#container').css('height',document.documentElement.clientHeight+"px");
-				calculate = (!calculate) ? document.documentElement.clientHeight : calculate;
-				var topKeyboard = initialViewHeight-calculate;
-				var scroll =  $('#messages-list').prop('scrollHeight');
-				$('body').scrollTop($('#messages-list').prop('scrollHeight'));
-				$('.hwhite2').css('top',(scroll-topKeyboard-43)+"px");
-				$('#mensaje-chat').focus();
-				// $('#container').scrollTop($('#container').prop("scrollHeight"));
-				// $('body').scrollTop(0);
-				// $('#messages-list').trigger("click");
-				return;
-			}
+		/*** Fix keyboard defaults ***/
+		if(typeof Keyboard != 'undefined'){
+			console.log("Keyboard not undefined");
 			Keyboard.disableScrollingInShrinkView(false);
 			Keyboard.shrinkView(false);
+		}
+
+		if($('#container').hasClass("chat")){
+			/*** Fix keyboard chat specifics ***/
+			if(typeof Keyboard != 'undefined'){
+				Keyboard.disableScrollingInShrinkView(true);
+				Keyboard.shrinkView(true);
+			}
+		}
+
+		var fixWithKeyboard = function(){
+			$('body').addClass("openkeyboard");
+			if($('#container').hasClass("chat")){
+
+				calculate = (!calculate) ? document.documentElement.clientHeight : calculate;			
+				$('#container').animate({ height: calculate+"px"}, 240, 'swing', function(){
+					$('.escribir').slideToggle('fast');
+				});
+				return;
+			}
+			
 		}
 
 		window.openKeyboard = false;
 
 		/* Keyboard shown event */
 		window.addEventListener('keyboardDidShow', function () {
-			console.log('keyboard did show');
-			// console.log(e));
+			
+			$('.escribir').hide();
 			window.openKeyboard = true;
 			return fixWithKeyboard();
 		});
 
 		/* Keyboard hidden event */
 		window.addEventListener('keyboardDidHide', function () {
-			console.log('keyboard did hide');
 			window.openKeyboard = false;
 			$('body').removeClass("openkeyboard");
-			$('.hwhite2').css('top', "0px");
-			// $('#container').css('height', document.documentElement.clientHeight+"px");
+			$('body').scrollTop($('#messages-list').prop('scrollHeight'));
 			$('.escribir').css('bottom', 0);
 		});
 
+
+		
 // ----------------------------------------------------------------------
 
 /*
@@ -723,7 +726,7 @@
 				 	
 				 	return;
 				}else{
-					console.log('Error');
+					app.toast("Ocurrió un error, por favor revisa tus datos.")
 				}
 			}
 	}); //END VALIDATE
