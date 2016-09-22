@@ -1,9 +1,0 @@
-{
-    "ImageIO.framework": 2,
-    "CoreLocation.framework": 2,
-    "AVFoundation.framework": 2,
-    "QuartzCore.framework": 2,
-    "AddressBook.framework": 2,
-    "libsqlite3.tbd": 2,
-    "libz.tbd": 2
-}
