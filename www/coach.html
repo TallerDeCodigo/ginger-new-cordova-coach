@@ -19,55 +19,59 @@
 		<script src="js/main.js"></script>	
 	</head>
 	<body class="coperfil iosm">
-	<div id="container">
-		<header class="hwhite2">
-			<div class="toolbar">
-				<a href="index.html" class="back" ><img src="images/back.svg"></a>
+		<div id="container">
+			<header class="hwhite2">
+				<div class="toolbar">
+					<a href="index.html" class="back" ><img src="images/back.svg"></a>
+					<h2 class="titulo">Mi Perfil</h2>
+				</div>
+			</header>
+			<img class="la_img" src="">
+			<h2 class="cpur"></h2>
+			<p class="bio-coach"></p>
+			<div class="rate-stars">
+				<!-- <img src="images/starh.svg">
+				<img src="images/starh.svg">
+				<img src="images/starh.svg">
+				<img src="images/star.svg">
+				<img src="images/star.svg"> -->
 			</div>
-		</header>
-		<img class="la_img" src="">
-		<h2 class="cpur"></h2>
-		<p class="bio-coach"></p>
-		<div class="rate-stars">
-			<!-- <img src="images/starh.svg">
-			<img src="images/starh.svg">
-			<img src="images/starh.svg">
-			<img src="images/star.svg">
-			<img src="images/star.svg"> -->
-		</div>
-		<div class="profile-menu">
-			<div class="info-coach">
-				<ul>
-				<!-- 	<li><span>Sexo: <strong id="sexo_perfil">-</strong></span></li>
-					<li><span>Edad: <strong id="anos_perfil">-</strong></span></li> -->
-					<li><span>Tipo de Coach: <strong id="coach_type_perfil"></strong></span></li>
-				</ul>
-			</div>
-			<a id="blog" href="http://www.gingerapp.mx/blogposts/">
-				<img src="images/profile/blog.svg">
-				Blog
-			</a>
-			<a href="about.html">
-				<img src="images/profile/settings.svg">
-				Acerca de
-			</a>
-			<a id="logout" class="logout" href="#">
-				<img src="images/profile/logout.svg">
-				Cerrar Sesión
-			</a>
-		</div>
-	</div>
-	<div class="overscreen2" style="display:none">
-		<div class="ov-filler2"></div>
-		<div class="dialog">
-			<h5>Ginger</h5>
-			<p>¿Estás seguro de querer<br>cerrar la sesión?</p>
-			<div class="di-options">
-				<a id="accept" class="accept">Cerrar sesión</a>
-				<a class="cancel">Cancelar</a>
+			<div class="profile-menu">
+				<div class="info-coach">
+					<ul>
+					<!-- 	<li><span>Sexo: <strong id="sexo_perfil">-</strong></span></li>
+						<li><span>Edad: <strong id="anos_perfil">-</strong></span></li> -->
+						<li><span>Tipo de Coach: <strong id="coach_type_perfil"></strong></span></li>
+					</ul>
+				</div>
+				<a id="blog" href="http://www.gingerapp.mx/blogposts/">
+					<img src="images/profile/blog.svg">
+					Blog
+				</a>
+				<a href="about.html">
+					<img src="images/profile/settings.svg">
+					Acerca de
+				</a>
+				<a id="logout" class="logout" href="#">
+					<img src="images/profile/logout.svg">
+					Cerrar Sesión
+				</a>
 			</div>
 		</div>
-	</div>
+		<div class="overscreen2" style="display:none">
+			<div class="ov-filler2"></div>
+			<div class="dialog">
+				<h5>Ginger</h5>
+				<p>¿Estás seguro de querer<br>cerrar la sesión?</p>
+				<div class="di-options">
+					<a id="accept" class="accept">Cerrar sesión</a>
+					<a class="cancel">Cancelar</a>
+				</div>
+			</div>
+		</div>
+		<div class="loader_container" id="spinner">
+			<div class="loading"></div>
+		</div>
 	</body>
 	<script type="text/javascript">
 		/* Initialize app object and perform initial login check */

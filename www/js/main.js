@@ -11,7 +11,6 @@
 			// Application Constructor
 		initialize: function() {
 
-
 			// 1) Request background execution
 			// cordova.plugins.backgroundMode.enable();
 

@@ -185,14 +185,15 @@ function requestHandlerAPI(){
 					'Content-Type': 'application/json'
 				}
 			}
-			console.log(req);
 
 			var response = this.getRequest('tables/dieta/?coach=' + localStorage.getItem('userId'), req);
 
 			console.log("Request Data Diets");
+			console.log(response);
 
-			console.log(response);  //llega aqui con la respuesta del servidor
-
+			setTimeout(function(){
+				sdk_app_context.hideLoader();
+			}, 2000);
 			return (response) ? response : false;
 
 		};
@@ -507,29 +508,44 @@ function requestHandlerAPI(){
 			return (response) ? response : false;
 		 };
 
+
 		/**
 		 * Función para obtener las usuarios de un coach que este logeado
 		 *
 		 **/
-
 		this.getUsuarios = function(){
 			var req = {
 				method : 'get',
-				url : api_base_url + 'tables/cliente?coach=',	//definitr tabla
+				url : api_base_url + 'tables/cliente?coach=',
 				headers: {
 					'X-ZUMO-APPLICATION': 'ideIHnCMutWTPsKMBlWmGVtIPXROdc92',
 					'X-ZUMO-AUTH': localStorage.getItem('token'),
 					'Content-Type': 'application/json'
 				}
 			};
-			//console.log(req);
 
 			var response = this.getRequest('tables/cliente/?coach=' + localStorage.getItem('userId'), req);
+			
+			if(response.length){
+				console.log(response);
+				response.forEach(function(item){
+					var request = {
+						method : 'get',
+						url : api_base_url + 'api/client_status?userid='+item._id,
+						headers: {
+							'X-ZUMO-APPLICATION': 'ideIHnCMutWTPsKMBlWmGVtIPXROdc92',
+							'X-ZUMO-AUTH': localStorage.getItem('token'),
+							'Content-Type': 'application/json'
+						}
+					};
+					console.log(request);
 
-			//console.log("Request Data Clientes");
-
-			//console.log(response);  //llega aqui con la respuesta del servidor
-
+					var response = context.getRequest('api/client_status?userid=' + localStorage.getItem('userId'), request);
+					console.log("Response 2 ::: ");
+					console.log(response);
+				});
+				
+			}
 			return (response) ? response : false;
 
 		};
@@ -540,7 +556,6 @@ function requestHandlerAPI(){
 		 ** Update Client Diet
 		 **
 		\**/
-
 		this.updateClientDiet = function (client_id, data){
 			
 			var req = {
