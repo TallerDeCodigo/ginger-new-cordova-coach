@@ -413,11 +413,9 @@ $(window).load(function(){
 				//Si viene de platillos o de un refresh
 
 			} else if (localStorage.getItem('idDishSelected') || localStorage.getItem('dietaEdit')) {
+				
+				localStorage.setItem('contador_platillos', 0);
 				dietaNew = JSON.parse(localStorage.getItem('dietaEdit'));
-
-				console.log("Stringify");
-				console.log(JSON.stringify(dietaNew));
-
 				if (localStorage.getItem('idDishSelected')) {
 					var i = 0;
 					var guardar1 = [];
@@ -446,7 +444,7 @@ $(window).load(function(){
 					contador_platillos++;
 					console.log(contador_platillos);
 					localStorage.setItem('contador_platillos', contador_platillos);
-					
+					console.log("Aqui no pasa o si?");
 					console.log(JSON.stringify(dietaNew));					
 				}
 
@@ -464,6 +462,8 @@ $(window).load(function(){
 					var ingredientes;
 					var losplatos = [];
 					var i=0;
+
+					localStorage.setItem('contador_platillos', platillos.length);
 
 					$.each( dietaNew.platillos, function( key, value ) {
 						losplatos[i]=[];
@@ -531,7 +531,7 @@ $(window).load(function(){
 						// desayuno, snack, comida,...
 						var dentrode = estoyen+'.acc-content.'+key+' ';
 						
-						var i=1;
+						var i = 1;
 
 						$.each( value, function( key, value ) {
 							// tiempos (1,2,3..)
