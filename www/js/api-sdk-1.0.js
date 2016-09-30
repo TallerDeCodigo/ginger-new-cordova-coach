@@ -527,7 +527,6 @@ function requestHandlerAPI(){
 			var response = this.getRequest('tables/cliente/?coach=' + localStorage.getItem('userId'), req);
 			
 			if(response.length){
-				console.log(response);
 				response.forEach(function(item){
 					var request = {
 						method : 'get',
@@ -539,8 +538,7 @@ function requestHandlerAPI(){
 						}
 					};
 					console.log(request);
-
-					var response = context.getRequest('api/client_status?userid=' + localStorage.getItem('userId'), request);
+					var response = context.getRequest('api/client_status?userid=' + item._id, request);
 					console.log("Response 2 ::: ");
 					console.log(response);
 				});
