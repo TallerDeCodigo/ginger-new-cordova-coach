@@ -538,9 +538,10 @@ function requestHandlerAPI(){
 						}
 					};
 					console.log(request);
-					var response = context.getRequest('api/client_status?userid=' + item._id, request);
+					var response2 = context.getRequest('api/client_status?userid=' + item._id, request);
 					console.log("Response 2 ::: ");
-					console.log(response);
+					console.log(response2);
+					response.consumos = response2;
 				});
 				
 			}
