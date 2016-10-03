@@ -230,7 +230,7 @@
 		render_user_list : function(url){
 			setTimeout(function(){
 				app.showLoader();
-			}, 240);
+			}, 200);
 			app.check_or_renderContainer();
 			console.log("Rendering user list");
 			app.registerTemplate('user-list');
