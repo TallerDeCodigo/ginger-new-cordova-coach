@@ -113,11 +113,12 @@
 $(window).load(function(){
 	$(function() {
 
+		/*** TODO: Get this shit into a catalogue ***/
 		var coach_type 				= [ 'Estricto', 'Innovador', 'Animador', 'Tradicional'];
 		var restricciones 			= [ 'Huevo', 'Pollo', 'Pescado', 'Mariscos', 'Lacteos', 'Carne' ];
 		var objetivo 				= [ 'adelgazar','detox','bienestar','rendimiento' ];
 		var sex 					= [ 'Hombre', 'Mujer'];
-		var tipo_de_ingredientes = [ 'granosycereales', 'verduras', 'grasas', 'lacteos', 'proteinaanimal', 'leguminosas', 'nuecesysemillas', 'frutas', 'endulzantes', 'aderezosycondimentos', 'superfoods', 'liquidos'];
+		var tipo_de_ingredientes 	= [ 'granosycereales', 'verduras', 'grasas', 'lacteos', 'proteinaanimal', 'leguminosas', 'nuecesysemillas', 'frutas', 'endulzantes', 'aderezosycondimentos', 'superfoods', 'liquidos'];
 
 		/**
 		 *

@@ -29,6 +29,15 @@
 				 async: false
 			});
 
+			/*** TODO: Get this shit into a catalogue ***/
+			window.catalogues 						= [];
+			window.catalogues.coach_type 			= [ 'Estricto', 'Innovador', 'Animador', 'Tradicional'];
+			window.catalogues.restricciones 		= [ 'Huevo', 'Pollo', 'Pescado', 'Mariscos', 'Lacteos', 'Carne' ];
+			window.catalogues.objetivo 				= [ 'adelgazar','detox','bienestar','rendimiento' ];
+			window.catalogues.sex 					= [ 'Hombre', 'Mujer'];
+			window.catalogues.tipo_de_ingredientes 	= [ 'granosycereales', 'verduras', 'grasas', 'lacteos', 'proteinaanimal', 'leguminosas', 'nuecesysemillas', 'frutas', 'endulzantes', 'aderezosycondimentos', 'superfoods', 'liquidos'];
+
+
 			window.loggedIn = false;
 			this.ls 		= window.localStorage;
 	
@@ -107,17 +116,17 @@
 		},
 		onBackButton: function(){
 			var userAgent = navigator.userAgent || navigator.vendor || window.opera;
-		    if (userAgent.match(/iPad/i) || userAgent.match(/iPhone/i) || userAgent.match(/iPod/i)) {
-		        // IOS DEVICE
-		        history.go(-1);
-		    } else if (userAgent.match(/Android/i)) {
-		        // ANDROID DEVICE
-		        navigator.app.backHistory();
-		    } else {
-		        // EVERY OTHER DEVICE
-		        history.go(-1);
-		    }
-		    console.log("BAck");
+			if (userAgent.match(/iPad/i) || userAgent.match(/iPhone/i) || userAgent.match(/iPod/i)) {
+				// IOS DEVICE
+				history.go(-1);
+			} else if (userAgent.match(/Android/i)) {
+				// ANDROID DEVICE
+				navigator.app.backHistory();
+			} else {
+				// EVERY OTHER DEVICE
+				history.go(-1);
+			}
+			console.log("BAck");
 		},
 
 		// deviceready Event Handler
@@ -207,7 +216,6 @@
 			}
 			app.registerTemplate('home');
 			var data = this.gatherEnvironment();
-			console.log(data);
 			return this.switchView('home', data, '.view');
 
 		},
@@ -309,7 +317,7 @@
 		render_taxonomy : function(term_id, tax_name, targetSelector, templateName ){
 			$.getJSON(api_base_url+'content/taxonomy/'+tax_name+'/'+term_id)
 			 .done(function(response){
-			 	console.log(response);
+				console.log(response);
 				/* Send header_title for it renders history_header */
 				var header_title = (tax_name == 'design-tools') ? 'Made with: '+response.name : response.name;
 				var data = app.gatherEnvironment(response, header_title);
@@ -352,23 +360,23 @@
 		},
 		locate_printer_here : function(){
 			var onSuccess = function(position) {
-		        var data = {latitude: position.coords.latitude, longitude: position.coords.longitude}
-		        var response = apiRH.makeRequest('user/'+user+"/location/" , data);
+				var data = {latitude: position.coords.latitude, longitude: position.coords.longitude}
+				var response = apiRH.makeRequest('user/'+user+"/location/" , data);
 				console.log("response"+JSON.stringify(response));
 				if(!response.success){
 					app.hideLoader();
 					app.toast('Sorry, There was an error saving your location');
 					return false;
 				}
-		        app.hideLoader();
-		        app.toast("Your current position is now registered as a printer location");
+				app.hideLoader();
+				app.toast("Your current position is now registered as a printer location");
 				return;
-		    };
+			};
 
-		    var onError = function(error) {
-		        app.toast("There was a problem while getting your location, please check your GPS settings and try again.");
-		    };
-		    navigator.geolocation.getCurrentPosition(onSuccess, onError, {maximumAge: 300000, timeout:10000, enableHighAccuracy : true});
+			var onError = function(error) {
+				app.toast("There was a problem while getting your location, please check your GPS settings and try again.");
+			};
+			navigator.geolocation.getCurrentPosition(onSuccess, onError, {maximumAge: 300000, timeout:10000, enableHighAccuracy : true});
 		},
 		get_file_from_device: function(destination, source){
 			apiRH.getFileFromDevice(destination, source);		
@@ -410,7 +418,7 @@
 				if(window.firstTime)
 					window.firstTime = false;				
 				app.hideLoader();
-				// initializeEvents();
+				initializeEvents();
 			}, 2000);
 			return;
 		},
@@ -585,61 +593,7 @@
 			});
 		}
 
-		//-----------------------------
-		//
-		// Keyboard events for iOS
-		//
-		//-----------------------------
-		console.log("Initializing events");
-		var initialViewHeight = document.documentElement.clientHeight;
-		var calculate = null;
-
-		/*** Fix keyboard defaults ***/
-		if(typeof Keyboard != 'undefined'){
-			console.log("Keyboard not undefined");
-			Keyboard.disableScrollingInShrinkView(false);
-			Keyboard.shrinkView(false);
-		}
-
-		if($('#container').hasClass("chat")){
-			/*** Fix keyboard chat specifics ***/
-			if(typeof Keyboard != 'undefined'){
-				Keyboard.disableScrollingInShrinkView(true);
-				Keyboard.shrinkView(true);
-			}
-		}
-
-		var fixWithKeyboard = function(){
-			$('body').addClass("openkeyboard");
-			if($('#container').hasClass("chat")){
-
-				calculate = (!calculate) ? document.documentElement.clientHeight : calculate;			
-				$('#container').animate({ height: calculate+"px"}, 240, 'swing', function(){
-					$('.escribir').slideToggle('fast');
-				});
-				return;
-			}
-			
-		}
-
-		window.openKeyboard = false;
-
-		/* Keyboard shown event */
-		window.addEventListener('keyboardDidShow', function () {
-			
-			$('.escribir').hide();
-			window.openKeyboard = true;
-			return fixWithKeyboard();
-		});
-
-		/* Keyboard hidden event */
-		window.addEventListener('keyboardDidHide', function () {
-			window.openKeyboard = false;
-			$('body').removeClass("openkeyboard");
-			$('body').scrollTop($('#messages-list').prop('scrollHeight'));
-			$('.escribir').css('bottom', 0);
-		});
-
+		
 
 		
 // ----------------------------------------------------------------------
@@ -707,10 +661,10 @@
 
 					console.log(coachInfo);
 
-				 	if(coachInfo)
-				 		window.location.assign('index.html');
-				 	
-				 	return;
+					if(coachInfo)
+						window.location.assign('index.html');
+					
+					return;
 				}else{
 					app.toast("Ocurrió un error, por favor revisa tus datos.")
 				}
@@ -737,11 +691,11 @@
 
 		tokenParams = {
 		  "card": {
-		    "number": t_card,
-		    "name": t_nombre,
-		    "exp_year": t_ano,
-		    "exp_month": t_mes,
-		    "cvc": t_cvc
+			"number": t_card,
+			"name": t_nombre,
+			"exp_year": t_ano,
+			"exp_month": t_mes,
+			"cvc": t_cvc
 		  }
 		};
 
