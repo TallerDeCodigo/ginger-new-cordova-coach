@@ -67,10 +67,14 @@ window.initializeEvents = function(){
 		/* Hook soft links */
 		$('.hook').on('click', function(e){
 			e.preventDefault();
+			if( $(this).data('resource') == "home" )
+				return app.render_home($(this).attr('href'));
 			if( $(this).data('resource') == "user-list" )
 				return app.render_user_list($(this).attr('href'));
 			if( $(this).data('resource') == "finanzas" )
 				return app.render_finanzas($(this).attr('href'));
+			if( $(this).data('resource') == "profile" )
+				return app.render_myProfile($(this).attr('href'));
 			
 
 			e.stopPropagation();
@@ -156,6 +160,8 @@ window.initializeEvents = function(){
 
 			/*Coach Profile*/
 
+		
+
 		if($('.view').hasClass('coach-profile')) {
 
 			
@@ -234,7 +240,7 @@ window.initializeEvents = function(){
 
 			app.hideLoader();
 
-		} // END CLASS COPERFIL
+		} // END CLASS coach-profile
 
 	});
 

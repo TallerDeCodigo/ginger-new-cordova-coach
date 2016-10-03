@@ -1,7 +1,9 @@
 	<header class="hwhite2">
 		<div class="toolbar">
-			<a href="index.html" class="back" ><img src="images/back.svg"></a>
-			<h2 class="titulo">Mi Perfil</h2>
+			<a class="back hook" data-resource="home" href="{{cordova_full_path}}home.html">
+				<img src="{{cordova_full_path}}images/back.svg">
+			</a>
+			<h2 class="titulo">{{header_title}}</h2>
 		</div>
 	</header>
 	<img class="la_img" src="https://gingerfiles.blob.core.windows.net/coaches/{{me._id}}.png">
@@ -19,15 +21,15 @@
 			</ul>
 		</div>
 		<a id="blog" href="http://www.gingerapp.mx/blogposts/">
-			<img src="images/profile/blog.svg">
+			<img src="{{cordova_full_path}}images/profile/blog.svg">
 			Blog
 		</a>
 		<a href="about.html">
-			<img src="images/profile/settings.svg">
+			<img src="{{cordova_full_path}}images/profile/settings.svg">
 			Acerca de
 		</a>
 		<a id="logout" class="logout" href="#">
-			<img src="images/profile/logout.svg">
+			<img src="{{cordova_full_path}}images/profile/logout.svg">
 			Cerrar Sesión
 		</a>
 	</div>

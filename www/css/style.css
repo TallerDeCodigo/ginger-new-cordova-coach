@@ -101,8 +101,7 @@ h1   { font-size:24px; font-size:2.4rem; } /* =24px */
 .right{ float:right;}
 
 .hidden{display:none!important;}
-.view{width: 100%; min-height: 100%; height: auto;}
-.view.full_noscroll{height: 100%;}
+.view{width: 100%; min-height: 100%; height: 100%;}
 
 /* GENERAL */
 
@@ -135,6 +134,8 @@ h4 {margin:10px 0px 12px;font-weight:700;font-size:130%;color:#333;}
 .openkeyboard #messages-list.content.list-group{position: absolute; bottom: 0; padding-bottom: 8rem; background-color: #e9ebee;}
 .openkeyboard .overscreen3.active{position: absolute;}
 
+	/*Scroll fix*/
+	.coach-profile .view{height: auto!important;}
 
 /*
 
@@ -475,9 +476,9 @@ nav.set-public span {font-size:30%;display:block;font-weight:800;}
 
 /* PERFIL COACH */
 
-body.coperfil #container {background:#f4f1f0; color:#3f3f3f;}
-body.coperfil #container h2 {font-weight:800;margin-bottom:5px;}
-body.coperfil .la_img {width:100%;height:auto;margin-top:2px;}
+.coach-profile #container {background:#f4f1f0; color:#3f3f3f;}
+.coach-profile #container h2 {font-weight:800;margin-bottom:5px;}
+.coach-profile .la_img {width:100%;height:auto;margin-top:2px;}
 .bio-coach {margin:0px 10% 10px;font-size:90%;}
 
 .rate-stars img {height:16px;width:auto;margin:3px 1px 0px;}

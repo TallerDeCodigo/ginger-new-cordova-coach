@@ -37,7 +37,6 @@
 			window.catalogues.sex 					= [ 'Hombre', 'Mujer'];
 			window.catalogues.tipo_de_ingredientes 	= [ 'granosycereales', 'verduras', 'grasas', 'lacteos', 'proteinaanimal', 'leguminosas', 'nuecesysemillas', 'frutas', 'endulzantes', 'aderezosycondimentos', 'superfoods', 'liquidos'];
 
-
 			window.loggedIn = false;
 			this.ls 		= window.localStorage;
 	
@@ -132,6 +131,8 @@
 		// deviceready Event Handler
 		onDeviceReady: function() {
 			app.receivedEvent('deviceready');
+			if(typeof(cordova) != 'undefined')
+				window.cordova_full_path			= cordova.file.applicationDirectory;
 
 			/*   ___    _         _   _     
 			*  / _ \  / \  _   _| |_| |__  
@@ -180,6 +181,8 @@
 			}
 			if(history_title)
 				parsed['header_title'] = history_title;
+			if(typeof(cordova_full_path) != 'undefined')
+				parsed['cordova_full_path'] = cordova_full_path+"www/";
 			return parsed;
 
 		},
@@ -215,16 +218,17 @@
 				$('.rootContainer').html( html );
 			}
 		},
-		render_home : function(){
+		render_home : function(url){
 			
 			app.check_or_renderContainer();
 			console.log("Rendering home");
 			app.registerTemplate('home');
 			var data = this.gatherEnvironment();
 			data.is_scrollable = false;
-			return this.switchView('home', data, '.view');
+			return this.switchView('home', data, '.view', url);
 		},
 		render_user_list : function(url){
+			app.showLoader();
 			app.check_or_renderContainer();
 			console.log("Rendering user list");
 			app.registerTemplate('user-list');
@@ -239,6 +243,7 @@
 			return app.showLoader();
 		},
 		render_finanzas : function(url){
+			app.showLoader();
 			app.check_or_renderContainer();
 			console.log("Rendering finanzas module");
 			app.registerTemplate('finanzas');
@@ -249,12 +254,13 @@
 			return this.switchView('finanzas', data, '.view', url, 'finanzas');
 		},
 		render_myProfile : function(url){
+			app.showLoader();
 			app.check_or_renderContainer();
 			console.log("Rendering Coach Profile");
 			app.registerTemplate('coach');
 			var responsedata = [];
 			
-			var data = this.gatherEnvironment(responsedata, 'Coach');
+			var data = this.gatherEnvironment(responsedata, 'Mi Perfil');
 			console.log(data);
 			return this.switchView('coach', data, '.view', url, 'coach-profile');
 		},
@@ -282,7 +288,6 @@
 			return;
 		},
 		switchView: function(newTemplate, data, targetSelector, recordUrl, targetClass){
-			app.showLoader();
 			/* Push to history if url is supplied */
 			if(recordUrl) window.history.pushState(newTemplate, newTemplate, '/'+recordUrl);
 			if(targetClass) $(targetSelector).addClass(targetClass);

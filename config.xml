@@ -39,9 +39,6 @@
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
         <allow-intent href="https://gingerservice.azure-mobile.net/*" />
-        <allow-intent href="https://sketchfab.com/models/*" />
-        <access origin="https://sketchfab.com/models/*" />
-        <allow-navigation href="https://sketchfab.com/models/*" />
         <allow-navigation href="https://gingerservice.azure-mobile.net/*" />
         <allow-navigation href="*://*.googleapis.com/*"/>
     </platform>
