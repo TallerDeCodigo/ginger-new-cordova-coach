@@ -1,4 +1,7 @@
 	
-	<section class="view full_noscroll">
+	<section class="view {{# unless data.is_scrollable }}full_noscroll{{/ unless}}">
 
 	</section>
+	<div class="loader_container" id="spinner">
+		<div class="loading"></div>
+	</div>

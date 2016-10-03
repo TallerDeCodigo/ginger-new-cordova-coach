@@ -527,7 +527,7 @@ function requestHandlerAPI(){
 
 			var response = null;
 				response = this.getRequest('api/client_status?coachid=' + localStorage.getItem('userId'), req);
-			console.log("Get status");
+
 			if(response.length){
 				// Process chat unread messages stuff
 				// response.forEach(function(item){
@@ -1282,16 +1282,12 @@ function requestHandlerAPI(){
 									return true;
 								};
 		/*
-		 * Advanced search success callback
+		 * Receipt success callback
 		 * @param 
 		 */
-		this.search_transfer_win = function (r) {
+		this.receipt_transfer_win = function (r) {
 									setTimeout(function() {
-										app.toast("Thanks! Dedalo is processing your request.");
-										app.registerTemplate('success_advanced_search');
-										var template = Handlebars.templates['success_advanced_search'];
-										console.log(JSON.parse(r.response));
-										$('.main').html( template(JSON.parse(r.response)) );
+										app.toast("Tu recibo se ha subido correctamente.");
 										setTimeout(function(){
 											app.hideLoader();
 										}, 2000);
@@ -1354,7 +1350,21 @@ function requestHandlerAPI(){
 		 * @param fileURL
 		 * @param source
 		 */
-		this.prepareSearchFileTransfer = function(fileURL, source){
+		this.prepareReceiptFileTransfer = function(fileURL, source){
+									// app.showLoader();
+									// this.transfer_options = new FileUploadOptions();
+									// this.transfer_options.fileUrl = fileURL;
+									// this.transfer_options.fileKey = "file";
+									// this.transfer_options.fileName = fileURL.substr(fileURL.lastIndexOf('/') + 1);
+									// this.transfer_options.mimeType = "image/jpeg";
+									// console.log(this.transfer_options);
+									// var params = {};
+									// 	params.user_id = "370n3209823n23";
+									// this.transfer_options.params = params;
+									// this.upload_ready = true;
+									// console.log("prepareReceiptTransfer");
+									// app.hideLoader();
+									
 									app.showLoader();
 									console.log(fileURL);
 									this.transfer_options = new FileUploadOptions();
@@ -1375,8 +1385,8 @@ function requestHandlerAPI(){
 									this.upload_ready = true;
 									var image = {thumb: this.transfer_options.fileLocal};
 									console.log(JSON.stringify(image));
-									apiRH.addImageToStack(image);
-									console.log("prepareSearchTransfer");
+									apiRH.initializeReceiptFileTransfer();
+									console.log("prepareReceiptTransfer");
 									app.hideLoader();
 								};
 
@@ -1386,7 +1396,7 @@ function requestHandlerAPI(){
 		 * @see prepareProfileTransfer MUST be executed before
 		 * Dedalo approved
 		 */
-		this.initializeSearchFileTransfer = function(params){
+		this.initializeReceiptFileTransfer = function(params){
 												user = (user) ? user : "not_logged";
 												if(this.upload_ready){
 													var ft = new FileTransfer();
@@ -1394,7 +1404,7 @@ function requestHandlerAPI(){
 													this.transfer_options.params = params;
 													ft.upload(  this.transfer_options.fileUrl, 
 																encodeURI('https://gingerfiles.blob.core.windows.net/recibos/'), 
-																context.search_transfer_win, 
+																context.receipt_transfer_win, 
 																context.transfer_fail, 
 																this.transfer_options
 															);
@@ -1410,13 +1420,13 @@ function requestHandlerAPI(){
 								return context.prepareProfileFileTransfer(r);
 							};
 
-		this.search_fileselect_win = function (r) {
+		this.receipt_fileselect_win = function (r) {
 								setTimeout(function() {
 									console.log("r ::: "+r);
-									console.log("Seach file sent");
+									console.log("Receipt file sent");
 									if(!r && r == '')
 										return;
-									return context.prepareSearchFileTransfer(r);
+									return context.prepareReceiptFileTransfer(r);
 								}, 0);
 							};
 
@@ -1450,8 +1460,8 @@ function requestHandlerAPI(){
 					destinationType: this.photoDestinationType.FILE_URI,
 					sourceType: sourcetype,
 					mediaType: navigator.camera.MediaType.ALLMEDIA  });
-			if(destination == 'search')
-				navigator.camera.getPicture(context.search_fileselect_win, context.fileselect_fail, { quality: 100,
+			if(destination == 'receipt')
+				navigator.camera.getPicture(context.receipt_fileselect_win, context.fileselect_fail, { quality: 100,
 						destinationType: this.photoDestinationType.FILE_URI,
 						sourceType: sourcetype,
 						mediaType: navigator.camera.MediaType.ALLMEDIA  });

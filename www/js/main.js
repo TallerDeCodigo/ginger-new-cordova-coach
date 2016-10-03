@@ -221,6 +221,7 @@
 			console.log("Rendering home");
 			app.registerTemplate('home');
 			var data = this.gatherEnvironment();
+			data.is_scrollable = false;
 			return this.switchView('home', data, '.view');
 		},
 		render_user_list : function(url){
@@ -234,164 +235,28 @@
 			console.log(data);
 			return this.switchView('user-list', data, '.view', url, 'list-usuarios');
 		},
-		render_chat : function(){
+		render_chat : function(url){
 			return app.showLoader();
 		},
-		render_finanzas : function(){
-			return app.showLoader();
+		render_finanzas : function(url){
+			app.check_or_renderContainer();
+			console.log("Rendering finanzas module");
+			app.registerTemplate('finanzas');
+			var responsedata = [];
+			
+			var data = this.gatherEnvironment(responsedata, 'Finanzas');
+			console.log(data);
+			return this.switchView('finanzas', data, '.view', url, 'finanzas');
 		},
-		render_myProfile : function(){
-			return app.showLoader();
-		},								
-		render_create_user : function(){
-
-			/* Send header_title for it renders history_header */
-			var data = app.gatherEnvironment(null, "Create account");
-			var template = Handlebars.templates['create_account'];
-
-			$('.main').html( template(data) );
-			setTimeout(function(){
-				app.hideLoader();
-			}, 2000);
-		},
-		render_settings : function(){
-			/* Send header_title for it renders history_header */
-			$.getJSON(api_base_url+user+'/me/')
-			 .done(function(response){
-				var data = app.gatherEnvironment(response, "Account settings");
-				console.log(data);
-				/* Get printers and models from catalogue */
-				data.printers = app.getJsonCatalogue("pModels");
-				var parent_count = Object.keys(app.getJsonCatalogue("pModels")).length;
-				var this_brand = null;
-				data.printer_brands = [];
-				data.printer_models = [];
-				for(var i = 0; i < parent_count; i++){
-					this_brand = Object.keys(data.printers)[i];
-					data.printer_brands.push(this_brand);
-					var level_count = data.printers[this_brand].length;
-					data.printer_models[this_brand] =  [];
-					for(var j = 0; j<level_count; j++ ){
-						var this_model = data.printers[this_brand];
-						data.printer_models[this_brand].push(this_model[j]);
-					}
-				}
-				window.printers_global = data.printer_models;
-				var template = Handlebars.templates['settings'];
-				$('.main').html( template(data) );
-				setTimeout(function(){
-					app.hideLoader();
-				}, 2000);
-			})
-			  .fail(function(err){
-				console.log(err);
-			});
-		},
-		render_notifications : function(){
-			/* Send header_title for it renders history_header */
-			var data = app.gatherEnvironment(null, "Notifications");
-			data.notifications_active = true;
-
-			var template = Handlebars.templates['notifications'];
-			$('.main').html( template(data) );
-			setTimeout(function(){
-				app.hideLoader();
-			}, 2000);
-		},
-		render_dashboard : function(){
-			$.getJSON(api_base_url+user+'/dashboard/')
-			 .done(function(response){
-				/* Send header_title for it renders history_header */
-				var data = app.gatherEnvironment(response, "Dashboard");
-				var template = Handlebars.templates['dashboard'];
-				$('.main').html( template(data) );
-				setTimeout(function(){
-					app.hideLoader();
-				}, 2000);
-			})
-			  .fail(function(err){
-				console.log(JSON.stringify(err));
-			});
-		},
-		render_maker : function(maker_id){
-			$.getJSON(api_base_url+user+'/maker/'+maker_id)
-			 .done(function(response){
-				/* Send header_title for it renders history_header */
-				var data = app.gatherEnvironment(response, "Maker profile");
-
-				var template = Handlebars.templates['maker'];
-				$('.main').html( template(data) );
-				setTimeout(function(){
-					app.hideLoader();
-				}, 2000);
-			})
-			  .fail(function(err){
-				console.log(err);
-			});
-		},
-		render_taxonomy : function(term_id, tax_name, targetSelector, templateName ){
-			$.getJSON(api_base_url+'content/taxonomy/'+tax_name+'/'+term_id)
-			 .done(function(response){
-				console.log(response);
-				/* Send header_title for it renders history_header */
-				var header_title = (tax_name == 'design-tools') ? 'Made with: '+response.name : response.name;
-				var data = app.gatherEnvironment(response, header_title);
-
-				var template = Handlebars.templates[templateName];
-				$(targetSelector).html( template(data) );
-				setTimeout(function(){
-					app.hideLoader();
-				}, 2000);
-			})
-			  .fail(function(err){
-				console.log(err);
-			});
-		},
-		render_direct_photo : function(){
-			//app.registerTemplate('direct_photo');
-			var data = app.gatherEnvironment(null, "Advanced search");
-			var template = Handlebars.templates['direct_photo'];
-
-			$('.main').html( template(data) );
-			setTimeout(function(){
-				app.hideLoader();
-			}, 2000);
-
-		},
-		render_select_printer : function(ref_id, printer_id){
-			/*** Make purchase action ***/
-			var response = apiRH.makeRequest(user+'/purchase/'+ref_id, {printer_id: printer_id});
-			if(response){
-				// $context.addClass('read');
-				var data = app.gatherEnvironment(null, "Printing in progress...");
-
-				var template = Handlebars.templates['select_printer'];
-				$('.main').html( template(data) );
-				setTimeout(function(){
-					app.hideLoader();
-				}, 2000);
-				return;
-			}
-		},
-		locate_printer_here : function(){
-			var onSuccess = function(position) {
-				var data = {latitude: position.coords.latitude, longitude: position.coords.longitude}
-				var response = apiRH.makeRequest('user/'+user+"/location/" , data);
-				console.log("response"+JSON.stringify(response));
-				if(!response.success){
-					app.hideLoader();
-					app.toast('Sorry, There was an error saving your location');
-					return false;
-				}
-				app.hideLoader();
-				app.toast("Your current position is now registered as a printer location");
-				return;
-			};
-
-			var onError = function(error) {
-				app.toast("There was a problem while getting your location, please check your GPS settings and try again.");
-			};
-			navigator.geolocation.getCurrentPosition(onSuccess, onError, {maximumAge: 300000, timeout:10000, enableHighAccuracy : true});
+		render_myProfile : function(url){
+			app.check_or_renderContainer();
+			console.log("Rendering Coach Profile");
+			app.registerTemplate('coach');
+			var responsedata = [];
+			
+			var data = this.gatherEnvironment(responsedata, 'Coach');
+			console.log(data);
+			return this.switchView('coach', data, '.view', url, 'coach-profile');
 		},
 		get_file_from_device: function(destination, source){
 			apiRH.getFileFromDevice(destination, source);		
@@ -574,44 +439,36 @@
  *                                                                         |___/ 
  */
 	jQuery(document).ready(function($) {
+
+		window.number_format = function(amount, decimals) {
+
+		    amount += ''; // por si pasan un numero en vez de un string
+		    amount = parseFloat(amount.replace(/[^0-9\.]/g, '')); // elimino cualquier cosa que no sea numero o punto
+
+		    decimals = decimals || 0; // por si la variable no fue fue pasada
+
+		    // si no es un numero o es igual a cero retorno el mismo cero
+		    if (isNaN(amount) || amount === 0) 
+		        return parseFloat(0).toFixed(decimals);
+
+		    // si es mayor o menor que cero retorno el valor formateado como numero
+		    amount = '' + amount.toFixed(decimals);
+
+		    var amount_parts = amount.split('.'),
+		        regexp = /(\d+)(\d{3})/;
+
+		    while (regexp.test(amount_parts[0]))
+		        amount_parts[0] = amount_parts[0].replace(regexp, '$1' + ',' + '$2');
+
+		    return amount_parts.join('.');
+		}
 		/* 
 
 			Create a new account the old fashioned way 
 
 		*/
 
-		if($('body').hasClass('coperfil') ){
-
-			/* Log Out from the API */
-			$('#logout').on('click', function(e){
-				/* Requesting logout from server */
-				//var response = apiRH.logOut({user_login : user, request_token : apiRH.get_request_token() });
-				//if(response.success){
-
-					if($('.overscreen2').is(':visible') ){
-
-					}else{
-						$('.overscreen2').addClass('active');
-						$('.overscreen2').show();
-						$('#container').toggleClass('blurred');
-					}
-
-					
-			});
-			$('#accept').click(function(){
-				//app.toast('Has cerrado la sesión, hasta pronto');
-						localStorage.clear();
-					window.location.assign('login.html');
-					return;
-				//}
-				app.toast('No ha sido posible crear tu cuenta, inténtalo de nuevo por favor.');
-				return;
-			});
-			$('.cancel').click(function(){
-				$('#container').toggleClass('blurred');
-			});
-		}
-
+		
 		
 
 		
