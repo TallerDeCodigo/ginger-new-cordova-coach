@@ -80,7 +80,8 @@ function requestHandlerAPI(){
 			var response = this.makeRequest('api/login', req);
 
 			console.log(JSON.stringify(response));
-
+			if(response.Status == 'FAIL')
+				return false;
 			/*
 				GUARDA LOS DATOS DEL USUARIO EN LOCAL STORAGE 
 			*/
@@ -600,10 +601,6 @@ function requestHandlerAPI(){
 
 			var response = this.getRequest('api/history/?coach=' + localStorage.getItem('userId') + '&mes=' + mes, req);
 
-			console.log("Request Data Finanzas");
-
-			console.log(JSON.stringify(response) );  //llega aqui con la respuesta del servidor
-
 			return (response) ? response : false;
 
 		};
@@ -1049,11 +1046,11 @@ function requestHandlerAPI(){
 					$('.overscreen_err').removeClass('active');
 					setTimeout(function() {$('.overscreen_err').hide();}, 800);
 				}
-				$('#container').toggleClass('blurred');
+				$('#blur').toggleClass('blurred');
 
 				$('#aceptar_err').click(function(){
 					$('.overscreen_err').hide();
-					$('#container').toggleClass('blurred');
+					$('#blur').toggleClass('blurred');
 				});
 
 			});
@@ -1112,7 +1109,7 @@ function requestHandlerAPI(){
 			})
 			 .done(function(response){
 				result = response;
-				sdk_app_context.hideLoader(response);
+				// sdk_app_context.hideLoader(response);
 			})
 			 .fail(function(e){
 				result = false;

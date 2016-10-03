@@ -1,0 +1,39 @@
+	<header class="hwhite2">
+		<div class="toolbar">
+			<a class="back"><img src="images/back.svg"></a>
+			<!--agregar nombre del coach-->
+			<h2 class="titulo">{{header_title}}</h2>
+			<!-- <a class="add">Guardar</a> -->
+		</div>
+	</header>
+	<div id="container" class="list-chat">
+		
+		<ul class="lista_chat" id="dialogs-list"></ul>
+
+		<ul class="lista_chat" id="contacts-list" style='display:none'></ul>
+
+		<div class="content list-group pre-scrollable nice-scroll" id="messages-list" style="opacity:0">
+			<!-- list of chat messages will be here -->
+		</div>
+
+		<footer class="menu-bar hwhite2">
+			<a id="btn_chats">
+				<img src="{{cordova_full_path}}images/menu/chat.svg">
+				<span>chat</span>
+			</a>
+			<a id="btn_contacts">
+				<img src="{{cordova_full_path}}images/menu/contacts.svg">
+				<span>contactos</span>
+			</a>
+		</footer>
+		
+		<footer class="foot-chat escribir" style="display:none; opacity:0;">
+			<form class="form-inline" role="form" method="POST" action="" onsubmit="return submit_handler(this)">
+				<input type="file" capture="camera" accept="image/*" name="galeria" id="load-img" style="z-index:-1; position:absolute; ">
+				<a href="#" class="attach" onclick="$('#load-img').click();"><img src="{{cordova_full_path}}images/attach.svg"></a>
+				<textarea id="mensaje-chat" rows="1" >Mensaje</textarea>
+				<input type="submit" class="send cpur" value="Enviar" onclick="clickSendMessage()">
+				<!-- <button  type="submit" id="send_btn" class="btn btn-default send cpur" onclick="clickSendMessage()">Enviar</button> -->
+			</form>
+		</footer>
+	</div>

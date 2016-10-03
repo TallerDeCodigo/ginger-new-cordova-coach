@@ -38,7 +38,7 @@
 	  				$('.overscreen5').removeClass('active');
 	  				setTimeout(function() {$('.overscreen5').hide();}, 800);
 	  			}
-	  			$('#container').toggleClass('blurred');
+	  			$('#blur').toggleClass('blurred');
 	  		});
 
 	  			$('#aceptar').click(function(){
@@ -74,13 +74,13 @@
 	  				localStorage.setItem('dietaEdit', JSON.stringify(modify));
 
 	  				$('.overscreen5').hide();
-	  				$('#container').toggleClass('blurred');
+	  				$('#blur').toggleClass('blurred');
 	  			});
 
 	  			$('#cancelar').click(function(){
 	  				console.log('cancelado');
 	  				$('.overscreen5').hide();
-	  				$('#container').toggleClass('blurred');
+	  				$('#blur').toggleClass('blurred');
 	  			});
 
 	  			$('.back').click(function(){
@@ -271,7 +271,7 @@ $(window).load(function(){
 					$('.overscreen4').removeClass('active');
 					setTimeout(function() {$('.overscreen4').hide();}, 800);
 				}
-				$('#container').toggleClass('blurred');
+				$('#blur').toggleClass('blurred');
 			});
 
 				$('#aceptar').click(function(){
@@ -286,14 +286,14 @@ $(window).load(function(){
 					}
 
 					$('.overscreen4').hide();
-					$('#container').toggleClass('blurred');
+					$('#blur').toggleClass('blurred');
 
 				});
 
 				$('#cancelar').click(function(){
 					console.log('cancelado');
 					$('.overscreen4').hide();
-					$('#container').toggleClass('blurred');
+					$('#blur').toggleClass('blurred');
 				});
 
 		}
@@ -800,11 +800,11 @@ $(window).load(function(){
 					$('.overscreen_error').removeClass('active');
 					setTimeout(function() {$('.overscreen_error').hide();}, 800);
 				}
-				$('#container').toggleClass('blurred');
+				$('#blur').toggleClass('blurred');
 
 				$('#aceptar_error').click(function(){
 					$('.overscreen_error').hide();
-					$('#container').toggleClass('blurred');
+					$('#blur').toggleClass('blurred');
 				})
 				//alert('La dieta está incompleta. Favor de verificar.');
 			}
@@ -904,7 +904,7 @@ $(window).load(function(){
 			// 		$('.alert_meal_description').removeClass('active');
 			// 		setTimeout(function() {$('.alert_meal_description').hide();}, 800);
 			// 	}
-			// 	$('#container').toggleClass('blurred');
+			// 	$('#blur').toggleClass('blurred');
 			// })
 
 			/*
@@ -921,7 +921,7 @@ $(window).load(function(){
 			 	console.log( localStorage.getItem('idDishSelected') );
 
 				$('.alert_meal_description').hide();
-				$('#container').toggleClass('blurred');
+				$('#blur').toggleClass('blurred');
 
 				window.location.assign('dieta.html');
 
@@ -929,7 +929,7 @@ $(window).load(function(){
 
 			$('.cancel').click(function(){
 				$('.alert_meal_description').hide();
-				$('#container').toggleClass('blurred');
+				$('#blur').toggleClass('blurred');
 			});
 
 		}
@@ -1202,7 +1202,7 @@ $(window).load(function(){
 					$('.overscreen5').removeClass('active');
 					setTimeout(function() {$('.overscreen5').hide();}, 800);
 				}
-				$('#container').toggleClass('blurred');
+				$('#blur').toggleClass('blurred');
 
 				
 			});
@@ -1218,7 +1218,7 @@ $(window).load(function(){
 
 			$('#cancelar').click(function(){
 				$('.overscreen5').hide();
-				$('#container').toggleClass('blurred');
+				$('#blur').toggleClass('blurred');
 			});
 		}//END IF BODY HAS CLASS HAS INGREDIENTES
 
@@ -1241,7 +1241,7 @@ $(window).load(function(){
 					$('.overscreen5').removeClass('active');
 					setTimeout(function() {$('.overscreen5').hide();}, 800);
 				}
-				$('#container').toggleClass('blurred');
+				$('#blur').toggleClass('blurred');
 			});
 
 				$('#aceptar').click(function(){
@@ -1280,7 +1280,7 @@ $(window).load(function(){
 
 				$('#cancelar').click(function(){
 					$('.overscreen5').hide();
-					$('#container').toggleClass('blurred');
+					$('#blur').toggleClass('blurred');
 				});
 				
 			$('.ing-category').click(function(){
@@ -1355,7 +1355,7 @@ $(window).load(function(){
 					$('.overscreen5').removeClass('active');
 					setTimeout(function() {$('.overscreen5').hide();}, 800);
 				}
-				$('#container').toggleClass('blurred');
+				$('#blur').toggleClass('blurred');
 
 				$('#aceptar').click(function(){
 					
@@ -1380,7 +1380,7 @@ $(window).load(function(){
 
 				$('#cancelar').click(function(){
 					$('.overscreen5').hide();
-					$('#container').toggleClass('blurred');
+					$('#blur').toggleClass('blurred');
 				});
 
 				
@@ -1422,112 +1422,6 @@ $(window).load(function(){
 			$('.ing-category').removeClass('active');
 			$(this).addClass('active');
 		});
-
-
-		if($('body').hasClass('has-chat-list') ){
-				
-				var userLog = JSON.parse(localStorage.getItem('user'));
-
-				var user = { login : userLog.mail, pass : userLog.chatPassword};
-				
-				connectToChat(user);
-
-				var responsedata = apiRH.getUsuarios();
-
-				console.log(JSON.stringify(responsedata));
-
-				var user = responsedata;
-
-				//Loop the feed
-
-				var i = 0;
-
-				$.each(user, function( key, value ) {
-					
-					console.log(i + " - " + value);
-					
-					$('#contacts-list').append("<a class='btnDialogs' data='" + JSON.stringify(user[i].jid) + "'><li class='persona' ><div class='circle-frame'><img src='images/Icon-60@3x.png'></div><h5 style='margin-top:10px'>" + user[i].nombre + " " + user[i].apellido + "</h5></li>");
-
-					i++;
-				});
-
-
-				$('.btnDialogs').click(function () {
-					
-					console.log($(this).attr('data'));
-
-					localStorage.setItem('idQBOX', $(this).attr('data'));
-
-					if ($(this).attr('data')==$('.los_chats:nth-of-type(1)').attr('data')) {
-						console.log('ya existe');
-					} else {
-						createNewDialog();
-					}
-
-				});
-
-				$('.attach').click(function(){
-					$('input[name="galeria"]').trigger('click');
-
-				});
-
-				$('.list-group-item').click(function(){
-					console.log("aqui ");
-					$('#dialog-list').hide();$('.menu-bar').hide();$('.escribir').show();
-				});
-
-				$('.back').click(function(){
-
-					if($('#messages-list').is(':visible') ){
-						console.log('lista_chat visible');
-						$('#dialogs-list').show();
-						$('#messages-list').hide();
-						$('.escribir').hide();
-						$('.menu-bar').show();
-					}else if($('.lista_chat').is(':visible') ) {
-						window.location.assign('index.html');
-					}
-
-
-					// if($('.lista_chat').is(':visible')){
-					// 	window.location.assign('index.html');
-					// }
-				});
-
-				$('#btn_contacts').click(function(){
-					$('#dialogs-list').hide();
-					$('#contacts-list').show();
-				});
-
-				$('#btn_chats').click(function(){
-					$('#dialogs-list').show();
-					$('#contacts-list').hide();
-				});
-
-				$('#mensaje-chat').focus(function() {
-  					if(this.innerHTML=='Mensaje') {this.innerHTML='';}
-  			// 		$('#container').addClass('conteclado');
-					// $('#container').css('height',document.documentElement.clientHeight+"px");
-					// var calulitio = document.documentElement.clientHeight-40;
-					// $('.escribir').css('top',calulitio+"px");
-				});
-
-				// var nuevo = 0;
-
-				// $('h2.titulo').click(function(){
-				// 	$(window).resize();
-				// 	$(document).resize();
-				// 	nuevo++;
-				// 	$('#container').addClass('conteclado');
-				// 	$('#container').css('height',document.documentElement.clientHeight+"px");
-				// 	var calulitio = document.documentElement.clientHeight-43;
-				// 	$('.escribir').css('top',calulitio+"px");
-				// 	$('#mensaje-chat').focus();
-				// 	console.log(nuevo+" "+document.documentElement.clientHeight);
-				// 	$('#container').scrollTop($('#container').prop("scrollHeight"));
-				// });
-				app.hideLoader();
-		}//end IF body has class
 		
 
 		$('.usuario-item').click(function(){
@@ -1609,7 +1503,7 @@ $(window).load(function(){
 	    		$('.alert_meal_description').removeClass('active');
 	    		setTimeout(function() {$('.alert_meal_description').hide();}, 800);
 	    	}
-	    	$('#container').toggleClass('blurred');
+	    	$('#blur').toggleClass('blurred');
 
 	});
 

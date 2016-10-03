@@ -107,7 +107,8 @@ h1   { font-size:24px; font-size:2.4rem; } /* =24px */
 
 body {font-family:'Kohi';text-align:center;font-weight:300;letter-spacing:0.025em;color:#3f3f3f;}
 #container {position:absolute;width:100%;min-height:100vh; height: 100%;top:0px;left:0px;padding-top:50px;-webkit-transition:.5s ease-in-out;transition:.5s ease-in-out;}
-#container.blurred {-webkit-filter:blur(5px);}
+.blur {background: #FFF;}
+.blur.blurred {-webkit-filter:blur(5px);}
 body.perfil2 #container {position:relative;width:100%;background:#f5f1f0;min-height:100%;}
 section {width:100%;overflow:hidden;}
 a {text-decoration:none;color:inherit;}
@@ -135,7 +136,7 @@ h4 {margin:10px 0px 12px;font-weight:700;font-size:130%;color:#333;}
 .openkeyboard .overscreen3.active{position: absolute;}
 
 	/*Scroll fix*/
-	.coach-profile .view{height: auto!important;}
+	.coach-profile.view{height: auto!important;}
 
 /*
 
@@ -233,7 +234,7 @@ input.send {position:absolute;border-style:none; outline:none;background:none;ri
 
 .chat section {padding-bottom:50px;}
 .content.list-group .list-group-item:last-of-type div{margin-bottom: 50px}
-.content.list-group{padding-bottom: 7rem; position: relative; z-index: 5; min-height: 80vh; background-color: #e9ebee;}
+.content.list-group{padding-bottom: 7rem; position: relative; z-index: 5; min-height: 85vh; background-color: #e9ebee;}
 
 /* DIETA */
 
@@ -478,7 +479,7 @@ nav.set-public span {font-size:30%;display:block;font-weight:800;}
 
 .coach-profile #container {background:#f4f1f0; color:#3f3f3f;}
 .coach-profile #container h2 {font-weight:800;margin-bottom:5px;}
-.coach-profile .la_img {width:100%;height:auto;margin-top:2px;}
+.coach-profile .la_img {width:100%;height:auto; min-height: 250px; margin-top:2px;}
 .bio-coach {margin:0px 10% 10px;font-size:90%;}
 
 .rate-stars img {height:16px;width:auto;margin:3px 1px 0px;}

@@ -219,16 +219,18 @@
 			}
 		},
 		render_home : function(url){
-			
+			app.showLoader();
 			app.check_or_renderContainer();
 			console.log("Rendering home");
 			app.registerTemplate('home');
 			var data = this.gatherEnvironment();
 			data.is_scrollable = false;
-			return this.switchView('home', data, '.view', url);
+			return this.switchView('home', data, '.view', url, 'home-menu');
 		},
 		render_user_list : function(url){
-			app.showLoader();
+			setTimeout(function(){
+				app.showLoader();
+			}, 240);
 			app.check_or_renderContainer();
 			console.log("Rendering user list");
 			app.registerTemplate('user-list');
@@ -240,7 +242,17 @@
 			return this.switchView('user-list', data, '.view', url, 'list-usuarios');
 		},
 		render_chat : function(url){
-			return app.showLoader();
+			setTimeout(function(){
+				app.showLoader();
+			}, 800);
+			app.check_or_renderContainer();
+			console.log("Rendering chat list");
+			app.registerTemplate('chat-contacts');
+			var responsedata = [];
+			
+			var data = this.gatherEnvironment(responsedata, 'Chat');
+			console.log(data);
+			return this.switchView('chat-contacts', data, '.view', url, 'has-chat-list', true);
 		},
 		render_finanzas : function(url){
 			app.showLoader();
@@ -268,9 +280,11 @@
 			apiRH.getFileFromDevice(destination, source);		
 		},
 		showLoader: function(){
+			console.log("Showing loader");
 			$('#spinner').show();
 		},
 		hideLoader: function(){
+			console.log("Hiding< loader");
 			$('#spinner').hide();
 		},
 		toast: function(message, bottom){
@@ -287,10 +301,10 @@
 			}
 			return;
 		},
-		switchView: function(newTemplate, data, targetSelector, recordUrl, targetClass){
+		switchView: function(newTemplate, data, targetSelector, recordUrl, targetClass, keepLoader){
 			/* Push to history if url is supplied */
 			if(recordUrl) window.history.pushState(newTemplate, newTemplate, '/'+recordUrl);
-			if(targetClass) $(targetSelector).addClass(targetClass);
+			if(targetClass) $(targetSelector).attr('class','view').addClass(targetClass);
 			
 			var template = Handlebars.templates[newTemplate];
 			$(targetSelector).fadeOut('fast', function(){
@@ -298,18 +312,25 @@
 				$(targetSelector).html( template(data) ).css("opacity", 1)
 												 .css("display", "block")
 												 .css("margin-left", "20px")
-												 .animate({
-													'margin-left': "0",
-													opacity: 1
-												}, 240);
+												 .animate(	{
+																'margin-left': "0",
+																opacity: 1
+															}, 240);
 			});
-			setTimeout(function(){
-				if(window.firstTime)
-					window.firstTime = false;				
-				app.hideLoader();
-				initializeEvents();
-			}, 2000);
-			return;
+			console.log("KeepLoader :: "+keepLoader);
+			if(!keepLoader)
+				return setTimeout(function(){
+					if(window.firstTime)
+						window.firstTime = false;				
+					app.hideLoader();
+					initializeEvents();
+				}, 2000);
+				
+			return setTimeout(function(){
+					if(window.firstTime)
+						window.firstTime = false;				
+					initializeEvents();
+				}, 2000);
 		},
 		register_activity: function(type, magnitude, client_id, coach_id){
 

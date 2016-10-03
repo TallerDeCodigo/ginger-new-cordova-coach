@@ -3,18 +3,17 @@
 var currentUser;
 
 function connectToChat(user) {
-
-  console.log('llegando a connectToChat');
-  // Create session and connect to chat
-  //
+  
+  console.log("Attempting to connect to chat api");
+  
   QB.createSession({email: user.login, password: user.pass}, function(err, res) {
 
     console.log(user);
 
     currentUser = user;
 
-    console.log("usr> "+user.login);
-    console.log("pass> "+user.pass);
+    console.log("usr > "+user.login);
+    console.log("pass > "+user.pass);
 
     console.log(res);
     if (res) {
@@ -37,8 +36,6 @@ function connectToChat(user) {
         if (err) {
           console.log(err);
         } else {
-
-          console.log("entra pero no ejecuta las funciones");
 
           console.log(roster);
 

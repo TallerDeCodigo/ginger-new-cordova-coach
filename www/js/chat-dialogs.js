@@ -30,13 +30,11 @@ function retrieveChatDialogs() {
 
   console.log("en retrieve chat dialogs");
 
-
   QB.chat.dialog.list(null, function(err, resDialogs) {
     if (err) {
       console.log(err);
     } else {
 
-      console.log('aca 2');
       // repackage dialogs data and collect all occupants ids
       var occupantsIds = [];
       var i = 0;
@@ -45,10 +43,7 @@ function retrieveChatDialogs() {
       var hours;
       var minutes;
       var message_time;
-       console.log('aca 3');
-       console.log(resDialogs);
       
-      console.log('456465456456456456');
 
       if(resDialogs.items.length === 0){
 
@@ -112,7 +107,7 @@ function retrieveChatDialogs() {
 
           clickSendAttachments(inputFile);
         });
-        app.hideLoader();
+        // app.hideLoader();
       });
     }
   });
@@ -145,7 +140,7 @@ function showOrUpdateDialogInUI(itemRes, updateHtml) {
     $('#dialogs-list').append(dialogHtml);
 	
   }
-  app.hideLoader();
+  //app.hideLoader();
   console.log('opponentId <<<<<<'+opponentId);
 }
 
