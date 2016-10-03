@@ -11,35 +11,17 @@
 			// Application Constructor
 		initialize: function() {
 
-			// 1) Request background execution
-			// cordova.plugins.backgroundMode.enable();
-
-			// // 2) Now the app runs ins background but stays awake
-			// cordova.plugins.backgroundMode.onactivate = function () {
-			//     setInterval(function () {
-			//         cordova.plugins.notification.badge.increase();
-			//         cordova.plugins.backgroundMode.setDefaults({ color: 'FF0000' });
-			//     }, 1000);
-			// };
-
-			// // 3) App is back to foreground
-			// cordova.plugins.backgroundMode.ondeactivate = function () {
-			//     cordova.plugins.notification.badge.clear();
-			// };
-
 			this.bindEvents();
+			window.firstTime = true;
+
 			/* Initialize API request handler */
 			window.apiRH = new requestHandlerAPI().construct(app);
-
 			//console.log('token');
 			
-			var is_login = apiRH.has_token();
+			var is_login 	= apiRH.has_token();
+			var is_client 	= localStorage.getItem('customerId');
+			var is_current 	= localStorage.getItem('valido');
 
-			var is_client = localStorage.getItem('customerId');
-
-			var is_current = localStorage.getItem('valido');
-
-			//console.log(is_login);
 
 			/* IMPORTANT to set requests to be syncronous */
 			/* TODO test all requests without the following code 'cause of deprecation */
@@ -49,27 +31,26 @@
 
 			window.loggedIn = false;
 			this.ls 		= window.localStorage;
-			if(is_login)
-				loggedIn = true;
 	
 			/* Check if has a valid token */
-			//var response = apiRH.has_valid_token();
 
 			if(is_login){
 				
-				//console.log('You okay, now you can start making calls');
+				console.log('You okay, now you can start making calls');
+				loggedIn = true;
+				var userinfo 	= JSON.parse(localStorage.getItem('user'));
+					window._coach = (userinfo) ? userinfo : '';
 				/* Take the user to it's timeline */
-
 				var is_home = window.is_home;
 				
-
 				if(is_home){
 					return;
 				}else{
-					if(!is_home)
+					if(!is_home){
 						return;
-					else	
+					}else{
 						window.location.assign('index.html?filter_feed=all');
+					}	
 				}	
 				return;
 			}else{
@@ -81,13 +62,7 @@
 				}
 				
 			}
-			/* Copiado de ondeviceready ----- QUITAR ----- */
-			// var backButtonElement = document.getElementById("backBtn");
-			// if(backButtonElement)
-			// 	backButtonElement.addEventListener("click", app.onBackButton, false);
-			
-			/* Requesting passive token if no token is previously stored */
-			//console.log("Token::: "+apiRH.request_token().get_request_token());
+
 		},
 		registerCompiledPartials: function() {
 			console.log("Register pre compiled partials");
@@ -149,18 +124,12 @@
 		onDeviceReady: function() {
 			app.receivedEvent('deviceready');
 
-
-
-
 			/*   ___    _         _   _     
 			*  / _ \  / \  _   _| |_| |__  
 			* | | | |/ _ \| | | | __| '_ \ 
 			* | |_| / ___ \ |_| | |_| | | |
 			*  \___/_/   \_\__,_|\__|_| |_|
 			*/                              
-
-
-
 
 			try{
 				OAuth.initialize('F_A1PBTm8Vv9WtuftE8CuTqNV7g');
@@ -175,7 +144,6 @@
 				backButtonElement.addEventListener("click", app.onBackButton, false);
 			return;
 		},
-
 		// deviceready Event Handler
 		onMobileInit: function() {
 			app.receivedEvent('mobileinit');
@@ -193,9 +161,9 @@
 		},
 		gatherEnvironment: function(optional_data, history_title) {
 			/* Gather environment information */
-			var meInfo 	= apiRH.ls.getItem('me');
-			var logged 	= apiRH.ls.getItem('me.logged');
-			var parsed 	= {me: JSON.parse(meInfo), logged_user: JSON.parse(logged)};
+			var meInfo 	= apiRH.ls.getItem('user');
+			// var logged 	= apiRH.ls.getItem('me.logged');
+			var parsed 	= {me: JSON.parse(meInfo)};
 			
 			if(optional_data){
 				parsed['data'] = optional_data;
@@ -229,7 +197,19 @@
 				return true;
 		},
 		render_home : function(){
-			return;
+			
+			/*** First time loading home ***/
+			if(window.firstTime){
+				app.registerTemplate('container');
+				var container_template = Handlebars.templates['container'];
+				var html 	 = container_template();
+				$('.rootContainer').html( html );
+			}
+			app.registerTemplate('home');
+			var data = this.gatherEnvironment();
+			console.log(data);
+			return this.switchView('home', data, '.view');
+
 		},
 		render_chat : function(){
 			return app.showLoader();
@@ -390,16 +370,7 @@
 		    };
 		    navigator.geolocation.getCurrentPosition(onSuccess, onError, {maximumAge: 300000, timeout:10000, enableHighAccuracy : true});
 		},
-
-		
-
-		/*
-			CAMARA LLAMADO DE LA FUCNION EN EL API SDK
-		*/
-
-
-		get_file_from_device: function(destination, source)
-		{
+		get_file_from_device: function(destination, source){
 			apiRH.getFileFromDevice(destination, source);		
 		},
 		showLoader: function(){
@@ -422,16 +393,32 @@
 			}
 			return;
 		},
+		switchView: function(newTemplate, data, targetSelector){
+			app.showLoader();
+			var template = Handlebars.templates[newTemplate];
+			$(targetSelector).fadeOut('fast', function(){
 
-		/** INIT GINGER SERVICES REQUEST **/
-		/* ---- TRACKING ACTIVITY USERS ---- */
-		/* @param type: [ 'peso', 'animo', 'brazo', 'pierna', 'cintura', 'cadera', 'pecho', 'agua', 'ejercicio', 'recorrido', 'caminar', 'correr', 'pesas', 'cross' ],  //0..9 */
-
+				$(targetSelector).html( template(data) ).css("opacity", 1)
+												 .css("display", "block")
+												 .css("margin-left", "20px")
+												 .animate({
+													'margin-left': "0",
+													opacity: 1
+												}, 240);
+			});
+			setTimeout(function(){
+				if(window.firstTime)
+					window.firstTime = false;				
+				app.hideLoader();
+				// initializeEvents();
+			}, 2000);
+			return;
+		},
 		register_activity: function(type, magnitude, client_id, coach_id){
 
 			var req = {
 				method : 'post',
-				url : api_base_url + 'tables/medicion/',	//definitr tabla
+				url : api_base_url + 'tables/medicion/',
 				headers: {
 					'X-ZUMO-APPLICATION': 'ideIHnCMutWTPsKMBlWmGVtIPXROdc92',
 					'X-ZUMO-AUTH': '',

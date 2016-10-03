@@ -113,23 +113,12 @@
 $(window).load(function(){
 	$(function() {
 
-		var coach_type 		= [ 'Estricto', 'Innovador', 'Animador', 'Tradicional'];
-		var restricciones 	= [ 'Huevo', 'Pollo', 'Pescado', 'Mariscos', 'Lacteos', 'Carne' ];
-		var objetivo 		= [ 'adelgazar','detox','bienestar','rendimiento' ];
-		var sex 			= [ 'Hombre', 'Mujer'];
+		var coach_type 				= [ 'Estricto', 'Innovador', 'Animador', 'Tradicional'];
+		var restricciones 			= [ 'Huevo', 'Pollo', 'Pescado', 'Mariscos', 'Lacteos', 'Carne' ];
+		var objetivo 				= [ 'adelgazar','detox','bienestar','rendimiento' ];
+		var sex 					= [ 'Hombre', 'Mujer'];
 		var tipo_de_ingredientes = [ 'granosycereales', 'verduras', 'grasas', 'lacteos', 'proteinaanimal', 'leguminosas', 'nuecesysemillas', 'frutas', 'endulzantes', 'aderezosycondimentos', 'superfoods', 'liquidos'];
 
-
-		if($('body').hasClass('has-home'))
-		{
-
-			var coach = JSON.parse(localStorage.getItem('user'));
-
-			console.log('Hello ' +coach.nombre);
-
-			$('.titulo').html(coach.nombre);
-		}
-		
 		/**
 		 *
 		 * Lista de Usuarios de Coach

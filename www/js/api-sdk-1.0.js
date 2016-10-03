@@ -516,7 +516,7 @@ function requestHandlerAPI(){
 		this.getUsuarios = function(){
 			var req = {
 				method : 'get',
-				url : api_base_url + 'tables/cliente?coach=',
+				url : api_base_url + 'api/client_status?coachid=' + localStorage.getItem('userId'),
 				headers: {
 					'X-ZUMO-APPLICATION': 'ideIHnCMutWTPsKMBlWmGVtIPXROdc92',
 					'X-ZUMO-AUTH': localStorage.getItem('token'),
@@ -527,23 +527,24 @@ function requestHandlerAPI(){
 			var response = this.getRequest('tables/cliente/?coach=' + localStorage.getItem('userId'), req);
 			
 			if(response.length){
-				response.forEach(function(item){
-					var request = {
-						method : 'get',
-						url : api_base_url + 'api/client_status?userid='+item._id,
-						headers: {
-							'X-ZUMO-APPLICATION': 'ideIHnCMutWTPsKMBlWmGVtIPXROdc92',
-							'X-ZUMO-AUTH': localStorage.getItem('token'),
-							'Content-Type': 'application/json'
-						}
-					};
-					console.log(request);
-					var response2 = context.getRequest('api/client_status?userid=' + item._id, request);
-					console.log("Response 2 ::: ");
-					console.log(response2);
-					response.consumos = response2;
-				});
-				
+				// Process chat unread messages stuff
+				// response.forEach(function(item){
+				// 	var request = {
+				// 		method : 'get',
+				// 		url : api_base_url + 'api/client_status?userid='+item._id,
+				// 		headers: {
+				// 			'X-ZUMO-APPLICATION': 'ideIHnCMutWTPsKMBlWmGVtIPXROdc92',
+				// 			'X-ZUMO-AUTH': localStorage.getItem('token'),
+				// 			'Content-Type': 'application/json'
+				// 		}
+				// 	};
+				// 	console.log(request);
+				// 	var response2 = context.getRequest('api/client_status?userid=' + item._id, request);
+				// 	console.log("Response 2 ::: ");
+				// 	console.log(response2);
+				// 	response.consumos = response2;
+				// });
+				console.log(response);
 			}
 			return (response) ? response : false;
 
