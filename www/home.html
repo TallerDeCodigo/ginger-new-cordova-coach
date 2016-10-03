@@ -6,6 +6,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, maximum-scale=1, minimum-scale=1, height=device-height">
 		<meta http-equiv="cleartype" content="on">
 	    <script type="text/javascript" src="js/bower_components/handlebars/handlebars.min.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/quickblox/2.1.2/quickblox.min.js"></script>
 	    <script type='text/javascript' src="js/jquery-1.12.2.min.js"></script>
 	    <script type='text/javascript' src="js/jquery-touch.min.js"></script>
 		<link rel="stylesheet" type="text/css" href="css/style.css">
@@ -20,7 +21,6 @@
 	<script type="text/javascript" src="js/main.js"></script>
 	<script type="text/javascript" src="cordova.js"></script>
 	<script type="text/javascript" src="js/oauth.js"></script>
-	<script type="text/javascript" src="js/functions_coach.js"></script>
 	<script type="text/javascript">
 		/* Initialize app object and perform initial login check */
 		window.is_home = true;
@@ -28,7 +28,12 @@
 		app.render_home();
 		app.showLoader();
 	</script>
+	<script type="text/javascript" src="js/functions_coach.js"></script>
 	<script type="text/javascript" src="js/scripts/document_ready.js"></script>
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/quickblox/2.1.2/quickblox.min.js"></script>
+	<script type="text/javascript" src="js/chat-connection.js"></script>
+	<script type="text/javascript" src="js/chat-messages.js"></script>
+	<script type="text/javascript" src="js/chat-ui-helpers.js"></script>
+	<script type="text/javascript" src="js/chat-dialogs.js"></script>
+	<script type="text/javascript" src="js/chat-users.js"></script>
 </html>
 

@@ -69,6 +69,8 @@ window.initializeEvents = function(){
 			e.preventDefault();
 			if( $(this).data('resource') == "home" )
 				return app.render_home($(this).attr('href'));
+			if( $(this).data('resource') == "chat-contacts" )
+				return app.render_chat($(this).attr('href'));
 			if( $(this).data('resource') == "user-list" )
 				return app.render_user_list($(this).attr('href'));
 			if( $(this).data('resource') == "finanzas" )
