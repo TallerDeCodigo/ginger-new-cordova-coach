@@ -13,9 +13,9 @@ window.initializeEvents = function(){
 
 		/* Hook soft links */
 		$('.hook').on('click', function(e){
-
+			e.preventDefault();
 			if( $(this).data('resource') == "user-list" )
-				return app.render_user_list();
+				return app.render_user_list($(this).attr('href'));
 			
 
 			if( $(this).data('resource') == "radio" )
@@ -36,6 +36,7 @@ window.initializeEvents = function(){
 				return app.render_column($(this).data('id'));
 			if( $(this).hasClass("single-podcast") )
 				return app.render_podcast($(this).data('id'));
+			e.stopPropagation();
 		});
 
 		//-----------------------------

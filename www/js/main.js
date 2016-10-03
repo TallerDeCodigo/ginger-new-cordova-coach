@@ -205,19 +205,34 @@
 					if (hasOwnProperty.call(obj, key)) return false;
 				return true;
 		},
-		render_home : function(){
-			
+		check_or_renderContainer : function(){
 			/*** First time loading home ***/
 			if(window.firstTime){
+				console.log("Rendering first time");
 				app.registerTemplate('container');
 				var container_template = Handlebars.templates['container'];
 				var html 	 = container_template();
 				$('.rootContainer').html( html );
 			}
+		},
+		render_home : function(){
+			
+			app.check_or_renderContainer();
+			console.log("Rendering home");
 			app.registerTemplate('home');
 			var data = this.gatherEnvironment();
 			return this.switchView('home', data, '.view');
-
+		},
+		render_user_list : function(url){
+			app.check_or_renderContainer();
+			console.log("Rendering user list");
+			app.registerTemplate('user-list');
+			var responsedata = [];
+				responsedata.users = apiRH.getUsuarios();
+			
+			var data = this.gatherEnvironment(responsedata, 'Usuarios');
+			console.log(data);
+			return this.switchView('user-list', data, '.view', url, 'list-usuarios');
 		},
 		render_chat : function(){
 			return app.showLoader();
@@ -401,8 +416,12 @@
 			}
 			return;
 		},
-		switchView: function(newTemplate, data, targetSelector){
+		switchView: function(newTemplate, data, targetSelector, recordUrl, targetClass){
 			app.showLoader();
+			/* Push to history if url is supplied */
+			if(recordUrl) window.history.pushState(newTemplate, newTemplate, '/'+recordUrl);
+			if(targetClass) $(targetSelector).addClass(targetClass);
+			
 			var template = Handlebars.templates[newTemplate];
 			$(targetSelector).fadeOut('fast', function(){
 

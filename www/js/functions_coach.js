@@ -126,14 +126,14 @@ $(window).load(function(){
 		 *
 		 **/
 
-		if($('body').hasClass('has-usuarios') ){
+		// if($('body').hasClass('has-usuarios') ){
 
-			var responsedata = apiRH.getUsuarios();
-			$.each(responsedata, function( key, value ) {
-				$('.list-users').append("<li class='usuario-item' data='" + JSON.stringify(responsedata[key]) + "'><h2>" + responsedata[key].nombre + " " + responsedata[key].apellido + "</h2><a class='bubble notificaciones' >0</a><a class='bubble mensajes'>0</a></li>");
-			});
+		// 	var responsedata = apiRH.getUsuarios();
+		// 	$.each(responsedata, function( key, value ) {
+		// 		$('.list-users').append("<li class='usuario-item' data='" + JSON.stringify(responsedata[key]) + "'><h2>" + responsedata[key].nombre + " " + responsedata[key].apellido + "</h2><a class='bubble notificaciones' >0</a><a class='bubble mensajes'>0</a></li>");
+		// 	});
 
-		}
+		// }
 
 
 		if($('body').hasClass('has-user') ){

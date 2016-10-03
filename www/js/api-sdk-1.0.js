@@ -514,6 +514,7 @@ function requestHandlerAPI(){
 		 *
 		 **/
 		this.getUsuarios = function(){
+			
 			var req = {
 				method : 'get',
 				url : api_base_url + 'api/client_status?coachid=' + localStorage.getItem('userId'),
@@ -524,8 +525,9 @@ function requestHandlerAPI(){
 				}
 			};
 
-			var response = this.getRequest('tables/cliente/?coach=' + localStorage.getItem('userId'), req);
-			
+			var response = null;
+				response = this.getRequest('api/client_status?coachid=' + localStorage.getItem('userId'), req);
+			console.log("Get status");
 			if(response.length){
 				// Process chat unread messages stuff
 				// response.forEach(function(item){

@@ -1,0 +1,15 @@
+	<header class="hwhite2">
+		<div class="toolbar">
+			<a href="home.html" class="back"><img src="images/back.svg"></a>
+			<h2 class="titulo">{{header_title}}</h2>
+		</div>
+	</header>
+	<ul class="list-users">
+		{{# each data.users}}
+			<li class="usuario-item" data="{{@key}}">
+				<h2>{{nombre}} {{apellido}}</h2>
+				<a class='bubble notificaciones' >{{consumos}}</a>
+				<a id="chat_unread" class='bubble mensajes'>0</a>
+			</li>
+		{{/ each}}
+	</ul>
