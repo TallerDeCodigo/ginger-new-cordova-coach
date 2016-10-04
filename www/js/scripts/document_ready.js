@@ -441,6 +441,35 @@ window.initializeEvents = function(){
 					$('#blur').toggleClass('blurred');
 				});
 
+		} // END diet-list
+
+		if($('.view').hasClass('create-new-diet')){
+
+			$('.btn-gre').click(function () {
+				app.showLoader();
+				console.log('CREAR DIETA');
+
+				var d_nombre 		= $('input[name="nombre"]').val();
+				var d_comentario 	= $('input[name="cometario"]').val();
+
+				localStorage.setItem('d_nombre', d_nombre);
+				localStorage.setItem('d_comentario', d_comentario);
+				d_nombre 		= localStorage.getItem('d_nombre');
+				d_comentario 	= localStorage.getItem('d_comentario'); 
+
+				console.log(d_nombre);
+				console.log(d_comentario);
+
+				if(d_nombre.length < 4)
+					return;
+				if(d_comentario.length < 4)
+					return;
+
+				//REQUEST TO GET DIET
+				window.location.assign('dieta.html?method=create');
+				
+			});
+
 		}
 
 	});
