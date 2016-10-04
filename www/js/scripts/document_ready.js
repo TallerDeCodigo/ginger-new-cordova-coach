@@ -73,10 +73,16 @@ window.initializeEvents = function(){
 				return app.render_chat($(this).attr('href'));
 			if( $(this).data('resource') == "user-list" )
 				return app.render_user_list($(this).attr('href'));
+			if( $(this).data('resource') == "diet-list" )
+				return app.render_coach_dietas($(this).attr('href'));
 			if( $(this).data('resource') == "finanzas" )
 				return app.render_finanzas($(this).attr('href'));
 			if( $(this).data('resource') == "profile" )
 				return app.render_myProfile($(this).attr('href'));
+
+
+			if( $(this).data('resource') == "create-diet" )
+				return app.render_create_diet($(this).attr('href'));
 			
 
 			e.stopPropagation();
@@ -327,6 +333,115 @@ window.initializeEvents = function(){
 
 				app.hideLoader();
 		}//end IF body has class
+
+		/**
+		 *
+		 * Lista de Dietas de Coach
+		 *
+		 **/
+
+		if( $('.view').hasClass('diet-list') ){
+			
+			// setTimeout(function(){
+			// 	app.showLoader();
+			// }, 0);
+			//Request to Service
+			var responsedata = apiRH.getDiets();
+
+			//console.log(JSON.stringify(responsedata));
+			var diet = responsedata;
+
+			//Loop the feed
+			var i = 0;
+
+			$.each(diet, function( key, value ) {
+				
+				//console.log(i + " - " + value);
+				
+				var nombre = 'no-name';
+				var descripcion = '';
+				var _id = ''
+
+				$.each(value, function( key, value ) 
+				{
+
+					if(key == 'nombre'){
+						//console.log(value);
+						nombre = value;
+					}
+
+					if(key == '_id'){
+						//console.log(value);
+						_id  = value;
+					}
+
+					if(key == 'descripcion'){
+						//console.log(value);
+						descripcion = value;
+					}
+					
+				});
+
+				// $('.list-diet').append('<li class="elemento-dieta" data="' + _id + '"><h2> ' + nombre + ' </h2><p>' + descripcion + '</p><nav><a href="copiar-dieta.html"><img class="btn_copy" data="' + _id + '" src="images/copy.png"></a><a href="dieta.html"><img class="btn_edit" data="' + _id + '" src="images/edit.png"></a><a><img class="btn_delete" data="' + _id + '" src="images/delete.png"></a></nav></li>');
+
+				i++;
+			});
+
+			$('.btn_copy').click(function (e) {
+				console.log('copy');
+				var idDieta = $(this).attr('data');	
+				localStorage.setItem("dOperator", idDieta);
+
+			});
+
+			$('.btn_edit').click(function () {
+				
+				var idDietax = $(this).attr('data');
+
+				console.log('ID DIET: ' + idDietax);
+
+				localStorage.setItem('dOperator', idDietax);
+
+
+			});
+			var idDelete;
+			$('.btn_delete').click(function () {
+				console.log('borrar');
+				idDelete = $(this).attr('data');
+				if(!$('.overscreen4').is(':visible')){
+					console.log('entra popup');
+					$('.overscreen4').show();
+					setTimeout(function() {$('.overscreen4').addClass('active');}, 200);
+				} else {
+					$('.overscreen4').removeClass('active');
+					setTimeout(function() {$('.overscreen4').hide();}, 800);
+				}
+				$('#blur').toggleClass('blurred');
+			});
+
+				$('#aceptar').click(function(){
+					console.log('aceptar borrar');
+					
+					var response = apiRH.deleteDiet(idDelete);
+					console.log(response);
+					console.log(idDelete);
+					if(response){
+						console.log('DELETE OK: ' + response);
+						$('li.elemento-dieta[data='+idDelete+']').remove();
+					}
+
+					$('.overscreen4').hide();
+					$('#blur').toggleClass('blurred');
+
+				});
+
+				$('#cancelar').click(function(){
+					console.log('cancelado');
+					$('.overscreen4').hide();
+					$('#blur').toggleClass('blurred');
+				});
+
+		}
 
 	});
 

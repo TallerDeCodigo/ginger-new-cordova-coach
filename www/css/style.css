@@ -136,6 +136,7 @@ h4 {margin:10px 0px 12px;font-weight:700;font-size:130%;color:#333;}
 .openkeyboard .overscreen3.active{position: absolute;}
 
 	/*Scroll fix*/
+	.diet-list.view,
 	.coach-profile.view{height: auto!important;}
 
 /*
@@ -371,14 +372,14 @@ li.persona {list-style:none;border-bottom:1px solid #cfcfcf;text-align:left;heig
 
 /* DIETAS */
 
-.diets ul {margin:0;padding-bottom:45px;}
-.diets ul li {list-style:none;border-bottom:1px solid #cfcfcf;text-align:left;height:80px;position:relative;padding:8px 37% 3px 13px;}
-.diets ul li:last-of-type {border:none;}
-.diets ul li h2 {margin-top: 14px;}
-.diets ul li p {font-size:92%;margin-bottom:0px;height:38px;overflow:hidden;line-height:140%;margin-top:3px;}
-.diets ul li nav {position:absolute;width:36%;height:100%;right:1%;top:0px;text-align:center;}
-.diets ul li nav a {width:26px;height:26px;display:inline-block;overflow:hidden;margin:22px 4%;}
-.diets ul li nav a img {height:90%;width:auto;position:relative;display:inline-block;margin:5% 0px;}
+.diet-list ul {margin:0;padding-bottom:45px;}
+.diet-list ul li {list-style:none;border-bottom:1px solid #cfcfcf;text-align:left;height:80px;position:relative;padding:8px 37% 3px 13px;}
+.diet-list ul li:last-of-type {border:none;}
+.diet-list ul li h2 {margin-top: 14px;}
+.diet-list ul li p {font-size:92%;margin-bottom:0px;height:38px;overflow:hidden;line-height:140%;margin-top:3px;}
+.diet-list ul li nav {position:absolute;width:36%;height:100%;right:1%;top:0px;text-align:center;}
+.diet-list ul li nav a {width:26px;height:26px;display:inline-block;overflow:hidden;margin:22px 4%;}
+.diet-list ul li nav a img {height:90%;width:auto;position:relative;display:inline-block;margin:5% 0px;}
 a.create-diet {position:fixed;width:100%;height:45px;bottom:0px;z-index:9999999;left:0px;line-height:45px;font-size:150%;padding:0;}
 
 /* CREAR & DUPLICAR DIETA */

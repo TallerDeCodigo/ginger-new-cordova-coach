@@ -1,0 +1,42 @@
+	<header class="hwhite2">
+		<div class="toolbar">
+			<a href="index.html" class="back"><img src="{{cordova_full_path}}images/back.svg"></a>
+			<h2 class="titulo">{{header_title}}</h2>
+		</div>
+	</header>
+	<ul class="list-diet">
+		{{# each data}}
+			<li class="elemento-dieta" data="{{_id}}">
+				<h2>{{nombre}}</h2>
+				{{# descripcion}}<p>{{.}}</p>{{/ descripcion}}
+				<nav>
+					<a href="copiar-dieta.html"><img class="btn_copy" data="{{_id}}" src="{{cordova_full_path}}images/copy.png"></a>
+					<a href="dieta.html"><img class="btn_edit" data="{{_id}}" src="{{cordova_full_path}}images/edit.png"></a>
+					<a><img class="btn_delete" data="{{_id}}" src="{{cordova_full_path}}images/delete.png"></a>
+				</nav>
+			</li>
+		{{/ each}}
+	</ul>
+
+	<a class="btn-gre hook create-diet" data-resource="create-diet" href="crear-dieta.html">Crear Dieta</a>
+	<div class="overscreen4" style="display:none">
+		<div class="ov-filler2"></div>
+		<div class="dialog">
+			<h5>Eliminar</h5>
+			<p>¿Estás seguro que deseas eliminar esta dieta?</p>
+			<div class="di-options">
+				<a id="aceptar" class="accept">Aceptar</a>
+				<a id="cancelar" class="cancel">Cancelar</a>
+			</div>
+		</div>
+	</div>
+	<div class="overscreen_err" style="display:none">
+		<div class="ov-filler2"></div>
+		<div class="dialog">
+			<h5>Eliminar</h5>
+			<p>Esta dieta no se puede eliminar porque está asignada a un usuario</p>
+			<div class="di-options">
+				<a id="aceptar_err" class="accept">Aceptar</a>
+			</div>
+		</div>
+	</div>

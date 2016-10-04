@@ -265,6 +265,17 @@
 			console.log(data);
 			return this.switchView('finanzas', data, '.view', url, 'finanzas');
 		},
+		render_coach_dietas : function(url){
+			app.showLoader();
+			app.check_or_renderContainer();
+			console.log("Rendering Coach dietas");
+			app.registerTemplate('diet-list');
+			var responsedata = [];
+				responsedata = apiRH.getDiets();
+			var data = this.gatherEnvironment(responsedata, 'Dietas');
+			console.log(data);
+			return this.switchView('diet-list', data, '.view', url, 'diet-list');
+		},
 		render_myProfile : function(url){
 			app.showLoader();
 			app.check_or_renderContainer();
