@@ -236,7 +236,7 @@
 			app.registerTemplate('user-list');
 			var responsedata = [];
 				responsedata.users = apiRH.getUsuarios();
-			
+			// chatCore.fetchDialogList();
 			var data = this.gatherEnvironment(responsedata, 'Usuarios');
 			console.log(data);
 			return this.switchView('user-list', data, '.view', url, 'list-usuarios');
@@ -282,7 +282,7 @@
 			console.log("Rendering Create new diet");
 			app.registerTemplate('create-diet');
 			var responsedata = [];
-				responsedata = apiRH.getDiets();
+				// responsedata = apiRH.getDiets();
 			var data = this.gatherEnvironment(responsedata, 'Dietas');
 			console.log(data);
 			return this.switchView('create-diet', data, '.view', url, 'create-new-diet');
@@ -302,11 +302,11 @@
 			apiRH.getFileFromDevice(destination, source);		
 		},
 		showLoader: function(){
-			console.log("Showing loader");
+			// console.log("Showing loader");
 			$('#spinner').show();
 		},
 		hideLoader: function(){
-			console.log("Hiding< loader");
+			// console.log("Hiding loader");
 			$('#spinner').hide();
 		},
 		toast: function(message, bottom){

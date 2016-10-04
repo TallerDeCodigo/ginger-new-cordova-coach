@@ -530,7 +530,6 @@ function requestHandlerAPI(){
 				response = this.getRequest('api/client_status?coachid=' + localStorage.getItem('userId'), req);
 
 			if(response.length){
-				console.log(QB);
 				// Process chat unread messages stuff
 				// response.forEach(function(item){
 				// 	var request = {

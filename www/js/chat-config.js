@@ -32,8 +32,10 @@ var config = {
 /*
   DECLARA USUARIOS
 */
-
-QB.init(QBApp.appId, QBApp.authKey, QBApp.authSecret, config);
+console.log("init QB");
+setTimeout(function(){
+  QB.init(QBApp.appId, QBApp.authKey, QBApp.authSecret, config);
+}, 800);
 
 
 // Stickerpipe plugin en desuso
