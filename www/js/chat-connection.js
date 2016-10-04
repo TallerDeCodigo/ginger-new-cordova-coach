@@ -5,7 +5,7 @@ var currentUser;
 function connectToChat(user) {
   
   console.log("Attempting to connect to chat api");
-  
+  console.log(QB);
   QB.createSession({email: user.login, password: user.pass}, function(err, res) {
 
     console.log(user);

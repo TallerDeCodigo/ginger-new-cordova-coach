@@ -1,4 +1,4 @@
-console.log('<CHAT DIALOG JS>');
+
 var dialogs = {};
 
 function onSystemMessageListener(message) {

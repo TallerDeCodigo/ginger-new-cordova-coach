@@ -13,8 +13,6 @@
 /*
   INICIALIZA QUICKBLOX
 */
-
-
 var QBApp = {
   appId: 20019,
   authKey: 'wX-b8q-hSn3AArS',
@@ -31,8 +29,6 @@ var config = {
   }
 };
 
-
-
 /*
   DECLARA USUARIOS
 */
@@ -40,11 +36,7 @@ var config = {
 QB.init(QBApp.appId, QBApp.authKey, QBApp.authSecret, config);
 
 
-
-
 // Stickerpipe plugin en desuso
-
-
 var config = {
   chatProtocol: {
     active: 2

@@ -236,6 +236,7 @@ window.initializeEvents = function(){
 			});
 
 			$('.cancel').click(function(){
+				$('.overscreen2').hide();
 				$('#blur').toggleClass('blurred');
 			});
 	
@@ -248,9 +249,9 @@ window.initializeEvents = function(){
 				
 				var userLog = JSON.parse(localStorage.getItem('user'));
 
-				var user = { login : userLog.mail, pass : userLog.chatPassword};
+				var loginfo = { login : userLog.mail, pass : userLog.chatPassword};
+				connectToChat(loginfo);
 				
-				connectToChat(user);
 
 				var responsedata = apiRH.getUsuarios();
 

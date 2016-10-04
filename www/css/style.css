@@ -107,8 +107,8 @@ h1   { font-size:24px; font-size:2.4rem; } /* =24px */
 
 body {font-family:'Kohi';text-align:center;font-weight:300;letter-spacing:0.025em;color:#3f3f3f;}
 #container {position:absolute;width:100%;min-height:100vh; height: 100%;top:0px;left:0px;padding-top:50px;-webkit-transition:.5s ease-in-out;transition:.5s ease-in-out;}
-.blur {background: #FFF;}
-.blur.blurred {-webkit-filter:blur(5px);}
+.blur { background: rgba(197, 197, 197, 0.63); display: block; display: none; width: 100%; height: 100%; position: absolute; top: 0; left: 0;}
+.blur.blurred {display: block; -webkit-filter: blur(5px); -moz-filter: blur(5px); -o-filter: blur(5px); -ms-filter: blur(5px); filter: blur(5px);}
 body.perfil2 #container {position:relative;width:100%;background:#f5f1f0;min-height:100%;}
 section {width:100%;overflow:hidden;}
 a {text-decoration:none;color:inherit;}
@@ -374,7 +374,7 @@ li.persona {list-style:none;border-bottom:1px solid #cfcfcf;text-align:left;heig
 .diets ul {margin:0;padding-bottom:45px;}
 .diets ul li {list-style:none;border-bottom:1px solid #cfcfcf;text-align:left;height:80px;position:relative;padding:8px 37% 3px 13px;}
 .diets ul li:last-of-type {border:none;}
-.diets ul li h2 {margin-top:0px;}
+.diets ul li h2 {margin-top: 14px;}
 .diets ul li p {font-size:92%;margin-bottom:0px;height:38px;overflow:hidden;line-height:140%;margin-top:3px;}
 .diets ul li nav {position:absolute;width:36%;height:100%;right:1%;top:0px;text-align:center;}
 .diets ul li nav a {width:26px;height:26px;display:inline-block;overflow:hidden;margin:22px 4%;}

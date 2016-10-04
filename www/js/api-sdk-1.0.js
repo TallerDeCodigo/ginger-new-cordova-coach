@@ -408,7 +408,7 @@ function requestHandlerAPI(){
 		this.listDishes = function(publico){
 			var req = {
 				method : 'get',
-				url : api_base_url + 'tables/plato?coach=' + localStorage.getItem('userId') + '&publico=' + publico + '&epp=999',	//definitr tabla
+				url : api_base_url + 'tables/plato?coach=' + localStorage.getItem('userId') + '&publico=' + publico ,	//definitr tabla
 				headers: {
 					'X-ZUMO-APPLICATION': 'ideIHnCMutWTPsKMBlWmGVtIPXROdc92',
 					'X-ZUMO-AUTH': localStorage.getItem('token'),
@@ -417,7 +417,7 @@ function requestHandlerAPI(){
 			}
 			console.log(req);
 
-			var response = this.getRequest('tables/plato?coach=' + localStorage.getItem('userId') + '&publico=' + publico + '&epp=999' , req);
+			var response = this.getRequest('tables/plato?coach=' + localStorage.getItem('userId') + '&publico=' + publico , req);
 
 			console.log("Request Data Dishes");
 
@@ -530,6 +530,7 @@ function requestHandlerAPI(){
 				response = this.getRequest('api/client_status?coachid=' + localStorage.getItem('userId'), req);
 
 			if(response.length){
+				console.log(QB);
 				// Process chat unread messages stuff
 				// response.forEach(function(item){
 				// 	var request = {
