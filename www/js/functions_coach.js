@@ -191,8 +191,8 @@ $(window).load(function(){
 
 		
 
-		//has-create-diet
-		if($('body').hasClass('has-create-diet')){
+		//create-new-diet
+		if($('.view').hasClass('create-new-diet')){
 
 			$('.btn-gre').click(function () {
 				

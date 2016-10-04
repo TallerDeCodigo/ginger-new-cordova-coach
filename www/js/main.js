@@ -276,6 +276,17 @@
 			console.log(data);
 			return this.switchView('diet-list', data, '.view', url, 'diet-list');
 		},
+		render_create_diet : function(url){
+			app.showLoader();
+			app.check_or_renderContainer();
+			console.log("Rendering Create new diet");
+			app.registerTemplate('create-diet');
+			var responsedata = [];
+				responsedata = apiRH.getDiets();
+			var data = this.gatherEnvironment(responsedata, 'Dietas');
+			console.log(data);
+			return this.switchView('create-diet', data, '.view', url, 'create-new-diet');
+		},
 		render_myProfile : function(url){
 			app.showLoader();
 			app.check_or_renderContainer();
@@ -315,11 +326,11 @@
 		switchView: function(newTemplate, data, targetSelector, recordUrl, targetClass, keepLoader){
 			/* Push to history if url is supplied */
 			if(recordUrl) window.history.pushState(newTemplate, newTemplate, '/'+recordUrl);
-			if(targetClass) $(targetSelector).attr('class','view').addClass(targetClass);
 			
 			var template = Handlebars.templates[newTemplate];
 			$(targetSelector).fadeOut('fast', function(){
 
+				if(targetClass) $(targetSelector).attr('class','view').addClass(targetClass);
 				$(targetSelector).html( template(data) ).css("opacity", 1)
 												 .css("display", "block")
 												 .css("margin-left", "20px")

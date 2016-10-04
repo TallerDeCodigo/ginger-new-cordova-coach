@@ -387,10 +387,10 @@ a.create-diet {position:fixed;width:100%;height:45px;bottom:0px;z-index:9999999;
 .box-input-1 {border:2px solid #767676;width:80%;border-top:none;position:relative;display:inline-block;height:20px;}
 .box-input-1 input {position:relative;top:-12px;width:100%;background:none;outline:none;text-align:center;border:none;color:#767676;font-size:130%;height:30px;padding-bottom:3px;}
 
-.create {background:url(../images/bottom.png) no-repeat;background-size:100% auto;background-position:bottom;}
-.create h5 {font-size:125%;margin-top:16%;margin-bottom:15px}
-.create .box-input-1 {margin-top:25px;margin-bottom:20px;}
-.create .btn-gre {margin-top:16%;}
+.create-new-diet {background:url(../images/bottom.png) no-repeat;background-size:100% auto;background-position:bottom;}
+.create-new-diet h5 {font-size:125%;margin-top:16%;margin-bottom:15px}
+.create-new-diet .box-input-1 {margin-top:25px;margin-bottom:20px;}
+.create-new-diet .btn-gre {margin-top:16%;}
 
 /* Platillos */
 
