@@ -131,8 +131,9 @@
 		// deviceready Event Handler
 		onDeviceReady: function() {
 			app.receivedEvent('deviceready');
-			if(typeof(cordova) != 'undefined')
-				window.cordova_full_path			= cordova.file.applicationDirectory;
+			window.cordova_full_path = (typeof(cordova) != 'undefined') 
+									 ? cordova.file.applicationDirectory
+									 : '';
 
 			/*   ___    _         _   _     
 			*  / _ \  / \  _   _| |_| |__  
@@ -296,7 +297,7 @@
 			
 			var data = this.gatherEnvironment(responsedata, 'Mi Perfil');
 			console.log(data);
-			return this.switchView('coach', data, '.view', url, 'coach-profile');
+			return this.switchView(cordova_full_path+'coach', data, '.view', url, 'coach-profile');
 		},
 		get_file_from_device: function(destination, source){
 			apiRH.getFileFromDevice(destination, source);		
