@@ -238,7 +238,6 @@
 				responsedata.users = apiRH.getUsuarios();
 			// chatCore.fetchDialogList();
 			var data = this.gatherEnvironment(responsedata, 'Usuarios');
-			console.log(data);
 			return this.switchView('user-list', data, '.view', url, 'list-usuarios');
 		},
 		render_chat : function(url){
@@ -247,53 +246,52 @@
 				app.showLoader();
 			}, 800);
 			app.check_or_renderContainer();
-			console.log("Rendering chat list");
-			app.registerTemplate('chat-contacts');
-			
+			console.log("Rendering chat list");			
 			var data = this.gatherEnvironment(responsedata, 'Chat');
-			console.log(data);
 			return this.switchView('chat-contacts', data, '.view', url, 'has-chat-list', true);
 		},
 		render_finanzas : function(url){
-			app.showLoader();
-			app.check_or_renderContainer();
-			console.log("Rendering finanzas module");
-			app.registerTemplate('finanzas');
 			var responsedata = [];
-			
+			setTimeout(function(){
+				app.showLoader();
+			}, 800);			
+			app.check_or_renderContainer();
+			console.log("Rendering finanzas module");			
 			var data = this.gatherEnvironment(responsedata, 'Finanzas');
-			console.log(data);
 			return this.switchView('finanzas', data, '.view', url, 'finanzas');
 		},
 		render_coach_dietas : function(url){
 			var responsedata = [];
-			app.showLoader();
+			setTimeout(function(){
+				app.showLoader();
+			}, 800);
 			app.check_or_renderContainer();
 			console.log("Rendering Coach dietas");
 				responsedata = apiRH.getDiets();
 			var data = this.gatherEnvironment(responsedata, 'Dietas');
-			console.log(data);
 			return this.switchView('diet-list', data, '.view', url, 'diet-list');
 		},
 		render_create_diet : function(url){
-			app.showLoader();
+			var responsedata = [];
+			setTimeout(function(){
+				app.showLoader();
+			}, 800);
 			app.check_or_renderContainer();
 			console.log("Rendering Create new diet");
-			app.registerTemplate('create-diet');
-			var responsedata = [];
 				// responsedata = apiRH.getDiets();
 			var data = this.gatherEnvironment(responsedata, 'Dietas');
 			console.log(data);
 			return this.switchView('create-diet', data, '.view', url, 'create-new-diet');
 		},
 		render_myProfile : function(url){
-			app.showLoader();
+			var extra_data = [];
+			setTimeout(function(){
+				app.showLoader();
+			}, 800);
 			app.check_or_renderContainer();
 			console.log("Rendering Coach Profile");
-			app.registerTemplate('coach');
-			var responsedata = [];
-			
-			var data = this.gatherEnvironment(responsedata, 'Mi Perfil');
+			var extra_data =  fetchCoachProfileInfo();	
+			var data = this.gatherEnvironment(extra_data, 'Mi Perfil');
 			console.log(data);
 			return this.switchView('coach', data, '.view', url, 'coach-profile');
 		},
@@ -518,9 +516,6 @@
 			Create a new account the old fashioned way 
 
 		*/
-
-		
-		
 
 		
 // ----------------------------------------------------------------------

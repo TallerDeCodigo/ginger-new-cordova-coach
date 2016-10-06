@@ -174,32 +174,10 @@ window.initializeEvents = function(){
 
 		if($('.view').hasClass('coach-profile')) {
 
-			
-			console.log(JSON.stringify(localStorage.getItem('user')));
-
 			var pUser = JSON.parse(localStorage.getItem('user'));
-			// $('.la_img').attr('src','https://gingerfiles.blob.core.windows.net/coaches/' + pUser._id + '.png');
-			// $('.cpur').html(pUser.nombre + ' ' + pUser.apellido);
-			// $('.bio-coach').html('<strong>'+pUser.frase+'</strong><br/><br/>'+pUser.bio);
 
-			//CALCULO DE LA ESTRELLAS DE MIERDA
-			var star = Math.round(pUser.rating);
-
-			console.log(Math.round(star));
-
-			var count = 5;
-
-			for (var i = 0; i < star; i++) {
-				$('.rate-stars').append('<img src="images/starh.svg">');
-				console.log(i);
-				
-			};
 			
-			for (var x = 0; x < count - star; x++) {
-				console.log('-' + x);
-				$('.rate-stars').append('<img src="images/star.svg">');
-			};
-
+			
 
 			var personalidades = pUser.personalidad;
 			var separador = "";

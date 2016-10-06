@@ -20,15 +20,20 @@
 	<script type='text/javascript' src='js/plugins.js'></script>
 	<script type='text/javascript' src='js/api-sdk-1.0.js'></script>
 	<script type="text/javascript" src="js/main.js"></script>	
-	<script type="text/javascript" src="js/cordova.js"></script>
+	<script type="text/javascript" src="cordova.js"></script>
 	<script type="text/javascript" src="js/oauth.js"></script>
-    <script type="text/javascript" src="js/functions_coach.js"></script>
 	<script type="text/javascript">
 		/* Initialize app object and perform initial login check */
 		window.is_home = false;
 		app.initialize();
+	</script>
+	<!-- Load necesary compiled templates -->
+	<script type="text/javascript" src="views/compiled/home.js"></script>
+	<script type="text/javascript" src="views/compiled/coach.js"></script>
+	<script type="text/javascript">
 		app.render_myProfile();
 	</script>
+    <script type="text/javascript" src="js/functions_coach.js"></script>
     <script type="text/javascript" src="js/scripts/document_ready.js"></script>
 </html>
 
