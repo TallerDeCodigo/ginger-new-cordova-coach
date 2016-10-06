@@ -67,18 +67,20 @@ window.initializeEvents = function(){
 		/* Hook soft links */
 		$('.hook').on('click', function(e){
 			e.preventDefault();
+			app.showLoader();
+			console.log("After preventDefault");
 			if( $(this).data('resource') == "home" )
-				return app.render_home($(this).attr('href'));
+				return app.render_home( $(this).attr('href') );
 			if( $(this).data('resource') == "chat-contacts" )
-				return app.render_chat($(this).attr('href'));
+				return app.render_chat( $(this).attr('href') );
 			if( $(this).data('resource') == "user-list" )
-				return app.render_user_list($(this).attr('href'));
+				return app.render_user_list( $(this).attr('href') );
 			if( $(this).data('resource') == "diet-list" )
-				return app.render_coach_dietas($(this).attr('href'));
+				return app.render_coach_dietas( $(this).attr('href') );
 			if( $(this).data('resource') == "finanzas" )
-				return app.render_finanzas($(this).attr('href'));
+				return app.render_finanzas( $(this).attr('href') );
 			if( $(this).data('resource') == "profile" )
-				return app.render_myProfile($(this).attr('href'));
+				return app.render_myProfile( $(this).attr('href') );
 
 
 			if( $(this).data('resource') == "create-diet" )

@@ -22,6 +22,7 @@
 			var is_client 	= localStorage.getItem('customerId');
 			var is_current 	= localStorage.getItem('valido');
 
+			window.cordova_full_path = "";
 
 			/* IMPORTANT to set requests to be syncronous */
 			/* TODO test all requests without the following code 'cause of deprecation */
@@ -83,7 +84,7 @@
 		},
 		registerTemplate : function(name) {
 			$.ajax({
-				url : 'views/' + name + '.hbs',
+				url : cordova_full_path+'views/' + name + '.hbs',
 				success : function(response) {
 						if (Handlebars.templates === undefined)
 							Handlebars.templates = {};
@@ -183,7 +184,7 @@
 			if(history_title)
 				parsed['header_title'] = history_title;
 			if(typeof(cordova_full_path) != 'undefined')
-				parsed['cordova_full_path'] = cordova_full_path+"www/";
+				parsed['cordova_full_path'] = cordova_full_path+"";
 			return parsed;
 
 		},
@@ -223,19 +224,17 @@
 			app.showLoader();
 			app.check_or_renderContainer();
 			console.log("Rendering home");
-			app.registerTemplate('home');
 			var data = this.gatherEnvironment();
 			data.is_scrollable = false;
 			return this.switchView('home', data, '.view', url, 'home-menu');
 		},
 		render_user_list : function(url){
-			setTimeout(function(){
-				app.showLoader();
-			}, 200);
+			var responsedata = [];
 			app.check_or_renderContainer();
 			console.log("Rendering user list");
-			app.registerTemplate('user-list');
-			var responsedata = [];
+			setTimeout(function(){
+				app.showLoader();
+			}, 1200);
 				responsedata.users = apiRH.getUsuarios();
 			// chatCore.fetchDialogList();
 			var data = this.gatherEnvironment(responsedata, 'Usuarios');
@@ -243,13 +242,13 @@
 			return this.switchView('user-list', data, '.view', url, 'list-usuarios');
 		},
 		render_chat : function(url){
+			var responsedata = [];
 			setTimeout(function(){
 				app.showLoader();
 			}, 800);
 			app.check_or_renderContainer();
 			console.log("Rendering chat list");
 			app.registerTemplate('chat-contacts');
-			var responsedata = [];
 			
 			var data = this.gatherEnvironment(responsedata, 'Chat');
 			console.log(data);
@@ -267,11 +266,10 @@
 			return this.switchView('finanzas', data, '.view', url, 'finanzas');
 		},
 		render_coach_dietas : function(url){
+			var responsedata = [];
 			app.showLoader();
 			app.check_or_renderContainer();
 			console.log("Rendering Coach dietas");
-			app.registerTemplate('diet-list');
-			var responsedata = [];
 				responsedata = apiRH.getDiets();
 			var data = this.gatherEnvironment(responsedata, 'Dietas');
 			console.log(data);
@@ -329,6 +327,10 @@
 			if(recordUrl) window.history.pushState(newTemplate, newTemplate, '/'+recordUrl);
 			
 			var template = Handlebars.templates[newTemplate];
+			if(!template){
+				console.log("Template doesn't exist");
+				return false;
+			}
 			$(targetSelector).fadeOut('fast', function(){
 
 				if(targetClass) $(targetSelector).attr('class','view').addClass(targetClass);
