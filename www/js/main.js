@@ -290,7 +290,7 @@
 			}, 800);
 			app.check_or_renderContainer();
 			console.log("Rendering Coach Profile");
-			// var extra_data =  window.fetchCoachProfileInfo();	
+			var extra_data =  window.fetchCoachProfileInfo();	
 			var data = this.gatherEnvironment(extra_data, 'Mi Perfil');
 			console.log(data);
 			return this.switchView('coach', data, '.view', url, 'coach-profile');

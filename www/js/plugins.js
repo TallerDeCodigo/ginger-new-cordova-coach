@@ -411,3 +411,22 @@ var slider = new Swipe(document.getElementById('scroller'));
 //   $('.receta textarea').autogrow({vertical: true, horizontal: false,flickering: false});
 //   $('.comentario textarea').autogrow({vertical: true, horizontal: false,flickering: false});
 // });
+
+window.fetchCoachProfileInfo = function(){
+
+	var count 	= 5;
+	var _object = { "stars": { "active": 0, "inactive": 0 }  };
+	var myhtml 	= "";
+	var star 	= Math.round(_coach.rating);
+
+	for (var i = 0; i < star; i++){
+		_object.stars.active ++;
+		myhtml += "<img src="+cordova_full_path+"'images/starh.svg'>";
+	}
+	for (var x = 0; x < count - star; x++){
+		_object.stars.inactive ++;
+		myhtml += "<img src="+cordova_full_path+"'images/star.svg'>";
+	}
+	_object.stars.html = myhtml;
+	return _object;
+};
