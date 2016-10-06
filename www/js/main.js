@@ -183,8 +183,8 @@
 			}
 			if(history_title)
 				parsed['header_title'] = history_title;
-			if(typeof(cordova_full_path) != 'undefined')
-				parsed['cordova_full_path'] = cordova_full_path+"";
+			if(typeof(cordova_full_path) != 'undefined' && cordova_full_path != '')
+				parsed['cordova_full_path'] = cordova_full_path+"www/";
 			return parsed;
 
 		},
@@ -295,7 +295,7 @@
 			
 			var data = this.gatherEnvironment(responsedata, 'Mi Perfil');
 			console.log(data);
-			return this.switchView(cordova_full_path+'coach', data, '.view', url, 'coach-profile');
+			return this.switchView('coach', data, '.view', url, 'coach-profile');
 		},
 		get_file_from_device: function(destination, source){
 			apiRH.getFileFromDevice(destination, source);		
