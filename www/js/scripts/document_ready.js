@@ -34,10 +34,12 @@ window.initializeEvents = function(){
 		}
 
 		var fixWithKeyboard = function(){
+			console.log("Fixin keyboard");
 			$('body').addClass("openkeyboard");
-			if($('#container').hasClass("chat")){
+			if($('.view').hasClass("has-chat-list")){
 
-				calculate = (!calculate) ? document.documentElement.clientHeight : calculate;			
+				calculate = (!calculate) ? document.documentElement.clientHeight : calculate;
+				console.log('calculate ::: '+calculate);		
 				$('#container').animate({ height: calculate+"px"}, 240, 'swing', function(){
 					$('.escribir').slideToggle('fast');
 				});
@@ -50,7 +52,7 @@ window.initializeEvents = function(){
 
 		/* Keyboard shown event */
 		window.addEventListener('keyboardDidShow', function () {
-			
+			console.log('keyboardDidShow');
 			$('.escribir').hide();
 			window.openKeyboard = true;
 			return fixWithKeyboard();
@@ -58,6 +60,7 @@ window.initializeEvents = function(){
 
 		/* Keyboard hidden event */
 		window.addEventListener('keyboardDidHide', function () {
+			console.log('keyboardDidHide');
 			window.openKeyboard = false;
 			$('body').removeClass("openkeyboard");
 			$('body').scrollTop($('#messages-list').prop('scrollHeight'));
@@ -250,8 +253,10 @@ window.initializeEvents = function(){
 				});
 
 				$('.list-group-item').click(function(){
-					console.log("aqui ");
-					$('#dialog-list').hide();$('.menu-bar').hide();$('.escribir').show();
+
+					$('#dialog-list').hide();
+					$('.menu-bar').hide();
+					$('.escribir').show();
 				});
 
 				$('.back').click(function(){

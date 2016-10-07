@@ -72,6 +72,7 @@ function onReadStatusListener(messageId) {
 }
 
 function retrieveChatMessages(dialog, beforeDateSent){
+  $('.escribir').show();
   console.log('retrieveChatMessages');
   // Load messages history
   //

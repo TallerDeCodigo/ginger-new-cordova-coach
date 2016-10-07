@@ -555,9 +555,6 @@ a:focus img {
     border: 0;
 }
 
-/*.escribir {height:43px;}
-.conteclado {overflow-x:hidden;overflow-y:scroll;}
-*/
 
 .escribir {height:43px; z-index: 999999;}
 #container.conteclado {overflow: hidden; min-height: 0; padding-bottom: 60px;}
