@@ -418,15 +418,33 @@ window.fetchCoachProfileInfo = function(){
 	var _object = { "stars": { "active": 0, "inactive": 0 }  };
 	var myhtml 	= "";
 	var star 	= Math.round(_coach.rating);
+	var personalidadesConcat = "";
+
+	tipo_coach_concat
 
 	for (var i = 0; i < star; i++){
 		_object.stars.active ++;
-		myhtml += "<img src="+cordova_full_path+"'images/starh.svg'>";
+		myhtml += "<img src='"+cordova_full_path+"www/images/starh.svg'>";
 	}
 	for (var x = 0; x < count - star; x++){
 		_object.stars.inactive ++;
-		myhtml += "<img src="+cordova_full_path+"'images/star.svg'>";
+		myhtml += "<img src='"+cordova_full_path+"www/images/star.svg'>";
 	}
+
+	var separador = "";
+
+	for(var p = 0; p < _coach.personalidades.length; p++){
+
+		if(p == personalidades.length - 1){
+			separador = "";
+
+		}else{
+			separador = ", ";
+		}
+		personalidadesConcat += catalogues.coach_type[p] + separador;
+	}
+
 	_object.stars.html = myhtml;
+	_object.personalidad_concat = personalidadesConcat;
 	return _object;
 };

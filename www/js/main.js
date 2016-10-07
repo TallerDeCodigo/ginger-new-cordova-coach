@@ -183,7 +183,7 @@
 			}
 			if(history_title)
 				parsed['header_title'] = history_title;
-			if(typeof(cordova_full_path) != 'undefined' && cordova_full_path != '')
+			if( typeof(cordova_full_path) != 'undefined' && cordova_full_path != '' )
 				parsed['cordova_full_path'] = cordova_full_path+"www/";
 			return parsed;
 
@@ -290,8 +290,8 @@
 			}, 800);
 			app.check_or_renderContainer();
 			console.log("Rendering Coach Profile");
-			var extra_data =  window.fetchCoachProfileInfo();	
-			var data = this.gatherEnvironment(extra_data, 'Mi Perfil');
+			var extra_data 	=  window.fetchCoachProfileInfo();	
+			var data 		= this.gatherEnvironment(extra_data, 'Mi Perfil');
 			console.log(data);
 			return this.switchView('coach', data, '.view', url, 'coach-profile');
 		},
