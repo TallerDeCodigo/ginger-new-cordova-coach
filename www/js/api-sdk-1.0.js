@@ -1452,16 +1452,18 @@ function requestHandlerAPI(){
 			var sourcetype =  navigator.camera.PictureSourceType.PHOTOLIBRARY;
 			
 			if(source == "camera") sourcetype =  navigator.camera.PictureSourceType.CAMERA;
+			
 			if(destination == 'profile')
 				navigator.camera.getPicture(context.profileselect_win, context.fileselect_fail, { quality: 50,
 					destinationType: this.photoDestinationType.FILE_URI,
 					sourceType: sourcetype,
-					mediaType: navigator.camera.MediaType.ALLMEDIA  });
+					mediaType: navigator.camera.MediaType.ALLMEDIA });
+
 			if(destination == 'receipt')
 				navigator.camera.getPicture(context.receipt_fileselect_win, context.fileselect_fail, { quality: 100,
 						destinationType: this.photoDestinationType.FILE_URI,
 						sourceType: sourcetype,
-						mediaType: navigator.camera.MediaType.ALLMEDIA  });
+						mediaType: navigator.camera.MediaType.ALLMEDIA });
 			return;
 		};
 

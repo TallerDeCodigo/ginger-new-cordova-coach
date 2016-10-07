@@ -174,43 +174,15 @@ window.initializeEvents = function(){
 
 		if($('.view').hasClass('coach-profile')) {
 
-			var pUser = JSON.parse(localStorage.getItem('user'));
-
-			
-			
-
-			var personalidades = pUser.personalidad;
-			var separador = "";
-
-			for(var p=0; p<personalidades.length; p++){
-
-				console.log(personalidades.length);
-				if(p == personalidades.length - 1){
-					separador = "";
-
-				}else{
-					separador = ", ";
-				}
-				console.log(catalogues.coach_type[p]);
-				$('#coach_type_perfil').append(catalogues.coach_type[p] + separador);
-			}
-
 			/* Log Out from the API */
 			$('#logout').on('click', function(e){
-				/* Requesting logout from server */
-				//var response = apiRH.logOut({user_login : user, request_token : apiRH.get_request_token() });
-				//if(response.success){
-
-					if($('.overscreen2').is(':visible') ){
-
-					}else{
+					if(!$('.overscreen2').is(':visible') ){
 						$('.overscreen2').addClass('active');
 						$('.overscreen2').show();
 						$('#blur').toggleClass('blurred');
 					}
-
-					
 			});
+
 			$('#accept').click(function(){
 				//app.toast('Has cerrado la sesión, hasta pronto');
 						localStorage.clear();
@@ -226,7 +198,6 @@ window.initializeEvents = function(){
 				$('#blur').toggleClass('blurred');
 			});
 	
-
 			app.hideLoader();
 
 		} // END CLASS coach-profile

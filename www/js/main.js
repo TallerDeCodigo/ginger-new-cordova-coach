@@ -42,7 +42,6 @@
 			this.ls 		= window.localStorage;
 	
 			/* Check if has a valid token */
-
 			if(is_login){
 				
 				console.log('You okay, now you can start making calls');
@@ -133,7 +132,7 @@
 		onDeviceReady: function() {
 			app.receivedEvent('deviceready');
 			window.cordova_full_path = (typeof(cordova) != 'undefined') 
-									 ? cordova.file.applicationDirectory
+									 ? cordova.file.applicationDirectory+"www/"
 									 : '';
 
 			/*   ___    _         _   _     
@@ -184,7 +183,7 @@
 			if(history_title)
 				parsed['header_title'] = history_title;
 			if( typeof(cordova_full_path) != 'undefined' && cordova_full_path != '' )
-				parsed['cordova_full_path'] = cordova_full_path+"www/";
+				parsed['cordova_full_path'] = cordova_full_path;
 			return parsed;
 
 		},
@@ -234,9 +233,9 @@
 			console.log("Rendering user list");
 			setTimeout(function(){
 				app.showLoader();
-			}, 1200);
-				responsedata.users = apiRH.getUsuarios();
-			// chatCore.fetchDialogList();
+			}, 1000);
+			responsedata.users = apiRH.getUsuarios();
+			chatCore.fetchDialogList(_coach);
 			var data = this.gatherEnvironment(responsedata, 'Usuarios');
 			return this.switchView('user-list', data, '.view', url, 'list-usuarios');
 		},
@@ -290,7 +289,7 @@
 			}, 800);
 			app.check_or_renderContainer();
 			console.log("Rendering Coach Profile");
-			var extra_data 	=  window.fetchCoachProfileInfo();	
+			var extra_data 	= window.fetchCoachProfileInfo();	
 			var data 		= this.gatherEnvironment(extra_data, 'Mi Perfil');
 			console.log(data);
 			return this.switchView('coach', data, '.view', url, 'coach-profile');

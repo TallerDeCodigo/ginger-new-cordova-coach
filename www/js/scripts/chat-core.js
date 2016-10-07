@@ -3,15 +3,14 @@
 console.log("Hey Chat core");
 window.chatCore = [];
 
-chatCore.fetchDialogList = function(){
-		QB.createSession({email: _coach.mail, password: _coach.chat_password}, function(err, res) {
+chatCore.fetchDialogList = function(elCoach){
+		QB.createSession({email: elCoach.mail, password: elCoach.chatPassword}, function(err, res) {
 
-		    console.log(user);
+		    myCurrentUser = elCoach;
+		    console.log("current "+JSON.stringify(myCurrentUser));
 
-		    currentUser = user;
-
-		    console.log("usr > "+user.login);
-		    console.log("pass > "+user.pass);
+		    console.log("usr > "+myCurrentUser.mail);
+		    console.log("pass > "+myCurrentUser.chatPassword);
 
 		    console.log(res);
 		    if (res) {
@@ -20,10 +19,10 @@ chatCore.fetchDialogList = function(){
 
 			    console.log(' TOKEN ' + token);
 
-			    user.id = res.user_id;
+			    myCurrentUser.id = res.user_id;
 
-			    console.log('LOG ID: ' + user.id);
-			    mergeUsers([{user: user}]);
+			    console.log('LOG ID: ' + myCurrentUser.id);
+			    mergeUsers([{user: myCurrentUser}]);
 
 		      	QB.chat.dialog.list(null, function(err, resDialogs) {
 					if (err) {
@@ -33,7 +32,7 @@ chatCore.fetchDialogList = function(){
 						// repackage dialogs data and collect all occupants ids
 						var occupantsIds = [];
 						var i = 0;
-						var nombre_del_usuario = currentUser.id;
+						var nombre_del_usuario = myCurrentUser.id;
 						var time;
 						var hours;
 						var minutes;
