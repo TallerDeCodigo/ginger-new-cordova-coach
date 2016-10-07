@@ -143,7 +143,7 @@
 			*/                              
 
 			try{
-				OAuth.initialize('F_A1PBTm8Vv9WtuftE8CuTqNV7g');
+				OAuth.initialize('7-ipR3QS-__wrorRTpdedM8-_v8');
 				console.log("Initialized Oauth");
 			}
 			catch(err){
@@ -213,9 +213,8 @@
 			/*** First time loading home ***/
 			if(window.firstTime){
 				console.log("Rendering first time");
-				app.registerTemplate('container');
 				var container_template = Handlebars.templates['container'];
-				var html 	 = container_template();
+				var html = container_template();
 				$('.rootContainer').html( html );
 			}
 		},

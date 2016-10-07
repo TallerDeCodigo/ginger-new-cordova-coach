@@ -210,10 +210,8 @@ window.initializeEvents = function(){
 		if($('.view').hasClass('has-chat-list') ){
 				
 				var userLog = JSON.parse(localStorage.getItem('user'));
-
 				var loginfo = { login : userLog.mail, pass : userLog.chatPassword};
 				connectToChat(loginfo);
-				
 
 				var responsedata = apiRH.getUsuarios();
 
@@ -292,7 +290,7 @@ window.initializeEvents = function(){
 				});
 
 				app.hideLoader();
-		}//end IF body has class
+		} // END has-chat-list
 
 		/**
 		 *
@@ -301,49 +299,33 @@ window.initializeEvents = function(){
 		 **/
 
 		if( $('.view').hasClass('diet-list') ){
-			
-			// setTimeout(function(){
-			// 	app.showLoader();
-			// }, 0);
+	
 			//Request to Service
 			var responsedata = apiRH.getDiets();
-
-			//console.log(JSON.stringify(responsedata));
 			var diet = responsedata;
-
-			//Loop the feed
 			var i = 0;
 
 			$.each(diet, function( key, value ) {
-				
-				//console.log(i + " - " + value);
-				
+								
 				var nombre = 'no-name';
 				var descripcion = '';
 				var _id = ''
 
-				$.each(value, function( key, value ) 
-				{
+				$.each(value, function( key, value ){
 
 					if(key == 'nombre'){
 						//console.log(value);
 						nombre = value;
 					}
 
-					if(key == '_id'){
-						//console.log(value);
+					if(key == '_id')
 						_id  = value;
-					}
 
-					if(key == 'descripcion'){
-						//console.log(value);
+					if(key == 'descripcion')
 						descripcion = value;
-					}
 					
 				});
-
 				// $('.list-diet').append('<li class="elemento-dieta" data="' + _id + '"><h2> ' + nombre + ' </h2><p>' + descripcion + '</p><nav><a href="copiar-dieta.html"><img class="btn_copy" data="' + _id + '" src="images/copy.png"></a><a href="dieta.html"><img class="btn_edit" data="' + _id + '" src="images/edit.png"></a><a><img class="btn_delete" data="' + _id + '" src="images/delete.png"></a></nav></li>');
-
 				i++;
 			});
 
