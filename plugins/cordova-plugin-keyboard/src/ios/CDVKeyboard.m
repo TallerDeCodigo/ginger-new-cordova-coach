@@ -94,7 +94,7 @@
                                                                  object:nil
                                                                   queue:[NSOperationQueue mainQueue]
                                                              usingBlock:^(NSNotification* notification) {
-                                                                 [weakSelf shrinkViewKeyboardWillChangeFrame:notification];
+                                                                 [weakSelf performSelector:@selector(shrinkViewKeyboardWillChangeFrame:) withObject:notification afterDelay:0];
                                                                  CGRect screen = [[UIScreen mainScreen] bounds];
                                                                  CGRect keyboard = ((NSValue*)notification.userInfo[@"UIKeyboardFrameEndUserInfoKey"]).CGRectValue;
                                                                  CGRect intersection = CGRectIntersection(screen, keyboard);
@@ -107,12 +107,17 @@
 
 #pragma mark HideFormAccessoryBar
 
+- (BOOL)hideFormAccessoryBar
+{
+    return _hideFormAccessoryBar;
+}
+
 static IMP UIOriginalImp;
 static IMP WKOriginalImp;
 
-- (void)setHideFormAccessoryBar:(BOOL)hideFormAccessoryBar
+- (void)setHideFormAccessoryBar:(BOOL)ahideFormAccessoryBar
 {
-    if (hideFormAccessoryBar == _hideFormAccessoryBar) {
+    if (ahideFormAccessoryBar == _hideFormAccessoryBar) {
         return;
     }
 
@@ -122,7 +127,7 @@ static IMP WKOriginalImp;
     Method UIMethod = class_getInstanceMethod(NSClassFromString(UIClassString), @selector(inputAccessoryView));
     Method WKMethod = class_getInstanceMethod(NSClassFromString(WKClassString), @selector(inputAccessoryView));
 
-    if (hideFormAccessoryBar) {
+    if (ahideFormAccessoryBar) {
         UIOriginalImp = method_getImplementation(UIMethod);
         WKOriginalImp = method_getImplementation(WKMethod);
 
@@ -137,26 +142,10 @@ static IMP WKOriginalImp;
         method_setImplementation(WKMethod, WKOriginalImp);
     }
 
-    _hideFormAccessoryBar = hideFormAccessoryBar;
+    _hideFormAccessoryBar = ahideFormAccessoryBar;
 }
 
 #pragma mark KeyboardShrinksView
-
-- (void)setShrinkView:(BOOL)shrinkView
-{
-    // When the keyboard shows, WKWebView shrinks window.innerHeight. This isn't helpful when we are already shrinking the frame
-    // They removed this behavior is iOS 10, but for 8 and 9 we need to prevent the webview from listening on keyboard events
-    // Even if you later set shrinkView to false, the observers will not be added back
-    NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
-    if ([self.webView isKindOfClass:NSClassFromString(@"WKWebView")]
-        && ![[NSProcessInfo processInfo] isOperatingSystemAtLeastVersion:(NSOperatingSystemVersion){.majorVersion = 10, .minorVersion = 0, .patchVersion = 0 }]) {
-        [nc removeObserver:self.webView name:UIKeyboardWillHideNotification object:nil];
-        [nc removeObserver:self.webView name:UIKeyboardWillShowNotification object:nil];
-        [nc removeObserver:self.webView name:UIKeyboardWillChangeFrameNotification object:nil];
-        [nc removeObserver:self.webView name:UIKeyboardDidChangeFrameNotification object:nil];
-    }
-    _shrinkView = shrinkView;
-}
 
 - (void)shrinkViewKeyboardWillChangeFrame:(NSNotification*)notif
 {
@@ -259,13 +248,12 @@ static IMP WKOriginalImp;
 - (void)dealloc
 {
     // since this is ARC, remove observers only
+
     NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
 
-    [nc removeObserver:_keyboardShowObserver];
-    [nc removeObserver:_keyboardHideObserver];
-    [nc removeObserver:_keyboardWillShowObserver];
-    [nc removeObserver:_keyboardWillHideObserver];
-    [nc removeObserver:_shrinkViewKeyboardWillChangeFrameObserver];
+    [nc removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+    [nc removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+    [nc removeObserver:self name:UIKeyboardWillChangeFrameNotification object:nil];
 }
 
 @end

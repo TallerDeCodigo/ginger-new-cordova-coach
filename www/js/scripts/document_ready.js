@@ -22,15 +22,16 @@ window.initializeEvents = function(){
 		/*** Fix keyboard defaults ***/
 		if(typeof Keyboard != 'undefined'){
 			console.log("Keyboard not undefined");
-			Keyboard.disableScrollingInShrinkView(false);
 			Keyboard.shrinkView(false);
+			Keyboard.disableScrollingInShrinkView(false);
 		}
 
 		if($('.view').hasClass("has-chat-list")){
 			/*** Fix keyboard chat specifics ***/
+			console.log("Keyboard has-chat-list");
 			if(typeof Keyboard != 'undefined'){
-				Keyboard.disableScrollingInShrinkView(true);
 				Keyboard.shrinkView(true);
+				Keyboard.disableScrollingInShrinkView(true);
 			}
 		}
 
@@ -264,9 +265,11 @@ window.initializeEvents = function(){
 
 					if($('#messages-list').is(':visible') ){
 						console.log('lista_chat visible');
+						var event = new CustomEvent("keyboardDidHide", { "detail": "Forced hide keyboard event" });
+						document.dispatchEvent(event);
+						$('.escribir').hide();
 						$('#dialogs-list').show();
 						$('#messages-list').hide();
-						$('.escribir').hide();
 						$('.menu-bar').show();
 					}else if($('.lista_chat').is(':visible') ) {
 						app.render_home();
