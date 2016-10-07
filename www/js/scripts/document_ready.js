@@ -16,6 +16,7 @@ window.initializeEvents = function(){
 		//
 		//-----------------------------
 		var initialViewHeight = document.documentElement.clientHeight;
+		console.log("Initializing calculate ::: "+initialViewHeight);
 		var calculate = null;
 
 		/*** Fix keyboard defaults ***/
@@ -25,7 +26,7 @@ window.initializeEvents = function(){
 			Keyboard.shrinkView(false);
 		}
 
-		if($('#container').hasClass("chat")){
+		if($('.view').hasClass("has-chat-list")){
 			/*** Fix keyboard chat specifics ***/
 			if(typeof Keyboard != 'undefined'){
 				Keyboard.disableScrollingInShrinkView(true);
