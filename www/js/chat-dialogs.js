@@ -206,6 +206,8 @@ function triggerDialog(dialogId){
 
   // load chat history
   //
+  console.log("Hay que repetir la escena de Santos Protones Milhouse");
+  console.log(dialogs[dialogId]);
   retrieveChatMessages(dialogs[dialogId], null);
 
   // $('#messages-list').scrollTop($('#messages-list').prop('scrollHeight'));

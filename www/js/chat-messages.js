@@ -74,10 +74,7 @@ function onReadStatusListener(messageId) {
 function retrieveChatMessages(dialog, beforeDateSent){
   $('.escribir').show();
   console.log('retrieveChatMessages');
-  // Load messages history
-  //
-  //$(".load-msg").show(0);
-
+  console.log(dialog);
   var params = {chat_dialog_id: dialog._id,
                      sort_desc: 'date_sent',
                          limit: 10};
@@ -90,7 +87,8 @@ function retrieveChatMessages(dialog, beforeDateSent){
     console.log('BEFORE DATE SENT IS NOT NULL');
     
     currentDialog = dialog;
-    //console.log(currentDialog);
+    console.log("Current dialog");
+    console.log(currentDialog);
     dialogsMessages = [];
   }
 

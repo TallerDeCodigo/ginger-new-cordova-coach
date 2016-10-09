@@ -196,7 +196,9 @@ window.initializeEvents = function(){
 			
 			if($('.view').hasClass('dialogLoad')){
 				console.log("Trigger");
-				triggerDialog($(e.currentTarget).data('dialogid'));
+				if(!dialogNow)
+					console.log("Too bad for you");
+				triggerDialog(dialogNow);
 			}
 
 		}

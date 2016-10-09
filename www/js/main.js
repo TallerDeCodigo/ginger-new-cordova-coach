@@ -257,6 +257,7 @@
 			console.log("Rendering Chat Dialog");			
 			var data = this.gatherEnvironment(responsedata, 'Chat');
 			var dialogClass = (dialogId) ? "dialogLoad" : "";
+			window.dialogNow = (dialogId) ? dialogId : null;
 			return this.switchView('chat-dialog', data, '.view', url, 'list-chat dialog_detail '+dialogClass);
 		},
 		render_finanzas : function(url){
