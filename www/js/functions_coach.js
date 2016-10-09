@@ -1290,8 +1290,6 @@ $(window).load(function(){
 
 			var json = $(this).data("key");
 
-			//var pJson = JSON.parse(json);
-
 			localStorage.setItem('user-selected', json);
 
 			window.location.assign('usuario.html');

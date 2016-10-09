@@ -24,11 +24,12 @@ chatCore.fetchDialogList = function(elCoach){
 							var dialogId = item._id;
 							dialogs[dialogId] = item;
 							var user_id = item.user_id;
+							var unread_count = item.unread_messages_count;
 							console.log(user_id);
 							var $foundElement = $('*[data-chatId="'+user_id+'"]');
 							var exists_in_list = $foundElement.length;
 							$foundElement.addClass('active');
-							console.log($foundElement);
+							$foundElement.find('.mensajes').text(unread_count);
 						});
 
 					}
