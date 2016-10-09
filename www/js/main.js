@@ -234,8 +234,8 @@
 				app.showLoader();
 			}, 1000);
 			responsedata.users = apiRH.getUsuarios();
-			chatCore.fetchDialogList(_coach);
 			var data = this.gatherEnvironment(responsedata, 'Usuarios');
+			console.log(data);
 			return this.switchView('user-list', data, '.view', url, 'list-usuarios');
 		},
 		render_chat : function(url){
@@ -293,6 +293,14 @@
 			console.log(data);
 			return this.switchView('coach', data, '.view', url, 'coach-profile');
 		},
+		render_comingSoon : function(url){
+			var extra_data = [];
+			app.showLoader();
+			app.check_or_renderContainer();
+			console.log("Rendering Coming soon");
+			var data = this.gatherEnvironment(extra_data, 'Próximamente');
+			return this.switchView('coming-soon', data, '.view', url, 'coming-soon');
+		},
 		get_file_from_device: function(destination, source){
 			apiRH.getFileFromDevice(destination, source);		
 		},
@@ -338,7 +346,7 @@
 																opacity: 1
 															}, 240);
 			});
-			console.log("KeepLoader :: "+keepLoader);
+
 			if(!keepLoader)
 				return setTimeout(function(){
 					if(window.firstTime)

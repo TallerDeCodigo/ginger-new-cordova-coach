@@ -8,7 +8,35 @@
 		
 window.initializeEvents = function(){
 	jQuery(document).ready(function($) {
-		console.log("Initializing events");
+
+		console.log("Initializing DocReady v0.1");
+		$('body').removeClass("preventEvents");
+		
+		/* Hook soft links */
+		$('.hook').on('click', function(e){
+			e.preventDefault();
+			app.showLoader();
+			console.log("After preventDefault");
+			if( $(this).data('resource') == "home" )
+				return app.render_home( $(this).attr('href') );
+			if( $(this).data('resource') == "chat-contacts" )
+				return app.render_chat( $(this).attr('href') );
+			if( $(this).data('resource') == "user-list" )
+				return app.render_user_list( $(this).attr('href') );
+			if( $(this).data('resource') == "diet-list" )
+				return app.render_coach_dietas( $(this).attr('href') );
+			if( $(this).data('resource') == "finanzas" )
+				return app.render_finanzas( $(this).attr('href') );
+			if( $(this).data('resource') == "profile" )
+				return app.render_myProfile( $(this).attr('href') );
+
+
+			if( $(this).data('resource') == "create-diet" )
+				return app.render_create_diet($(this).attr('href'));
+			
+
+			e.stopPropagation();
+		});
 		
 		//-----------------------------
 		//
@@ -16,7 +44,6 @@ window.initializeEvents = function(){
 		//
 		//-----------------------------
 		var initialViewHeight = document.documentElement.clientHeight;
-		console.log("Initializing calculate ::: "+initialViewHeight);
 		var calculate = null;
 
 		/*** Fix keyboard defaults ***/
@@ -69,31 +96,6 @@ window.initializeEvents = function(){
 			$('.escribir').css('bottom', 0);
 		});
 
-		/* Hook soft links */
-		$('.hook').on('click', function(e){
-			e.preventDefault();
-			app.showLoader();
-			console.log("After preventDefault");
-			if( $(this).data('resource') == "home" )
-				return app.render_home( $(this).attr('href') );
-			if( $(this).data('resource') == "chat-contacts" )
-				return app.render_chat( $(this).attr('href') );
-			if( $(this).data('resource') == "user-list" )
-				return app.render_user_list( $(this).attr('href') );
-			if( $(this).data('resource') == "diet-list" )
-				return app.render_coach_dietas( $(this).attr('href') );
-			if( $(this).data('resource') == "finanzas" )
-				return app.render_finanzas( $(this).attr('href') );
-			if( $(this).data('resource') == "profile" )
-				return app.render_myProfile( $(this).attr('href') );
-
-
-			if( $(this).data('resource') == "create-diet" )
-				return app.render_create_diet($(this).attr('href'));
-			
-
-			e.stopPropagation();
-		});
 
 		if( $('.view').hasClass('finanzas') ){
 			var hoy = new Date();
@@ -173,10 +175,22 @@ window.initializeEvents = function(){
 		}//	END HAS CLASS FINANZAS
 
 
-			/*Coach Profile*/
 
 
 
+		/* User List */
+		if($('.view').hasClass('list-usuarios')) {
+			
+			/*** Start chat updating process ***/
+			chatCore.fetchDialogList(_coach);
+
+			$('.notificaciones').on('click', function(){
+				app.render_comingSoon();
+			});
+
+		}
+		
+		/*Coach Profile*/
 		if($('.view').hasClass('coach-profile')) {
 
 			/* Log Out from the API */

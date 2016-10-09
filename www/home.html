@@ -11,7 +11,7 @@
 	    <script type='text/javascript' src="js/jquery-touch.min.js"></script>
 		<link rel="stylesheet" type="text/css" href="css/style.css">
 	</head>
-	<body class="iosm" >
+	<body class="iosm preventEvents" >
 		<div id="container" class="rootContainer">
 			
 		</div>
@@ -28,6 +28,7 @@
 		app.showLoader();
 	</script>
 	<!-- Load necesary templates -->
+	<script type="text/javascript" src="views/compiled/container.js"></script>
 	<script type="text/javascript" src="views/compiled/home.js"></script>
 	<script type="text/javascript" src="views/compiled/diet-list.js"></script>
 	<script type="text/javascript" src="views/compiled/user-list.js"></script>
@@ -35,6 +36,7 @@
 	<script type="text/javascript" src="views/compiled/finanzas.js"></script>
 	<script type="text/javascript" src="views/compiled/chat-contacts.js"></script>
 	<script type="text/javascript" src="views/compiled/create-diet.js"></script>
+	<script type="text/javascript" src="views/compiled/coming-soon.js"></script>
 
 	<script type="text/javascript">
 		app.render_home();

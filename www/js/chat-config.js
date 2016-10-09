@@ -32,7 +32,6 @@ var config = {
 /*
   DECLARA USUARIOS
 */
-console.log("init QB");
 setTimeout(function(){
   QB.init(QBApp.appId, QBApp.authKey, QBApp.authSecret, config);
 }, 800);

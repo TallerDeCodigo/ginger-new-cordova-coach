@@ -1288,9 +1288,7 @@ $(window).load(function(){
 
 		$('.usuario-item').click(function(){
 
-			console.log($(this).attr("data"));
-
-			var json = $(this).attr("data");
+			var json = $(this).data("key");
 
 			//var pJson = JSON.parse(json);
 
