@@ -25,11 +25,17 @@ chatCore.fetchDialogList = function(elCoach){
 							dialogs[dialogId] = item;
 							var user_id = item.user_id;
 							var unread_count = item.unread_messages_count;
-							console.log(user_id);
+							console.log(item);
 							var $foundElement = $('*[data-chatId="'+user_id+'"]');
 							var exists_in_list = $foundElement.length;
-							$foundElement.addClass('active');
-							$foundElement.find('.mensajes').text(unread_count);
+
+							$foundElement.addClass('active')
+											.find('.mensajes')
+															 .text(unread_count)
+															 .on('click', function(e){
+															 	console.log($(e.currentTarget).data('dialogid'));
+															 	return app.render_chat_dialog(null, $(e.currentTarget).data('dialogid'));
+															});
 						});
 
 					}

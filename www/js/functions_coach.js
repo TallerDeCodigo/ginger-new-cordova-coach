@@ -1286,14 +1286,15 @@ $(window).load(function(){
 		});
 		
 
-		$('.usuario-item').click(function(){
-
+		$('.usuario-item').click(function(e){
+			console.log($(e.target));
 			var json = $(this).data("key");
 
 			localStorage.setItem('user-selected', json);
 
-			window.location.assign('usuario.html');
-
+			if(!$(e.target).hasClass('mensajes notificaciones'))
+				window.location.assign('usuario.html');
+			console.log("Not this reality");
 		});
 
 		$('.bt-review').click(function(){

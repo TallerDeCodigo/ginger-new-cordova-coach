@@ -185,8 +185,19 @@ window.initializeEvents = function(){
 			chatCore.fetchDialogList(_coach);
 
 			$('.notificaciones').on('click', function(){
-				app.render_comingSoon();
+				app.render_comingSoon('proximamente.html');
 			});
+
+		}
+		
+
+		/* Chat list */
+		if($('.view').hasClass('dialog_detail')) {
+			
+			if($('.view').hasClass('dialogLoad')){
+				console.log("Trigger");
+				triggerDialog($(e.currentTarget).data('dialogid'));
+			}
 
 		}
 		

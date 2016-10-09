@@ -248,6 +248,17 @@
 			var data = this.gatherEnvironment(responsedata, 'Chat');
 			return this.switchView('chat-contacts', data, '.view', url, 'has-chat-list', true);
 		},
+		render_chat_dialog : function(url, dialogId){
+			var responsedata = [];
+			setTimeout(function(){
+				app.showLoader();
+			}, 800);			
+			app.check_or_renderContainer();
+			console.log("Rendering Chat Dialog");			
+			var data = this.gatherEnvironment(responsedata, 'Chat');
+			var dialogClass = (dialogId) ? "dialogLoad" : "";
+			return this.switchView('chat-dialog', data, '.view', url, 'list-chat dialog_detail '+dialogClass);
+		},
 		render_finanzas : function(url){
 			var responsedata = [];
 			setTimeout(function(){
