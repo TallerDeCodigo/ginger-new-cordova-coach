@@ -3,7 +3,7 @@
 window.chatCore = [];
 
 chatCore.fetchDialogList = function(elCoach){
-	
+
 		console.log("Oh Captain my Captain");
 		QB.createSession({email: elCoach.mail, password: elCoach.chatPassword}, function(err, res) {
 
@@ -101,6 +101,7 @@ chatCore.fetchDialogList = function(elCoach){
 
 		var usersIds = [];
 		var usersNames = [];
+		/*** TODO: Fetch this id from method as attribute ***/
 		var qbUser = localStorage.getItem('idQBOX');
 		qbUser = qbUser.split('-');
 		qbUser = qbUser[0].replace('"',''); 
