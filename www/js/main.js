@@ -221,7 +221,6 @@
 		render_home : function(url){
 			app.showLoader();
 			app.check_or_renderContainer();
-			console.log("Rendering home");
 			var data = this.gatherEnvironment();
 			data.is_scrollable = false;
 			return this.switchView('home', data, '.view', url, 'home-menu');
@@ -229,7 +228,6 @@
 		render_user_list : function(url){
 			var responsedata = [];
 			app.check_or_renderContainer();
-			console.log("Rendering user list");
 			setTimeout(function(){
 				app.showLoader();
 			}, 1000);
@@ -244,7 +242,6 @@
 				app.showLoader();
 			}, 800);
 			app.check_or_renderContainer();
-			console.log("Rendering chat list");			
 			var data = this.gatherEnvironment(responsedata, 'Chat');
 			return this.switchView('chat-contacts', data, '.view', url, 'has-chat-list', true);
 		},
@@ -254,7 +251,6 @@
 				app.showLoader();
 			}, 800);			
 			app.check_or_renderContainer();
-			console.log("Rendering Chat Dialog");			
 			var data = this.gatherEnvironment(responsedata, 'Chat');
 			var dialogClass = (dialogId) ? "dialogLoad" : "";
 			window.dialogNow = (dialogId) ? dialogId : null;
@@ -266,7 +262,6 @@
 				app.showLoader();
 			}, 800);			
 			app.check_or_renderContainer();
-			console.log("Rendering finanzas module");			
 			var data = this.gatherEnvironment(responsedata, 'Finanzas');
 			return this.switchView('finanzas', data, '.view', url, 'finanzas');
 		},
@@ -276,7 +271,6 @@
 				app.showLoader();
 			}, 800);
 			app.check_or_renderContainer();
-			console.log("Rendering Coach dietas");
 				responsedata = apiRH.getDiets();
 			var data = this.gatherEnvironment(responsedata, 'Dietas');
 			return this.switchView('diet-list', data, '.view', url, 'diet-list');
@@ -287,7 +281,6 @@
 				app.showLoader();
 			}, 800);
 			app.check_or_renderContainer();
-			console.log("Rendering Create new diet");
 				// responsedata = apiRH.getDiets();
 			var data = this.gatherEnvironment(responsedata, 'Dietas');
 			console.log(data);
@@ -299,7 +292,6 @@
 				app.showLoader();
 			}, 800);
 			app.check_or_renderContainer();
-			console.log("Rendering Coach Profile");
 			var extra_data 	= window.fetchCoachProfileInfo();	
 			var data 		= this.gatherEnvironment(extra_data, 'Mi Perfil');
 			console.log(data);
@@ -309,7 +301,6 @@
 			var extra_data = [];
 			app.showLoader();
 			app.check_or_renderContainer();
-			console.log("Rendering Coming soon");
 			var data = this.gatherEnvironment(extra_data, 'Próximamente');
 			return this.switchView('coming-soon', data, '.view', url, 'coming-soon');
 		},
@@ -317,11 +308,9 @@
 			apiRH.getFileFromDevice(destination, source);		
 		},
 		showLoader: function(){
-			// console.log("Showing loader");
 			$('#spinner').show();
 		},
 		hideLoader: function(){
-			// console.log("Hiding loader");
 			$('#spinner').hide();
 		},
 		toast: function(message, bottom){
