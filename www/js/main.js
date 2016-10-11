@@ -19,6 +19,7 @@
 			//console.log('token');
 			
 			var is_login 	= apiRH.has_token();
+			var is_home 	= (typeof(window.is_home) != 'undefined') ? window.is_home : true;
 			var is_client 	= localStorage.getItem('customerId');
 			var is_current 	= localStorage.getItem('valido');
 
@@ -49,36 +50,23 @@
 				var userinfo 	= JSON.parse(localStorage.getItem('user'));
 					window._coach = (userinfo) ? userinfo : '';
 				/* Take the user to it's timeline */
-				var is_home = window.is_home;
-				
+				console.log(is_home);
 				if(is_home){
-					return;
-				}else{
-					if(!is_home){
-						return;
-					}else{
-						window.location.assign('index.html?filter_feed=all');
-					}	
-				}	
-				return;
-			}else{
-				if(window.is_login){
-					return;
-				}else{
-					window.location.assign('login.html');
-					return;
+					return app.render_home();
 				}
-				
+			}else{
+				console.log("RenderLogin ::: ");
+				return app.render_login();
 			}
 
 		},
 		registerCompiledPartials: function() {
 			console.log("Register pre compiled partials");
 			/* Add files to be loaded here */
-			var filenames = ['header', 'history_header', 'history_header_nouser', 'search_header', 'feed_chunk', 'sidemenu', 'sidemenu_logged', 'footer', 'subheader', 'dom_assets'];
+			var filenames = ['header', 'loader'];
 			
 			filenames.forEach(function (filename) {
-					//Handlebars.registerPartial(filename, Handlebars.templates[filename]);
+				Handlebars.registerPartial(filename, Handlebars.templates[filename]);
 			});
 		},
 		registerTemplate : function(name) {
@@ -213,12 +201,22 @@
 			/*** First time loading home ***/
 			if(window.firstTime){
 				console.log("Rendering first time");
-				var container_template = Handlebars.templates['container'];
+				var container_template = Handlebars.templates.container;
 				var html = container_template();
 				$('.rootContainer').html( html );
 			}
 		},
+		render_login : function(url){
+			window.is_home = false;
+			app.showLoader();
+			app.check_or_renderContainer();
+			var data = this.gatherEnvironment();
+			data.is_scrollable = false;
+			return this.switchView('login', data, '.view', url, 'login');
+		},
 		render_home : function(url){
+			console.log("Render home");
+			window.is_home = true;
 			app.showLoader();
 			app.check_or_renderContainer();
 			var data = this.gatherEnvironment();
@@ -227,6 +225,7 @@
 		},
 		render_user_list : function(url){
 			var responsedata = [];
+			window.is_home = false;
 			app.check_or_renderContainer();
 			setTimeout(function(){
 				app.showLoader();
@@ -238,6 +237,7 @@
 		},
 		render_chat : function(url){
 			var responsedata = [];
+			window.is_home = false;
 			setTimeout(function(){
 				app.showLoader();
 			}, 800);
@@ -247,6 +247,7 @@
 		},
 		render_chat_dialog : function(url, dialogId){
 			var responsedata = [];
+			window.is_home = false;
 			setTimeout(function(){
 				app.showLoader();
 			}, 800);			
@@ -258,6 +259,7 @@
 		},
 		render_finanzas : function(url){
 			var responsedata = [];
+			window.is_home = false;
 			setTimeout(function(){
 				app.showLoader();
 			}, 800);			
@@ -267,6 +269,7 @@
 		},
 		render_coach_dietas : function(url){
 			var responsedata = [];
+			window.is_home = false;
 			setTimeout(function(){
 				app.showLoader();
 			}, 800);
@@ -277,6 +280,7 @@
 		},
 		render_create_diet : function(url){
 			var responsedata = [];
+			window.is_home = false;
 			setTimeout(function(){
 				app.showLoader();
 			}, 800);
@@ -288,6 +292,7 @@
 		},
 		render_myProfile : function(url){
 			var extra_data = [];
+			window.is_home = false;
 			setTimeout(function(){
 				app.showLoader();
 			}, 800);
@@ -299,6 +304,7 @@
 		},
 		render_comingSoon : function(url){
 			var extra_data = [];
+			window.is_home = false;
 			app.showLoader();
 			app.check_or_renderContainer();
 			var data = this.gatherEnvironment(extra_data, 'Próximamente');
@@ -526,79 +532,6 @@
 
 		
 // ----------------------------------------------------------------------
-
-/*
-	LOGIN WITHOUT FACEBOOK
-							*/
-
-	if($('#login_form').length)
-		$('#login_form').validate({
-			rules:{
-				mail:{
-					required:true,
-					email:true
-				},
-				pass:"required"
-			},
-			messages:{
-				mail:{
-					required:"Debes proporcionar un correo",
-					email:"Proporciona un correo válido"
-				},
-				pass:"Este campo es requerido para acceder a tu cuenta"
-			},
-			submitHandler:function(){
-				var data_login	= app.getFormData("#login_form");
-
-				console.log(data_login.mail);
-
-				data_login.pass = $('#pass').val();
-
-
-				//Login OK
-
-				var responsedata = apiRH.loginNative(data_login);
-
-
-				console.log(responsedata);
-				
-				//Dietas OK
-				
-				//var responsedata = apiRH.getDiets();
-
-				//Usuarios OK
-
-				//var responsedata = apiRH.getUsuarios();
-
-				//Finanzas
-
-				//var responsedata = apiRH.getFinanzas(1);
-
-				//Platillos
-
-				//var responsedata = apiRH.listDishes(1);
-
-				//Ingredientes
-
-				// var responsedata = apiRH.listIngredient();
-				
-				console.log("> "+ JSON.stringify(responsedata));
-
-				if(responsedata){
-
-					var coachInfo = apiRH.getInfoCoach();
-
-					console.log(coachInfo);
-
-					if(coachInfo)
-						window.location.assign('index.html');
-					
-					return;
-				}else{
-					app.toast("Ocurrió un error, por favor revisa tus datos.")
-				}
-			}
-	}); //END VALIDATE
 
 
 /*TARJETA DE CREDITO*/

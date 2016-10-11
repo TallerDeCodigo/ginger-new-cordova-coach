@@ -102,6 +102,11 @@ h1   { font-size:24px; font-size:2.4rem; } /* =24px */
 
 .hidden{display:none!important;}
 .view{width: 100%; min-height: 100%; height: 100%;}
+/* .view{width: 100%; min-height: 100vh; height: 100%; margin-top: -9.5vh; padding-top: 70px;} */
+
+/* View anti-margin fix */
+.view.login{ height: 100vh; margin-top: -9.5vh; padding-top: 9.5vh;}
+
 
 /* GENERAL */
 

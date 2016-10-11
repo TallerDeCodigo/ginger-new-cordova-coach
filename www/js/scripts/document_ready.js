@@ -96,6 +96,43 @@ window.initializeEvents = function(){
 			$('.escribir').css('bottom', 0);
 		});
 
+		if($('#login_form').length){
+			console.log("Login length");
+			$('#login_form').validate({
+				rules:{
+					mail:{
+						required:true,
+						email:true
+					},
+					pass:"required"
+				},
+				messages:{
+					mail:{
+						required:"Debes proporcionar un correo",
+						email:"Proporciona un correo válido"
+					},
+					pass:"Este campo es requerido para acceder a tu cuenta"
+				},
+				submitHandler:function(form, event){
+					event.preventDefault();
+					var data_login		= app.getFormData(form);
+					var login_response 	= apiRH.loginNative(data_login);
+
+					console.log("RESPONSE ::: "+ JSON.stringify(login_response));
+
+					if(login_response){
+
+						var coachInfo = apiRH.getInfoCoach();
+						if(coachInfo)
+							return app.render_home();
+						
+					}else{
+						app.toast("Ocurrió un error, por favor revisa tus datos.")
+					}
+				}
+			}); //END VALIDATE
+		}
+
 
 		if( $('.view').hasClass('finanzas') ){
 			var hoy = new Date();
@@ -218,7 +255,7 @@ window.initializeEvents = function(){
 			$('#accept').click(function(){
 				//app.toast('Has cerrado la sesión, hasta pronto');
 						localStorage.clear();
-					window.location.assign('login.html');
+					app.render_login();
 					return;
 				//}
 				app.toast('No ha sido posible crear tu cuenta, inténtalo de nuevo por favor.');
