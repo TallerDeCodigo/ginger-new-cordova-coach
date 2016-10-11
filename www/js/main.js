@@ -524,11 +524,6 @@
 
 		    return amount_parts.join('.');
 		}
-		/* 
-
-			Create a new account the old fashioned way 
-
-		*/
 
 		
 // ----------------------------------------------------------------------

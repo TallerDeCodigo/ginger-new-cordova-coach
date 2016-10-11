@@ -16,7 +16,6 @@ window.initializeEvents = function(){
 		$('.hook').on('click', function(e){
 			e.preventDefault();
 			app.showLoader();
-			console.log("After preventDefault");
 			if( $(this).data('resource') == "home" )
 				return app.render_home( $(this).attr('href') );
 			if( $(this).data('resource') == "chat-contacts" )

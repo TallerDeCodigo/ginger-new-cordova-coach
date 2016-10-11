@@ -30,19 +30,23 @@ function requestHandlerAPI(){
 							platform: this.device_platform,
 							version: this.device_platform_version
 						};
+
+
+	/*** Request headers ***/
+	this.headers = 	{
+						'X-ZUMO-APPLICATION': 'ideIHnCMutWTPsKMBlWmGVtIPXROdc92',
+						'X-ZUMO-AUTH': app.ls.getItem('token'),
+						'Content-Type': 'application/json'
+					};
+
 	var context = this;
 	window.sdk_app_context = null;
 
-	/* 
-		Production API URL 
-							*/
-
+	/*  Production API URL  */
 	window.api_base_url = "https://gingerservice.azure-mobile.net/";  //servicios ginger
-	/* Development local API URL */
-	// window.api_base_url = "http://dedalo.dev/rest/v1/";
-	// window.api_base_url = "http://localhost/~manuelon/dedalo/rest/v1/";
 	
 	this.ls = window.localStorage;
+	
 	/* Constructor */
 	this.construct = function(app_context){
 					//console.log('Initialized ginger api-sdk1.0');
@@ -52,7 +56,9 @@ function requestHandlerAPI(){
 					return this;
 				};
 				
-		/*** Methods ***/
+/***********************/
+/*** API sdk Methods ***/
+/***********************/
 		/* 
 		 * Manage pseudo Log in process to use protected API calls
 		 * @param data_login JSON {user_login, user_password}
@@ -117,53 +123,7 @@ function requestHandlerAPI(){
 						"password" : pass
 					}
 				}
-				// var user = this.getRequest('tables/coaches/' + userId, req);
-
-				// //console.log(JSON.stringify(user));
-				// //console.log(user);
-
-				// if(user){
-				// 	localStorage.setItem('coach_type', user.perfil.personalidad);
-				// 		console.log("plan> "+user.perfil.personalidad);
-				// 	localStorage.setItem('user_name', user.nombre);
-				// 		console.log("name> "+user.nombre);
-				// 	localStorage.setItem('user_last_name', user.apellido);
-				// 		console.log("apellido> "+user.apellido);
-				// 	localStorage.setItem('genero', user.perfil.sexo);
-				// 		console.log("sexo> "+user.perfil.sexo);
-				// 	localStorage.setItem('edad', user.perfil.edad.real);
-				// 		console.log("edad> "+user.perfil.edad.real);
-				// 	localStorage.setItem('zipcode', user.cp);
-				// 		console.log("zipcode> "+user.cp);
-				// 	localStorage.setItem('estatura', user.perfil.estatura);
-				// 		console.log("estatura> "+user.perfil.estatura);
-				// 	localStorage.setItem('peso', user.perfil.peso);
-				// 		console.log("peso> "+user.perfil.peso);
-				// 	localStorage.setItem('peso_ideal', user.pesoDeseado);
-				// 		console.log("peso_ideal> "+user.pesoDeseado);
-				// 	localStorage.setItem('dpw', user.perfil.ejercicio);
-				// 		console.log("dpw> "+user.perfil.ejercicio);
-				// 	localStorage.setItem('restricciones', user.restricciones);
-				// 		console.log("restricciones> "+user.restricciones);
-				// 	localStorage.setItem('comentarios', user.comentarios);
-				// 		console.log("comentarios> "+user.comentarios);
-				// 	localStorage.setItem('customerId', user.customerId);
-				// 		console.log("customerId> "+user.customerId);
-				// 	localStorage.setItem('chatId', user.chatId);
-				// 		console.log("chatId> "+user.jid);
-				// 	localStorage.setItem('chatId', user.chatId);
-				// 		console.log("chatId> "+user.chatId);
-				// 	localStorage.setItem('dietaId', user.dieta._id);
-				// 		console.log("dietaId> "+user.dieta._id);
-				// 	localStorage.setItem('dietaName', user.dieta.nombre);
-				// 		console.log("dietaName> "+user.dieta.nombre);
-				// 	localStorage.setItem('nombre_coach', user.coach.nombre);
-				// 		console.log("coach_name> " + user.coach.nombre);
-				// 	localStorage.setItem('nombre_coach', user.coach.apellido);
-				// 		console.log("coach_last> " + user.coach.apellido);		
-
-				// 	return (userId) ? response : false;
-				// }
+				
 				return true;
 				
 			}
@@ -174,8 +134,7 @@ function requestHandlerAPI(){
 		/**
 		 * Función para obtener las dietas de un coach que este logeado
 		 *
-		 **/
-
+		 */
 		this.getDiets = function(){
 			var req = {
 				method : 'get',
@@ -205,8 +164,7 @@ function requestHandlerAPI(){
 		 *
 		 * Update Diet
 		 *
-		 **/
-
+		 */
 		this.updateDiet = function (data){
 			
 			var req = {
@@ -233,8 +191,7 @@ function requestHandlerAPI(){
 
 		/**
 		 * DELETE DIET
-		 * */
-
+		 */
 		this.deleteDiet = function(diet){
 			var req = {
 				method : 'DELETE',
@@ -257,11 +214,9 @@ function requestHandlerAPI(){
 
 
 
-				/*Holkan*/
 		/**
 		 * DELETE DISH
 		 * */
-
 		this.deleteDish = function(diet){
 			var req = {
 				method : 'DELETE',
@@ -286,7 +241,6 @@ function requestHandlerAPI(){
 		/**
 		 * COPY DIET
 		 * */
-
 		 this.copyDiet = function(data){
 			var req = {
 				method : 'POST',
@@ -588,21 +542,10 @@ function requestHandlerAPI(){
 		};
 
 		this.getFinanzas = function(mes){
-			var req = {
-				method : 'get',
-				url : api_base_url + 'api/history/?coach=' + localStorage.getItem('userId') + '&mes=' + mes,	//definitr tabla
-				headers: {
-					'X-ZUMO-APPLICATION': 'ideIHnCMutWTPsKMBlWmGVtIPXROdc92',
-					'X-ZUMO-AUTH': localStorage.getItem('token'),
-					'Content-Type': 'application/json'
-				}
-			}
-			console.log(req);
 
-			var response = this.getRequest('api/history/?coach=' + localStorage.getItem('userId') + '&mes=' + mes, req);
-
+			var response = this.getRequest('api/history/?coach=' + localStorage.getItem('userId') + '&mes=' + mes, null);
+			console.log("Response Finanzas ::: "+JSON.stringify(response));
 			return (response) ? response : false;
-
 		};
 
 		this.getInfoCoach = function(){
@@ -615,21 +558,10 @@ function requestHandlerAPI(){
 					'Content-Type': 'application/json'
 				}
 			}
-			console.log(req);
-
 			var response = this.getRequest('tables/coach?_id=' + localStorage.getItem('userId'), req);
-
-			console.log("Request Data Coach");
-
-			console.log(JSON.stringify(response) );  //llega aqui con la respuesta del servidor
-
-
-			console.log("INFO COACH SAVE");
 			this.save_user_data_clientside(JSON.stringify(response));
 
-
 			return (response) ? true : false;
-
 		};
 
 		this.updatePerfil = function(data){
