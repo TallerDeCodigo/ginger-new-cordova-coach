@@ -122,11 +122,14 @@ window.initializeEvents = function(){
 					if(login_response){
 
 						var coachInfo = apiRH.getInfoCoach();
-						if(coachInfo)
+						if(coachInfo){
+							var coachInfo 	= JSON.parse(localStorage.getItem('user'));
+							window._coach = (coachInfo) ? coachInfo : null;
 							return app.render_home();
+						}
 						
 					}else{
-						app.toast("Ocurrió un error, por favor revisa tus datos.")
+						app.toast("Ocurrió un error, por favor revisa que tus datos sean correctos.")
 					}
 				}
 			}); //END VALIDATE
@@ -134,30 +137,22 @@ window.initializeEvents = function(){
 
 
 		if( $('.view').hasClass('finanzas') ){
+			
 			var hoy = new Date();
-
-			console.log("MES: " + (hoy.getMonth() + 1));
-
 			var month = hoy.getMonth();
 			var dia = hoy.getDate();
 			var pdia = 1;
-
 			var totalAmount = 0;
 			var totalDays 	= 0;
+			var meses = app.catalogues.months;
 			
-			console.log(dia);
-
-			var responsedata = apiRH.getFinanzas( hoy.getMonth() + 1 );
-			var meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
 			$('.mes').html(meses[month]);
 
-
-			var finanzas = responsedata;
-			console.log(finanzas);
+			var finanzas = apiRH.getFinanzas( hoy.getMonth() + 1 );
 
 			var i = 0;
 
-			$.each(finanzas, function( key, value ){
+			$.each( finanzas, function( key, value ){
 
 				$('.record').append('<tr><td>' + finanzas[i].name + '</td><td>' + finanzas[i].days_since_subscription + '</td><td>' + finanzas[i].days_since_subscription + '</td><td>$' + number_format(finanzas[i].amount_this_month, 2) + '</td></tr>');	
 
@@ -242,30 +237,28 @@ window.initializeEvents = function(){
 		/*Coach Profile*/
 		if($('.view').hasClass('coach-profile')) {
 
-			/* Log Out from the API */
+			/* Log Out from the API (Actually just delete local info, token is not affected) */
+			/* TODO: Proper log out */
 			$('#logout').on('click', function(e){
-					if(!$('.overscreen2').is(':visible') ){
-						$('.overscreen2').addClass('active');
-						$('.overscreen2').show();
-						$('#blur').toggleClass('blurred');
-					}
+				if(!$('.overscreen2').is(':visible') ){
+					$('.overscreen2').addClass('active');
+					$('.overscreen2').show();
+					$('#blur').toggleClass('blurred');
+				}
 			});
 
-			$('#accept').click(function(){
-				//app.toast('Has cerrado la sesión, hasta pronto');
-						localStorage.clear();
+				$('#accept').click(function(){
+					localStorage.clear();
 					app.render_login();
+					app.toast('No ha sido posible cerrar tu sesión, por favor intenta de nuevo.');
 					return;
-				//}
-				app.toast('No ha sido posible crear tu cuenta, inténtalo de nuevo por favor.');
-				return;
-			});
+				});
 
 			$('.cancel').click(function(){
 				$('.overscreen2').hide();
 				$('#blur').toggleClass('blurred');
 			});
-	
+
 			app.hideLoader();
 
 		} // END CLASS coach-profile

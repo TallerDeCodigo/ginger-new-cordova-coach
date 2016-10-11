@@ -422,7 +422,7 @@ var slider = new Swipe(document.getElementById('scroller'));
 		}
 
 		var separador = "";
-
+		
 		for(var p = 0; p < _coach.personalidad.length; p++){
 
 			if(p == _coach.personalidad.length - 1){

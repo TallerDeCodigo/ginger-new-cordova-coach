@@ -26,13 +26,14 @@
 			window.cordova_full_path = "";
 
 			/* IMPORTANT to set requests to be syncronous */
-			/* TODO test all requests without the following code 'cause of deprecation */
-			$.ajaxSetup({
-				 async: false
-			});
+				/* TODO test all requests without the following code 'cause of deprecation */
+				$.ajaxSetup({
+					 async: false
+				});
 
 			/*** TODO: Get this shit into a catalogue ***/
 			window.catalogues 						= [];
+			window.catalogues.months 				= [ 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre' ];
 			window.catalogues.coach_type 			= [ 'Estricto', 'Innovador', 'Animador', 'Tradicional'];
 			window.catalogues.restricciones 		= [ 'Huevo', 'Pollo', 'Pescado', 'Mariscos', 'Lacteos', 'Carne' ];
 			window.catalogues.objetivo 				= [ 'adelgazar','detox','bienestar','rendimiento' ];
@@ -50,7 +51,6 @@
 				var userinfo 	= JSON.parse(localStorage.getItem('user'));
 					window._coach = (userinfo) ? userinfo : '';
 				/* Take the user to it's timeline */
-				console.log(is_home);
 				if(is_home){
 					return app.render_home();
 				}
