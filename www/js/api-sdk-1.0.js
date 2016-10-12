@@ -863,7 +863,7 @@ function requestHandlerAPI(){
 			  type: 'GET',
 			  headers: this.headers,
 			  url: window.api_base_url + endpoint,
-			  data: JSON.stringify(data.data),
+			  data: JSON.stringify(data),
 			  dataType: 'json',
 			  async: false
 			})

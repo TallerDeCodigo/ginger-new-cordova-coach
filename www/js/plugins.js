@@ -410,7 +410,6 @@ var slider = new Swipe(document.getElementById('scroller'));
 		var myhtml 	= "";
 		var star 	= Math.round(_coach.rating);
 		var personalidadesConcat = "";
-		console.log(_coach);
 
 		for (var i = 0; i < star; i++){
 			_object.stars.active ++;
@@ -422,7 +421,7 @@ var slider = new Swipe(document.getElementById('scroller'));
 		}
 
 		var separador = "";
-		
+
 		for(var p = 0; p < _coach.personalidad.length; p++){
 
 			if(p == _coach.personalidad.length - 1){

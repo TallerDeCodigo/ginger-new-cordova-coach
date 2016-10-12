@@ -257,7 +257,7 @@
 			window.dialogNow = (dialogId) ? dialogId : null;
 			return this.switchView('chat-dialog', data, '.view', url, 'list-chat dialog_detail '+dialogClass);
 		},
-		render_finanzas : function(url){
+		render_finanzas_view : function(url){
 			var responsedata = [];
 			window.is_home = false;
 			setTimeout(function(){
@@ -266,6 +266,31 @@
 			app.check_or_renderContainer();
 			var data = this.gatherEnvironment(responsedata, 'Finanzas');
 			return this.switchView('finanzas', data, '.view', url, 'finanzas');
+		},
+		render_finanzas : function(url, month, day){
+			var responsedata = [];
+			window.is_home = false;
+			setTimeout(function(){
+				app.showLoader();
+			}, 800);
+
+			var meses 	= catalogues.months;
+
+			var hoy 	= new Date();
+			var month 	= hoy.getMonth();
+			var day 	= hoy.getDate();
+			var pDay 	= 1;
+			var totalAmount = 0;
+			var totalDays 	= 0;
+			var data = apiRH.getFinanzas( month );
+			console.log(data);
+			// app.render_finanzas("finanzas.html", month, day);
+
+			// console.log("finanzas");
+			// console.log(data);
+			// app.check_or_renderContainer();
+			// var data = this.gatherEnvironment( responsedata, 'Finanzas' );
+			// return this.switchView( 'finanzas', data, '.view', url, 'finanzas' );
 		},
 		render_coach_dietas : function(url){
 			var responsedata = [];

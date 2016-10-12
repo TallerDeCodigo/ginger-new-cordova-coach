@@ -8,9 +8,9 @@
 	</header>
 	<a class="btn-gre">Recibo de honorarios</a>
 	<p class="acumulado">Saldo acumulado del <span class="inicio"></span> al <span class="final"></span></p>
-	<p class="cantidad">$ <span class="totalAcumulado">0</span> MXN</p>
+	<p class="cantidad">$ <span class="totalAcumulado">{{moneys.totalAmount}}</span> MXN</p>
 	<p class="status">PAGADO</p>
-	<p class="diasac">Total de días acumulados<br><span class="total">0</span></p>
+	<p class="diasac">Total de días acumulados<br><span class="total">{{moneys.totalAmount}}</span></p>
 	<div class="changer">
 		<a class="btn_left" href="#"><img src="{{cordova_full_path}}images/leftarrow.png"></a>
 		<span class="mes"></span>
@@ -23,10 +23,13 @@
 			<th>Días</th>
 			<th>Saldo</th>
 		</tr>
-		<!-- <tr>
-			<td>Raúl H.</td>
-			<td>15 Ago</td>
-			<td>15</td>
-			<td>$ 320.50</td>
-		</tr> -->
+		{{# each moneys.client}}
+			<tr>
+				<td>{{name}}</td>
+				<td>{{days_since_subscription}}</td>
+				<td>{{days_this_month}}</td>
+				<td>$ {{amount_this_month}}</td>
+			</tr>
+		{{/ each}}
+		
 	</table>

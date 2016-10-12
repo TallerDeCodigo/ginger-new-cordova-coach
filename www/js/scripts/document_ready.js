@@ -138,40 +138,25 @@ window.initializeEvents = function(){
 
 		if( $('.view').hasClass('finanzas') ){
 			
-			var hoy = new Date();
-			var month = hoy.getMonth();
-			var dia = hoy.getDate();
-			var pdia = 1;
+			var meses 	= catalogues.months;
+
+			var hoy 	= new Date();
+			var month 	= hoy.getMonth();
+			var day 	= hoy.getDate();
+			var pDay 	= 1;
 			var totalAmount = 0;
 			var totalDays 	= 0;
-			var meses = app.catalogues.months;
 			
-			$('.mes').html(meses[month]);
-
-			var finanzas = apiRH.getFinanzas( hoy.getMonth() + 1 );
-
-			var i = 0;
-
-			$.each( finanzas, function( key, value ){
-
-				$('.record').append('<tr><td>' + finanzas[i].name + '</td><td>' + finanzas[i].days_since_subscription + '</td><td>' + finanzas[i].days_since_subscription + '</td><td>$' + number_format(finanzas[i].amount_this_month, 2) + '</td></tr>');	
-
-				totalAmount = totalAmount + finanzas[i].amount_this_month;
-
-				totalDays= totalDays+finanzas[i].days_since_subscription;
-
-				console.log( totalAmount + ' - ' +  totalDays);
-				i++;
-			});
-
-
+			// $('.mes').html(meses[month]);
+			// app.render_finanzas("finanzas.html", month, day);
+			
 			//TOTALES
-			$('.totalAcumulado').html(number_format(totalAmount,2));
-			$('.total').html(totalDays);
+			// $('.totalAcumulado').html(number_format(totalAmount,2));
+			// $('.total').html(totalDays);
 
 			//FECHAS DE INICIO
-			$('.inicio').html(pdia);
-			$('.final').html(dia + ' de ' + meses[month] );
+			$('.inicio').html(pDay);
+			$('.final').html(day + ' de ' + meses[month] );
 
 			$('.btn-gre').click(function(){
 				console.log('Clicked upload receipt');
