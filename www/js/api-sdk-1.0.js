@@ -1147,6 +1147,7 @@ function requestHandlerAPI(){
 																context.transfer_fail, 
 																this.transfer_options
 															);
+													app.showLoader();
 													app.toast("Estamos procesando tu recibo...")
 												}
 											};
