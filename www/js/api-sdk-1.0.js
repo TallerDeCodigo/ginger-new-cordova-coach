@@ -1038,15 +1038,15 @@ function requestHandlerAPI(){
 		 * @param 
 		 */
 		this.receipt_transfer_win = function (r) {
-									setTimeout(function() {
-										app.toast("Tu recibo se ha subido correctamente.");
-										setTimeout(function(){
-											app.hideLoader();
-										}, 2000);
+										setTimeout(function() {
+											app.toast("Tu recibo se ha subido correctamente.");
+											setTimeout(function(){
+												app.hideLoader();
+											}, 2000);
 
-										return true;
-									}, 0);
-								};
+											return true;
+										}, 0);
+									};
 		/*
 		 * Advanced search fail callback
 		 * @param 
@@ -1103,19 +1103,6 @@ function requestHandlerAPI(){
 		 * @param source
 		 */
 		this.prepareReceiptFileTransfer = function(fileURL, source){
-									// app.showLoader();
-									// this.transfer_options = new FileUploadOptions();
-									// this.transfer_options.fileUrl = fileURL;
-									// this.transfer_options.fileKey = "file";
-									// this.transfer_options.fileName = fileURL.substr(fileURL.lastIndexOf('/') + 1);
-									// this.transfer_options.mimeType = "image/jpeg";
-									// console.log(this.transfer_options);
-									// var params = {};
-									// 	params.user_id = "370n3209823n23";
-									// this.transfer_options.params = params;
-									// this.upload_ready = true;
-									// console.log("prepareReceiptTransfer");
-									// app.hideLoader();
 									
 									app.showLoader();
 									console.log(fileURL);
@@ -1149,18 +1136,18 @@ function requestHandlerAPI(){
 		 * Dedalo approved
 		 */
 		this.initializeReceiptFileTransfer = function(params){
-												user = (user) ? user : "not_logged";
+												
+												var user = (_coach) ? _coach : "not_logged";
 												if(this.upload_ready){
 													var ft = new FileTransfer();
-													console.log(JSON.stringify(ft));
 													this.transfer_options.params = params;
 													ft.upload(  this.transfer_options.fileUrl, 
-																encodeURI('https://gingerfiles.blob.core.windows.net/recibos/'), 
+																encodeURI('http://ginger-admin.cloudapp.net/rogue1.php'), 
 																context.receipt_transfer_win, 
 																context.transfer_fail, 
 																this.transfer_options
 															);
-													app.toast("Still processing...")
+													app.toast("Estamos procesando tu recibo...")
 												}
 											};
 								

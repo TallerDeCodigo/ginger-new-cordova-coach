@@ -286,7 +286,8 @@
 				client.amount_this_month 	 = Math.round(client.amount_this_month * 100) / 100;
 			});
 			console.log(responsedata);
-			return this.switchView( 'finanzas', responsedata, '.view', url, 'finanzas' );
+			var data = this.gatherEnvironment( responsedata, "Finanzas");
+			return this.switchView( 'finanzas', data, '.view', url, 'finanzas' );
 		},
 		render_finanzas : function(url, month, day){
 
@@ -308,8 +309,8 @@
 				client.amount_this_month 	 = Math.round(client.amount_this_month * 100) / 100;
 			});
 			console.log(responsedata);
-			adjustFinanzas();
-			return this.switchView( 'finanzas', responsedata, '.view', url, 'finanzas', false, false );
+			var data = this.gatherEnvironment( responsedata, "Finanzas");
+			return this.switchView( 'finanzas', data, '.view', url, 'finanzas', false, false );
 		},
 		render_coach_dietas : function(url){
 
@@ -324,6 +325,7 @@
 			return this.switchView('diet-list', data, '.view', url, 'diet-list');
 		},
 		render_create_diet : function(url){
+
 			var responsedata = [];
 			window.is_home = false;
 			setTimeout(function(){
@@ -336,6 +338,7 @@
 			return this.switchView('create-diet', data, '.view', url, 'create-new-diet');
 		},
 		render_myProfile : function(url){
+
 			var extra_data = [];
 			window.is_home = false;
 			setTimeout(function(){
@@ -348,6 +351,7 @@
 			return this.switchView('coach', data, '.view', url, 'coach-profile');
 		},
 		render_comingSoon : function(url){
+
 			var extra_data = [];
 			window.is_home = false;
 			app.showLoader();
