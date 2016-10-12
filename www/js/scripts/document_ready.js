@@ -135,45 +135,50 @@ window.initializeEvents = function(){
 
 
 		if( $('.view').hasClass('finanzas') ){
-			
-			var meses 	= catalogues.months;
 
-			var hoy 	= new Date();
-			var month 	= hoy.getMonth();
-			var day 	= hoy.getDate();
-			var pDay 	= 1;
-			var totalAmount = 0;
-			var totalDays 	= 0;
-			
-			$('.btn-gre').click(function(){
-				console.log('Clicked upload receipt');
-				app.get_file_from_device('receipt', 'gallery');
-			});
+			window.adjustFinanzas = function(){
 
-			$('.btn_right').click( function(){
+				var meses 	= catalogues.months;
+				var todayObj 	= new Date();
+				var base_month 	= todayObj.getMonth();
+				var month 		= (!window.temp_month) ? todayObj.getMonth() : temp_month;
+				console.log(base_month);
+				console.log(month);
 
-				month++;
-				if(month > 11){
-					month = 0;
-				}
-				console.log(meses[month] );
+				$('.btn_right').removeClass('inactive');
+				if(month == base_month)
+					$('.btn_right').addClass('inactive');
+				
+				$('.btn-gre').click(function(){
+					console.log( 'Clicked upload receipt' );
+					app.get_file_from_device( 'receipt', 'gallery' );
+				});
 
-				responsedata = apiRH.getFinanzas(month + 1);
-				console.log("Response right ::: "+JSON.stringify(responsedata));
-			});
+				$('.btn_right').click( function(){
 
-			$('.btn_left').click( function(){
+					month++;
+					month = (month > 11) ? 0 : month;
+					window.temp_month = month;
+					console.log(month);
+					if(month == base_month)
+						$(this).addClass('inactive');
+					return app.render_finanzas(null, month);
+				});
 
-				month--;
-				if(month < 0){
-					month = 11;
-				}
-				console.log(meses[month] );
+				$('.btn_left').click( function(){
 
-				responsedata = apiRH.getFinanzas(month + 1);
-				console.log("Response left ::: "+JSON.stringify(responsedata));
-			});
-			app.hideLoader();
+					month--;
+					month = (month < 0) ? 11 : month;
+					window.temp_month = month;
+					console.log(month);
+					if(month != base_month)
+						$('.btn_right').removeClass('inactive');
+					return app.render_finanzas(null, month);
+				});
+				app.hideLoader();
+			};
+			adjustFinanzas();
+
 		}//	END HAS CLASS FINANZAS
 
 

@@ -291,13 +291,25 @@
 		render_finanzas : function(url, month, day){
 
 			var responsedata = [];
-			window.is_home = false;
+			responsedata.total_amount 	= 0;
+			responsedata.total_days 	= 0;
+			var todayObj 	= new Date();
+			
 			setTimeout(function(){
 				app.showLoader();
-			}, 800);			
-			app.check_or_renderContainer();
-			var data = this.gatherEnvironment(responsedata, 'Finanzas');
-			return this.switchView('finanzas', data, '.view', url, 'finanzas');
+			}, 800);
+			responsedata.clients 		= apiRH.getFinanzas( month );
+			responsedata.this_month 	= catalogues.months[month];
+			responsedata.this_day 		= todayObj.getDate();
+
+			responsedata.clients.forEach(function(client){
+				responsedata.total_amount 	+= Math.round(client.amount_this_month * 100) / 100;
+				responsedata.total_days 	+= client.days_this_month;
+				client.amount_this_month 	 = Math.round(client.amount_this_month * 100) / 100;
+			});
+			console.log(responsedata);
+			adjustFinanzas();
+			return this.switchView( 'finanzas', responsedata, '.view', url, 'finanzas', false );
 		},
 		render_coach_dietas : function(url){
 
