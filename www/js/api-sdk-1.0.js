@@ -412,7 +412,7 @@ function requestHandlerAPI(){
 		 */
 		this.getUsuarios = function(){
 
-			var response = this.getRequest('api/client_status?coachid=' + localStorage.getItem('userId'), req);
+			var response = this.getRequest('api/client_status?coachid=' + localStorage.getItem('userId'), null);
 			console.log("RESPONSE getUSuarios ::: "+response);
 
 			return (response) ? response : false;
@@ -437,15 +437,9 @@ function requestHandlerAPI(){
 				data : data
 			}
 
-			console.log(data);
-
-			console.log(JSON.stringify(req));
-
 			var response = this.makePatch2Request('tables/cliente/'+client_id, req);
 
-			console.log("Request Path Data Dieta CLiente");
-
-			console.log('Response: ' + JSON.stringify(response));  //llega aqui con la respuesta del servidor
+			console.log('Response Update Client Diet: ' + JSON.stringify(response));  //llega aqui con la respuesta del servidor
 
 			localStorage.setItem('user-selected', JSON.stringify(response));
 
