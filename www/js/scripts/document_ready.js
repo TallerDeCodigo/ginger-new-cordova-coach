@@ -142,8 +142,6 @@ window.initializeEvents = function(){
 				var todayObj 	= new Date();
 				var base_month 	= todayObj.getMonth();
 				var month 		= (!window.temp_month) ? todayObj.getMonth() : temp_month;
-				console.log(base_month);
-				console.log(month);
 
 				$('.btn_right').removeClass('inactive');
 				if(month == base_month)

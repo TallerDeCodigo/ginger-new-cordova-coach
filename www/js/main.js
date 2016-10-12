@@ -224,7 +224,7 @@
 			app.check_or_renderContainer();
 			var data = this.gatherEnvironment();
 			data.is_scrollable = false;
-			return this.switchView('home', data, '.view', url, 'home-menu');
+			return this.switchView('home', data, '.view', url, 'home-menu', false, false);
 		},
 		render_user_list : function(url){
 
@@ -309,7 +309,7 @@
 			});
 			console.log(responsedata);
 			adjustFinanzas();
-			return this.switchView( 'finanzas', responsedata, '.view', url, 'finanzas', false );
+			return this.switchView( 'finanzas', responsedata, '.view', url, 'finanzas', false, false );
 		},
 		render_coach_dietas : function(url){
 
@@ -383,29 +383,31 @@
 			if(recordUrl) window.history.pushState(newTemplate, newTemplate, '/'+recordUrl);
 			
 			leNiceTransition = (typeof(leNiceTransition) != 'undefined') ? leNiceTransition : true;
-
 			var template = Handlebars.templates[newTemplate];
 			if(!template){
 				console.log("Template doesn't exist");
 				return false;
 			}
-			$(targetSelector).fadeOut('fast', function(){
+			$(targetSelector).fadeOut(360, function(){
 
 				if(targetClass) $(targetSelector).attr('class','view').addClass(targetClass);
 
 				if(!leNiceTransition){
+
 					$(targetSelector).html( template(data) ).css("opacity", 1)
-															.animate(	{
+															 .css("display", "block")
+															 .animate(	{
 																opacity: 1
-															}, 200);
+															}, 360);
 				}else{
+
 					$(targetSelector).html( template(data) ).css("opacity", 1)
 															 .css("display", "block")
 															 .css("margin-left", "20px")
 															 .animate(	{
 																			'margin-left': "0",
 																			opacity: 1
-																		}, 240);
+																		}, 360);
 				}
 				
 			});
