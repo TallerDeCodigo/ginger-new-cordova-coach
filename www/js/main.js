@@ -281,10 +281,11 @@
 			responsedata.this_day 		= todayObj.getDate();
 
 			responsedata.clients.forEach(function(client){
-				responsedata.total_amount 	+= Math.round(client.amount_this_month * 100) / 100;
+				responsedata.total_amount 	+= client.amount_this_month;
 				responsedata.total_days 	+= client.days_this_month;
 				client.amount_this_month 	 = Math.round(client.amount_this_month * 100) / 100;
 			});
+			responsedata.total_amount = Math.round(responsedata.total_amount * 100) / 100;
 			console.log(responsedata);
 			var data = this.gatherEnvironment( responsedata, "Finanzas");
 			return this.switchView( 'finanzas', data, '.view', url, 'finanzas' );
@@ -308,6 +309,7 @@
 				responsedata.total_days 	+= client.days_this_month;
 				client.amount_this_month 	 = Math.round(client.amount_this_month * 100) / 100;
 			});
+			responsedata.total_amount = Math.round(responsedata.total_amount * 100) / 100;
 			console.log(responsedata);
 			var data = this.gatherEnvironment( responsedata, "Finanzas");
 			return this.switchView( 'finanzas', data, '.view', url, 'finanzas', false, false );
