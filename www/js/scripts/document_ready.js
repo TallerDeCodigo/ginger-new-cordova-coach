@@ -117,10 +117,8 @@ window.initializeEvents = function(){
 					var data_login		= app.getFormData(form);
 					var login_response 	= apiRH.loginNative(data_login);
 
-					console.log("RESPONSE ::: "+ JSON.stringify(login_response));
-
 					if(login_response){
-
+						apiRH.headers['X-ZUMO-AUTH'] = login_response;
 						var coachInfo = apiRH.getInfoCoach();
 						if(coachInfo){
 							var coachInfo 	= JSON.parse(localStorage.getItem('user'));

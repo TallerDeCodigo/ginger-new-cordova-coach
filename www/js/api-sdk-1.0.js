@@ -38,6 +38,7 @@ function requestHandlerAPI(){
 						'X-ZUMO-AUTH': window.localStorage.getItem('token'),
 						'Content-Type': 'application/json'
 					};
+					console.log(this.headers);
 
 	var context = this;
 	window.sdk_app_context = null;
@@ -106,7 +107,7 @@ function requestHandlerAPI(){
 			if(!token){
 				return false;
 			}
-			return true;
+			return this.token;
 		};
 
 		/**
@@ -857,13 +858,14 @@ function requestHandlerAPI(){
 		 */
 		this.getRequest = function(endpoint, data){
 			sdk_app_context.showLoader();
+			var myData = (!data) ? "" : JSON.stringify(data);
 			var result = {};
 		
 			$.ajax({
 			  type: 'GET',
 			  headers: this.headers,
 			  url: window.api_base_url + endpoint,
-			  data: JSON.stringify(data),
+			  data: myData,
 			  dataType: 'json',
 			  async: false
 			})
