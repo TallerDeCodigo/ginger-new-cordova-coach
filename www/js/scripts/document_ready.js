@@ -25,7 +25,7 @@ window.initializeEvents = function(){
 			if( $(this).data('resource') == "diet-list" )
 				return app.render_coach_dietas( $(this).attr('href') );
 			if( $(this).data('resource') == "finanzas" )
-				return app.render_finanzas( $(this).attr('href') );
+				return app.render_finanzas_view( $(this).attr('href') );
 			if( $(this).data('resource') == "profile" )
 				return app.render_myProfile( $(this).attr('href') );
 
@@ -145,45 +145,33 @@ window.initializeEvents = function(){
 			var totalAmount = 0;
 			var totalDays 	= 0;
 			
-			// $('.mes').html(meses[month]);
-			// app.render_finanzas("finanzas.html", month, day);
-			
-			//TOTALES
-			// $('.totalAcumulado').html(number_format(totalAmount,2));
-			// $('.total').html(totalDays);
-
-			//FECHAS DE INICIO
-			$('.inicio').html(pDay);
-			$('.final').html(day + ' de ' + meses[month] );
-
 			$('.btn-gre').click(function(){
 				console.log('Clicked upload receipt');
 				app.get_file_from_device('receipt', 'gallery');
 			});
 
-			$('.btn_right').click(function(){
-				month++;
+			$('.btn_right').click( function(){
 
-				
+				month++;
 				if(month > 11){
 					month = 0;
 				}
-				$('.mes').html(meses[month]);
 				console.log(meses[month] );
 
 				responsedata = apiRH.getFinanzas(month + 1);
+				console.log("Response right ::: "+JSON.stringify(responsedata));
 			});
 
-			$('.btn_left').click(function(){
+			$('.btn_left').click( function(){
+
 				month--;
 				if(month < 0){
 					month = 11;
 				}
-				$('.mes').html(meses[month]);
 				console.log(meses[month] );
 
 				responsedata = apiRH.getFinanzas(month + 1);
-
+				console.log("Response left ::: "+JSON.stringify(responsedata));
 			});
 			app.hideLoader();
 		}//	END HAS CLASS FINANZAS

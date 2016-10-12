@@ -398,9 +398,6 @@ new Swipe(document.getElementById('scroller'));
 var slider = new Swipe(document.getElementById('scroller'));
 
 
-
-
-
 /// ______THESE METHODS DON'T GO HERE______ ///
 
 	window.fetchCoachProfileInfo = function(){
@@ -421,7 +418,6 @@ var slider = new Swipe(document.getElementById('scroller'));
 		}
 
 		var separador = "";
-
 		for(var p = 0; p < _coach.personalidad.length; p++){
 
 			if(p == _coach.personalidad.length - 1){
@@ -432,7 +428,6 @@ var slider = new Swipe(document.getElementById('scroller'));
 			}
 			personalidadesConcat += catalogues.coach_type[p] + separador;
 		}
-
 		_object.stars.html = myhtml;
 		_object.personalidad_concat = personalidadesConcat;
 		return _object;

@@ -16,6 +16,7 @@
 
 			/* Initialize API request handler */
 			window.apiRH = new requestHandlerAPI().construct(app);
+			this.registerHelpers();
 			//console.log('token');
 			
 			var is_login 	= apiRH.has_token();
@@ -207,6 +208,7 @@
 			}
 		},
 		render_login : function(url){
+
 			window.is_home = false;
 			app.showLoader();
 			app.check_or_renderContainer();
@@ -215,6 +217,7 @@
 			return this.switchView('login', data, '.view', url, 'login');
 		},
 		render_home : function(url){
+
 			console.log("Render home");
 			window.is_home = true;
 			app.showLoader();
@@ -224,6 +227,7 @@
 			return this.switchView('home', data, '.view', url, 'home-menu');
 		},
 		render_user_list : function(url){
+
 			var responsedata = [];
 			window.is_home = false;
 			app.check_or_renderContainer();
@@ -236,6 +240,7 @@
 			return this.switchView('user-list', data, '.view', url, 'list-usuarios');
 		},
 		render_chat : function(url){
+
 			var responsedata = [];
 			window.is_home = false;
 			setTimeout(function(){
@@ -246,6 +251,7 @@
 			return this.switchView('chat-contacts', data, '.view', url, 'has-chat-list', true);
 		},
 		render_chat_dialog : function(url, dialogId){
+
 			var responsedata = [];
 			window.is_home = false;
 			setTimeout(function(){
@@ -258,6 +264,32 @@
 			return this.switchView('chat-dialog', data, '.view', url, 'list-chat dialog_detail '+dialogClass);
 		},
 		render_finanzas_view : function(url){
+
+			var responsedata = [];
+			responsedata.total_amount 	= 0;
+			responsedata.total_days 	= 0;
+			window.is_home 	= false;
+			var todayObj 	= new Date();
+			var month 		= todayObj.getMonth();
+			
+			setTimeout(function(){
+				app.showLoader();
+			}, 800);
+			app.check_or_renderContainer();
+			responsedata.clients 		= apiRH.getFinanzas( month );
+			responsedata.this_month 	= catalogues.months[month];
+			responsedata.this_day 		= todayObj.getDate();
+
+			responsedata.clients.forEach(function(client){
+				responsedata.total_amount 	+= Math.round(client.amount_this_month * 100) / 100;
+				responsedata.total_days 	+= client.days_this_month;
+				client.amount_this_month 	 = Math.round(client.amount_this_month * 100) / 100;
+			});
+			console.log(responsedata);
+			return this.switchView( 'finanzas', responsedata, '.view', url, 'finanzas' );
+		},
+		render_finanzas : function(url, month, day){
+
 			var responsedata = [];
 			window.is_home = false;
 			setTimeout(function(){
@@ -267,32 +299,8 @@
 			var data = this.gatherEnvironment(responsedata, 'Finanzas');
 			return this.switchView('finanzas', data, '.view', url, 'finanzas');
 		},
-		render_finanzas : function(url, month, day){
-			var responsedata = [];
-			window.is_home = false;
-			setTimeout(function(){
-				app.showLoader();
-			}, 800);
-
-			var meses 	= catalogues.months;
-
-			var hoy 	= new Date();
-			var month 	= hoy.getMonth();
-			var day 	= hoy.getDate();
-			var pDay 	= 1;
-			var totalAmount = 0;
-			var totalDays 	= 0;
-			var data = apiRH.getFinanzas( month );
-			console.log(data);
-			// app.render_finanzas("finanzas.html", month, day);
-
-			// console.log("finanzas");
-			// console.log(data);
-			// app.check_or_renderContainer();
-			// var data = this.gatherEnvironment( responsedata, 'Finanzas' );
-			// return this.switchView( 'finanzas', data, '.view', url, 'finanzas' );
-		},
 		render_coach_dietas : function(url){
+
 			var responsedata = [];
 			window.is_home = false;
 			setTimeout(function(){
@@ -358,10 +366,12 @@
 			}
 			return;
 		},
-		switchView: function(newTemplate, data, targetSelector, recordUrl, targetClass, keepLoader){
+		switchView: function(newTemplate, data, targetSelector, recordUrl, targetClass, keepLoader, leNiceTransition){
 			/* Push to history if url is supplied */
 			if(recordUrl) window.history.pushState(newTemplate, newTemplate, '/'+recordUrl);
 			
+			leNiceTransition = (typeof(leNiceTransition) != 'undefined') ? leNiceTransition : true;
+
 			var template = Handlebars.templates[newTemplate];
 			if(!template){
 				console.log("Template doesn't exist");
@@ -370,13 +380,22 @@
 			$(targetSelector).fadeOut('fast', function(){
 
 				if(targetClass) $(targetSelector).attr('class','view').addClass(targetClass);
-				$(targetSelector).html( template(data) ).css("opacity", 1)
-												 .css("display", "block")
-												 .css("margin-left", "20px")
-												 .animate(	{
-																'margin-left': "0",
+
+				if(!leNiceTransition){
+					$(targetSelector).html( template(data) ).css("opacity", 1)
+															.animate(	{
 																opacity: 1
-															}, 240);
+															}, 200);
+				}else{
+					$(targetSelector).html( template(data) ).css("opacity", 1)
+															 .css("display", "block")
+															 .css("margin-left", "20px")
+															 .animate(	{
+																			'margin-left': "0",
+																			opacity: 1
+																		}, 240);
+				}
+				
 			});
 
 			if(!keepLoader)
@@ -529,25 +548,25 @@
 
 		window.number_format = function(amount, decimals) {
 
-		    amount += ''; // por si pasan un numero en vez de un string
-		    amount = parseFloat(amount.replace(/[^0-9\.]/g, '')); // elimino cualquier cosa que no sea numero o punto
+			amount += ''; // por si pasan un numero en vez de un string
+			amount = parseFloat(amount.replace(/[^0-9\.]/g, '')); // elimino cualquier cosa que no sea numero o punto
 
-		    decimals = decimals || 0; // por si la variable no fue fue pasada
+			decimals = decimals || 0; // por si la variable no fue fue pasada
 
-		    // si no es un numero o es igual a cero retorno el mismo cero
-		    if (isNaN(amount) || amount === 0) 
-		        return parseFloat(0).toFixed(decimals);
+			// si no es un numero o es igual a cero retorno el mismo cero
+			if (isNaN(amount) || amount === 0) 
+				return parseFloat(0).toFixed(decimals);
 
-		    // si es mayor o menor que cero retorno el valor formateado como numero
-		    amount = '' + amount.toFixed(decimals);
+			// si es mayor o menor que cero retorno el valor formateado como numero
+			amount = '' + amount.toFixed(decimals);
 
-		    var amount_parts = amount.split('.'),
-		        regexp = /(\d+)(\d{3})/;
+			var amount_parts = amount.split('.'),
+				regexp = /(\d+)(\d{3})/;
 
-		    while (regexp.test(amount_parts[0]))
-		        amount_parts[0] = amount_parts[0].replace(regexp, '$1' + ',' + '$2');
+			while (regexp.test(amount_parts[0]))
+				amount_parts[0] = amount_parts[0].replace(regexp, '$1' + ',' + '$2');
 
-		    return amount_parts.join('.');
+			return amount_parts.join('.');
 		}
 
 		
