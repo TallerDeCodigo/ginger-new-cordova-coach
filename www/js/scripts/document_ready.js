@@ -126,7 +126,7 @@ window.initializeEvents = function(){
 						var coachInfo = apiRH.getInfoCoach();
 						if(coachInfo){
 							var coachInfo 	= JSON.parse( localStorage.getItem('user') );
-							window._coach = (coachInfo) ? coachInfo : null;
+							window._coach 	= (coachInfo) ? coachInfo : null;
 							return app.render_home();
 						}
 						

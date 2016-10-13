@@ -399,11 +399,10 @@
 
 				if(!leNiceTransition){
 
-					$(targetSelector).html( template(data) ).css("opacity", 1)
-															 .css("display", "block")
+					$(targetSelector).html( template(data) ).css({ "opacity": 0, "display": "block"})
 															 .animate(	{
 																opacity: 1
-															}, 360);
+															}, 640);
 				}else{
 
 					$(targetSelector).html( template(data) ).css("opacity", 1)
