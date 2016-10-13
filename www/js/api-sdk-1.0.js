@@ -38,7 +38,7 @@ function requestHandlerAPI(){
 						'X-ZUMO-AUTH': window.localStorage.getItem('token'),
 						'Content-Type': 'application/json'
 					};
-					console.log(this.headers);
+	console.log(this.headers);
 
 	var context = this;
 	window.sdk_app_context = null;
@@ -60,6 +60,7 @@ function requestHandlerAPI(){
 /***********************/
 /*** API sdk Methods ***/
 /***********************/
+		
 		/* 
 		 * Manage pseudo Log in process to use protected API calls
 		 * @param data_login JSON {user_login, user_password}

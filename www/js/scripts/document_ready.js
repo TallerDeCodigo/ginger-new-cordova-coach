@@ -100,14 +100,14 @@ window.initializeEvents = function(){
 			chatCore.init(_coach);
 
 		if($('#login_form').length){
-			console.log("Login length");
+
 			$('#login_form').validate({
 				rules:{
 					mail:{
-						required:true,
-						email:true
+						required : true,
+						email : true
 					},
-					pass:"required"
+					pass : "required"
 				},
 				messages:{
 					mail:{
@@ -116,7 +116,7 @@ window.initializeEvents = function(){
 					},
 					pass:"Este campo es requerido para acceder a tu cuenta"
 				},
-				submitHandler:function(form, event){
+				submitHandler:function( form, event ){
 					event.preventDefault();
 					var data_login		= app.getFormData(form);
 					var login_response 	= apiRH.loginNative(data_login);
@@ -125,7 +125,7 @@ window.initializeEvents = function(){
 						apiRH.headers['X-ZUMO-AUTH'] = login_response;
 						var coachInfo = apiRH.getInfoCoach();
 						if(coachInfo){
-							var coachInfo 	= JSON.parse(localStorage.getItem('user'));
+							var coachInfo 	= JSON.parse( localStorage.getItem('user') );
 							window._coach = (coachInfo) ? coachInfo : null;
 							return app.render_home();
 						}
