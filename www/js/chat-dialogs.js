@@ -188,7 +188,11 @@ function triggerDialog(dialogId){
   
   //console.log("Select a dialog with id: " + dialogId + ", name: " + dialogs[dialogId].name);
   // deselect
-
+  console.log("Hay que repetir la escena de Santos Protones Milhouse");
+  console.log(JSON.stringify(dialogId));
+  console.log(JSON.stringify(dialogs));
+  console.log(JSON.stringify(dialogs[dialogId]));
+  retrieveChatMessages(dialogs[dialogId], null);
   var kids = $('#dialogs-list').children();
   kids.removeClass('active').addClass('inactive');
 
@@ -206,9 +210,7 @@ function triggerDialog(dialogId){
 
   // load chat history
   //
-  console.log("Hay que repetir la escena de Santos Protones Milhouse");
-  console.log(dialogs[dialogId]);
-  retrieveChatMessages(dialogs[dialogId], null);
+ 
 
   // $('#messages-list').scrollTop($('#messages-list').prop('scrollHeight'));
   $('#mensaje-chat').focus();

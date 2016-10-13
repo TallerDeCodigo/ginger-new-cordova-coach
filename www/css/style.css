@@ -137,7 +137,7 @@ h4 {margin:10px 0px 12px;font-weight:700;font-size:130%;color:#333;}
 .openkeyboard .hwhite2{position: absolute!important;}
 .openkeyboard .escribir.foot-chat{position: absolute;}
 .openkeyboard #container{display: block; overflow: hidden;min-height: 0; }
-.openkeyboard #messages-list.content.list-group{position: absolute; bottom: 0; padding-bottom: 8rem; background-color: #e9ebee;}
+.openkeyboard #messages-list.content.list-group{width: 100%; position: absolute; bottom: 0; padding-bottom: 8rem; background-color: #e9ebee;}
 .openkeyboard .overscreen3.active{position: absolute;}
 
 	/*Scroll fix*/

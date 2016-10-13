@@ -233,10 +233,9 @@
 			app.check_or_renderContainer();
 			setTimeout(function(){
 				app.showLoader();
-			}, 1000);
+			}, 640);
 			responsedata.users = apiRH.getUsuarios();
 			var data = this.gatherEnvironment(responsedata, 'Usuarios');
-			console.log(data);
 			return this.switchView('user-list', data, '.view', url, 'list-usuarios');
 		},
 		render_chat : function(url){

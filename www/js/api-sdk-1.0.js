@@ -413,8 +413,7 @@ function requestHandlerAPI(){
 		this.getUsuarios = function(){
 
 			var response = this.getRequest('api/client_status?coachid=' + localStorage.getItem('userId'), null);
-			console.log("RESPONSE getUSuarios ::: "+response);
-
+			console.log("RESPONSE getUSuarios ::: "+JSON.stringify(response));
 			return (response) ? response : false;
 		};
 

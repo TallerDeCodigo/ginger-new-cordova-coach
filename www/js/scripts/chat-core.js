@@ -1,49 +1,97 @@
 
 /*** Attempt to get chat methods in to order ***/
-window.chatCore = [];
+	window.chatCore = [];
 
-chatCore.fetchDialogList = function(elCoach){
+	chatCore.isInitialized = false;
+	chatCore.token = null;
+
+	chatCore.init = function(elCoach){
+		console.log("Initilizing instant messaging api");
+		QB.createSession( { 	
+							email: elCoach.mail, 
+							password: elCoach.chatPassword
+						},  function(err, res) {
+
+								if (res) {
+									chatCore.token = res.token;
+									elCoach.id = res.user_id;
+									console.log("Are you even here?");
+									chatCore.isInitialized = true;
+									return res;
+								}
+			  			} );
+	};
+
+	chatCore.fetchUnreadCount = function(){
+
+		if(chatCore.isInitialized){
+			// mergeUsers([{user: elCoach}]);
+			QB.chat.dialog.list( null, function(err, resDialogs) {
+				if (err) {
+					console.log(err);
+				}
+
+				var occupantsIds = [];
+				var i = 0;
+				resDialogs.items.forEach(function(item, i, arr) {
+					var dialogId = item._id;
+					dialogs[dialogId] = item;
+					var user_id = item.user_id;
+					var unread_count = item.unread_messages_count;
+					console.log(item);
+					var $foundElement = $('*[data-chatId="'+user_id+'"]');
+					var exists_in_list = $foundElement.length;
+
+					$foundElement.addClass('active')
+									.data('chatid', dialogId)
+									.find('.mensajes')
+													 .text(unread_count)
+													 .on('click', function(e){
+														return app.render_chat_dialog(null, $(e.currentTarget).data('dialogid'));
+													});
+				});
+
+			});
+			return;
+		}
+		console.log("Not Initialized");
+	};
+
+	chatCore.fetchDialogList = function(){
 
 		console.log("Oh Captain my Captain");
-		QB.createSession({email: elCoach.mail, password: elCoach.chatPassword}, function(err, res) {
 
-			myCurrentUser = elCoach;
+		if(chatCore.isInitialized){
+			// mergeUsers([{user: elCoach}]);
+			QB.chat.dialog.list( null, function(err, resDialogs) {
+				if (err) {
+					console.log(err);
+				}
 
-			if (res) {
-				token = res.token;
-				myCurrentUser.id = res.user_id;
+				var occupantsIds = [];
+				var i = 0;
+				resDialogs.items.forEach(function(item, i, arr) {
+					var dialogId = item._id;
+					dialogs[dialogId] = item;
+					var user_id = item.user_id;
+					var unread_count = item.unread_messages_count;
+					console.log(item);
+					var $foundElement = $('*[data-chatId="'+user_id+'"]');
+					var exists_in_list = $foundElement.length;
 
-				mergeUsers([{user: myCurrentUser}]);
-
-				QB.chat.dialog.list(null, function(err, resDialogs) {
-					if (err) {
-						console.log(err);
-					} else {
-						var occupantsIds = [];
-						var i = 0;
-						resDialogs.items.forEach(function(item, i, arr) {
-							var dialogId = item._id;
-							dialogs[dialogId] = item;
-							var user_id = item.user_id;
-							var unread_count = item.unread_messages_count;
-							console.log(item);
-							var $foundElement = $('*[data-chatId="'+user_id+'"]');
-							var exists_in_list = $foundElement.length;
-
-							$foundElement.addClass('active')
-											.find('.mensajes')
-															 .text(unread_count)
-															 .on('click', function(e){
-																console.log($(e.currentTarget).data('dialogid'));
-																return app.render_chat_dialog(null, $(e.currentTarget).data('dialogid'));
-															});
-						});
-
-					}
+					$foundElement.addClass('active')
+									.find('.mensajes')
+													 .text(unread_count)
+													 .on('click', function(e){
+														console.log($(e.currentTarget).data('dialogid'));
+														return app.render_chat_dialog(null, $(e.currentTarget).data('dialogid'));
+													});
 				});
-			}
-		  });
-		
+
+			});
+			return;
+		}
+		console.log("Not Initialized");
 	};
 
 	/*** Populate dialog once screen has loaded ***/

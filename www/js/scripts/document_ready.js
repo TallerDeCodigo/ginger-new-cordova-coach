@@ -95,6 +95,10 @@ window.initializeEvents = function(){
 			$('.escribir').css('bottom', 0);
 		});
 
+		/*** Initializing chat api if not already did ***/
+		if(!chatCore.isInitialized)
+			chatCore.init(_coach);
+
 		if($('#login_form').length){
 			console.log("Login length");
 			$('#login_form').validate({
@@ -187,7 +191,7 @@ window.initializeEvents = function(){
 		if($('.view').hasClass('list-usuarios')) {
 			
 			/*** Start chat updating process ***/
-			chatCore.fetchDialogList(_coach);
+			chatCore.fetchUnreadCount(_coach);
 
 			$('.notificaciones').on('click', function(){
 				app.render_comingSoon('proximamente.html');
