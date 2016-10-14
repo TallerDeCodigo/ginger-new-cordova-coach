@@ -38,11 +38,11 @@
 					var user_id = item.user_id;
 					var unread_count = item.unread_messages_count;
 					console.log(item);
-					var $foundElement = $('*[data-chatId="'+user_id+'"]');
+					var $foundElement = $('*[data-chatid="'+user_id+'"]');
 					var exists_in_list = $foundElement.length;
 
 					$foundElement.addClass('active')
-									// .data('chatid', dialogId)
+									.data('chatid', dialogId)
 									.find('.mensajes')
 													 .text(unread_count)
 													 .on('click', function(e){

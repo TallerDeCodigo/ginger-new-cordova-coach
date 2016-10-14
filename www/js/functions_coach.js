@@ -1287,7 +1287,7 @@ $(window).load(function(){
 		
 
 		$('.usuario-item').click(function(e){
-			console.log($(e.target));
+			console.log( $(e.target) );
 			var json = $(this).data("key");
 
 			localStorage.setItem('user-selected', json);
