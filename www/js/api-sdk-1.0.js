@@ -86,7 +86,6 @@ function requestHandlerAPI(){
 				}
 			var response = this.makeRequest('api/login', req);
 
-			console.log(JSON.stringify(response));
 			if(response.Status == 'FAIL')
 				return false;
 
@@ -103,11 +102,9 @@ function requestHandlerAPI(){
 			var mail 	= localStorage.getItem('mail');
 			var token 	= localStorage.getItem('token');
 
-			console.log(" ID > > "+userId + " MAIL > > " + mail + " TOKEN > > " + this.token);
-
-			if(!token){
+			if(!token)
 				return false;
-			}
+			
 			return this.token;
 		};
 

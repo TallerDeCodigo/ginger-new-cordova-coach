@@ -96,7 +96,7 @@ window.initializeEvents = function(){
 		});
 
 		/*** Initializing chat api if not already did ***/
-		if(!chatCore.isInitialized)
+		if(!chatCore.isInitialized && loggedIn)
 			chatCore.init(_coach);
 
 		if($('#login_form').length){
