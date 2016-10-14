@@ -204,7 +204,7 @@ window.initializeEvents = function(){
 		if($('.view').hasClass('dialog_detail')) {
 			
 			if($('.view').hasClass('dialogLoad')){
-				console.log("Trigger");
+				console.log("Trigger load chat content");
 				if(!dialogNow)
 					console.log("Too bad for you");
 				triggerDialog(dialogNow);

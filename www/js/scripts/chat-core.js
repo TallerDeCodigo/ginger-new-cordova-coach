@@ -15,7 +15,6 @@
 								if (res) {
 									chatCore.token = res.token;
 									elCoach.id = res.user_id;
-									console.log("Are you even here?");
 									chatCore.isInitialized = true;
 									return res;
 								}
@@ -43,7 +42,7 @@
 					var exists_in_list = $foundElement.length;
 
 					$foundElement.addClass('active')
-									.data('chatid', dialogId)
+									// .data('chatid', dialogId)
 									.find('.mensajes')
 													 .text(unread_count)
 													 .on('click', function(e){
@@ -54,44 +53,41 @@
 			});
 			return;
 		}
-		console.log("Not Initialized");
+		return;
 	};
 
 	chatCore.fetchDialogList = function(){
 
-		console.log("Oh Captain my Captain");
-
 		if(chatCore.isInitialized){
 			// mergeUsers([{user: elCoach}]);
 			QB.chat.dialog.list( null, function(err, resDialogs) {
-				if (err) {
-					console.log(err);
-				}
-
 				var occupantsIds = [];
 				var i = 0;
-				resDialogs.items.forEach(function(item, i, arr) {
-					var dialogId = item._id;
-					dialogs[dialogId] = item;
-					var user_id = item.user_id;
-					var unread_count = item.unread_messages_count;
-					console.log(item);
-					var $foundElement = $('*[data-chatId="'+user_id+'"]');
-					var exists_in_list = $foundElement.length;
 
-					$foundElement.addClass('active')
-									.find('.mensajes')
-													 .text(unread_count)
-													 .on('click', function(e){
-														console.log($(e.currentTarget).data('dialogid'));
-														return app.render_chat_dialog(null, $(e.currentTarget).data('dialogid'));
-													});
+				if (err) 
+					return console.log(err);
+
+				if(resDialogs)
+					resDialogs.items.forEach(function(item, i, arr) {
+						var dialogId = item._id;
+						dialogs[dialogId] = item;
+						var user_id = item.user_id;
+						var unread_count = item.unread_messages_count;
+						var $foundElement = $('*[data-chatId="'+user_id+'"]');
+						var exists_in_list = $foundElement.length;
+
+						$foundElement.addClass('active')
+										.find('.mensajes')
+														 .text(unread_count)
+														 .on('click', function(e){
+															return app.render_chat_dialog(null, $(e.currentTarget).data('dialogid'));
+														});
 				});
 
 			});
 			return;
 		}
-		console.log("Not Initialized");
+		return;
 	};
 
 	/*** Populate dialog once screen has loaded ***/
@@ -132,7 +128,7 @@
 
 				currentDialog = createdDialog;
 
-				joinToNewDialogAndShow(createdDialog);    //create dialog es un itemDialog
+				joinToNewDialogAndShow(createdDialog);
 
 				notifyOccupants(createdDialog.occupants_ids, createdDialog._id, 1);
 

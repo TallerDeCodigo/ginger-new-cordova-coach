@@ -31,22 +31,23 @@ function requestHandlerAPI(){
 							version: this.device_platform_version
 						};
 
+	this.ls = window.localStorage;
 
 	/*** Request headers ***/
 	this.headers = 	{
 						'X-ZUMO-APPLICATION': 'ideIHnCMutWTPsKMBlWmGVtIPXROdc92',
-						'X-ZUMO-AUTH': window.localStorage.getItem('token'),
-						'Content-Type': 'application/json'
+						'X-ZUMO-AUTH'		: this.ls.getItem('token'),
+						'Content-Type'		: 'application/json'
 					};
+
 	console.log(this.headers);
 
 	var context = this;
 	window.sdk_app_context = null;
 
 	/*  Production API URL  */
-	window.api_base_url = "https://gingerservice.azure-mobile.net/";  //servicios ginger
+	window.api_base_url = "https://gingerservice.azure-mobile.net/";
 	
-	this.ls = window.localStorage;
 	
 	/* Constructor */
 	this.construct = function(app_context){
@@ -89,9 +90,7 @@ function requestHandlerAPI(){
 			if(response.Status == 'FAIL')
 				return false;
 
-			/*
-				GUARDA LOS DATOS DEL USUARIO EN LOCAL STORAGE 
-			*/
+			/* Save userInfo in localStorage */
 			localStorage.setItem('token', response.token);
 			localStorage.setItem('mail', response.mail);
 			localStorage.setItem('userId', response.userId);
@@ -104,7 +103,7 @@ function requestHandlerAPI(){
 
 			if(!token)
 				return false;
-			
+
 			return this.token;
 		};
 
@@ -322,7 +321,7 @@ function requestHandlerAPI(){
 		/**
 		 *
 		 * Platillos
- 		 *
+		 *
 		 **/
 
 		this.listDishes = function(publico){
@@ -337,7 +336,7 @@ function requestHandlerAPI(){
 		/**
 		 *
 		 * new dish
- 		 *
+		 *
 		 **/
 
 		this.newDish = function(data){
@@ -377,12 +376,12 @@ function requestHandlerAPI(){
 		/**
 		 *
 		 * SAVE INGREDIENTS
- 		 *
+		 *
 		 **/
 
 
 		 this.newIngredient = function(data){
-		 	var req = {
+			var req = {
 				method : 'post',
 				url : api_base_url + 'tables/ingrediente',	//definitr tabla
 				headers: {
@@ -392,13 +391,9 @@ function requestHandlerAPI(){
 				},
 				data : data
 			}
-			console.log(req);
-
 			var response = this.makeRequest('tables/ingrediente', req);
 
-			console.log("Request Data Ingredients");
-
-			console.log('API RESPONSE: ' + response);  //llega aqui con la respuesta del servidor
+			console.log('RESPONSE INGREDIENTS :::: ' + response);  //llega aqui con la respuesta del servidor
 
 			return (response) ? response : false;
 		 };
@@ -411,7 +406,6 @@ function requestHandlerAPI(){
 		this.getUsuarios = function(){
 
 			var response = this.getRequest('api/client_status?coachid=' + localStorage.getItem('userId'), null);
-			console.log("RESPONSE getUSuarios ::: "+JSON.stringify(response));
 			return (response) ? response : false;
 		};
 
@@ -853,16 +847,15 @@ function requestHandlerAPI(){
 			var result = {};
 		
 			$.ajax({
-			  type: 'GET',
-			  headers: this.headers,
-			  url: window.api_base_url + endpoint,
-			  data: myData,
-			  dataType: 'json',
-			  async: false
+				type: 'GET',
+				headers: this.headers,
+				url: window.api_base_url + endpoint,
+				data: myData,
+				dataType: 'json',
+				async: false
 			})
 			 .done(function(response){
 				result = response;
-				// sdk_app_context.hideLoader(response);
 			})
 			 .fail(function(e){
 				result = false;
@@ -919,11 +912,11 @@ function requestHandlerAPI(){
 							xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
 							xhr.onload = function() {
 								console.log(xhr.status);
-							    if (xhr.status === 200) {
-							        var userInfo = JSON.parse(xhr.responseText);
-							        console.log(userInfo);
-							        sdk_app_context.hideLoader();
-							    }
+								if (xhr.status === 200) {
+									var userInfo = JSON.parse(xhr.responseText);
+									console.log(userInfo);
+									sdk_app_context.hideLoader();
+								}
 							};
 							xhr.send(data);
 							/* ContentType is important to parse the data server side since PUT doesn't handle multipart form data */
@@ -978,7 +971,7 @@ function requestHandlerAPI(){
 		this.loginCallbackFB = function(response){
 									response.me()
 									 .done(function(response){
-									 	console.log(response);
+										console.log(response);
 										var email = response.email;
 										var username = response.lastname+"_"+response.id;
 										var found = apiRH.create_internal_user(username, email, {fbId: response.id, avatar: response.avatar, name: response.firstname, last_name: response.lastname}, window.localStorage.getItem('request_token'));
