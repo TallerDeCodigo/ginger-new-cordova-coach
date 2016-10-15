@@ -136,7 +136,7 @@ $(window).load(function(){
 		// }
 
 
-		if($('body').hasClass('has-user') ){
+		if($('.view').hasClass('has-user') ){
 
 			var item = apiRH.getUserId();
 			var user = item;
@@ -1285,15 +1285,13 @@ $(window).load(function(){
 			$(this).addClass('active');
 		});
 		
-
 		$('.usuario-item').click(function(e){
-			console.log( $(e.target) );
-			var json = $(this).data("key");
 
-			localStorage.setItem('user-selected', json);
-
+			var gingerId = $(this).data("gingerid");
+			console.log(gingerId);
+			localStorage.setItem('user-selected', gingerId);
 			if(!$(e.target).hasClass('mensajes notificaciones'))
-				window.location.assign('usuario.html');
+				return app.render_clientProfile( null, gingerId );
 			console.log("Not this reality");
 		});
 

@@ -6,10 +6,10 @@
 	</header>
 	<ul class="list-users">
 		{{# each data.users}}
-			<li class="usuario-item" data-key="{{@key}}" data-chatid="{{chatId}}">
+			<li class="usuario-item" data-key="{{@key}}" data-chatid="{{chatId}}" data-gingerid="{{_id}}">
 				<h2>{{nombre}} {{apellido}}</h2>
 				<a class='bubble notificaciones' >{{consumos}}</a>
-				<a id="chat_unread" class='bubble mensajes' data-dialogid="{{chatId}}">0</a>
+				<a class='bubble mensajes chat_unread' data-dialogid="{{chatId}}" >0</a>
 			</li>
 		{{/ each}}
 	</ul>

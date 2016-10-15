@@ -23,31 +23,36 @@
 
 	chatCore.fetchUnreadCount = function(){
 
+		console.log("Fetch unread");
 		if(chatCore.isInitialized){
 			// mergeUsers([{user: elCoach}]);
 			QB.chat.dialog.list( null, function(err, resDialogs) {
-				if (err) {
+				
+				if (err)
 					console.log(err);
-				}
 
 				var occupantsIds = [];
 				var i = 0;
 				resDialogs.items.forEach(function(item, i, arr) {
+
 					var dialogId = item._id;
 					dialogs[dialogId] = item;
 					var user_id = item.user_id;
 					var unread_count = item.unread_messages_count;
-					console.log(item);
 					var $foundElement = $('*[data-chatid="'+user_id+'"]');
 					var exists_in_list = $foundElement.length;
-
+					console.log(item);
 					$foundElement.addClass('active')
-									.data('chatid', dialogId)
-									.find('.mensajes')
-													 .text(unread_count)
-													 .on('click', function(e){
-														return app.render_chat_dialog(null, $(e.currentTarget).data('dialogid'));
-													});
+								  .data('chatid', dialogId);
+				
+					$foundElement.find('.mensajes')
+										 .text(unread_count)
+										 .on('click', function(e){
+										 	console.log($(e.currentTarget).data('dialogid'));
+											return app.render_chat_dialog(null, $(e.currentTarget).data('dialogid'));
+										 });
+					$foundElement.find('.chat_unread')
+								  .attr('data-dialogid', item._id);
 				});
 
 			});

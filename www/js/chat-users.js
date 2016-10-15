@@ -69,6 +69,8 @@ function mergeUsers(usersItems){
 
 function getUserLoginById(byId) {
 	var userLogin;
+  // console.log("List users");
+  // console.log(users);
 	if (users[byId]) {
 		userLogin = users[byId].login;
 		return userLogin;

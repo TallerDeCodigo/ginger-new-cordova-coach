@@ -1200,4 +1200,45 @@ function requestHandlerAPI(){
 			return;
 		};
 
+		
+		/**** More specific methods ****/
+
+		this.fetchCoachProfile = function(){
+
+			var count 	= 5;
+			var _object = { "stars": { "active": 0, "inactive": 0 }  };
+			var myhtml 	= "";
+			var star 	= Math.round(_coach.rating);
+			var personalidadesConcat = "";
+
+			for (var i = 0; i < star; i++){
+				_object.stars.active ++;
+				myhtml += "<img src='"+cordova_full_path+"images/starh.svg'>";
+			}
+			for (var x = 0; x < count - star; x++){
+				_object.stars.inactive ++;
+				myhtml += "<img src='"+cordova_full_path+"images/star.svg'>";
+			}
+
+			var separador = "";
+			for(var p = 0; p < _coach.personalidad.length; p++){
+
+				if(p == _coach.personalidad.length - 1){
+					separador = "";
+
+				}else{
+					separador = ", ";
+				}
+				personalidadesConcat += catalogues.coach_type[p] + separador;
+			}
+			_object.stars.html = myhtml;
+			_object.personalidad_concat = personalidadesConcat;
+			return _object;
+		};
+
+		this.fetchClientProfile = function(){
+			
+		};
+
+
 	}

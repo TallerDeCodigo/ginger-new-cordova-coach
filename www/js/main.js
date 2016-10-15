@@ -236,6 +236,7 @@
 			}, 640);
 			responsedata.users = apiRH.getUsuarios();
 			var data = this.gatherEnvironment(responsedata, 'Usuarios');
+			console.log(data);
 			return this.switchView('user-list', data, '.view', url, 'list-usuarios');
 		},
 		render_chat : function(url){
@@ -346,19 +347,34 @@
 				app.showLoader();
 			}, 800);
 			app.check_or_renderContainer();
-			var extra_data 	= window.fetchCoachProfileInfo();	
+			var extra_data 	= apiRH.fetchCoachProfile();	
 			var data 		= this.gatherEnvironment(extra_data, 'Mi Perfil');
 			console.log(data);
 			return this.switchView('coach', data, '.view', url, 'coach-profile');
+		},
+		render_clientProfile : function(url, clientId){
+
+			var extra_data = [];
+			window.is_home = false;
+			setTimeout(function(){
+				app.showLoader();
+			}, 800);
+			app.check_or_renderContainer();
+			var extra_data 	= apiRH.fetchClientProfile();	
+			var data 		= this.gatherEnvironment(extra_data, '');
+			console.log(data);
+			return this.switchView('user-profile', data, '.view', url, 'has-user');
 		},
 		render_comingSoon : function(url){
 
 			var extra_data = [];
 			window.is_home = false;
-			app.showLoader();
+			setTimeout(function(){
+				app.showLoader();
+			}, 800);
 			app.check_or_renderContainer();
-			var data = this.gatherEnvironment(extra_data, 'Próximamente');
-			return this.switchView('coming-soon', data, '.view', url, 'coming-soon');
+			var data = this.gatherEnvironment( extra_data, 'Próximamente' );
+			return this.switchView( 'coming-soon', data, '.view', url, 'coming-soon' );
 		},
 		get_file_from_device: function(destination, source){
 			apiRH.getFileFromDevice(destination, source);		

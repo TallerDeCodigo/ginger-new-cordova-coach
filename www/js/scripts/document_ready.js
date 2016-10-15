@@ -194,6 +194,7 @@ window.initializeEvents = function(){
 			chatCore.fetchUnreadCount(_coach);
 
 			$('.notificaciones').on('click', function(){
+				console.log("Notificaciones click");
 				app.render_comingSoon('proximamente.html');
 			});
 
