@@ -54,7 +54,7 @@
 					$foundElement.find('.chat_unread')
 								  .attr('data-dialogid', item._id);
 				});
-
+				app.hideLoader();
 			});
 			return;
 		}

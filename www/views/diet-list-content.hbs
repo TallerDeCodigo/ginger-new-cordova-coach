@@ -4,8 +4,12 @@
 				<h2>{{nombre}}</h2>
 				{{# descripcion}}<p>{{.}}</p>{{/ descripcion}}
 				<nav>
-					<a href="copiar-dieta.html"><img class="btn_copy" data="{{_id}}" src="{{../cordova_full_path}}images/copy.png"></a>
-					<a href="dieta.html"><img class="btn_edit" data="{{_id}}" src="{{../cordova_full_path}}images/edit.png"></a>
+					<a class="hook" data-resource="duplicate-diet" href="copiar-dieta.html">
+						<img class="btn_copy" data="{{_id}}" src="{{../cordova_full_path}}images/copy.png">
+					</a>
+					<a href="dieta.html">
+						<img class="btn_edit" data="{{_id}}" src="{{../cordova_full_path}}images/edit.png">
+					</a>
 					<a><img class="btn_delete" data="{{_id}}" src="{{../cordova_full_path}}images/delete.png"></a>
 				</nav>
 			</li>

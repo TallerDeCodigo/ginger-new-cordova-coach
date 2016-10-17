@@ -34,6 +34,8 @@ window.initializeEvents = function(){
 
 			if( $(this).data('resource') == "create-diet" )
 				return app.render_create_diet($(this).attr('href'));
+			if( $(this).data('resource') == "duplicate-diet" )
+				return app.render_duplicate_diet($(this).attr('href'));
 			
 
 			e.stopPropagation();
@@ -352,7 +354,7 @@ window.initializeEvents = function(){
 
 			app.render_template("diet-list-content", ".insert_content", responsedata);
 			var diet = responsedata;
-
+			initializeEvents();
 			$.each(diet, function( key, value ) {
 								
 				var nombre = 'no-name';

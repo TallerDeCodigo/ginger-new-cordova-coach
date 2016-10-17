@@ -848,7 +848,7 @@ function requestHandlerAPI(){
 		
 			$.ajax({
 				type: 'GET',
-				headers: this.headers,
+				headers: apiRH.headers,
 				url: window.api_base_url + endpoint,
 				data: myData,
 				dataType: 'json',

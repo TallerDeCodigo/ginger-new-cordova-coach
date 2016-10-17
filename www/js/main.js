@@ -153,7 +153,7 @@
 
 			try{
 				app.initPushNotifications();
-				apiRH.postNotification("", "Just kidding", "lol again", "Final long and winding lorem ipsum");
+				// apiRH.postNotification("", "Just kidding", "lol again", "Final long and winding lorem ipsum");
 			}
 			catch(err){
 				app.toast("Push notifications error: "+JSON.stringify(err));
@@ -375,6 +375,9 @@
 			var data = this.gatherEnvironment(responsedata, 'Dietas');
 			console.log(data);
 			return this.switchView('create-diet', data, '.view', url, 'create-new-diet');
+		},
+		render_duplicate_diet : function(url){
+
 		},
 		render_myProfile : function(url){
 
