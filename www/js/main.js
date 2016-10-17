@@ -61,6 +61,17 @@
 			}
 
 		},
+		initPushNotifications: function() {
+			console.log("Initilizing push notifications service");
+			var notificationOpenedCallback = function(jsonData) {
+				console.log('notificationOpenedCallback: ' + JSON.stringify(jsonData));
+			};
+
+			window.plugins.OneSignal
+									.startInit("d4e8ad62-1f9d-45f8-8905-3d152b7c1b7d")
+									.handleNotificationOpened(notificationOpenedCallback)
+									.endInit();
+		},
 		registerCompiledPartials: function() {
 			console.log("Register pre compiled partials");
 			/* Add files to be loaded here */
