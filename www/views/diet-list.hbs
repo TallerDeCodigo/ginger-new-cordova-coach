@@ -6,19 +6,9 @@
 			<h2 class="titulo">{{header_title}}</h2>
 		</div>
 	</header>
-	<ul class="list-diet">
-		{{# each data}}
-			<li class="elemento-dieta" data="{{_id}}">
-				<h2>{{nombre}}</h2>
-				{{# descripcion}}<p>{{.}}</p>{{/ descripcion}}
-				<nav>
-					<a href="copiar-dieta.html"><img class="btn_copy" data="{{_id}}" src="{{../cordova_full_path}}images/copy.png"></a>
-					<a href="dieta.html"><img class="btn_edit" data="{{_id}}" src="{{../cordova_full_path}}images/edit.png"></a>
-					<a><img class="btn_delete" data="{{_id}}" src="{{../cordova_full_path}}images/delete.png"></a>
-				</nav>
-			</li>
-		{{/ each}}
-	</ul>
+	<div class="insert_content">
+		
+	</div>
 
 	<a class="btn-gre hook create-diet" data-resource="create-diet" href="crear-dieta.html">Crear Dieta</a>
 	<div class="overscreen4" style="display:none">

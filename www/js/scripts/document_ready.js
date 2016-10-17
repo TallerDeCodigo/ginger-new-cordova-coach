@@ -203,6 +203,8 @@ window.initializeEvents = function(){
 							app.render_comingSoon('proximamente.html');
 					});
 
+					/*** Start chat updating process ***/
+					return chatCore.fetchUnreadCount(_coach);
 				}
 
 			
@@ -344,9 +346,12 @@ window.initializeEvents = function(){
 		if( $('.view').hasClass('diet-list') ){
 	
 			//Request to Service
-			var responsedata = apiRH.getDiets();
-			var diet = responsedata;
+			var responsedata = [];
+				responsedata.diets = apiRH.getDiets();
 			var i = 0;
+
+			app.render_template("diet-list-content", ".insert_content", responsedata);
+			var diet = responsedata;
 
 			$.each(diet, function( key, value ) {
 								

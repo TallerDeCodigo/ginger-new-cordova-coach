@@ -237,8 +237,6 @@
 			var data = this.gatherEnvironment(otherdata);
 			data.is_scrollable = false;
 			$(targetSelector).append(template(data));
-			/*** Start chat updating process ***/
-			return chatCore.fetchUnreadCount(_coach);
 		},
 		render_login : function(url){
 
@@ -343,6 +341,17 @@
 			return this.switchView( 'finanzas', data, '.view', url, 'finanzas', false, false );
 		},
 		render_coach_dietas : function(url){
+
+			var responsedata = [];
+			window.is_home = false;
+			setTimeout(function(){
+				app.showLoader();
+			}, 800);
+			app.check_or_renderContainer();
+			var data = this.gatherEnvironment(responsedata, 'Dietas');
+			return this.switchView('diet-list', data, '.view', url, 'diet-list');
+		},
+		render_dietas_content : function(url){
 
 			var responsedata = [];
 			window.is_home = false;
