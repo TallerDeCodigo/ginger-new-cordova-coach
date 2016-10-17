@@ -20,8 +20,10 @@ window.initializeEvents = function(){
 				return app.render_home( $(this).attr('href') );
 			if( $(this).data('resource') == "chat-contacts" )
 				return app.render_chat( $(this).attr('href') );
-			if( $(this).data('resource') == "user-list" )
+			if( $(this).data('resource') == "user-list" ){
+				console.log("User list");
 				return app.render_user_list( $(this).attr('href') );
+			}
 			if( $(this).data('resource') == "diet-list" )
 				return app.render_coach_dietas( $(this).attr('href') );
 			if( $(this).data('resource') == "finanzas" )
@@ -194,7 +196,6 @@ window.initializeEvents = function(){
 			chatCore.fetchUnreadCount(_coach);
 
 			$('.notificaciones').on('click', function(){
-				console.log("Notificaciones click");
 				app.render_comingSoon('proximamente.html');
 			});
 

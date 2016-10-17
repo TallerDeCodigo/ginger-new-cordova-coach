@@ -1201,7 +1201,7 @@ function requestHandlerAPI(){
 		};
 
 		
-		/**** More specific methods ****/
+	/**** More specific methods ****/
 
 		this.fetchCoachProfile = function(){
 
@@ -1236,8 +1236,9 @@ function requestHandlerAPI(){
 			return _object;
 		};
 
-		this.fetchClientProfile = function(){
-			
+		this.fetchClientProfile = function(clientId){
+			console.log("Fetch client profile");
+			var result = apiRH.getRequest("tables/cliente?_id="+clientId);
 		};
 
 

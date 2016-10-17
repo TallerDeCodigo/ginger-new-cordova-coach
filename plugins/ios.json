@@ -43,6 +43,9 @@
         "phonegap-plugin-push": {
             "SENDER_ID": "XXXXXXX",
             "PACKAGE_NAME": "com.ginger.coach"
+        },
+        "onesignal-cordova-plugin": {
+            "PACKAGE_NAME": "com.ginger.coach"
         }
     },
     "dependent_plugins": {

@@ -360,7 +360,7 @@
 				app.showLoader();
 			}, 800);
 			app.check_or_renderContainer();
-			var extra_data 	= apiRH.fetchClientProfile();	
+			var extra_data 	= apiRH.fetchClientProfile(clientId);	
 			var data 		= this.gatherEnvironment(extra_data, '');
 			console.log(data);
 			return this.switchView('user-profile', data, '.view', url, 'has-user');
