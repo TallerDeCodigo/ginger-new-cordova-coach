@@ -150,6 +150,14 @@
 				app.toast("Oauth error ocurred");
 				console.log('OAuth initialize error: ' + err);
 			}
+
+			try{
+				app.initPushNotifications();
+			}
+			catch(err){
+				app.toast("Push notifications error: "+JSON.stringify(err));
+			}
+
 			var backButtonElement = document.getElementById("backBtn");
 			if(backButtonElement)
 				backButtonElement.addEventListener("click", app.onBackButton, false);
