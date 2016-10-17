@@ -190,15 +190,22 @@ window.initializeEvents = function(){
 
 
 		/* User List */
-		if($('.view').hasClass('list-usuarios')) {
+		if( $('.view').hasClass('list-usuarios') ) {
+			app.showLoader();
+			var response = [];
+				response.users = apiRH.getUsuarios();
+				console.log(response);
+				if(typeof(response.users) != 'undefined'){
+					// Render template with new information
+					app.render_template("user-list-content", ".insert_content", response);
+
+					$('.notificaciones').on('click', function(){
+							app.render_comingSoon('proximamente.html');
+					});
+
+				}
+
 			
-			/*** Start chat updating process ***/
-			chatCore.fetchUnreadCount(_coach);
-
-			$('.notificaciones').on('click', function(){
-				app.render_comingSoon('proximamente.html');
-			});
-
 		}
 		
 

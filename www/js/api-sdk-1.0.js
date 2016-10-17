@@ -1240,6 +1240,24 @@ function requestHandlerAPI(){
 			console.log("Fetch client profile");
 			var result = apiRH.getRequest("tables/cliente?_id="+clientId);
 		};
+	
+		this.postNotification = function(userId, title, subtitle, content){
+			
+			console.log("Posting a notification");
+			window.plugins.OneSignal.getIds(function(ids) {
+			  	var notificationObj = { contents: {en: "message body"},
+			                          include_player_ids: [ids.userId]};
+				window.plugins.OneSignal.postNotification(notificationObj,
+				    function(successResponse) {
+				      console.log("Notification Post Success:", successResponse);
+				    },
+				    function (failedResponse) {
+				      console.log("Notification Post Failed: ", failedResponse);
+				      alert("Notification Post Failed:\n" + JSON.stringify(failedResponse));
+				    }
+				);
+			});
+		};
 
 
 	}

@@ -41,7 +41,7 @@
 					var unread_count = item.unread_messages_count;
 					var $foundElement = $('*[data-chatid="'+user_id+'"]');
 					var exists_in_list = $foundElement.length;
-					console.log(item);
+
 					$foundElement.addClass('active')
 								  .data('chatid', dialogId);
 				

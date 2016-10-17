@@ -153,6 +153,7 @@
 
 			try{
 				app.initPushNotifications();
+				apiRH.postNotification("", "Just kidding", "lol again", "Final long and winding lorem ipsum");
 			}
 			catch(err){
 				app.toast("Push notifications error: "+JSON.stringify(err));
@@ -226,6 +227,19 @@
 				$('.rootContainer').html( html );
 			}
 		},
+		render_template : function(templateName, targetSelector, otherdata){
+			window.is_home = false;
+			var template = Handlebars.templates[templateName];
+			if(!template){
+				console.log("Template doesn't exist");
+				return false;
+			}
+			var data = this.gatherEnvironment(otherdata);
+			data.is_scrollable = false;
+			$(targetSelector).append(template(data));
+			/*** Start chat updating process ***/
+			return chatCore.fetchUnreadCount(_coach);
+		},
 		render_login : function(url){
 
 			window.is_home = false;
@@ -250,12 +264,7 @@
 			var responsedata = [];
 			window.is_home = false;
 			app.check_or_renderContainer();
-			setTimeout(function(){
-				app.showLoader();
-			}, 640);
-			responsedata.users = apiRH.getUsuarios();
 			var data = this.gatherEnvironment(responsedata, 'Usuarios');
-			console.log(data);
 			return this.switchView('user-list', data, '.view', url, 'list-usuarios');
 		},
 		render_chat : function(url){
