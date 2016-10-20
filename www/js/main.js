@@ -42,7 +42,7 @@
 			window.catalogues.tipo_de_ingredientes 	= [ 'granosycereales', 'verduras', 'grasas', 'lacteos', 'proteinaanimal', 'leguminosas', 'nuecesysemillas', 'frutas', 'endulzantes', 'aderezosycondimentos', 'superfoods', 'liquidos'];
 
 			window.loggedIn = false;
-			this.ls 		= window.localStorage;
+			this.keeper 	= window.localStorage;
 	
 			/* Check if has a valid token */
 			if(is_login){
@@ -56,7 +56,6 @@
 					return app.render_home();
 				}
 			}else{
-				console.log("RenderLogin ::: ");
 				return app.render_login();
 			}
 
@@ -181,7 +180,7 @@
 		},
 		gatherEnvironment: function(optional_data, history_title) {
 			/* Gather environment information */
-			var meInfo 	= app.keeper.getItem('user');
+			var meInfo 	= this.keeper.getItem('user');
 			var parsed 	= {me: JSON.parse(meInfo)};
 			
 			if(optional_data){
