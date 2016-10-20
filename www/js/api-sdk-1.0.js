@@ -1,9 +1,9 @@
 /*
- *	Search for localStorage support
+ *	Search for app.keeper support
  *
  */
 
-if (localStorage) {
+if (app.keeper) {
 	//console.log("Local storage supported");
 } else {
   //console.log("Local storage not supported");
@@ -31,37 +31,36 @@ function requestHandlerAPI(){
 							version: this.device_platform_version
 						};
 
-	this.ls = window.localStorage;
+	this.keeper = window.localStorage;
 
 	/*** Request headers ***/
 	this.headers = 	{
 						'X-ZUMO-APPLICATION': 'ideIHnCMutWTPsKMBlWmGVtIPXROdc92',
-						'X-ZUMO-AUTH'		: this.ls.getItem('token'),
+						'X-ZUMO-AUTH'		: this.keeper.getItem('token'),
 						'Content-Type'		: 'application/json'
 					};
 
-	console.log(this.headers);
-
 	var context = this;
-	window.sdk_app_context = null;
 
 	/*  Production API URL  */
 	window.api_base_url = "https://gingerservice.azure-mobile.net/";
-	
-	
+
+	window.sdk_app_context = null;
+
 	/* Constructor */
 	this.construct = function(app_context){
 					//console.log('Initialized ginger api-sdk1.0');
-					if(this.ls.getItem('request_token')) this.token = this.ls.getItem('request_token');
+					if(this.keeper.getItem('request_token')) this.token = this.keeper.getItem('request_token');
 					sdk_app_context = app_context;
 					/* For chaining purposes ::) */
 					return this;
 				};
-				
+
+	
 /***********************/
 /*** API sdk Methods ***/
 /***********************/
-		
+
 		/* 
 		 * Manage pseudo Log in process to use protected API calls
 		 * @param data_login JSON {user_login, user_password}
@@ -90,16 +89,16 @@ function requestHandlerAPI(){
 			if(response.Status == 'FAIL')
 				return false;
 
-			/* Save userInfo in localStorage */
-			localStorage.setItem('token', response.token);
-			localStorage.setItem('mail', response.mail);
-			localStorage.setItem('userId', response.userId);
+			/* Save userInfo in app.keeper */
+			app.keeper.setItem('token', response.token);
+			app.keeper.setItem('mail', response.mail);
+			app.keeper.setItem('userId', response.userId);
 
 			this.token = response.token;
 
-			var userId 	= localStorage.getItem('userId');
-			var mail 	= localStorage.getItem('mail');
-			var token 	= localStorage.getItem('token');
+			var userId 	= app.keeper.getItem('userId');
+			var mail 	= app.keeper.getItem('mail');
+			var token 	= app.keeper.getItem('token');
 
 			if(!token)
 				return false;
@@ -113,7 +112,7 @@ function requestHandlerAPI(){
 		 */
 		this.getDiets = function(){
 
-			var response = this.getRequest('tables/dieta/?coach=' + localStorage.getItem('userId'), null);
+			var response = this.getRequest('tables/dieta/?coach=' + app.keeper.getItem('userId'), null);
 			console.log("RESPONSE DIET ::: "+JSON.stringify(response));
 			// TODO: Check this out
 			setTimeout(function(){
@@ -137,7 +136,7 @@ function requestHandlerAPI(){
 				url : api_base_url + 'tables/dieta/',
 				headers: {
 					'X-ZUMO-APPLICATION': 'ideIHnCMutWTPsKMBlWmGVtIPXROdc92',
-					'X-ZUMO-AUTH': localStorage.getItem('token'),
+					'X-ZUMO-AUTH': app.keeper.getItem('token'),
 					'Content-Type': 'application/json'
 				},
 				data : data
@@ -163,7 +162,7 @@ function requestHandlerAPI(){
 				url : api_base_url + 'tables/dieta/' + diet,
 				headers: {
 					'X-ZUMO-APPLICATION': 'ideIHnCMutWTPsKMBlWmGVtIPXROdc92',
-					'X-ZUMO-AUTH': localStorage.getItem('token'),
+					'X-ZUMO-AUTH': app.keeper.getItem('token'),
 					'Content-Type': 'application/json'
 				}
 			}
@@ -188,7 +187,7 @@ function requestHandlerAPI(){
 				url : api_base_url + 'tables/dieta/' + diet,
 				headers: {
 					'X-ZUMO-APPLICATION': 'ideIHnCMutWTPsKMBlWmGVtIPXROdc92',
-					'X-ZUMO-AUTH': localStorage.getItem('token'),
+					'X-ZUMO-AUTH': app.keeper.getItem('token'),
 					'Content-Type': 'application/json'
 				}
 			}
@@ -212,7 +211,7 @@ function requestHandlerAPI(){
 				url : api_base_url + 'api/duplicate',
 				headers: {
 					'X-ZUMO-APPLICATION': 'ideIHnCMutWTPsKMBlWmGVtIPXROdc92',
-					'X-ZUMO-AUTH': localStorage.getItem('token'),
+					'X-ZUMO-AUTH': app.keeper.getItem('token'),
 					'Content-Type': 'application/json'
 				},
 				data: data
@@ -242,7 +241,7 @@ function requestHandlerAPI(){
 				url : api_base_url + 'api/create',   //ESTO NO ES CORRECTO
 				headers: {
 					'X-ZUMO-APPLICATION': 'ideIHnCMutWTPsKMBlWmGVtIPXROdc92',
-					'X-ZUMO-AUTH': localStorage.getItem('token'),
+					'X-ZUMO-AUTH': app.keeper.getItem('token'),
 					'Content-Type': 'application/json'
 				},
 				data: data
@@ -265,7 +264,7 @@ function requestHandlerAPI(){
 				url : api_base_url + 'tables/dieta/',   //ESTO NO ES CORRECTO
 				headers: {
 					'X-ZUMO-APPLICATION': 'ideIHnCMutWTPsKMBlWmGVtIPXROdc92',
-					'X-ZUMO-AUTH': localStorage.getItem('token'),
+					'X-ZUMO-AUTH': app.keeper.getItem('token'),
 					'Content-Type': 'application/json'
 				},
 				data: JSON.parse(data)
@@ -299,7 +298,7 @@ function requestHandlerAPI(){
 				url : api_base_url + 'tables/dieta/'+ JSON.parse(data)._id,   //ESTO NO ES CORRECTO
 				headers: {
 					'X-ZUMO-APPLICATION': 'ideIHnCMutWTPsKMBlWmGVtIPXROdc92',
-					'X-ZUMO-AUTH': localStorage.getItem('token'),
+					'X-ZUMO-AUTH': app.keeper.getItem('token'),
 					'Content-Type': 'application/json'
 				},
 				data: data
@@ -326,7 +325,7 @@ function requestHandlerAPI(){
 
 		this.listDishes = function(publico){
 
-			var response = this.getRequest('tables/plato?coach=' + localStorage.getItem('userId') + '&publico=' + publico , null);
+			var response = this.getRequest('tables/plato?coach=' + app.keeper.getItem('userId') + '&publico=' + publico , null);
 			console.log("Request Data Dishes"+ JSON.stringify(response));
 
 			return (response) ? response : false;
@@ -345,7 +344,7 @@ function requestHandlerAPI(){
 				url : api_base_url + 'tables/plato',	//definitr tabla
 				headers: {
 					'X-ZUMO-APPLICATION': 'ideIHnCMutWTPsKMBlWmGVtIPXROdc92',
-					'X-ZUMO-AUTH': localStorage.getItem('token'),
+					'X-ZUMO-AUTH': app.keeper.getItem('token'),
 					'Content-Type': 'application/json'
 				},
 				data : data
@@ -386,7 +385,7 @@ function requestHandlerAPI(){
 				url : api_base_url + 'tables/ingrediente',	//definitr tabla
 				headers: {
 					'X-ZUMO-APPLICATION': 'ideIHnCMutWTPsKMBlWmGVtIPXROdc92',
-					'X-ZUMO-AUTH': localStorage.getItem('token'),
+					'X-ZUMO-AUTH': app.keeper.getItem('token'),
 					'Content-Type': 'application/json'
 				},
 				data : data
@@ -405,7 +404,7 @@ function requestHandlerAPI(){
 		 */
 		this.getUsuarios = function(){
 
-			var response = this.getRequest('api/client_status?coachid=' + localStorage.getItem('userId'), null);
+			var response = this.getRequest('api/client_status?coachid=' + app.keeper.getItem('userId'), null);
 			return (response) ? response : false;
 		};
 
@@ -422,7 +421,7 @@ function requestHandlerAPI(){
 				url : api_base_url + 'tables/cliente/'+client_id,
 				headers: {
 					'X-ZUMO-APPLICATION': 'ideIHnCMutWTPsKMBlWmGVtIPXROdc92',
-					'X-ZUMO-AUTH': localStorage.getItem('token'),
+					'X-ZUMO-AUTH': app.keeper.getItem('token'),
 					'Content-Type': 'application/json'
 				},
 				data : data
@@ -432,21 +431,21 @@ function requestHandlerAPI(){
 
 			console.log('Response Update Client Diet: ' + JSON.stringify(response));  //llega aqui con la respuesta del servidor
 
-			localStorage.setItem('user-selected', JSON.stringify(response));
+			app.keeper.setItem('user-selected', JSON.stringify(response));
 
 			return (response) ? response : false;
 		};
 
 		this.getFinanzas = function(mes){
 
-			var response = this.getRequest('api/history/?coach=' + localStorage.getItem('userId') + '&mes=' + mes, null);
+			var response = this.getRequest('api/history/?coach=' + app.keeper.getItem('userId') + '&mes=' + mes, null);
 			console.log("Response Finanzas ::: "+JSON.stringify(response));
 			return (response) ? response : false;
 		};
 
 		this.getInfoCoach = function(){
 			
-			var response = this.getRequest('tables/coach?_id=' + localStorage.getItem('userId'), null);
+			var response = this.getRequest('tables/coach?_id=' + app.keeper.getItem('userId'), null);
 			this.save_user_data_clientside(JSON.stringify(response));
 			return (response) ? true : false;
 		};
@@ -454,10 +453,10 @@ function requestHandlerAPI(){
 		this.updatePerfil = function(data){
 			var req = {
 				method : 'PATCH',
-				url : api_base_url + 'tables/cliente/' + localStorage.getItem('userId') ,
+				url : api_base_url + 'tables/cliente/' + app.keeper.getItem('userId') ,
 				headers: {
 					'X-ZUMO-APPLICATION': 'ideIHnCMutWTPsKMBlWmGVtIPXROdc92',
-					'X-ZUMO-AUTH': localStorage.getItem('token'),
+					'X-ZUMO-AUTH': app.keeper.getItem('token'),
 					'Content-Type': 'application/json'
 				},
 				data : data
@@ -466,7 +465,7 @@ function requestHandlerAPI(){
 
 			console.log(JSON.stringify(req));
 
-			var response = this.makePatchRequest('tables/cliente/' + localStorage.getItem('userId'), req);
+			var response = this.makePatchRequest('tables/cliente/' + app.keeper.getItem('userId'), req);
 
 			console.log("Request Path Data Cliente");
 
@@ -488,11 +487,11 @@ function requestHandlerAPI(){
 				url : api_base_url + 'api/history/',	//definitr tabla
 				headers: {
 					'X-ZUMO-APPLICATION': 'ideIHnCMutWTPsKMBlWmGVtIPXROdc92',
-					'X-ZUMO-AUTH': localStorage.getItem('token'),
+					'X-ZUMO-AUTH': app.keeper.getItem('token'),
 					'Content-Type': 'application/json'
 				},
 				data : {
-					'cliente' : localStorage.getItem('userId'),
+					'cliente' : app.keeper.getItem('userId'),
 					'card_token' : token
 				}
 			}
@@ -581,7 +580,7 @@ function requestHandlerAPI(){
 
 		this.getUserId = function(){
 
-			var users = JSON.parse(localStorage.getItem('user-selected'));
+			var users = JSON.parse(app.keeper.getItem('user-selected'));
 			var response = this.getRequest('tables/cliente?_id=' + users._id, req);
 			console.log("Response Data Clientes ::: "+response);
 
@@ -595,7 +594,7 @@ function requestHandlerAPI(){
 		 */
 		this.save_user_data_clientside = function(data){
 
-			localStorage.setItem('user', data);
+			app.keeper.setItem('user', data);
 		};
 		/* 
 		 * Request new passive token from the API 
@@ -606,7 +605,7 @@ function requestHandlerAPI(){
 								/* Verify we got a nice token */
 								if( response_data.success !== false){
 									this.token = response_data.data.request_token;
-									this.ls.setItem('request_token', response_data.data.request_token);
+									this.keeper.setItem('request_token', response_data.data.request_token);
 									return this;
 								}
 								return this;
@@ -635,10 +634,10 @@ function requestHandlerAPI(){
 		/* 
 		 * Check if the Request object has a token
 		 * @return stored token, false if no token is stored
-		 * @see localStorage
+		 * @see app.keeper
 		 */
 		this.has_token = function(){
-							return (typeof this.token != 'undefined' || this.token !== '') ? localStorage.getItem('token') : false;
+							return (typeof this.token != 'undefined' || this.token !== '') ? app.keeper.getItem('token') : false;
 						};
 		/* 
 		 * Check if the Request object has a valid token
@@ -648,7 +647,7 @@ function requestHandlerAPI(){
 							if(this.token !== undefined || this.token !== ''){
 
 								console.log("Looks like you already have a token, let's check if it is valid");
-								var dedalo_log_info = (typeof this.ls.getItem('dedalo_log_info') != undefined) ? JSON.parse(this.ls.getItem('dedalo_log_info')) : null;
+								var dedalo_log_info = (typeof this.keeper.getItem('dedalo_log_info') != undefined) ? JSON.parse(this.keeper.getItem('dedalo_log_info')) : null;
 								if(!dedalo_log_info) return false;
 
 									var user 		= dedalo_log_info.user_id;
@@ -819,7 +818,6 @@ function requestHandlerAPI(){
 			  url: window.api_base_url+endpoint,
 			  data: JSON.stringify(data.data),
 			  dataType: 'json',
-			  async: false
 			})
 			 .done(function(response){
 				result = response;
@@ -852,7 +850,6 @@ function requestHandlerAPI(){
 				url: window.api_base_url + endpoint,
 				data: myData,
 				dataType: 'json',
-				async: false
 			})
 			 .done(function(response){
 				result = response;
@@ -951,7 +948,7 @@ function requestHandlerAPI(){
 										console.log(response);
 										var email = response.email;
 										var username = response.lastname+"_"+response.id;
-										var found = apiRH.create_internal_user(username, email, {gpId: response.id, avatar: response.avatar, name: response.firstname, last_name: response.lastname}, window.localStorage.getItem('request_token'));
+										var found = apiRH.create_internal_user(username, email, {gpId: response.id, avatar: response.avatar, name: response.firstname, last_name: response.lastname}, window.app.keeper.getItem('request_token'));
 										/* End handshake with server by validating token and getting 'me' data */
 										context.endHandshake(username);
 
@@ -974,7 +971,7 @@ function requestHandlerAPI(){
 										console.log(response);
 										var email = response.email;
 										var username = response.lastname+"_"+response.id;
-										var found = apiRH.create_internal_user(username, email, {fbId: response.id, avatar: response.avatar, name: response.firstname, last_name: response.lastname}, window.localStorage.getItem('request_token'));
+										var found = apiRH.create_internal_user(username, email, {fbId: response.id, avatar: response.avatar, name: response.firstname, last_name: response.lastname}, window.app.keeper.getItem('request_token'));
 										/* End handshake with server by validating token and getting 'me' data */
 										context.endHandshake(username);
 

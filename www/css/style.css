@@ -219,6 +219,9 @@ h4 {margin:10px 0px 12px;font-weight:700;font-size:130%;color:#333;}
 
 #enviar_login{background:url(../images/enter.svg);background-position:center;background-repeat:no-repeat;outline:none;margin-top:30px;}
 
+/*General Form*/
+form label.error{ display: block; text-align: left; margin-left: 2.5rem; color: rgba(189, 12, 12, 0.8); }
+
 /* CHAT */
 .foot-chat {position:fixed;background:#f5f1f0;width:100%;bottom:0px;padding:6px 70px 2px 40px;border-top:1px solid #CCC;}
 .foot-chat a {position:absolute;}
