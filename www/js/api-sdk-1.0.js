@@ -101,7 +101,7 @@ function requestHandlerAPI(){
 		 */
 		this.getDiets = function(){
 
-			var response = this.getRequest('tables/dieta/?coach=' + apiRH.keeper.getItem('userId'), null);
+			var response = this.getRequest('tables/dieta?min=true&coach=' + apiRH.keeper.getItem('userId'), null);
 			console.log("RESPONSE DIET ::: "+JSON.stringify(response));
 			// TODO: Check this out
 			setTimeout(function(){
@@ -829,6 +829,7 @@ function requestHandlerAPI(){
 		 * @see API documentation about jsonp encoding
 		 */
 		this.getRequest = function(endpoint, data){
+			console.log("One request");
 			sdk_app_context.showLoader();
 			var myData = (!data) ? "" : JSON.stringify(data);
 			var result = {};

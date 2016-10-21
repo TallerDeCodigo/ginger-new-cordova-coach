@@ -21,11 +21,13 @@ window.initializeEvents = function(){
 			if( $(this).data('resource') == "chat-contacts" )
 				return app.render_chat( $(this).attr('href') );
 			if( $(this).data('resource') == "user-list" ){
-				console.log("User list");
+				app.showLoader();
 				return app.render_user_list( $(this).attr('href') );
 			}
-			if( $(this).data('resource') == "diet-list" )
+			if( $(this).data('resource') == "diet-list" ){
+				app.showLoader();
 				return app.render_coach_dietas( $(this).attr('href') );
+			}
 			if( $(this).data('resource') == "finanzas" )
 				return app.render_finanzas_view( $(this).attr('href') );
 			if( $(this).data('resource') == "profile" )
@@ -354,7 +356,7 @@ window.initializeEvents = function(){
 
 			app.render_template("diet-list-content", ".insert_content", responsedata);
 			var diet = responsedata;
-			initializeEvents();
+			// initializeEvents();
 			$.each(diet, function( key, value ) {
 								
 				var nombre = 'no-name';

@@ -1171,26 +1171,6 @@ $(window).load(function(){
 		if($('body').hasClass('has-list-diets') )
 		{
 
-			//Request to Service
-
-			var responsedata = apiRH.getDiets();
-
-			//console.log(JSON.stringify(responsedata));
-
-			var diet = responsedata;
-
-			//Loop the feed
-
-			var i = 0;
-
-			$.each(diet, function( key, value ) {
-
-				$('.list-diets').append('<li class="dieta-item"><h2>' +  diet[i].nombre + '</h2><p></p><div class="columna"><a href="#" class="btn-pur" data-id="' +  diet[i]._id + '">Cambiar Dieta</a></div></li>');	
-
-				i++;	
-
-			});
-
 			
 			$('.dieta-item h2').click(function () {
 				
