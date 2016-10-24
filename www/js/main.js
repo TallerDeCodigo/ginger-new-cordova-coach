@@ -257,10 +257,9 @@
 		},
 		render_user_list : function(url){
 
-			var responsedata = [];
 			window.is_home = false;
 			app.check_or_renderContainer();
-			var data = this.gatherEnvironment(responsedata, 'Usuarios');
+			var data = this.gatherEnvironment( [], 'Usuarios' );
 			return this.switchView('user-list', data, '.view', url, 'list-usuarios');
 		},
 		render_chat : function(url){
@@ -363,15 +362,13 @@
 		},
 		render_create_diet : function(url){
 
-			var responsedata = [];
 			window.is_home = false;
 			setTimeout(function(){
 				app.showLoader();
 			}, 800);
 			app.check_or_renderContainer();
-				// responsedata = apiRH.getDiets();
-			var data = this.gatherEnvironment(responsedata, 'Dietas');
-			console.log(data);
+
+			var data = this.gatherEnvironment( [], 'Crear nueva dieta');
 			return this.switchView('create-diet', data, '.view', url, 'create-new-diet');
 		},
 		render_duplicate_diet : function(url){

@@ -14,6 +14,7 @@ window.initializeEvents = function(){
 		
 		/* Hook soft links */
 		$('.hook').on('click', function(e){
+			console.log("hooked");
 			e.preventDefault();
 			app.showLoader();
 			if( $(this).data('resource') == "home" ){
@@ -206,6 +207,9 @@ window.initializeEvents = function(){
 			app.showLoader();
 			var response = [];
 				response.users = apiRH.getUsuarios();
+				if(!response.users)
+					response.users = apiRH.getUsuarios();
+
 				console.log(response);
 				if(typeof(response.users) != 'undefined'){
 					// Render template with new information
@@ -382,14 +386,19 @@ window.initializeEvents = function(){
 			var dietsContent = (!flag) ? responsedata : local_tmp;
 
 			app.render_template("diet-list-content", ".insert_content", dietsContent);
-			
-			
+
 			/*** Dieta operations ***/
 			$('.btn_copy').click(function (e) {
+				// var $context = $(this);
+				// e.preventDefault();
+				// console.log("copy");
 				app.keeper.setItem('dOperator', $(this).data('id'));
+				// console.log($context.attr('href'));
+				// window.location.assign($context.attr('href'));
 			});
 
-			$('.btn_edit').click(function () {
+			$('.btn_edit').click(function (e) {
+				e.preventDefault();
 				app.keeper.setItem('dOperator', $(this).data('id'));
 			});
 
