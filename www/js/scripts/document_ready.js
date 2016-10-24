@@ -113,44 +113,50 @@ window.initializeEvents = function(){
 		/*** Initializing chat api if not already did ***/
 		if(!chatCore.isInitialized && loggedIn)
 			chatCore.init(_coach);
+		if($('.view').hasClass('login')){
+			
+			// setTimeout(function(){
+			// 	$('#login_form').find('input').first().focus();
+			// }, 0);
 
-		if($('#login_form').length){
-
-			$('#login_form').validate({
-				rules:{
-					mail:{
-						required : true,
-						email : true
+			if($('#login_form').length)
+				$('#login_form').validate({
+					rules:{
+						mail:{
+							required : true,
+							email : true
+						},
+						pass : "required"
 					},
-					pass : "required"
-				},
-				messages:{
-					mail:{
-						required:"Debes proporcionar un correo",
-						email:"Proporciona un correo válido"
+					messages:{
+						mail:{
+							required:"Debes proporcionar un correo",
+							email:"Proporciona un correo válido"
+						},
+						pass:"Este campo es requerido para acceder a tu cuenta"
 					},
-					pass:"Este campo es requerido para acceder a tu cuenta"
-				},
-				submitHandler:function( form, event ){
-					event.preventDefault();
-					var data_login		= app.getFormData(form);
-					var login_response 	= apiRH.loginNative(data_login);
+					submitHandler:function( form, event ){
+						event.preventDefault();
+						var data_login		= app.getFormData(form);
+						var login_response 	= apiRH.loginNative(data_login);
 
-					if(login_response){
-						apiRH.headers['X-ZUMO-AUTH'] = login_response;
-						var coachInfo = apiRH.getInfoCoach();
-						if(coachInfo){
-							var coachInfo 	= JSON.parse( localStorage.getItem('user') );
-							window._coach 	= (coachInfo) ? coachInfo : null;
-							return app.render_home();
+						if(login_response){
+							apiRH.headers['X-ZUMO-AUTH'] = login_response;
+							var coachInfo = apiRH.getInfoCoach();
+							if(coachInfo){
+								var coachInfo 	= JSON.parse( localStorage.getItem('user') );
+								window._coach 	= (coachInfo) ? coachInfo : null;
+								return app.render_home();
+							}
+							
+						}else{
+							app.toast("Ocurrió un error, por favor revisa que tus datos sean correctos.")
 						}
-						
-					}else{
-						app.toast("Ocurrió un error, por favor revisa que tus datos sean correctos.")
 					}
-				}
-			}); //END VALIDATE
-		}
+				});
+
+
+		} //END login
 
 
 		if( $('.view').hasClass('finanzas') ){
@@ -206,22 +212,43 @@ window.initializeEvents = function(){
 		if( $('.view').hasClass('list-usuarios') ) {
 			app.showLoader();
 			var response = [];
-				response.users = apiRH.getUsuarios();
-				if(!response.users)
-					response.users = apiRH.getUsuarios();
+			var flag = false;
 
-				console.log(response);
-				if(typeof(response.users) != 'undefined'){
-					// Render template with new information
-					app.render_template("user-list-content", ".insert_content", response);
+			var local_tmp = app.keeper.getItem('temp-return');
+				local_tmp = (local_tmp != '') ? JSON.parse( local_tmp ) : null;
+			var flag = (local_tmp) ? true : false;
+			var diff_stamps = (local_tmp) 	? (new Date().getTime() - local_tmp.return_stamp)/1000
+											: 0;
 
-					$('.notificaciones').on('click', function(){
-							app.render_comingSoon('proximamente.html');
-					});
+			if( !local_tmp || (local_tmp.return !=  'user-list' && diff_stamps >= 600) ){
+				var diets = null;
+				if(users = apiRH.getUsuarios()){
 
-					/*** Start chat updating process ***/
-					return chatCore.fetchUnreadCount(_coach);
+					responsedata =  {
+										return 		: 'user-list',
+										return_stamp: new Date().getTime(),
+										users 		: users
+									};
+					console.log("Responsedata");
+					app.keeper.setItem('temp-return', JSON.stringify(responsedata));
+					flag = true;
 				}
+			}
+			if(!response.users)
+				response.users = apiRH.getUsuarios();
+
+			console.log(response);
+			if(typeof(response.users) != 'undefined'){
+				// Render template with new information
+				app.render_template("user-list-content", ".insert_content", response);
+
+				$('.notificaciones').on('click', function(){
+						app.render_comingSoon('proximamente.html');
+				});
+
+				/*** Start chat updating process ***/
+				return chatCore.fetchUnreadCount(_coach);
+			}
 
 			
 		}
@@ -367,15 +394,18 @@ window.initializeEvents = function(){
 			var responsedata = [];
 			var local_tmp = app.keeper.getItem('temp-return');
 				local_tmp = (local_tmp != '') ? JSON.parse( local_tmp ) : null;
+			var diff_stamps = (local_tmp) 	? (new Date().getTime() - local_tmp.return_stamp)/1000
+											: 0;
 			var flag = (local_tmp) ? true : false;
 
-			if( !local_tmp || local_tmp.return !=  'diet-list' ){
+			if(!local_tmp || (local_tmp.return !=  'diet-list' || diff_stamps >= 60) ){
 				var diets = null;
 				if(diets = apiRH.getDiets()){
 
 					responsedata =  {
-										return: 'diet-list',
-										diets: diets
+										return 		: 'diet-list',
+										return_stamp: new Date().getTime(),
+										diets 		: diets
 									};
 					console.log("Responsedata");
 					app.keeper.setItem('temp-return', JSON.stringify(responsedata));
