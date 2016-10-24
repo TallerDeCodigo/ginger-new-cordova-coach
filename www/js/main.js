@@ -373,6 +373,14 @@
 		},
 		render_duplicate_diet : function(url){
 
+			window.is_home = false;
+			setTimeout(function(){
+				app.showLoader();
+			}, 800);
+			app.check_or_renderContainer();
+
+			var data = this.gatherEnvironment( [], 'Duplicar dieta');
+			return this.switchView('copy-diet', data, '.view', url, 'copy-diet');
 		},
 		render_myProfile : function(url){
 

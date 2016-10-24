@@ -190,45 +190,6 @@ $(window).load(function(){
 		}
 
 
-		if($('body').hasClass('has-copy-diet')){
-			$('.btn-gre').click(function () {
-				console.log('COPY DIETA');
-				var d_nombre 		= $('input[name="nombre"]').val();
-				var d_comentario 	= $('input[name="comentario"]').val();
-
-				localStorage.setItem('d_nombre', d_nombre);
-				localStorage.setItem('d_comentario', d_comentario);
-
-				if(d_nombre.length < 4)
-					return;
-				if(d_comentario.length < 4)
-					return;
-
-				var json = {
-					"nombre" : 		localStorage.getItem('d_nombre'),
-					"descripcion" : localStorage.getItem('d_comentario'),
-					"id": 			localStorage.getItem("dOperator")
-				};
-
-				var response = apiRH.copyDiet(json);
-
-				console.log(response);
-
-				if(response){
-					var c_diet = response;
-
-					localStorage.removeItem('d_comentario');
-					localStorage.removeItem('d_nombre');
-					localStorage.setItem("dOperator", c_diet._id);
-
-					window.location.assign('dieta.html');
-				}
-				else
-					console.log('Error');
-			});
-		}
-
-
 		if($('body').hasClass('dieta')){
 				
 

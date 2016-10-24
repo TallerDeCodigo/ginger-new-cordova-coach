@@ -12,45 +12,49 @@ window.initializeEvents = function(){
 		console.log("Initializing DocReady v0.1");
 		$('body').removeClass("preventEvents");
 		
-		/* Hook soft links */
-		$('.hook').on('click', function(e){
-			console.log("hooked");
-			e.preventDefault();
-			app.showLoader();
-			if( $(this).data('resource') == "home" ){
+		window.initHooks = function(){
+			console.log("Initializing hooks");
+			/* Hook soft links */
+			$('.hook').on('click', function(e){
+				e.preventDefault();
 				app.showLoader();
-				return app.render_home( $(this).attr('href') );
-			}
-			if( $(this).data('resource') == "chat-contacts" ){
-				app.showLoader();
-				return app.render_chat( $(this).attr('href') );
-			}
-			if( $(this).data('resource') == "user-list" ){
-				app.showLoader();
-				return app.render_user_list( $(this).attr('href') );
-			}
-			if( $(this).data('resource') == "diet-list" ){
-				app.showLoader();
-				return app.render_coach_dietas( $(this).attr('href') );
-			}
-			if( $(this).data('resource') == "finanzas" ){
-				app.showLoader();
-				return app.render_finanzas_view( $(this).attr('href') );
-			}
-			if( $(this).data('resource') == "profile" ){
-				app.showLoader();
-				return app.render_myProfile( $(this).attr('href') );
-			}
+				if( $(this).data('resource') == "home" ){
+					app.showLoader();
+					return app.render_home( $(this).attr('href') );
+				}
+				if( $(this).data('resource') == "chat-contacts" ){
+					app.showLoader();
+					return app.render_chat( $(this).attr('href') );
+				}
+				if( $(this).data('resource') == "user-list" ){
+					app.showLoader();
+					return app.render_user_list( $(this).attr('href') );
+				}
+				if( $(this).data('resource') == "diet-list" ){
+					app.showLoader();
+					return app.render_coach_dietas( $(this).attr('href') );
+				}
+				if( $(this).data('resource') == "finanzas" ){
+					app.showLoader();
+					return app.render_finanzas_view( $(this).attr('href') );
+				}
+				if( $(this).data('resource') == "profile" ){
+					app.showLoader();
+					return app.render_myProfile( $(this).attr('href') );
+				}
 
 
-			if( $(this).data('resource') == "create-diet" )
-				return app.render_create_diet($(this).attr('href'));
-			if( $(this).data('resource') == "duplicate-diet" )
-				return app.render_duplicate_diet($(this).attr('href'));
-			
+				if( $(this).data('resource') == "create-diet" )
+					return app.render_create_diet($(this).attr('href'));
+				if( $(this).data('resource') == "duplicate-diet" )
+					return app.render_duplicate_diet($(this).attr('href'));
+				
 
-			e.stopPropagation();
-		});
+				e.stopPropagation();
+			});
+		};
+		initHooks();
+
 		
 		//-----------------------------
 		//
@@ -205,7 +209,43 @@ window.initializeEvents = function(){
 		}//	END HAS CLASS FINANZAS
 
 
+		if($('body').hasClass('copy-diet')){
+			$('.btn-gre').click(function () {
+				console.log('COPY DIETA');
+				var d_nombre 		= $('input[name="nombre"]').val();
+				var d_comentario 	= $('input[name="comentario"]').val();
 
+				localStorage.setItem('d_nombre', d_nombre);
+				localStorage.setItem('d_comentario', d_comentario);
+
+				if(d_nombre.length < 4)
+					return;
+				if(d_comentario.length < 4)
+					return;
+
+				var json = {
+					"nombre" : 		localStorage.getItem('d_nombre'),
+					"descripcion" : localStorage.getItem('d_comentario'),
+					"id": 			localStorage.getItem("dOperator")
+				};
+
+				var response = apiRH.copyDiet(json);
+
+				console.log(response);
+
+				if(response){
+					var c_diet = response;
+
+					localStorage.removeItem('d_comentario');
+					localStorage.removeItem('d_nombre');
+					localStorage.setItem("dOperator", c_diet._id);
+
+					window.location.assign('dieta.html');
+				}
+				else
+					console.log('Error');
+			});
+		}
 
 
 		/* User List */
@@ -429,6 +469,7 @@ window.initializeEvents = function(){
 
 			$('.btn_edit').click(function (e) {
 				e.preventDefault();
+				console.log("edit");
 				app.keeper.setItem('dOperator', $(this).data('id'));
 			});
 
@@ -462,7 +503,7 @@ window.initializeEvents = function(){
 					$('.overscreen4').hide();
 					$('#blur').toggleClass('blurred');
 				});
-
+			initHooks();
 		} // END diet-list
 
 		if($('.view').hasClass('create-new-diet')){
