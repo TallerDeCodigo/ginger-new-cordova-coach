@@ -16,10 +16,14 @@ window.initializeEvents = function(){
 		$('.hook').on('click', function(e){
 			e.preventDefault();
 			app.showLoader();
-			if( $(this).data('resource') == "home" )
+			if( $(this).data('resource') == "home" ){
+				app.showLoader();
 				return app.render_home( $(this).attr('href') );
-			if( $(this).data('resource') == "chat-contacts" )
+			}
+			if( $(this).data('resource') == "chat-contacts" ){
+				app.showLoader();
 				return app.render_chat( $(this).attr('href') );
+			}
 			if( $(this).data('resource') == "user-list" ){
 				app.showLoader();
 				return app.render_user_list( $(this).attr('href') );
@@ -28,10 +32,14 @@ window.initializeEvents = function(){
 				app.showLoader();
 				return app.render_coach_dietas( $(this).attr('href') );
 			}
-			if( $(this).data('resource') == "finanzas" )
+			if( $(this).data('resource') == "finanzas" ){
+				app.showLoader();
 				return app.render_finanzas_view( $(this).attr('href') );
-			if( $(this).data('resource') == "profile" )
+			}
+			if( $(this).data('resource') == "profile" ){
+				app.showLoader();
 				return app.render_myProfile( $(this).attr('href') );
+			}
 
 
 			if( $(this).data('resource') == "create-diet" )
@@ -240,12 +248,12 @@ window.initializeEvents = function(){
 				}
 			});
 
-				$('#accept').click(function(){
-					localStorage.clear();
-					app.render_login();
-					app.toast('No ha sido posible cerrar tu sesión, por favor intenta de nuevo.');
-					return;
-				});
+			$('#accept.logout').click(function(){
+				app.keeper.clear();
+				app.toast('Sesión cerrada ¡hasta pronto!');
+				$('#blur').toggleClass('blurred');
+				return app.render_login();
+			});
 
 			$('.cancel').click(function(){
 				$('.overscreen2').hide();
@@ -350,58 +358,44 @@ window.initializeEvents = function(){
 		if( $('.view').hasClass('diet-list') ){
 	
 			//Request to Service
-			var responsedata = [];
-				responsedata.diets = apiRH.getDiets();
 			var i = 0;
+			var idDelete = null;
+			var responsedata = [];
+			var local_tmp = app.keeper.getItem('temp-return');
+				local_tmp = (local_tmp != '') ? JSON.parse( local_tmp ) : null;
+			var flag = (local_tmp) ? true : false;
 
-			app.render_template("diet-list-content", ".insert_content", responsedata);
-			var diet = responsedata;
-			// initializeEvents();
-			$.each(diet, function( key, value ) {
-								
-				var nombre = 'no-name';
-				var descripcion = '';
-				var _id = ''
+			if( !local_tmp || local_tmp.return !=  'diet-list' ){
+				var diets = null;
+				if(diets = apiRH.getDiets()){
 
-				$.each(value, function( key, value ){
+					responsedata =  {
+										return: 'diet-list',
+										diets: diets
+									};
+					console.log("Responsedata");
+					app.keeper.setItem('temp-return', JSON.stringify(responsedata));
+					flag = true;
+				}
+			}
 
-					if(key == 'nombre'){
-						//console.log(value);
-						nombre = value;
-					}
+			var dietsContent = (!flag) ? responsedata : local_tmp;
 
-					if(key == '_id')
-						_id  = value;
-
-					if(key == 'descripcion')
-						descripcion = value;
-					
-				});
-				// $('.list-diet').append('<li class="elemento-dieta" data="' + _id + '"><h2> ' + nombre + ' </h2><p>' + descripcion + '</p><nav><a href="copiar-dieta.html"><img class="btn_copy" data="' + _id + '" src="images/copy.png"></a><a href="dieta.html"><img class="btn_edit" data="' + _id + '" src="images/edit.png"></a><a><img class="btn_delete" data="' + _id + '" src="images/delete.png"></a></nav></li>');
-				i++;
-			});
-
+			app.render_template("diet-list-content", ".insert_content", dietsContent);
+			
+			
+			/*** Dieta operations ***/
 			$('.btn_copy').click(function (e) {
-				console.log('copy');
-				var idDieta = $(this).attr('data');	
-				localStorage.setItem("dOperator", idDieta);
-
+				app.keeper.setItem('dOperator', $(this).data('id'));
 			});
 
 			$('.btn_edit').click(function () {
-				
-				var idDietax = $(this).attr('data');
-
-				console.log('ID DIET: ' + idDietax);
-
-				localStorage.setItem('dOperator', idDietax);
-
-
+				app.keeper.setItem('dOperator', $(this).data('id'));
 			});
-			var idDelete;
+
 			$('.btn_delete').click(function () {
-				console.log('borrar');
-				idDelete = $(this).attr('data');
+
+				idDelete = $(this).data('id');
 				if(!$('.overscreen4').is(':visible')){
 					console.log('entra popup');
 					$('.overscreen4').show();
@@ -413,24 +407,19 @@ window.initializeEvents = function(){
 				$('#blur').toggleClass('blurred');
 			});
 
-				$('#aceptar').click(function(){
-					console.log('aceptar borrar');
-					
+				$('#delete-diet').click(function(){
+
 					var response = apiRH.deleteDiet(idDelete);
 					console.log(response);
-					console.log(idDelete);
-					if(response){
-						console.log('DELETE OK: ' + response);
+					if(response)
 						$('li.elemento-dieta[data='+idDelete+']').remove();
-					}
 
 					$('.overscreen4').hide();
 					$('#blur').toggleClass('blurred');
-
 				});
 
 				$('#cancelar').click(function(){
-					console.log('cancelado');
+					idDelete = null;
 					$('.overscreen4').hide();
 					$('#blur').toggleClass('blurred');
 				});

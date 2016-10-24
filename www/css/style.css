@@ -380,7 +380,7 @@ li.persona {list-style:none;border-bottom:1px solid #cfcfcf;text-align:left;heig
 .changer {color:#ef8645;line-height:32px;font-size:120%;font-weight:700;}
 .changer img {height:32px;position:relative;display:inline-block;top:11px;margin:0px 17px;}
 
-.finanzas table {width:90%;position:relative;left:5%;margin-top:28px;table-layout:fixed;}
+.finanzas table {width:90%;position:relative;left:5%;margin-top:28px;table-layout:fixed;overflow: auto;}
 .finanzas th {font-size:105%;}
 .finanzas td, .finanzas th {border:none;}
 

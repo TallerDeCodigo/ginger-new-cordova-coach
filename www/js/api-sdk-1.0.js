@@ -102,7 +102,6 @@ function requestHandlerAPI(){
 		this.getDiets = function(){
 
 			var response = this.getRequest('tables/dieta?min=true&coach=' + apiRH.keeper.getItem('userId'), null);
-			console.log("RESPONSE DIET ::: "+JSON.stringify(response));
 			// TODO: Check this out
 			setTimeout(function(){
 				sdk_app_context.hideLoader();
@@ -142,26 +141,15 @@ function requestHandlerAPI(){
 			return (response) ? response : false;
 		};
 
-		/**
-		 * DELETE DIET
-		 */
+		/** DELETE DIET ***/
 		this.deleteDiet = function(diet){
+			
 			var req = {
 				method : 'DELETE',
 				url : api_base_url + 'tables/dieta/' + diet,
-				headers: {
-					'X-ZUMO-APPLICATION': 'ideIHnCMutWTPsKMBlWmGVtIPXROdc92',
-					'X-ZUMO-AUTH': apiRH.keeper.getItem('token'),
-					'Content-Type': 'application/json'
-				}
-			}
-
-			console.log(JSON.stringify(req));
-
-			var response = this.makeDeleteRequest('tables/dieta/' + diet, req);
-
-			console.log(response);  //llega aqui con la respuesta del servidor
-
+				headers: apiRH.headers
+			};
+			var response = this.deleteRequest('tables/dieta/' + diet, req);
 			return (response) ? response : false;
 		};
 
@@ -183,7 +171,7 @@ function requestHandlerAPI(){
 
 			console.log(JSON.stringify(req));
 
-			var response = this.makeDeleteRequest('tables/dieta/' + diet, req);
+			var response = this.deleteRequest('tables/dieta/' + diet, req);
 
 			console.log(response);  //llega aqui con la respuesta del servidor
 
@@ -748,7 +736,7 @@ function requestHandlerAPI(){
 			return result;
 		};
 
-		this.makeDeleteRequest = function(endpoint, data){
+		this.deleteRequest = function(endpoint, data){
 			console.log(data.data); //llega a makerequest
 
 			sdk_app_context.showLoader();
