@@ -163,34 +163,31 @@ function retrieveChatMessages(dialog, beforeDateSent){
 
 // sending messages after confirmation
 function clickSendMessage() {
+
+	console.log('click send message');
 	var currentText = $('#mensaje-chat').val().trim();
-	if (currentText.length === 0){
+	console.log(currentText);
+	if (currentText.length === 0)
 		return;
-	}
 
 	$('#mensaje-chat').val('').focus();
-
 	sendMessage(currentText, null);
-	$('#container').scrollTop($('#container').prop("scrollHeight"));
+	$('#container').scrollTop($('#container').prop('scrollHeight'));
 }
 
 function clickSendAttachments(inputFile) {
-	// upload image
-	QB.content.createAndUpload({name: inputFile.name, file: inputFile, type:
-				inputFile.type, size: inputFile.size, 'public': false}, function(err, response){
+
+	QB.content.createAndUpload({name: inputFile.name, file: inputFile, type: inputFile.type, size: inputFile.size, 'public': false}, function(err, response){
 		if (err) {
 			console.log(err);
 		} else {
 
-			$("#progress").fadeOut(400, function() {
-				$(".input-group-btn_change_load").removeClass("visibility_hidden");
+			$('#progress').fadeOut(400, function() {
+				$('.input-group-btn_change_load').removeClass('visibility_hidden');
 			});
-
 			var uploadedFile = response;
-
-			sendMessage("[attachment]", uploadedFile.id);
-
-			$("input[type=file]").val('');
+			sendMessage('[attachment]', uploadedFile.id);
+			$('input[type=file]').val('');
 		}
 	});
 }
@@ -198,17 +195,16 @@ function clickSendAttachments(inputFile) {
 // send text or attachment
 function sendMessage(text, attachmentFileId) {
 
-	// stickerpipe.onUserMessageSent(stickerpipe.isSticker(text));
-
 	var msg = {
-		type: currentDialog.type === 3 ? 'chat' : 'groupchat',
-		body: text,
-		extension: {
-			save_to_history: 1,
-		},
-		senderId: currentUser.id,
-		markable: 1
+		type 		: currentDialog.type === 3 ? 'chat' : 'groupchat',
+		body 		: text,
+		extension 	: {
+						save_to_history: 1,
+					},
+		senderId 	: currentUser.id,
+		markable 	: 1
 	};
+
 	if(attachmentFileId !== null){
 		msg["extension"]["attachments"] = [{id: attachmentFileId, type: 'photo'}];
 	}
@@ -216,8 +212,6 @@ function sendMessage(text, attachmentFileId) {
 	if (currentDialog.type === 3) {
 		opponentId = QB.chat.helpers.getRecipientId(currentDialog.occupants_ids, currentUser.id);
 		QB.chat.send(opponentId, msg);
-
-		//$('.list-group-item.active .list-group-item-text').text(stickerpipe.isSticker(msg.body) ? 'Sticker' : msg.body);
 
 		if(attachmentFileId === null){
 			showMessage(currentUser.id, msg);
@@ -228,7 +222,6 @@ function sendMessage(text, attachmentFileId) {
 		QB.chat.send(currentDialog.xmpp_room_jid, msg);
 	}
 
-	// claer timer and send 'stop typing' status
 	clearTimeout(isTypingTimerId);
 	isTypingTimeoutCallback();
 

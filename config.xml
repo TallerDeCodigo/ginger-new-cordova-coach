@@ -12,7 +12,6 @@
     <plugin name="cordova-plugin-whitelist" spec="1" />
     <plugin name="cordova-plugin-keyboard" />
     <plugin name="com.oauthio.plugins.oauthio" spec="0.2.4" source="pgb" />
-  <!--   <gap:plugin name="de.appplant.cordova.plugin.background-mode" version="0.6.3" /> -->
     
     <feature name="App">
         <param name="android-package" value="org.ginger.coach" />
@@ -94,6 +93,7 @@
         <preference name="fullscreen" value="false" />
         <preference name="webviewbounce" value="false" />
         <preference name="enableViewPortScale" value="true" />
+        <preference name="KeyboardDisplayRequiresUserAction" value="false" />
     </platform>
 
     <preference name="Orientation" value="portrait" />

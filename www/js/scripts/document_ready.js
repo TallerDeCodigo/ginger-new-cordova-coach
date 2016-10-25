@@ -117,6 +117,7 @@ window.initializeEvents = function(){
 		/*** Initializing chat api if not already did ***/
 		if(!chatCore.isInitialized && loggedIn)
 			chatCore.init(_coach);
+		
 		if($('.view').hasClass('login')){
 			
 			// setTimeout(function(){
@@ -250,6 +251,7 @@ window.initializeEvents = function(){
 
 		/* User List */
 		if( $('.view').hasClass('list-usuarios') ) {
+
 			app.showLoader();
 			var response = [];
 			var flag = false;
@@ -259,7 +261,7 @@ window.initializeEvents = function(){
 			var flag = (local_tmp) ? true : false;
 			var diff_stamps = (local_tmp) 	? (new Date().getTime() - local_tmp.return_stamp)/1000
 											: 0;
-
+			console.log(diff_stamps);		
 			if( !local_tmp || (local_tmp.return !=  'user-list' && diff_stamps >= 600) ){
 				var diets = null;
 				if(users = apiRH.getUsuarios()){

@@ -227,7 +227,8 @@ form label.error{ display: block; text-align: left; margin-left: 2.5rem; color: 
 .foot-chat a {position:absolute;}
 .attach {left:10px;bottom:4px;}
 .attach img {width:22px;height:auto;}
-input.send {position:absolute;border-style:none; outline:none;background:none;right:4px;bottom:5px;height:27px;width:61px;line-height:27px;font-weight:700;}
+input.send ,
+.cpur.send.btn-default {position:absolute;border-style:none; outline:none;background:none;right:4px;bottom:5px;height:27px;width:61px;line-height:27px;font-weight:700;}
 
 .foot-chat textarea {width:100%;resize:none;outline:none;border:1px solid #CCC;border-radius:3px;padding:4px 5px 1px;}
 
