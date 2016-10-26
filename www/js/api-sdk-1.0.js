@@ -656,12 +656,12 @@ function requestHandlerAPI(){
 			sdk_app_context.showLoader();
 			var result = {};
 			$.ajax({
-			  type: 'POST',
-			  headers: data.headers,
-			  url: window.api_base_url+endpoint,
-			  data: JSON.stringify(data.data),
-			  dataType: 'json',
-			  async: false
+				type: 'POST',
+				headers: data.headers,
+				url: window.api_base_url+endpoint,
+				data: data.data,
+				dataType: 'json',
+				async: false
 			})
 			 .done(function(response){
 				result = response;
