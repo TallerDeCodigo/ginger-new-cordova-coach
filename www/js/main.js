@@ -17,21 +17,13 @@
 			/* Initialize API request handler */
 			window.apiRH = new requestHandlerAPI().construct(app);
 			this.registerHelpers();
-			//console.log('token');
 			
 			var is_login 	= apiRH.has_token();
-			console.log("Is login ::: "+is_login);
 			var is_home 	= (typeof(window.is_home) != 'undefined') ? window.is_home : true;
 			var is_client 	= localStorage.getItem('customerId');
 			var is_current 	= localStorage.getItem('valido');
 
 			window.cordova_full_path = "";
-
-			/* IMPORTANT to set requests to be syncronous */
-				/* TODO test all requests without the following code 'cause of deprecation */
-				// $.ajaxSetup({
-				// 	 async: false
-				// });
 
 			/*** TODO: Get this shit into a catalogue ***/
 			window.catalogues 						= [];
@@ -46,20 +38,20 @@
 			this.keeper 	= window.localStorage;
 	
 			/* Check if has a valid token */
-			// if(is_login){
+			if(is_login){
 				
-			// 	console.log('You okay, now you can start making calls');
-			// 	loggedIn = true;
-			// 	var userinfo 	= JSON.parse(localStorage.getItem('user'));
-			// 		window._coach = (userinfo) ? userinfo : '';
-			// 	/* Take the user to it's timeline */
-			// 	if(is_home){
-			// 		return app.render_home();
-			// 	}
-			// 	return app.render_login();
-			// }else{
-			// 	return app.render_login();
-			// }
+				console.log('You okay, now you can start making calls');
+				loggedIn = true;
+				var userinfo 	= JSON.parse(localStorage.getItem('user'));
+					window._coach = (userinfo) ? userinfo : '';
+				/* Take the user to it's timeline */
+				if(is_home){
+					return app.render_home();
+				}
+				return app.render_login();
+			}else{
+				return app.render_login();
+			}
 
 		},
 		initPushNotifications: function() {
