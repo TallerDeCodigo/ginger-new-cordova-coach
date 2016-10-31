@@ -261,7 +261,7 @@ window.initializeEvents = function(){
 			var flag = (local_tmp) ? true : false;
 			var diff_stamps = (local_tmp) 	? (new Date().getTime() - local_tmp.return_stamp)/1000
 											: 0;
-			console.log(diff_stamps);		
+			console.log("Diff timestamps :: " + diff_stamps);		
 			if( !local_tmp || (local_tmp.return !=  'user-list' && diff_stamps >= 600) ){
 				var diets = null;
 				if(users = apiRH.getUsuarios()){
@@ -291,7 +291,6 @@ window.initializeEvents = function(){
 				/*** Start chat updating process ***/
 				return chatCore.fetchUnreadCount(_coach);
 			}
-
 			
 		}
 		
@@ -332,7 +331,6 @@ window.initializeEvents = function(){
 				$('.overscreen2').hide();
 				$('#blur').toggleClass('blurred');
 			});
-
 			app.hideLoader();
 
 		} // END CLASS coach-profile

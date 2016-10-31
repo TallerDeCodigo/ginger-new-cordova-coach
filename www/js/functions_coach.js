@@ -110,7 +110,7 @@
 			$('.iosm #toda_la_dieta > li').css("height",alto-120);
 		});// end window on load
 
-$(window).load(function(){
+$(window).on('load', function(){
 	$(function() {
 
 		/*** TODO: Get this shit into a catalogue ***/

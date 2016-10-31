@@ -1,0 +1,36 @@
+{
+  "name": "Ginger",
+  "homepage": "http://www.gingerapp.mx",
+  "authors": [
+    "John Falcon <john@tallerdecodigo.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "plugins":[
+    "org.apache.cordova.camera",
+    "org.apache.cordova.console",
+    "org.apache.cordova.contacts",
+    "org.apache.cordova.device",
+    "org.apache.cordova.dialogs",
+    "org.apache.cordova.file",
+    "org.apache.cordova.file-transfer",
+    "org.apache.cordova.geolocation",
+    "org.apache.cordova.inappbrowser",
+    "org.apache.cordova.media",
+    "org.apache.cordova.media-capture",
+    "org.apache.cordova.network-information",
+    "org.apache.cordova.splashscreen"
+  ],
+  "dependencies": {
+    "handlebars": "^4.0.5"
+  }
+}

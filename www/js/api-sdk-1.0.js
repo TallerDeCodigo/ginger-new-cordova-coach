@@ -371,7 +371,7 @@ function requestHandlerAPI(){
 		 *
 		 */
 		this.getUsuarios = function(){
-
+			console.log("Entrando a ver usuarios");
 			var response = this.getRequest('api/client_status?coachid=' + apiRH.keeper.getItem('userId'), null);
 			return (response) ? response : false;
 		};
@@ -447,7 +447,6 @@ function requestHandlerAPI(){
 
 	
 		//Conekta
-
 		this.makePayment = function(token)
 		{
 			var req = {
@@ -551,7 +550,6 @@ function requestHandlerAPI(){
 			var users = JSON.parse(apiRH.keeper.getItem('user-selected'));
 			var response = this.getRequest('tables/cliente?_id=' + users._id, req);
 			console.log("Response Data Clientes ::: "+response);
-
 			return (response) ? response : false;
 		};
 
@@ -820,7 +818,7 @@ function requestHandlerAPI(){
 		 * @see API documentation about jsonp encoding
 		 */
 		this.getRequest = function(endpoint, data){
-			console.log("One request");
+
 			sdk_app_context.showLoader();
 			var myData = (!data) ? "" : JSON.stringify(data);
 			var result = {};
