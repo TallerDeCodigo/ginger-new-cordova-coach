@@ -12,7 +12,7 @@ function requestHandlerAPI(){
 	this.device_model = (typeof device != 'undefined') ? device.model : 'not set';
 	this.device_platform = (typeof device != 'undefined') ? device.platform : 'not set';
 	this.device_platform_version = (typeof device != 'undefined') ? device.version : 'not set';
-	this.device_info = {
+	this.device_info =  {
 							sdk_version: this.version,
 							build: this.app_build,
 							model: this.device_model,
@@ -57,23 +57,14 @@ function requestHandlerAPI(){
 		 */
 		this.loginNative =  function(data_login){
 
-			var email = data_login.mail;
-			var pass = data_login.pass;
-			var req = {
-					method : 'post',
-					url : api_base_url + 'api/login',
-					headers: {
-						'X-ZUMO-APPLICATION': 'ideIHnCMutWTPsKMBlWmGVtIPXROdc92',
-						'X-ZUMO-AUTH': '',
-						'Content-Type': 'application/json'
-					},
-					data : {
-						"tipo" : "coach",
-						"mail" : email,
-						"password" : pass
-					}
-				}
-			var response = this.makeRequest('api/login', req);
+			var req = 	{
+							data : {
+									"tipo" 		: "coach",
+									"mail" 		: data_login.mail,
+									"password" 	: data_login.pass
+								}
+						};	
+			var response = this.makeRequest('api/login', req, true, false);
 
 			if(response.Status == 'FAIL')
 				return false;
@@ -651,38 +642,50 @@ function requestHandlerAPI(){
 		 * @param data url encoded data
 		 * @return JSON encoded response
 		 */
-		this.makeRequest = function(endpoint, data){
+		this.makeRequest = function(endpoint, data, noHeaders, stringify){
 			
-			sdk_app_context.showLoader();
+			var myData = ( typeof(stringify) == 'undefined' || stringify == true ) ? JSON.stringify(data.data) : data.data;
+			setTimeout(function(){
+				app.showLoader();
+			}, 420);
 			var result = {};
-			$.ajax({
-				type: 'POST',
-				headers: data.headers,
-				url: window.api_base_url+endpoint,
-				data: data.data,
-				dataType: 'json',
-				async: false
-			})
-			 .done(function(response){
+
+			var options = 	{
+								type 		: 'POST',
+								url			: window.api_base_url + endpoint,
+								data 		: myData,
+								dataType 	: 'json',
+								async 		: false
+							};
+							console.log(options);
+			var myHeaders = (!noHeaders || typeof(noHeaders) == 'undefined') ? apiRH.headers : {'X-ZUMO-APPLICATION': apiRH.headers['X-ZUMO-APPLICATION']};
+			if(myHeaders)
+				options.headers = myHeaders;
+
+			$.ajax(options)
+			 .always( function(response){
+				setTimeout(function(){
+					app.hideLoader();
+				}, 2000);
+			 })
+			 .done( function(response){
+			 	console.log(response);
 				result = response;
-				sdk_app_context.hideLoader();
-			})
-			 .fail(function(e){
-				result = false;
-				console.log(JSON.stringify(e));
+			 })
+			 .fail( function(e){
+				console.log(e);
+				return false;
 			});
 			return result;
 		};
 
 		this.makePatchRequest = function(endpoint, data){
 			
-			console.log("----------------------------"); //llega a makerequest
-			console.log(data.data); //llega a makerequest
-			console.log("----------------------------"); //llega a makerequest
+			console.log("----------------------------");
+			console.log(data.data);
+			console.log("----------------------------");
 			sdk_app_context.showLoader();
 			var result = {};
-
-			//console.log('datos: ' + data.data);
 
 			$.ajax({
 			  type: 'PATCH',
