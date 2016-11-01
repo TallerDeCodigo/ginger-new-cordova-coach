@@ -335,49 +335,28 @@ window.initializeEvents = function(){
 
 		} // END CLASS coach-profile
 
-		if($('.view').hasClass('has-chat-list') ){
+		if( $('.view').hasClass('has-chat-list') ){
 				
-				var userLog = JSON.parse(localStorage.getItem('user'));
-				var loginfo = { login : userLog.mail, pass : userLog.chatPassword};
+				var loginfo = { login : _coach.mail, pass : _coach.chatPassword };
 				connectToChat(loginfo);
 
-				var responsedata = apiRH.getUsuarios();
-
-				console.log(JSON.stringify(responsedata));
-
-				var user = responsedata;
-
-				//Loop the feed
-
-				var i = 0;
-
-				$.each(user, function( key, value ) {
-					
-					console.log(i + " - " + value);
-					
-					$('#contacts-list').append("<a class='btnDialogs' data='" + JSON.stringify(user[i].jid) + "'><li class='persona' ><div class='circle-frame'><img src='images/Icon-60@3x.png'></div><h5 style='margin-top:10px'>" + user[i].nombre + " " + user[i].apellido + "</h5></li>");
-
-					i++;
-				});
-
+				var users_response = [];
+					users_response.users = apiRH.getUsuarios();
+				console.log(users_response);
+				app.render_template('chat-dialogs', '.insert_contacts', users_response);
 
 				$('.btnDialogs').click(function () {
 					
-					console.log($(this).attr('data'));
-
-					localStorage.setItem('idQBOX', $(this).attr('data'));
-
-					if ($(this).attr('data')==$('.los_chats:nth-of-type(1)').attr('data')) {
+					app.keeper.setItem('idQBOX', $(this).attr('data'));
+					if ($(this).attr('data') == $('.los_chats:nth-of-type(1)').attr('data')) {
 						console.log('ya existe');
 					} else {
 						createNewDialog();
 					}
-
 				});
 
 				$('.attach').click(function(){
 					$('input[name="galeria"]').trigger('click');
-
 				});
 
 				$('.list-group-item').click(function(){
@@ -400,7 +379,6 @@ window.initializeEvents = function(){
 					}else if($('.lista_chat').is(':visible') ) {
 						app.render_home();
 					}
-
 				});
 
 				$('#btn_contacts').click(function(){
@@ -416,8 +394,8 @@ window.initializeEvents = function(){
 				$('#mensaje-chat').focus(function() {
   					if(this.innerHTML=='Mensaje') {this.innerHTML='';}
 				});
-
 				app.hideLoader();
+
 		} // END has-chat-list
 
 		/**
@@ -515,10 +493,10 @@ window.initializeEvents = function(){
 				var d_nombre 		= $('input[name="nombre"]').val();
 				var d_comentario 	= $('input[name="cometario"]').val();
 
-				localStorage.setItem('d_nombre', d_nombre);
-				localStorage.setItem('d_comentario', d_comentario);
-				d_nombre 		= localStorage.getItem('d_nombre');
-				d_comentario 	= localStorage.getItem('d_comentario'); 
+				app.keeper.setItem('d_nombre', d_nombre);
+				app.keeper.setItem('d_comentario', d_comentario);
+				d_nombre 		= app.keeper.getItem('d_nombre');
+				d_comentario 	= app.keeper.getItem('d_comentario'); 
 
 				console.log(d_nombre);
 				console.log(d_comentario);

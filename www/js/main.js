@@ -13,7 +13,7 @@
 
 			this.bindEvents();
 			window.firstTime = true;
-			console.log("Hello?");
+			
 			/* Initialize API request handler */
 			window.apiRH = new requestHandlerAPI().construct(app);
 			this.registerHelpers();

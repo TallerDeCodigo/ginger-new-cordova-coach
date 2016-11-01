@@ -345,8 +345,6 @@ function requestHandlerAPI(){
 		 * SAVE INGREDIENTS
 		 *
 		 **/
-
-
 		 this.newIngredient = function(data){
 			var req = {
 				method : 'post',
@@ -366,12 +364,9 @@ function requestHandlerAPI(){
 		 };
 
 
-		/**
-		 * Función para obtener las usuarios de un coach que este logeado
-		 *
-		 */
+		/** Fetch Coach clients **/
 		this.getUsuarios = function(){
-			console.log("Entrando a ver usuarios");
+
 			var response = this.getRequest('api/client_status?coachid=' + apiRH.keeper.getItem('userId'), null);
 			return (response) ? response : false;
 		};
