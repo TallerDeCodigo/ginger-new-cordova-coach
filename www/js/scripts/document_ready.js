@@ -251,8 +251,7 @@ window.initializeEvents = function(){
 
 		/* User List */
 		if( $('.view').hasClass('list-usuarios') ) {
-
-			app.showLoader();
+			
 			var response = [];
 			var flag = false;
 
@@ -261,8 +260,9 @@ window.initializeEvents = function(){
 			var flag = (local_tmp) ? true : false;
 			var diff_stamps = (local_tmp) 	? (new Date().getTime() - local_tmp.return_stamp)/1000
 											: 0;
-			console.log("Diff timestamps :: " + diff_stamps);		
+
 			if( !local_tmp || (local_tmp.return !=  'user-list' && diff_stamps >= 600) ){
+				console.log("I'm getting some data");
 				var diets = null;
 				if(users = apiRH.getUsuarios()){
 
@@ -274,24 +274,30 @@ window.initializeEvents = function(){
 					console.log("Responsedata");
 					app.keeper.setItem('temp-return', JSON.stringify(responsedata));
 					flag = true;
+
+					app.render_template("user-list-content", ".insert_content", responsedata);
+
+					/*** Start chat updating process ***/
+					return chatCore.fetchUnreadCount(_coach);
 				}
-			}
-			if(!response.users)
-				response.users = apiRH.getUsuarios();
-
-			console.log(response);
-			if(typeof(response.users) != 'undefined'){
+			}else{
+				console.log("note getting data");
 				// Render template with new information
-				app.render_template("user-list-content", ".insert_content", response);
-
-				$('.notificaciones').on('click', function(){
-						app.render_comingSoon('proximamente.html');
-				});
+				var content = JSON.parse( app.keeper.getItem('temp-return') );
+				app.render_template("user-list-content", ".insert_content", content);
 
 				/*** Start chat updating process ***/
 				return chatCore.fetchUnreadCount(_coach);
 			}
-			
+			setTimeout(function(){
+				$('.notificaciones').on('click', function(){
+						app.render_comingSoon('proximamente.html');
+				});
+			}, 1000);
+			/*** Manually retry once ***/
+			// if(!response.users)
+			// 	response.users = apiRH.getUsuarios();
+
 		}
 		
 

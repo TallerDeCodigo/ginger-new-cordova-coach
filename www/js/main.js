@@ -24,6 +24,7 @@
 			var is_current 	= localStorage.getItem('valido');
 
 			window.cordova_full_path = "";
+			window.is_home = false;
 
 			/*** TODO: Get this shit into a catalogue ***/
 			window.catalogues 						= [];
@@ -45,10 +46,7 @@
 				var userinfo 	= JSON.parse(localStorage.getItem('user'));
 					window._coach = (userinfo) ? userinfo : '';
 				/* Take the user to it's timeline */
-				if(is_home){
-					return app.render_home();
-				}
-				return app.render_login();
+				return;
 			}else{
 				return app.render_login();
 			}
@@ -219,7 +217,8 @@
 				$('.rootContainer').html( html );
 			}
 		},
-		render_template : function(templateName, targetSelector, otherdata){
+		render_template : function(templateName, targetSelector, otherdata, keepLoader){
+			keepLoader = (typeof keepLoader == 'undefined' || !keepLoader) ? false : true;
 			window.is_home = false;
 			var template = Handlebars.templates[templateName];
 			if(!template){
@@ -229,6 +228,10 @@
 			var data = this.gatherEnvironment(otherdata);
 			data.is_scrollable = false;
 			$(targetSelector).append(template(data));
+			if(!keepLoader)
+				setTimeout(function(){
+					app.hideLoader();
+				}, 420);
 		},
 		render_login : function(url){
 
@@ -250,7 +253,9 @@
 			return this.switchView('home', data, '.view', url, 'home-menu', false, false);
 		},
 		render_user_list : function(url){
-
+			setTimeout(function(){
+				app.showLoader();
+			}, 220);
 			window.is_home = false;
 			app.check_or_renderContainer();
 			var data = this.gatherEnvironment( [], 'Usuarios' );

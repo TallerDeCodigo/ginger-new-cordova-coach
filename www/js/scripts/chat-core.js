@@ -24,41 +24,44 @@
 	chatCore.fetchUnreadCount = function(){
 
 		console.log("Fetch unread");
-		if(chatCore.isInitialized){
-			// mergeUsers([{user: elCoach}]);
-			QB.chat.dialog.list( null, function(err, resDialogs) {
-				
-				if (err)
-					console.log(err);
+		setTimeout(function(){
 
-				var occupantsIds = [];
-				var i = 0;
-				resDialogs.items.forEach(function(item, i, arr) {
+			if(chatCore.isInitialized){
+				// mergeUsers([{user: elCoach}]);
+				QB.chat.dialog.list( null, function(err, resDialogs) {
+					
+					if (err)
+						console.log(err);
+					console.log(resDialogs);
+					var occupantsIds = [];
+					var i = 0;
+					resDialogs.items.forEach(function(item, i, arr) {
 
-					var dialogId = item._id;
-					dialogs[dialogId] = item;
-					var user_id = item.user_id;
-					var unread_count = item.unread_messages_count;
-					var $foundElement = $('*[data-chatid="'+user_id+'"]');
-					var exists_in_list = $foundElement.length;
+						var dialogId = item._id;
+						dialogs[dialogId] = item;
+						var user_id = item.user_id;
+						var unread_count = item.unread_messages_count;
+						var $foundElement = $('*[data-chatid="'+user_id+'"]');
+						var exists_in_list = $foundElement.length;
 
-					$foundElement.addClass('active')
-								  .data('chatid', dialogId);
-				
-					$foundElement.find('.mensajes')
-										 .text(unread_count)
-										 .on('click', function(e){
-										 	console.log($(e.currentTarget).data('dialogid'));
-											return app.render_chat_dialog(null, $(e.currentTarget).data('dialogid'));
-										 });
-					$foundElement.find('.chat_unread')
-								  .attr('data-dialogid', item._id);
+						$foundElement.addClass('active')
+									  .data('chatid', dialogId);
+					
+						$foundElement.find('.mensajes')
+											 .text(unread_count)
+											 .on('click', function(e){
+											 	console.log($(e.currentTarget).data('dialogid'));
+												return app.render_chat_dialog(null, $(e.currentTarget).data('dialogid'));
+											 });
+						$foundElement.find('.chat_unread')
+									  .attr('data-dialogid', item._id);
+					});
+					app.hideLoader();
 				});
-				app.hideLoader();
-			});
+				return;
+			}
 			return;
-		}
-		return;
+		}, 420);
 	};
 
 	chatCore.fetchDialogList = function(){
