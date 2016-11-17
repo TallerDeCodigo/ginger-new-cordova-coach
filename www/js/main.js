@@ -46,7 +46,7 @@
 				var userinfo 	= JSON.parse(localStorage.getItem('user'));
 					window._coach = (userinfo) ? userinfo : '';
 				/* Take the user to it's timeline */
-				return;
+				return app.render_home();
 			}else{
 				return app.render_login();
 			}
@@ -314,14 +314,14 @@
 		},
 		render_finanzas : function(url, month, day){
 
+			setTimeout(function(){
+				app.showLoader();
+			}, 420);
 			var responsedata = [];
 			responsedata.total_amount 	= 0;
 			responsedata.total_days 	= 0;
 			var todayObj 	= new Date();
 			
-			setTimeout(function(){
-				app.showLoader();
-			}, 800);
 			responsedata.clients 		= apiRH.getFinanzas( month );
 			responsedata.this_month 	= catalogues.months[month];
 			responsedata.this_day 		= todayObj.getDate();

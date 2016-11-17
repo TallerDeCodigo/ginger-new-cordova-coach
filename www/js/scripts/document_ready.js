@@ -261,7 +261,7 @@ window.initializeEvents = function(){
 			var diff_stamps = (local_tmp) 	? (new Date().getTime() - local_tmp.return_stamp)/1000
 											: 0;
 
-			if( !local_tmp || (local_tmp.return !=  'user-list' && diff_stamps >= 600) ){
+			if( !local_tmp || local_tmp.return !=  'user-list' || (local_tmp.return ==  'user-list' && diff_stamps >= 600) ){
 				console.log("I'm getting some data");
 				var diets = null;
 				if(users = apiRH.getUsuarios()){
@@ -422,7 +422,7 @@ window.initializeEvents = function(){
 											: 0;
 			var flag = (local_tmp) ? true : false;
 
-			if(!local_tmp || (local_tmp.return !=  'diet-list' || diff_stamps >= 60) ){
+			if(!local_tmp || local_tmp.return !=  'diet-list' || (local_tmp.return ==  'diet-list' && diff_stamps >= 60) ){
 				console.log("Gonna get some data");
 				var diets = null;
 				if( diets = apiRH.getDiets() ){
