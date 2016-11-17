@@ -281,7 +281,7 @@ window.initializeEvents = function(){
 					return chatCore.fetchUnreadCount(_coach);
 				}
 			}else{
-				console.log("note getting data");
+				console.log("not getting data");
 				// Render template with new information
 				var content = JSON.parse( app.keeper.getItem('temp-return') );
 				app.render_template("user-list-content", ".insert_content", content);
@@ -423,8 +423,9 @@ window.initializeEvents = function(){
 			var flag = (local_tmp) ? true : false;
 
 			if(!local_tmp || (local_tmp.return !=  'diet-list' || diff_stamps >= 60) ){
+				console.log("Gonna get some data");
 				var diets = null;
-				if(diets = apiRH.getDiets()){
+				if( diets = apiRH.getDiets() ){
 
 					responsedata =  {
 										return 		: 'diet-list',
@@ -432,9 +433,17 @@ window.initializeEvents = function(){
 										diets 		: diets
 									};
 					console.log("Responsedata");
+					console.log(responsedata);
+					app.render_template("diet-list-content", ".insert_content", responsedata);
 					app.keeper.setItem('temp-return', JSON.stringify(responsedata));
 					flag = true;
 				}
+			}else{
+				console.log("not getting data");
+				// Render template with new information
+				var content = JSON.parse( app.keeper.getItem('temp-return') );
+				app.render_template("user-list-content", ".insert_content", content);
+				return;
 			}
 
 			var dietsContent = (!flag) ? responsedata : local_tmp;

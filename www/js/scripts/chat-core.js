@@ -23,7 +23,6 @@
 
 	chatCore.fetchUnreadCount = function(){
 
-		console.log("Fetch unread");
 		setTimeout(function(){
 
 			if(chatCore.isInitialized){
