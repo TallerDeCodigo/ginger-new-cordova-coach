@@ -501,6 +501,7 @@ window.initializeEvents = function(){
 					$('.overscreen4').hide();
 					$('#blur').toggleClass('blurred');
 				});
+			
 			initHooks();
 		} // END diet-list
 
