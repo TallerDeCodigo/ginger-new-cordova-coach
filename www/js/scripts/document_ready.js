@@ -428,7 +428,7 @@ window.initializeEvents = function(){
 											: 0;
 			var flag = (local_tmp) ? true : false;
 
-			if(!local_tmp || local_tmp.return !=  'diet-list' || (local_tmp.return ==  'diet-list' && diff_stamps >= 60) ){
+			if(!local_tmp || local_tmp.return !=  'diet-list' || (local_tmp.return ==  'diet-list' && diff_stamps >= 600) ){
 				console.log("Gonna get some data");
 				var diets = null;
 				if( diets = apiRH.getDiets() ){
@@ -438,9 +438,8 @@ window.initializeEvents = function(){
 										return_stamp: new Date().getTime(),
 										diets 		: diets
 									};
-					console.log("Responsedata");
 					console.log(responsedata);
-					app.render_template("diet-list-content", ".insert_content", responsedata);
+					app.render_template("diet-list-content", ".insert-content", responsedata);
 					app.keeper.setItem('temp-return', JSON.stringify(responsedata));
 					flag = true;
 				}
@@ -448,13 +447,13 @@ window.initializeEvents = function(){
 				console.log("not getting data");
 				// Render template with new information
 				var content = JSON.parse( app.keeper.getItem('temp-return') );
-				app.render_template("user-list-content", ".insert_content", content);
+				app.render_template("diet-list-content", ".insert-content", content);
 				return;
 			}
 
 			var dietsContent = (!flag) ? responsedata : local_tmp;
 
-			app.render_template("diet-list-content", ".insert_content", dietsContent);
+			app.render_template("diet-list-content", ".insert-content", dietsContent);
 
 			/*** Dieta operations ***/
 			$('.btn_copy').click(function (e) {
