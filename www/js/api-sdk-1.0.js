@@ -330,13 +330,10 @@ function requestHandlerAPI(){
 
 		/**
 		 * Ingredientes
-		 * */
-
+		 */
 		 this.listIngredient = function(){
-
 			var response = this.getRequest('tables/ingrediente/?epp=999' , null);
 			console.log("Request Data Ingredients"+JSON.stringify(response));
-
 			return (response) ? response : false;
 		 };
 
@@ -344,7 +341,7 @@ function requestHandlerAPI(){
 		 *
 		 * SAVE INGREDIENTS
 		 *
-		 **/
+		 */
 		 this.newIngredient = function(data){
 			var req = {
 				method : 'post',
@@ -357,16 +354,13 @@ function requestHandlerAPI(){
 				data : data
 			}
 			var response = this.makeRequest('tables/ingrediente', req);
-
 			console.log('RESPONSE INGREDIENTS :::: ' + response);  //llega aqui con la respuesta del servidor
-
 			return (response) ? response : false;
 		 };
 
 
 		/** Fetch Coach clients **/
 		this.getUsuarios = function(){
-
 			var response = this.getRequest('api/client_status?coachid=' + apiRH.keeper.getItem('userId'), null);
 			return (response) ? response : false;
 		};
@@ -400,9 +394,7 @@ function requestHandlerAPI(){
 		};
 
 		this.getFinanzas = function(mes){
-
 			var response = this.getRequest('api/history/?coach=' + apiRH.keeper.getItem('userId') + '&mes=' + mes, null);
-			console.log("Response Finanzas ::: "+JSON.stringify(response));
 			return (response) ? response : false;
 		};
 

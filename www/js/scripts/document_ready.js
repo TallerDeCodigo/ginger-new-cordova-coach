@@ -268,7 +268,6 @@ window.initializeEvents = function(){
 											: 0;
 
 			if( !local_tmp || local_tmp.return !=  'user-list' || (local_tmp.return ==  'user-list' && diff_stamps >= 600) ){
-				console.log("I'm getting some data");
 				var diets = null;
 				if(users = apiRH.getUsuarios()){
 
@@ -277,7 +276,6 @@ window.initializeEvents = function(){
 										return_stamp: new Date().getTime(),
 										users 		: users
 									};
-					console.log("Responsedata");
 					app.keeper.setItem('temp-return', JSON.stringify(responsedata));
 					flag = true;
 
@@ -287,7 +285,6 @@ window.initializeEvents = function(){
 					return chatCore.fetchUnreadCount(_coach);
 				}
 			}else{
-				console.log("not getting data");
 				// Render template with new information
 				var content = JSON.parse( app.keeper.getItem('temp-return') );
 				app.render_template("user-list-content", ".insert_content", content);
