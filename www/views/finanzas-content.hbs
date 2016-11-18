@@ -1,0 +1,25 @@
+	<p class="cantidad">$ <span class="totalAcumulado">{{data.total_amount}}</span> MXN</p>
+	<p class="status">PAGADO</p>
+	<p class="diasac">Total de días acumulados<br><span class="total">{{data.total_days}}</span></p>
+	<div class="changer">
+		<a class="btn_left" href="#"><img src="{{cordova_full_path}}images/leftarrow.png"></a>
+		<span class="mes">{{data.this_month}}</span>
+		<a class="btn_right" href="#"><img src="{{cordova_full_path}}images/rightarrow.png"></a>
+	</div>
+	<table class="record">
+		<tr>
+			<th>Nombre</th>
+			<th>Inicio</th>
+			<th>Días</th>
+			<th>Saldo</th>
+		</tr>
+		{{# each data.clients}}
+			<tr>
+				<td>{{name}}</td>
+				<td>{{days_since_subscription}}</td>
+				<td>{{days_this_month}}</td>
+				<td>$ {{amount_this_month}}</td>
+			</tr>
+		{{/ each}}
+		
+	</table>

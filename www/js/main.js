@@ -46,7 +46,9 @@
 				var userinfo 	= JSON.parse(localStorage.getItem('user'));
 					window._coach = (userinfo) ? userinfo : '';
 				/* Take the user to it's timeline */
-				return app.render_home();
+				if(is_home)
+					return app.render_home();
+				return;
 			}else{
 				return app.render_login();
 			}
@@ -285,56 +287,25 @@
 			window.dialogNow = (dialogId) ? dialogId : null;
 			return this.switchView('chat-dialog', data, '.view', url, 'list-chat dialog_detail '+dialogClass);
 		},
-		render_finanzas_view : function(url){
+		render_finances_view : function(url){
 
-			var responsedata = [];
-			responsedata.total_amount 	= 0;
-			responsedata.total_days 	= 0;
-			window.is_home 	= false;
-			var todayObj 	= new Date();
-			var month 		= todayObj.getMonth();
-			
 			setTimeout(function(){
 				app.showLoader();
 			}, 800);
-			app.check_or_renderContainer();
-			responsedata.clients 		= apiRH.getFinanzas( month );
-			responsedata.this_month 	= catalogues.months[month];
-			responsedata.this_day 		= todayObj.getDate();
 
-			responsedata.clients.forEach(function(client){
-				responsedata.total_amount 	+= client.amount_this_month;
-				responsedata.total_days 	+= client.days_this_month;
-				client.amount_this_month 	 = Math.round(client.amount_this_month * 100) / 100;
-			});
-			responsedata.total_amount = Math.round(responsedata.total_amount * 100) / 100;
-			console.log(responsedata);
-			var data = this.gatherEnvironment( responsedata, "Finanzas");
-			return this.switchView( 'finanzas', data, '.view', url, 'finanzas' );
-		},
-		render_finanzas : function(url, month, day){
-
-			setTimeout(function(){
-				app.showLoader();
-			}, 420);
-			var responsedata = [];
+			var responsedata 	= [];
+			var todayObj 		= new Date();
+			var month 			= todayObj.getMonth();
+			window.is_home 		= false;
 			responsedata.total_amount 	= 0;
 			responsedata.total_days 	= 0;
-			var todayObj 	= new Date();
-			
-			responsedata.clients 		= apiRH.getFinanzas( month );
 			responsedata.this_month 	= catalogues.months[month];
 			responsedata.this_day 		= todayObj.getDate();
-
-			responsedata.clients.forEach(function(client){
-				responsedata.total_amount 	+= Math.round(client.amount_this_month * 100) / 100;
-				responsedata.total_days 	+= client.days_this_month;
-				client.amount_this_month 	 = Math.round(client.amount_this_month * 100) / 100;
-			});
-			responsedata.total_amount = Math.round(responsedata.total_amount * 100) / 100;
-			console.log(responsedata);
+			
+			app.check_or_renderContainer();
+			
 			var data = this.gatherEnvironment( responsedata, "Finanzas");
-			return this.switchView( 'finanzas', data, '.view', url, 'finanzas', false, false );
+			return this.switchView( 'finanzas', data, '.view', url, 'finanzas', true );
 		},
 		render_coach_dietas : function(url){
 
@@ -391,7 +362,6 @@
 			app.check_or_renderContainer();
 			var extra_data 	= apiRH.fetchCoachProfile();	
 			var data 		= this.gatherEnvironment(extra_data, 'Mi Perfil');
-			console.log(data);
 			return this.switchView('coach', data, '.view', url, 'coach-profile');
 		},
 		render_clientProfile : function(url, clientId){
@@ -542,9 +512,6 @@
 			});
 
 		},//END UPDATE PERFIL
-
-
-
 		update_platillo: function(plato, fecha, comida, platillo){
 			var req = {
 				method: 'post',
@@ -566,10 +533,7 @@
 				console.log(response);	
 			});
 		},
-
-
-		get_diet: function(dietId)
-		{
+		get_diet: function(dietId) {
 			var req = {
 				method : 'GET',
 				url : api_base_url + 'tables/dieta/' + dietId,  //definitr tabla
@@ -600,9 +564,7 @@
 			//console.log(result);
 			return result;
 		},//END GET DIET
-		
-		restaFechas: function(f1,f2)
-		{
+		restaFechas: function(f1,f2){
 			var aFecha1 = f1.split('-'); 
 			var aFecha2 = f2.split('/'); 
 			var fFecha1 = Date.UTC(aFecha1[2],aFecha1[1]-1,aFecha1[0]); 
@@ -610,6 +572,31 @@
 			var dif = fFecha2 - fFecha1;
 			var dias = Math.floor(dif / (1000 * 60 * 60 * 24)); 
 			return dias;
+		},
+		renderFinancesContent: function(month){
+			setTimeout(function(){
+				app.showLoader();
+			}, 420);
+			console.log("Renderings finances content");
+			var responsedata = [];
+			responsedata.total_amount 	= 0;
+			responsedata.total_days 	= 0;
+			window.is_home 	= false;
+			var todayObj 	= new Date();
+			var month 		= todayObj.getMonth();
+			
+			responsedata.clients 		= apiRH.getFinanzas( month );
+			responsedata.this_month 	= catalogues.months[month];
+			responsedata.this_day 		= todayObj.getDate();
+
+			responsedata.clients.forEach(function(client){
+				responsedata.total_amount 	+= Math.round(client.amount_this_month * 100) / 100;
+				responsedata.total_days 	+= client.days_this_month;
+				client.amount_this_month 	 = Math.round(client.amount_this_month * 100) / 100;
+			});
+			responsedata.total_amount = Math.round(responsedata.total_amount * 100) / 100;
+			console.log(responsedata);
+			return this.render_template('finanzas-content', '.insert-content', responsedata);
 		}
 	};	
 

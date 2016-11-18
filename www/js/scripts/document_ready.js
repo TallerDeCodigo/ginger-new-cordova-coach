@@ -36,7 +36,7 @@ window.initializeEvents = function(){
 				}
 				if( $(this).data('resource') == "finanzas" ){
 					app.showLoader();
-					return app.render_finanzas_view( $(this).attr('href') );
+					return app.render_finances_view( $(this).attr('href') );
 				}
 				if( $(this).data('resource') == "profile" ){
 					app.showLoader();
@@ -173,6 +173,8 @@ window.initializeEvents = function(){
 				var base_month 	= todayObj.getMonth();
 				var month 		= (!window.temp_month) ? todayObj.getMonth() : temp_month;
 
+				
+
 				$('.btn_right').removeClass('inactive');
 				if(month == base_month)
 					$('.btn_right').addClass('inactive');
@@ -190,7 +192,7 @@ window.initializeEvents = function(){
 					console.log(month);
 					if(month == base_month)
 						$(this).addClass('inactive');
-					return app.render_finanzas(null, month);
+					return app.renderFinancesContent(month);
 				});
 
 				$('.btn_left').click( function(){
@@ -201,9 +203,13 @@ window.initializeEvents = function(){
 					console.log(month);
 					if(month != base_month)
 						$('.btn_right').removeClass('inactive');
-					return app.render_finanzas(null, month);
+					return app.renderFinancesContent(month);
 				});
-				app.hideLoader();
+				setTimeout(function(){
+					/*** Fetch dynamic content ***/ 
+					app.renderFinancesContent(month);
+					// app.hideLoader();
+				}, 1200);
 			};
 			adjustFinanzas();
 
