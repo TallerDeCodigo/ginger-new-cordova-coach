@@ -166,7 +166,6 @@ function requestHandlerAPI(){
 							};
 
 			var response = this.makeRequest('api/duplicate', params);
-			console.log(response);
 			return (response) ? response : false;
 		};
 
@@ -672,8 +671,6 @@ function requestHandlerAPI(){
 			})
 			 .done(function(response){
 				result = response;
-				// TODO: clean specific temps outside this method
-				app.keeper.removeItem('temp-return');
 			})
 			 .fail(function(e){
 				result = false;

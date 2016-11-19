@@ -241,16 +241,15 @@ window.initializeEvents = function(){
 				};
 
 				var _newDiet = apiRH.cloneDiet(clone_params);
-				console.log(_newDiet);
-				// if(_newDiet){
+				if(_newDiet._id){
 
-				// 	app.keeper.removeItem('d_comentario');
-				// 	app.keeper.removeItem('d_nombre');
-				// 	app.keeper.setItem("dOperator", _newDiet._id);
-				// 	return app.render_diet_edition();
-				// } else{
-				// 	return app.toast("Error clonando la dieta, por favor intenta nuevamente.");
-				// }
+					app.keeper.removeItem('d_comentario');
+					app.keeper.removeItem('d_nombre');
+					app.keeper.setItem("dOperator", _newDiet._id);
+					return app.render_diet_edition('dieta.html');
+				} else{
+					return app.toast("Error clonando la dieta, por favor intenta nuevamente.");
+				}
 
 			});
 
@@ -458,9 +457,10 @@ window.initializeEvents = function(){
 
 						var response = apiRH.deleteDiet(idDelete);
 						console.log(response);
-						if(response)
+						if(response){
 							$('.each_diet_element[data-id='+idDelete+']').remove();
-
+							app.keeper.removeItem('temp-return');
+						}
 						$('.overscreen4').hide();
 						$('#blur').toggleClass('blurred');
 					});
@@ -586,9 +586,6 @@ window.initializeEvents = function(){
 
 			console.log("Workspace dieta");
 
-			$( ".accordion" ).accordion({collapsible:true,active:false,animate:300,heightStyle:"content"});
-			$( ".accordion1" ).accordion({collapsible:true,active:false,animate:200,heightStyle:"content"});
-			
 			$('#save_working_diet').click( function(){
 
 				var response = null;
@@ -968,7 +965,7 @@ window.initializeEvents = function(){
 					var nombre_receta;
 					var ingredientes;
 					var misPlatos = [];
-					var i=0;
+					var i = 0;
 
 					$.each( dieta.platillos, function( key, value ) {
 						
@@ -1119,7 +1116,9 @@ window.initializeEvents = function(){
 				window.location.assign('platillos.html');
 			});
 
-
+			$( ".accordion" ).accordion({collapsible:true,active:false,animate:300,heightStyle:"content"});
+			$( ".accordion1" ).accordion({collapsible:true,active:false,animate:200,heightStyle:"content"});
+			
 		} // END workspace-diet
 
 
