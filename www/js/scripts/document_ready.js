@@ -749,8 +749,8 @@ window.initializeEvents = function(){
 
 				$('.platillo').hide();
 
-			} else if (app.keeper.getItem('idDishSelected') || app.keeper.getItem('dietaEdit')) {
-				
+			} else if ( app.keeper.getItem('idDishSelected') || app.keeper.getItem('dietaEdit') ) {
+
 				/*** SAVE DIET DUPLICATE ***/
 				var dish_count = 0;
 				// Fetch diet copy from local memory
@@ -949,7 +949,7 @@ window.initializeEvents = function(){
 				});
 
 			}else{
-
+				console.log("here?");
 				var dieta = app.get_diet('?_id='+ app.keeper.getItem('dOperator'));
 				console.log('ID DIET: ' + dieta._id);
 

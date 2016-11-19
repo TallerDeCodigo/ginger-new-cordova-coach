@@ -568,6 +568,7 @@
 			 .done(function(response){
 				result = response;
 				localStorage.setItem('dieta', response);
+				console.log(response);
 				sdk_app_context.hideLoader(response);
 			})
 			 .fail(function(e){
