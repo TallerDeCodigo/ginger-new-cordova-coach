@@ -173,26 +173,12 @@ function requestHandlerAPI(){
 		/**
 		 * COPY DIET
 		 * */
-		 this.copyDiet = function(data){
-			var req = {
-				method : 'POST',
-				url : api_base_url + 'api/duplicate',
-				headers: {
-					'X-ZUMO-APPLICATION': 'ideIHnCMutWTPsKMBlWmGVtIPXROdc92',
-					'X-ZUMO-AUTH': apiRH.keeper.getItem('token'),
-					'Content-Type': 'application/json'
-				},
-				data: data
-			}
+		 this.cloneDiet = function(data){
+			var params = 	{
+							data: data
+						};
 
-			console.log(JSON.stringify(req));
-
-			var response = this.makeRequest('api/duplicate', req);
-
-			console.log("Request Copy Data Dieta");
-
-			console.log(response);  //llega aqui con la respuesta del servidor
-
+			var response = this.makeRequest('api/duplicate', params);
 			return (response) ? response : false;
 		};
 

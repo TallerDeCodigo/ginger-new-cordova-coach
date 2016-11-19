@@ -149,7 +149,7 @@ window.initializeEvents = function(){
 							apiRH.headers['X-ZUMO-AUTH'] = login_response;
 							var coachInfo = apiRH.getInfoCoach();
 							if(coachInfo){
-								var coachInfo 	= JSON.parse( localStorage.getItem('user') );
+								var coachInfo 	= JSON.parse( app.keeper.getItem('user') );
 								window._coach 	= (coachInfo) ? coachInfo : null;
 								return app.render_home();
 							}
@@ -213,44 +213,46 @@ window.initializeEvents = function(){
 			};
 			adjustFinanzas();
 
-		}//	END HAS CLASS FINANZAS
+		}//	END FINANZAS
 
 
-		if($('body').hasClass('copy-diet')){
-			$('.btn-gre').click(function () {
-				console.log('COPY DIETA');
+		if( $('body').hasClass('copy-diet') ){
+
+			$('#start_copying').click(function () {
+
+				console.log('Copy diet from existing structure');
 				var d_nombre 		= $('input[name="nombre"]').val();
 				var d_comentario 	= $('input[name="comentario"]').val();
 
-				localStorage.setItem('d_nombre', d_nombre);
-				localStorage.setItem('d_comentario', d_comentario);
+				// Pero bueno está bien
+				app.keeper.setItem('d_nombre', d_nombre);
+				app.keeper.setItem('d_comentario', d_comentario);
 
 				if(d_nombre.length < 4)
-					return;
-				if(d_comentario.length < 4)
-					return;
+					return app.toast("El nombre de la dieta debe ser mayor a 4 caracteres");
 
-				var json = {
-					"nombre" : 		localStorage.getItem('d_nombre'),
-					"descripcion" : localStorage.getItem('d_comentario'),
-					"id": 			localStorage.getItem("dOperator")
+				if(d_comentario.length < 4)
+					return app.toast("La descripción debe ser mayor a 4 caracteres");
+
+				var clone_params = {
+					"nombre" : 		app.keeper.getItem('d_nombre'),
+					"descripcion" : app.keeper.getItem('d_comentario'),
+					"id": 			app.keeper.getItem("dOperator")
 				};
 
-				var response = apiRH.copyDiet(json);
-
-				console.log(response);
-
+				var response = apiRH.cloneDiet(clone_params);
 				if(response){
+
 					var c_diet = response;
-
-					localStorage.removeItem('d_comentario');
-					localStorage.removeItem('d_nombre');
-					localStorage.setItem("dOperator", c_diet._id);
-
+					app.keeper.removeItem('d_comentario');
+					app.keeper.removeItem('d_nombre');
+					app.keeper.setItem("dOperator", c_diet._id);
+					//TODO: Render via templating engine
 					window.location.assign('dieta.html');
+				} else{
+					return app.toast("Error clonando la dieta, por favor intenta nuevamente.");
 				}
-				else
-					console.log('Error');
+
 			});
 		}
 
@@ -529,7 +531,60 @@ window.initializeEvents = function(){
 				
 			});
 
-		}
+		} // END create-new-diet
+
+
+		$('.btn_add').click(function(){
+			console.log('Saving diet structure');
+
+			var dieta_added = app.keeper.getItem('idDishSelected');
+			var contador_platillos = app.keeper.getItem('contador_platillos');
+			console.log(dieta_added);
+			console.log("contador :: "+app.keeper.getItem('contador_platillos'));
+			if(app.keeper.getItem('contador_platillos') >= 3 ){
+
+					var dieta = app.keeper.getItem('dietaEdit');
+					
+					console.log('ID DIETA DEFINIDO: ' +JSON.parse(dieta)._id);
+					
+					if(JSON.parse(dieta)._id){
+
+						var response = apiRH.saveDiet(dieta);
+						console.log(response);
+					}
+					else{
+						var response = apiRH.makeDiet(dieta);	
+					}
+
+					if(response){			
+		  				if (app.keeper.getItem('proviene') == "lista") {
+		  					app.keeper.removeItem('dietaEdit');
+		  					app.keeper.removeItem('proviene');
+			 	 		window.location.assign('lista-dietas.html');
+		        		} else {
+		        			app.keeper.removeItem('dietaEdit');
+			     		window.location.assign('dietas.html');
+		        	 	}
+		        	}
+			}else {
+
+				if(!$('.overscreen_error').is(':visible')){
+					console.log('entra popup');
+					$('.overscreen_error').show();
+					setTimeout(function() {$('.overscreen_error').addClass('active');}, 200);
+				} else {
+					$('.overscreen_error').removeClass('active');
+					setTimeout(function() {$('.overscreen_error').hide();}, 800);
+				}
+				$('#blur').toggleClass('blurred');
+
+				$('#aceptar_error').click(function(){
+					$('.overscreen_error').hide();
+					$('#blur').toggleClass('blurred');
+				})
+			}
+		}); // END Save diet structure
+
 
 	});
 

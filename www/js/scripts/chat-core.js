@@ -7,8 +7,7 @@
 
 	chatCore.init = function(elCoach){
 		console.log("Initilizing instant messaging api");
-		console.log(elCoach.mail);
-		console.log(elCoach.chatPassword);
+
 		QB.createSession( { 	
 							email: elCoach.mail, 
 							password: elCoach.chatPassword
