@@ -7,14 +7,22 @@
 	$(function(){
 
 		if($('body').hasClass('dieta') ){
+			console.log("Has class dieta");
+			/*** TODO: Get this shit into a catalogue ***/
+			var coach_type 				= [ 'Estricto', 'Innovador', 'Animador', 'Tradicional'];
+			var restricciones 			= [ 'Huevo', 'Pollo', 'Pescado', 'Mariscos', 'Lacteos', 'Carne' ];
+			var objetivo 				= [ 'adelgazar','detox','bienestar','rendimiento' ];
+			var sex 					= [ 'Hombre', 'Mujer'];
+			var tipo_de_ingredientes 	= [ 'granosycereales', 'verduras', 'grasas', 'lacteos', 'proteinaanimal', 'leguminosas', 'nuecesysemillas', 'frutas', 'endulzantes', 'aderezosycondimentos', 'superfoods', 'liquidos'];
+
 			
-			console.log("has class");
 		  	$( ".accordion" ).accordion({collapsible:true,active:false,animate:300,heightStyle:"content"});
 		  	$( ".accordion1" ).accordion({collapsible:true,active:false,animate:200,heightStyle:"content"});
 
 		  	var idDelete;
 		  	var diaDelete;
 		  	var mealDelete;
+
 
 		  	$('.ingred').click(function(){
 		  		$(this).parent().find('.los_ing').toggle();
@@ -97,6 +105,410 @@
 		  				window.location.assign('dietas.html');
 	  				}
 	  			});
+
+				
+
+				/*
+					CREANDO DIETA NEWWWWWWWW
+				 */
+
+				var dietaNew = {};
+				var jsonNew = '{"nombre": "' +app.keeper.getItem('d_nombre') + '","descripcion":"' + app.keeper.getItem('d_comentario') + '", "estructura":{"domingo":{"desayuno":{},"snack1":{},"comida":{},"snack2":{},"cena":{}},"lunes":{"desayuno":{},"snack1":{},"comida":{},"snack2":{},"cena":{}},"martes":{"desayuno":{},"snack1":{},"comida":{},"snack2":{},"cena":{}},"miercoles":{"desayuno":{},"snack1":{},"comida":{},"snack2":{},"cena":{}},"jueves":{"desayuno":{},"snack1":{},"comida":{},"snack2":{},"cena":{}},"viernes":{"desayuno":{},"snack1":{},"comida":{},"snack2":{},"cena":{}},"sabado":{"desayuno":{},"snack1":{},"comida":{},"snack2":{},"cena":{}}},"perfil":{"sexo":0,"edad":0,"bmi":0,"objetivo":0}}';
+				
+				if(window.location.href.search('editar') != -1){
+					app.keeper.setItem('contador_platillos', 1);
+				}
+
+				if(window.location.href.search('create') != -1 ){
+
+					app.keeper.setItem('contador_platillos', 0);
+
+					console.log(jsonNew);
+					
+					console.log('PARSE: ' + JSON.parse(jsonNew));	
+
+					dietaNew = JSON.parse(jsonNew);
+
+					app.keeper.setItem('dietaEdit', JSON.stringify(dietaNew));
+
+					console.log('Todo: ' + dietaNew);
+
+
+					$('.platillo').hide();
+
+				} else if (app.keeper.getItem('idDishSelected') || app.keeper.getItem('dietaEdit')) {
+					
+					/*** SAVE DIET DUPLICATE ***/
+					var dish_count = 0;
+					// Fetch diet copy from local memory
+					dietaNew = JSON.parse( app.keeper.getItem('dietaEdit') );
+
+				// IS THIS EVEN USEFUL??? ? ? ? ? 
+				// IS THIS EVEN USEFUL??? ? ? ? ? 
+				// IS THIS EVEN USEFUL??? ? ? ? ? 
+					if ( app.keeper.getItem('idDishSelected') ) {
+						
+						var i = 0;
+						var guardar1 = [];
+						var guardar2 = [];
+
+						$.each(dietaNew["estructura"][app.keeper.getItem('d_date')][app.keeper.getItem('d_time')], function( key, value ) {
+							guardar1[i] = key;
+							guardar2[i] = value;
+							i++;
+						});
+
+						guardar1[i] = i;
+						guardar2[i] = {"a":{"platillo":app.keeper.getItem('idDishSelected'),"descripcion":app.keeper.getItem('desDishSelected'),"receta":app.keeper.getItem('recetaDishSelected')}};
+						var rv = {};
+						for (var j = 0; j < guardar1.length; ++j) {
+							var agregar = j+1;
+						    rv[agregar] = guardar2[j];
+						}
+						dietaNew["estructura"][app.keeper.getItem('d_date')][app.keeper.getItem('d_time')]= rv;
+						app.keeper.setItem('dietaEdit', JSON.stringify(dietaNew));
+
+						app.keeper.removeItem('idDishSelected');
+
+						var contador_platillos = dish_count;
+
+						contador_platillos++;
+						console.log(contador_platillos);
+						app.keeper.setItem('contador_platillos', contador_platillos);
+						console.log("Aqui no pasa o si?");
+						console.log(JSON.stringify(dietaNew));					
+					}
+
+					var referer = false;
+
+					if (dietaNew._id) {
+
+						var i 	= 0;
+						var j 	= 0;
+						var receta;
+						var nombre_receta;
+						var platillo_id;
+						var comm_id;
+						var ingredientes;
+						var comments;
+						var misPlatos 		= [];
+						var loscomentarios 	= [];
+						var comentarios 	= dietaNew.comentarios;
+						var platillos 		= dietaNew.platillos;
+						
+						referer = true;
+						app.keeper.setItem( 'contador_platillos', platillos.length );
+
+						$.each( dietaNew.platillos, function( key, value ) {
+
+							misPlatos[i] = [];
+							$.each( value, function( key, value ) {
+
+								if ( key == "_id" )
+								 	misPlatos[i][0] = value;
+
+								if ( key == "descripcion" )
+								 	misPlatos[i][1] = value;
+
+								if ( key == "receta" )
+								 	misPlatos[i][2] = value;
+
+								if ( key == "ingredientes" ) {
+
+								 	var ingredientes_concat = '';
+								 	$.each(value, function(key, value){
+								 		if(value._id != null)
+								 			ingredientes_concat = ingredientes_concat + value._id.nombre;
+								 	});
+								 	misPlatos[i][3] = ingredientes_concat;
+								}
+
+							});
+							i++;
+						});
+
+						i = 0;
+						$.each( dietaNew.comentarios, function( key, value ) {
+							loscomentarios[i] = [];
+							j = 0;
+							$.each( value, function( key, value ) {
+								loscomentarios[i][j] = value;
+								j++;
+							});
+							i++;
+						});
+
+						for ( var i = 0; i < misPlatos.length; i++ ) {
+							misPlatos[i][4] = "";
+							for (var j = 0; j < loscomentarios.length; j++) {
+								if ( misPlatos[i][0] == loscomentarios[j][2] && misPlatos[i][4] == "" ) {
+									misPlatos[i][4]  = loscomentarios[j][1];
+								}
+							}
+						}
+						console.log(misPlatos);
+						console.log(loscomentarios);
+					} // Dieta new id
+
+					$.each( dietaNew.estructura, function( key, value ) {
+
+						if(key == "domingo"){ dia_prueba = 1; } else if (key == "lunes") {dia_prueba=2;} else if (key == "martes") {dia_prueba=3;} else if (key == "miercoles") {dia_prueba=4;} else if (key == "jueves") {dia_prueba=5;} else if (key == "viernes") {dia_prueba=6;} else if (key=="sabado") {dia_prueba=7;}
+						
+						var level_refer = '#toda_la_dieta li:nth-of-type('+dia_prueba+') ';
+						
+						$.each( value, function( key, value ) {
+							// desayuno, snack, comida,...
+							var sec_level_refer = level_refer+'.acc-content.'+key+' ';
+							var i = 1;
+
+							$.each( value, function( key, value ) {
+								// tiempos (1,2,3..)
+								// console.log(key + " :::: 0" +value);
+								var third_level_ref = sec_level_refer+'div.platillo:nth-of-type('+i+')';
+								i++;	
+								$.each( value, function( key, value ) {
+
+									$.each( value, function( key, value ) {
+
+										// console.log(key + " :::: " +value);
+										if ( key == "platillo" ) {
+
+											$(third_level_ref).attr("data", value);
+											$(third_level_ref + ' nav svg').attr("data", value);
+
+											if(referer)
+												for (var ii = 0; ii < misPlatos.length; ii++) {
+													if (value == misPlatos[ii][0]) {
+
+														$(third_level_ref).attr( "data", misPlatos[ii][0] );
+														$(third_level_ref + ' nav svg').attr( "data", misPlatos[ii][0] );
+														$(third_level_ref+' h5').html( misPlatos[ii][1] );
+														
+														if (misPlatos[ii][2] != '') {
+															$(third_level_ref+' p.receta').html( misPlatos[ii][2] );
+														} else {
+															$(third_level_ref+'p.receta').hide();
+														}
+														if (misPlatos[ii][4] != '') {
+															$(third_level_ref+' p.comentario').html(misPlatos[ii][4]);
+														} else {
+															$(third_level_ref+' p.comentario').hide();
+														}
+
+														if(misPlatos[ii][3] != ''){
+															$(third_level_ref+' p.los_ing').html(misPlatos[ii][3]);
+															console.log('plato '+ii+' sus ing '+misPlatos[ii][3]);
+														}else{
+															console.log("nones");
+														}
+														
+													}
+												}
+
+										}
+
+										if ( key == "descripcion" ) {
+											$(third_level_ref+' h5').html(value);
+										}
+
+										if ( key == "receta" ) {
+
+											$(third_level_ref+' p.receta').html(value);
+											if (value == '')
+												$(third_level_ref+' p.receta').hide();
+										}
+
+										if ( $(third_level_ref+' p.comentario').html() == "" )
+											$(third_level_ref+' p.comentario').hide();
+
+
+									});	
+
+								});
+							});
+						});
+					});
+
+					$('.platillo').each(function() {
+					    if ($(this).attr('data') === undefined) {
+					      $(this).remove();
+					    }
+					});
+
+				}else{
+
+					var dieta = app.get_diet('?_id='+ localStorage.getItem('dOperator'));
+					console.log('ID DIET: ' + dieta._id);
+					// console.log(JSON.stringify(dieta));
+					localStorage.setItem('dietaEdit', JSON.stringify(dieta));
+
+					if(dieta){
+						var comm_id;
+						var platillo_id;
+						var comentarios = dieta.comentarios;
+						var comments;
+						var platillos = dieta.platillos;
+						var receta;
+						var nombre_receta;
+						var ingredientes;
+						var misPlatos = [];
+						var i=0;
+
+						$.each( dieta.platillos, function( key, value ) {
+							misPlatos[i]=[];
+							$.each( value, function( key, value ) {
+								// console.log(key+":::"+value);
+								if (key=="_id") {
+								 	misPlatos[i][0]=value;
+								}
+								if (key=="descripcion") {
+								 	misPlatos[i][1]=value;
+								}
+								if (key=="receta") {
+								 	misPlatos[i][2]=value;
+								}
+								if (key=="ingredientes") {
+								 	
+								 	var ing = ' ';
+								 	$.each(value, function(key, value){
+								 		if(value._id != null){
+								 			ing = ing + value._id.nombre;
+								 			console.log('fghfghfghfgh <<<<<<'+ value._id.nombre);	
+								 		}	
+								 	});
+
+								 	misPlatos[i][3] = ing;
+								 	console.log(misPlatos[i][3]);
+								}
+							});
+							i++;
+						});
+
+						var loscomentarios = [];
+						var i=0;
+						var j=0;
+
+						$.each( dieta.comentarios, function( key, value ) {
+							loscomentarios[i]=[];
+							j=0;
+							$.each( value, function( key, value ) {
+								loscomentarios[i][j]=value;
+								j++;
+							});
+							i++;
+						});
+
+						for (var i=0; i<misPlatos.length; i++) {
+							misPlatos[i][4]="";
+							for (var j = 0; j < loscomentarios.length; j++) {
+								if (misPlatos[i][0]==loscomentarios[j][2]&&misPlatos[i][4]=="") {
+									misPlatos[i][4]=loscomentarios[j][1];
+								}
+							}
+						}
+
+						var dieta_array = [];
+
+						var dia_prueba=0;
+
+						var dias = [];
+
+						var arrDieta = dieta;
+
+						$.each( dieta.estructura, function( key, value ) {
+
+							if(key == "domingo"){dia_prueba=1;} else if (key=="lunes") {dia_prueba=2;} else if (key=="martes") {dia_prueba=3;} else if (key=="miercoles") {dia_prueba=4;} else if (key=="jueves") {dia_prueba=5;} else if (key=="viernes") {dia_prueba=6;} else if (key=="sabado") {dia_prueba=7;}
+							
+							var level_refer = '#toda_la_dieta li:nth-of-type('+dia_prueba+') ';
+							
+							$.each( value, function( key, value ) {
+								// desayuno, snack, comida,...
+								var sec_level_refer = level_refer+'.acc-content.'+key+' ';
+								
+								var i=1;
+
+								$.each( value, function( key, value ) {
+									// tiempos (1,2,3..)
+									// console.log(key + " :::: 0" +value);
+									var third_level_ref = sec_level_refer+'div.platillo:nth-of-type('+i+')';
+									i++;	
+									$.each( value, function( key, value ) {
+
+										$.each( value, function( key, value ) {
+											// id_platillo, id_comentario
+											// console.log(key + " :::: " +value);
+											if (key == "platillo") {
+												for (var i = 0; i < misPlatos.length; i++) {
+													if (value==misPlatos[i][0]) {
+														// console.log(misPlatos[i][1]+"<"+misPlatos[i][2]+"<"+misPlatos[i][4]);
+
+														$(third_level_ref).attr("data", misPlatos[i][0]);
+														
+														$(third_level_ref + ' nav svg').attr("data", misPlatos[i][0]);
+
+														$(third_level_ref+' h5').html(misPlatos[i][1]);
+														
+														if (misPlatos[i][2]!="") {
+															$(third_level_ref+' p.receta').html(misPlatos[i][2]);
+														} else {
+															$(third_level_ref+'p.receta').hide();
+														}
+														if (misPlatos[i][4]!="") {
+															$(third_level_ref+' p.comentario').html(misPlatos[i][4]);
+														} else {
+															$(third_level_ref+' p.comentario').hide();
+														}
+														if(misPlatos[i][3]!= ''){
+															$(third_level_ref+' p.los_ing').html(misPlatos[i][3]);
+															console.log('plato '+i+' sus ing'+misPlatos[i][3]);
+														}else{
+															;	
+														}
+													}
+												}
+											}
+
+										});	
+
+									});
+								});
+							});
+						});
+
+						$('.platillo').each(function() {
+						    if ($(this).attr('data') === undefined) {
+						      $(this).remove();
+						    }
+						});
+					
+				}//end if
+
+
+			}
+
+			
+
+
+			$('.add_dish').click(function(){
+				// if ($(this).parent().hasClass('desayuno')) {
+				// 	console.log('desayuno');
+				// }
+
+				// console.log($(this).parent().attr("class"));
+				// console.log($(this).parent().parent().parent().parent().attr("class"));
+
+				localStorage.setItem('d_time', $(this).attr('data'));
+				localStorage.setItem('d_date', $(this).attr('date'));
+
+				console.log($(this).attr('data'));
+				console.log($(this).attr('date'));
+
+
+				window.location.assign('platillos.html');
+			});
+
+
+			console.log("Has class dieta end");
 
 		} //End Has Class DIETA -> dieta.html
 
@@ -190,419 +602,7 @@ $(window).on('load', function(){
 		}
 
 
-		if($('body').hasClass('dieta')){
-				
-
-			/*
-				CREANDO DIETA
-			*/
-
-			var dietaNew = {};
-			var jsonNew = '{"nombre": "' +app.keeper.getItem('d_nombre') + '","descripcion":"' + app.keeper.getItem('d_comentario') + '", "estructura":{"domingo":{"desayuno":{},"snack1":{},"comida":{},"snack2":{},"cena":{}},"lunes":{"desayuno":{},"snack1":{},"comida":{},"snack2":{},"cena":{}},"martes":{"desayuno":{},"snack1":{},"comida":{},"snack2":{},"cena":{}},"miercoles":{"desayuno":{},"snack1":{},"comida":{},"snack2":{},"cena":{}},"jueves":{"desayuno":{},"snack1":{},"comida":{},"snack2":{},"cena":{}},"viernes":{"desayuno":{},"snack1":{},"comida":{},"snack2":{},"cena":{}},"sabado":{"desayuno":{},"snack1":{},"comida":{},"snack2":{},"cena":{}}},"perfil":{"sexo":0,"edad":0,"bmi":0,"objetivo":0}}';
-			
-			if(window.location.href.search('editar') != -1){
-				app.keeper.setItem('contador_platillos', 1);
-			}
-
-			if(window.location.href.search('create') != -1 ){
-
-				app.keeper.setItem('contador_platillos', 0);
-
-				console.log(jsonNew);
-				
-				console.log('PARSE: ' + JSON.parse(jsonNew));	
-
-				dietaNew = JSON.parse(jsonNew);
-
-				app.keeper.setItem('dietaEdit', JSON.stringify(dietaNew));
-
-				console.log('Todo: ' + dietaNew);
-
-
-				$('.platillo').hide();
-
-			} else if (app.keeper.getItem('idDishSelected') || app.keeper.getItem('dietaEdit')) {
-				
-				/*** SAVE DIET DUPLICATE ***/
-				var dish_count = 0;
-				// Fetch diet copy from local memory
-				dietaNew = JSON.parse( app.keeper.getItem('dietaEdit') );
-
-			// IS THIS EVEN USEFUL??? ? ? ? ? 
-			// IS THIS EVEN USEFUL??? ? ? ? ? 
-			// IS THIS EVEN USEFUL??? ? ? ? ? 
-				if (app.keeper.getItem('idDishSelected')) {
-					var i = 0;
-					var guardar1 = [];
-					var guardar2 = [];
-
-					$.each(dietaNew["estructura"][app.keeper.getItem('d_date')][app.keeper.getItem('d_time')], function( key, value ) {
-						guardar1[i] = key;
-						guardar2[i] = value;
-						i++;
-					});
-
-					guardar1[i] = i;
-					guardar2[i] = {"a":{"platillo":app.keeper.getItem('idDishSelected'),"descripcion":app.keeper.getItem('desDishSelected'),"receta":app.keeper.getItem('recetaDishSelected')}};
-					var rv = {};
-					for (var j = 0; j < guardar1.length; ++j) {
-						var agregar = j+1;
-					    rv[agregar] = guardar2[j];
-					}
-					dietaNew["estructura"][app.keeper.getItem('d_date')][app.keeper.getItem('d_time')]= rv;
-					app.keeper.setItem('dietaEdit', JSON.stringify(dietaNew));
-
-					app.keeper.removeItem('idDishSelected');
-
-					var contador_platillos = dish_count;
-
-					contador_platillos++;
-					console.log(contador_platillos);
-					app.keeper.setItem('contador_platillos', contador_platillos);
-					console.log("Aqui no pasa o si?");
-					console.log(JSON.stringify(dietaNew));					
-				}
-
-				var referer = false;
-
-				if (dietaNew._id) {
-
-					var i = 0;
-					var j=0;
-					var receta;
-					var nombre_receta;
-					var platillo_id;
-					var ingredientes;
-					var losplatos 		= [];
-					var comm_id;
-					var comments;
-					var loscomentarios 	= [];
-					var comentarios 	= dietaNew.comentarios;
-					var platillos 		= dietaNew.platillos;
-					
-					referer = true;
-					app.keeper.setItem( 'contador_platillos', platillos.length );
-
-					$.each( dietaNew.platillos, function( key, value ) {
-
-						losplatos[i] = [];
-						$.each( value, function( key, value ) {
-
-							if ( key == "_id" )
-							 	losplatos[i][0] = value;
-
-							if ( key == "descripcion" )
-							 	losplatos[i][1] = value;
-
-							if ( key == "receta" )
-							 	losplatos[i][2] = value;
-
-							if ( key == "ingredientes" ) {
-
-							 	var ingredientes_concat = '';
-							 	$.each(value, function(key, value){
-							 		if(value._id != null)
-							 			ingredientes_concat = ingredientes_concat + value._id.nombre;
-							 	});
-							 	losplatos[i][3] = ingredientes_concat;
-							}
-
-						});
-						i++;
-					});
-
-					i = 0;
-					$.each( dietaNew.comentarios, function( key, value ) {
-						loscomentarios[i] = [];
-						j = 0;
-						$.each( value, function( key, value ) {
-							loscomentarios[i][j] = value;
-							j++;
-						});
-						i++;
-					});
-
-					for ( var i = 0; i < losplatos.length; i++ ) {
-						losplatos[i][4] = "";
-						for (var j = 0; j < loscomentarios.length; j++) {
-							if ( losplatos[i][0] == loscomentarios[j][2] && losplatos[i][4] == "" ) {
-								losplatos[i][4]  = loscomentarios[j][1];
-							}
-						}
-					}
-					console.log(losplatos);
-					console.log(loscomentarios);
-				} // Dieta new id
-
-				$.each( dietaNew.estructura, function( key, value ) {
-
-					if(key == "domingo"){ dia_prueba = 1; } else if (key == "lunes") {dia_prueba=2;} else if (key == "martes") {dia_prueba=3;} else if (key == "miercoles") {dia_prueba=4;} else if (key == "jueves") {dia_prueba=5;} else if (key == "viernes") {dia_prueba=6;} else if (key=="sabado") {dia_prueba=7;}
-					
-					var estoyen = '#toda_la_dieta li:nth-of-type('+dia_prueba+') ';
-					
-					$.each( value, function( key, value ) {
-						// desayuno, snack, comida,...
-						var dentrode = estoyen+'.acc-content.'+key+' ';
-						
-						var i = 1;
-
-						$.each( value, function( key, value ) {
-							// tiempos (1,2,3..)
-							// console.log(key + " :::: 0" +value);
-							var masadentro = dentrode+'div.platillo:nth-of-type('+i+')';
-							i++;	
-							$.each( value, function( key, value ) {
-
-								$.each( value, function( key, value ) {
-									// id_platillo, id_comentario
-									// console.log(key + " :::: " +value);
-									if (key=="platillo") {
-										$(masadentro).attr("data", value);
-										$(masadentro + ' nav svg').attr("data", value);
-
-										if(referer){
-											for (var i = 0; i < losplatos.length; i++) {
-												if (value==losplatos[i][0]) {
-
-													$(masadentro).attr("data", losplatos[i][0]);
-													
-													$(masadentro + ' nav svg').attr("data", losplatos[i][0]);
-
-													$(masadentro+' h5').html(losplatos[i][1]);
-													
-													if (losplatos[i][2]!="") {
-														$(masadentro+' p.receta').html(losplatos[i][2]);
-													} else {
-														$(masadentro+'p.receta').hide();
-													}
-													if (losplatos[i][4]!="") {
-														$(masadentro+' p.comentario').html(losplatos[i][4]);
-													} else {
-														$(masadentro+' p.comentario').hide();
-													}
-
-													if(losplatos[i][3]!= ''){
-														$(masadentro+' p.los_ing').html(losplatos[i][3]);
-														console.log('plato '+i+' sus ing'+losplatos[i][3]);
-													}else{
-														;	
-													}
-													
-												}
-											}
-										}	
-									}
-
-									if (key=="descripcion") {
-										$(masadentro+' h5').html(value);
-									}
-
-									if (key=="receta") {
-										$(masadentro+' p.receta').html(value);
-										if (value=="") {
-											$(masadentro+' p.receta').hide();
-										}
-									}
-
-									if ($(masadentro+' p.comentario').html()=="") {
-										$(masadentro+' p.comentario').hide();
-									}
-
-								});	
-
-							});
-						});
-					});
-				});
-
-				$('.platillo').each(function() {
-				    if ($(this).attr('data') === undefined) {
-				      $(this).remove();
-				    }
-				});
-
-			}else{
-
-				var dieta = app.get_diet('?_id='+ localStorage.getItem('dOperator'));
-				console.log('ID DIET: ' + dieta._id);
-				// console.log(JSON.stringify(dieta));
-				localStorage.setItem('dietaEdit', JSON.stringify(dieta));
-
-				if(dieta){
-					var comm_id;
-					var platillo_id;
-					var comentarios = dieta.comentarios;
-					var comments;
-					var platillos = dieta.platillos;
-					var receta;
-					var nombre_receta;
-					var ingredientes;
-					var losplatos = [];
-					var i=0;
-
-					$.each( dieta.platillos, function( key, value ) {
-						losplatos[i]=[];
-						$.each( value, function( key, value ) {
-							// console.log(key+":::"+value);
-							if (key=="_id") {
-							 	losplatos[i][0]=value;
-							}
-							if (key=="descripcion") {
-							 	losplatos[i][1]=value;
-							}
-							if (key=="receta") {
-							 	losplatos[i][2]=value;
-							}
-							if (key=="ingredientes") {
-							 	
-							 	var ing = ' ';
-							 	$.each(value, function(key, value){
-							 		if(value._id != null){
-							 			ing = ing + value._id.nombre;
-							 			console.log('fghfghfghfgh <<<<<<'+ value._id.nombre);	
-							 		}	
-							 	});
-
-							 	losplatos[i][3] = ing;
-							 	console.log(losplatos[i][3]);
-							}
-						});
-						i++;
-					});
-
-					var loscomentarios = [];
-					var i=0;
-					var j=0;
-
-					$.each( dieta.comentarios, function( key, value ) {
-						loscomentarios[i]=[];
-						j=0;
-						$.each( value, function( key, value ) {
-							loscomentarios[i][j]=value;
-							j++;
-						});
-						i++;
-					});
-
-					// console.log(loscomentarios);
-
-
-					for (var i=0; i<losplatos.length; i++) {
-						losplatos[i][4]="";
-						for (var j = 0; j < loscomentarios.length; j++) {
-							if (losplatos[i][0]==loscomentarios[j][2]&&losplatos[i][4]=="") {
-								losplatos[i][4]=loscomentarios[j][1];
-							}
-						}
-					}
-
-					var dieta_array = [];
-
-					var dia_prueba=0;
-
-					var dias = [];
-
-
-					//delete dieta.estructura['martes'];
-
-					console.log(dieta);
-
-					var arrDieta = dieta;
-
-					$.each( dieta.estructura, function( key, value ) {
-						// los dias de la semana
-						if(key=="domingo"){dia_prueba=1;} else if (key=="lunes") {dia_prueba=2;} else if (key=="martes") {dia_prueba=3;} else if (key=="miercoles") {dia_prueba=4;} else if (key=="jueves") {dia_prueba=5;} else if (key=="viernes") {dia_prueba=6;} else if (key=="sabado") {dia_prueba=7;}
-						
-						var estoyen = '#toda_la_dieta li:nth-of-type('+dia_prueba+') ';
-						
-						$.each( value, function( key, value ) {
-							// desayuno, snack, comida,...
-							var dentrode = estoyen+'.acc-content.'+key+' ';
-							
-							var i=1;
-
-							$.each( value, function( key, value ) {
-								// tiempos (1,2,3..)
-								// console.log(key + " :::: 0" +value);
-								var masadentro = dentrode+'div.platillo:nth-of-type('+i+')';
-								i++;	
-								$.each( value, function( key, value ) {
-
-									$.each( value, function( key, value ) {
-										// id_platillo, id_comentario
-										// console.log(key + " :::: " +value);
-										if (key=="platillo") {
-											for (var i = 0; i < losplatos.length; i++) {
-												if (value==losplatos[i][0]) {
-													// console.log(losplatos[i][1]+"<"+losplatos[i][2]+"<"+losplatos[i][4]);
-
-													$(masadentro).attr("data", losplatos[i][0]);
-													
-													$(masadentro + ' nav svg').attr("data", losplatos[i][0]);
-
-													$(masadentro+' h5').html(losplatos[i][1]);
-													
-													if (losplatos[i][2]!="") {
-														$(masadentro+' p.receta').html(losplatos[i][2]);
-													} else {
-														$(masadentro+'p.receta').hide();
-													}
-													if (losplatos[i][4]!="") {
-														$(masadentro+' p.comentario').html(losplatos[i][4]);
-													} else {
-														$(masadentro+' p.comentario').hide();
-													}
-													if(losplatos[i][3]!= ''){
-														$(masadentro+' p.los_ing').html(losplatos[i][3]);
-														console.log('plato '+i+' sus ing'+losplatos[i][3]);
-													}else{
-														;	
-													}
-												}
-											}
-										}
-
-									});	
-
-								});
-							});
-						});
-					});
-
-					$('.platillo').each(function() {
-					    if ($(this).attr('data') === undefined) {
-					      $(this).remove();
-					    }
-					});
-				
-			}//end if
-
-
-		}
-
 		
-
-
-		$('.add_dish').click(function(){
-			// if ($(this).parent().hasClass('desayuno')) {
-			// 	console.log('desayuno');
-			// }
-
-			// console.log($(this).parent().attr("class"));
-			// console.log($(this).parent().parent().parent().parent().attr("class"));
-
-			localStorage.setItem('d_time', $(this).attr('data'));
-			localStorage.setItem('d_date', $(this).attr('date'));
-
-			console.log($(this).attr('data'));
-			console.log($(this).attr('date'));
-
-
-			window.location.assign('platillos.html');
-		});
-
-
-		}// end if has class
 		
 		////////////////////////////////////////////////////////////
 		//

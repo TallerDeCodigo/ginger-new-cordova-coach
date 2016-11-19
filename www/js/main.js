@@ -406,7 +406,7 @@
 				}
 			}
 			catch(err){
-				console.log('Toasting error: ' + JSON.stringify(err)); // imprime esto con un JSON vacio
+				console.log('Toasting error: ' + JSON.stringify(err));
 				alert(message);
 			}
 			return;
@@ -458,7 +458,7 @@
 					initializeEvents();
 				}, 2000);
 		},
-		register_activity: function(type, magnitude, client_id, coach_id){
+		register_activity: function( type, magnitude, client_id, coach_id ){
 
 			var req = {
 				method : 'post',
