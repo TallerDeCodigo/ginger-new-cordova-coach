@@ -155,7 +155,7 @@ h4 {margin:10px 0px 12px;font-weight:700;font-size:130%;color:#333;}
 */
 	body.iosm header {height:70px;}
 	body.iosm header .toolbar {top:20px;}
-	body.dieta.iosm #scroller {top:120px;height:calc(100% - 120px);}
+	body.iosm .workspace-diet #scroller {top:120px;height:calc(100% - 120px);}
 	body.iosm #container {padding-top:70px;}
 	body.iosm .month {top:70px;}
 	body.iosm .week {top:70px;}
@@ -258,9 +258,9 @@ input.send ,
 .weekdays td span {width:22px;height:22px;position:relative;display:inline-block;border-radius:50%;line-height:21px;}
 .weekdays td span.active {background:#33cc99;color:#FFF;}
 
-body.dieta #scroller {width:92%;position:absolute;height:calc(100% - 100px);top:100px;left:4%;}
-#toda_la_dieta {height:100%;position:absolute;}
-#toda_la_dieta > li {position:relative;height:330px;}
+.workspace-diet #scroller {width:92%;position:absolute;height:calc(100% - 100px);top:100px;left:4%;}
+#toda_la_dieta { height: 100%; width: 100%; position: absolute; margin: 0;}
+#toda_la_dieta > li { position: relative; height: 100%; }
 .dieta-wrapper {position:absolute;width:100%;height:100%;overflow-y:scroll;left:0px;top:0px;}
 
 div.acc-selector {width:100%;color:#FFF;font-weight:900;font-size:150%;letter-spacing:0.06em;margin-bottom:-10px;border-top-left-radius:7px;border-top-right-radius:7px;height:74px;line-height:69px;outline:none;}

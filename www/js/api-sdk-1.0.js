@@ -33,6 +33,7 @@ function requestHandlerAPI(){
 
 	/*  Production API URL  */
 	window.api_base_url = "https://gingerservice.azure-mobile.net/";
+	// var app = window.app;
 
 	window.sdk_app_context = null;
 
@@ -132,16 +133,15 @@ function requestHandlerAPI(){
 			return (response) ? response : false;
 		};
 
-		/** DELETE DIET ***/
-		this.deleteDiet = function(diet){
+		/**
+		 * DELETE Diet handler
+		 * @param diet_id
+		 * @return Boolean _deleted
+		 */
+		this.deleteDiet = function(diet_id){
 			
-			var req = {
-				method : 'DELETE',
-				url : api_base_url + 'tables/dieta/' + diet,
-				headers: apiRH.headers
-			};
-			var response = this.deleteRequest('tables/dieta/' + diet, req);
-			return (response) ? response : false;
+			var response = this.deleteRequest('tables/dieta/' + diet_id);
+			return (response.success) ? true : false;
 		};
 
 
@@ -149,36 +149,24 @@ function requestHandlerAPI(){
 		/**
 		 * DELETE DISH
 		 * */
-		this.deleteDish = function(diet){
-			var req = {
-				method : 'DELETE',
-				url : api_base_url + 'tables/dieta/' + diet,
-				headers: {
-					'X-ZUMO-APPLICATION': 'ideIHnCMutWTPsKMBlWmGVtIPXROdc92',
-					'X-ZUMO-AUTH': apiRH.keeper.getItem('token'),
-					'Content-Type': 'application/json'
-				}
-			}
+		this.deleteDish = function(diet_id){
 
-			console.log(JSON.stringify(req));
-
-			var response = this.deleteRequest('tables/dieta/' + diet, req);
-
-			console.log(response);  //llega aqui con la respuesta del servidor
-
+			var response = this.deleteRequest('tables/dieta/' + diet_id);
+			console.log(response);
 			return (response) ? response : false;
 		};
 
 
 		/**
-		 * COPY DIET
-		 * */
+		 * CLONE DIET
+		 */
 		 this.cloneDiet = function(data){
 			var params = 	{
-							data: data
-						};
+								data: data
+							};
 
 			var response = this.makeRequest('api/duplicate', params);
+			console.log(response);
 			return (response) ? response : false;
 		};
 
@@ -628,7 +616,7 @@ function requestHandlerAPI(){
 								dataType 	: 'json',
 								async 		: false
 							};
-							console.log(options);
+			console.log(options);
 			var myHeaders = (!noHeaders || typeof(noHeaders) == 'undefined') ? apiRH.headers : {'X-ZUMO-APPLICATION': apiRH.headers['X-ZUMO-APPLICATION']};
 			if(myHeaders)
 				options.headers = myHeaders;
@@ -648,6 +636,54 @@ function requestHandlerAPI(){
 				return false;
 			});
 			return result;
+		};
+
+		/* 
+		 * Executes a DELETE request
+		 * @param endpoint API endpoint to make the call to
+		 * @param data url encoded data
+		 * @param stringify
+		 * @return JSON encoded response
+		 * @see CORS
+		 */
+		this.deleteRequest = function(endpoint, data, stringify){
+			
+			setTimeout(function(){
+				app.showLoader();
+			}, 0);
+			var myData = ( typeof(stringify) == 'undefined' || stringify == true ) ? JSON.stringify(data) : data;
+			var result = {};
+
+			var options = 	{
+								type 		: 'DELETE',
+								headers		: apiRH.headers,
+								url			: window.api_base_url + endpoint,
+								// data 		: myData,
+								dataType 	: 'json',
+								async 		: false
+							};
+			console.log(options);
+
+			$.ajax(options)
+			 .always(function(){
+				setTimeout(function(){
+					app.hideLoader();
+				}, 0);
+			})
+			 .done(function(response){
+				result = response;
+				// TODO: clean specific temps outside this method
+				app.keeper.removeItem('temp-return');
+			})
+			 .fail(function(e){
+				result = false;
+				console.log(JSON.stringify(e));
+				if(e.statusText == 'Conflict')
+					return app.toast("Oops, parece que el elemento no existe");
+				return app.toast("Error al eliminar");
+			});
+			return result;
+
 		};
 
 		this.makePatchRequest = function(endpoint, data){
@@ -709,51 +745,6 @@ function requestHandlerAPI(){
 			});
 			return result;
 		};
-
-		this.deleteRequest = function(endpoint, data){
-			console.log(data.data); //llega a makerequest
-
-			sdk_app_context.showLoader();
-			var result = {};
-
-			console.log('datos' + data.data);
-
-			$.ajax({
-			  type: 'DELETE',
-			  headers: data.headers,
-			  url: window.api_base_url+endpoint,
-			  data: JSON.stringify(data.data),
-			  dataType: 'json',
-			  async: false
-			})
-			 .done(function(response){
-				result = response;
-				sdk_app_context.hideLoader(response);
-			})
-			 .fail(function(e){
-				result = false;
-				console.log(JSON.stringify(e));
-
-				if(!$('.overscreen_err').is(':visible')){
-					console.log('entra popup');
-					$('.overscreen_err').show();
-					setTimeout(function() {$('.overscreen_err').addClass('active');}, 200);
-				} else {
-					$('.overscreen_err').removeClass('active');
-					setTimeout(function() {$('.overscreen_err').hide();}, 800);
-				}
-				$('#blur').toggleClass('blurred');
-
-				$('#aceptar_err').click(function(){
-					$('.overscreen_err').hide();
-					$('#blur').toggleClass('blurred');
-				});
-
-			});
-			return result;
-
-		};
-
 
 		this.makeCopyDietReques = function(endpoint, data){
 			console.log(data.data); //llega a makerequest

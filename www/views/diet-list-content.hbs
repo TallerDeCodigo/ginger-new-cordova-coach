@@ -1,7 +1,7 @@
 	<ul class="list-diet">
 		{{# each data.diets}}
-			<li class="elemento-dieta" data="{{_id}}">
-				<h2>{{nombre}}</h2>
+			<li class="each_diet_element" data-id="{{_id}}">
+				<h2 class="diet_element_hook">{{nombre}}</h2>
 				{{# descripcion}}<p>{{.}}</p>{{/ descripcion}}
 				<nav>
 					<a class="hook" data-resource="duplicate-diet" href="copiar-dieta.html">

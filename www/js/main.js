@@ -309,8 +309,9 @@
 		},
 		render_coach_dietas : function(url){
 
-			var responsedata = [];
 			window.is_home = false;
+			this.initialize();
+			var responsedata = [];
 			setTimeout(function(){
 				app.showLoader();
 			}, 800);
@@ -344,6 +345,7 @@
 		render_duplicate_diet : function(url){
 
 			window.is_home = false;
+			app.initialize();
 			setTimeout(function(){
 				app.showLoader();
 			}, 800);
@@ -351,6 +353,18 @@
 
 			var data = this.gatherEnvironment( [], 'Duplicar dieta');
 			return this.switchView('copy-diet', data, '.view', url, 'copy-diet');
+		},
+		render_diet_edition : function(url){
+
+			window.is_home = false;
+			this.initialize();
+			setTimeout(function(){
+				app.showLoader();
+			}, 800);
+			app.check_or_renderContainer();
+
+			var data = this.gatherEnvironment( [], 'Editar Dieta');
+			return this.switchView('diet-edition', data, '.view', url, 'workspace-diet dieta');
 		},
 		render_myProfile : function(url){
 
