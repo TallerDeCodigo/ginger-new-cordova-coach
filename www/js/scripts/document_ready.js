@@ -415,7 +415,6 @@ window.initializeEvents = function(){
 		 **/
 
 		if( $('.view').hasClass('diet-list') ){
-	
 			//Request to Service
 			var i = 0;
 			var idDelete = null;
@@ -425,6 +424,8 @@ window.initializeEvents = function(){
 			var diff_stamps = (local_tmp) 	? (new Date().getTime() - local_tmp.return_stamp)/1000
 											: 0;
 			var flag = (local_tmp) ? true : false;
+			
+			localStorage.removeItem('dietaEdit');
 
 			var initDietActions = function(){
 
