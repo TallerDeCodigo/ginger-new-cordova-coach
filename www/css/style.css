@@ -395,7 +395,7 @@ li.persona {list-style:none;border-bottom:1px solid #cfcfcf;text-align:left;heig
 /* DIETAS */
 
 .diet-list ul {margin:0;padding-bottom:45px;}
-.diet-list ul li {list-style:none;border-bottom:1px solid #cfcfcf;text-align:left;height:80px;position:relative;padding:8px 37% 3px 13px;}
+.diet-list ul li {list-style: none; border-bottom: 1px solid #cfcfcf; text-align: left; height: 70px; position: relative; padding: 8px 37% 3px 13px;}
 .diet-list ul li:last-of-type {border:none;}
 .diet-list ul li h2 {margin-top: 14px;}
 .diet-list ul li p {font-size:92%;margin-bottom:0px;height:38px;overflow:hidden;line-height:140%;margin-top:3px;}

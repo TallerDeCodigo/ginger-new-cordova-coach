@@ -433,12 +433,12 @@ window.initializeEvents = function(){
 
 		} // END has-chat-list
 
+
 		/**
 		 *
 		 * Lista de Dietas de Coach
 		 *
 		 **/
-
 		if( $('.view').hasClass('diet-list') ){
 			//Request to Service
 			var i = 0;
@@ -450,7 +450,7 @@ window.initializeEvents = function(){
 											: 0;
 			var flag = (local_tmp) ? true : false;
 			
-			localStorage.removeItem('dietaEdit');
+			app.keeper.removeItem('dietaEdit');
 
 			var initDietActions = function(){
 
@@ -497,14 +497,14 @@ window.initializeEvents = function(){
 						$('#blur').toggleClass('blurred');
 					});
 
-				$('.diet_element_hook').click(function () {
-					console.log("Le hook");
-					var idDietax = $(this).parent().find('.each_diet_element').data('id');
-					app.keeper.setItem('dOperator', idDietax);
-					app.keeper.setItem('proviene', 'lista');
-					// app.render_diet();
-					window.location.assign('dieta.html');
-				});
+				// $('.diet_element_hook').click(function () {
+				// 	console.log("Le hook");
+				// 	var idDietax = $(this).parent().find('.each_diet_element').data('id');
+				// 	app.keeper.setItem('dOperator', idDietax);
+				// 	app.keeper.setItem('proviene', 'lista');
+				// 	// app.render_diet();
+				// 	window.location.assign('dieta.html');
+				// });
 			};
 
 			if(!local_tmp || local_tmp.return !=  'diet-list' || (local_tmp.return ==  'diet-list' && diff_stamps >= 600) ){
@@ -521,57 +521,55 @@ window.initializeEvents = function(){
 					app.render_template("diet-list-content", ".insert-content", responsedata);
 					app.keeper.setItem('temp-return', JSON.stringify(responsedata));
 					initHooks();
-					return initDietActions();
+					initDietActions();
 				}
 			}else{
 
 				var content = JSON.parse( app.keeper.getItem('temp-return') );
 				app.render_template("diet-list-content", ".insert-content", content);
 				initHooks();
-				return initDietActions();
+				initDietActions();
 			}
 
-			// $('.each_diet_element').click(function(){
+			$('.diet_element_hook').click(function(){
 
-			// 	var dietSelected = $(this).data("id");
+				var dietSelected = $(this).data("id");
 
-			// 	if(!$('.overscreen5').is(':visible')){
-			// 		console.log('entra popup');
-			// 		$('.overscreen5').show();
-			// 		setTimeout(function() {$('.overscreen5').addClass('active');}, 200);
-			// 	} else {
-			// 		$('.overscreen5').removeClass('active');
-			// 		setTimeout(function() {$('.overscreen5').hide();}, 800);
-			// 	}
-			// 	$('#blur').toggleClass('blurred');
+				$('#blur').toggleClass('blurred');
+				if(!$('.overscreen5').is(':visible')){
+					console.log('entra popup');
+					$('.overscreen5').show();
+					setTimeout(function() {$('.overscreen5').addClass('active');}, 200);
+				} else {
+					$('.overscreen5').removeClass('active');
+					setTimeout(function() {$('.overscreen5').hide();}, 800);
+				}
 
-			// 		$('#aceptar').click(function(){
+
+					$('#accept-assignation').click(function(){
 						
-			// 			console.log( $(this).parent().html() );
-			// 			console.log('CLICK CHANGE: ' + dietSelected);
+						console.log('CLICK CHANGE: ' + dietSelected);
+						var myClient = JSON.parse( app.keeper.getItem('user-selected') );
+						if(!myClient || myClient == '')
+							return app.toast("No has seleccionado un usuario para asignar la dieta");
 
-			// 			var user = JSON.parse(localStorage.getItem('user-selected'));
+						var params = {
+										dieta : dietSelected,
+										coach : _coach._id
+									};
 
-			// 			console.log(user._id);
+						if(apiRH.updateClientDiet(myClient, params)){
+							app.keeper.removeItem('user-selected');
+							app.render_clientProfile('usuario.html', myClient);
+						}
+					});
 
-			// 			var data = {
-			// 					dieta : dietSelected,
-			// 					coach : localStorage.getItem('userId')
-			// 			};
+					$('#cancel-assignation').click(function(){
+						$('.overscreen5').hide().removeClass('active');;
+						$('#blur').removeClass('blurred');
+					});
 
-			// 			var response = apiRH.updateClientDiet(user._id, data);
-
-			// 			if(response){
-			// 				window.location.assign('usuario.html');
-			// 			}
-			// 		});
-
-			// 		$('#cancelar').click(function(){
-			// 			$('.overscreen5').hide();
-			// 			$('#blur').toggleClass('blurred');
-			// 		});
-
-			// });
+			});
 			
 			
 		} // END diet-list

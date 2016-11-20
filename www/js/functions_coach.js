@@ -5,10 +5,6 @@
 	"use strict";
 
 	$(function(){
-	
-
-$(window).on('load', function(){
-	$(function() {
 
 		/*** TODO: Get this shit into a catalogue ***/
 		var coach_type 				= [ 'Estricto', 'Innovador', 'Animador', 'Tradicional'];
@@ -73,7 +69,7 @@ $(window).on('load', function(){
 
 			$('.add').click(function () {
 				console.log('click');
-				//localStorage.setItem('dishSelected', '');
+				//app.keeper.setItem('dishSelected', '');
 
 			});
 
@@ -101,11 +97,11 @@ $(window).on('load', function(){
 			$('.accept').click(function(){
 				console.log("Accept");
 				$(this);
-			 	localStorage.setItem('idDishSelected', $(this).attr('data') );
-			 	localStorage.setItem('desDishSelected', $(this).parent().parent().find('h5').html() );
-			 	localStorage.setItem('recetaDishSelected', $(this).parent().parent().find('p').html() );
+			 	app.keeper.setItem('idDishSelected', $(this).attr('data') );
+			 	app.keeper.setItem('desDishSelected', $(this).parent().parent().find('h5').html() );
+			 	app.keeper.setItem('recetaDishSelected', $(this).parent().parent().find('p').html() );
 
-			 	console.log( localStorage.getItem('idDishSelected') );
+			 	console.log( app.keeper.getItem('idDishSelected') );
 
 				$('.alert_meal_description').hide();
 				$('#blur').toggleClass('blurred');
@@ -135,7 +131,7 @@ $(window).on('load', function(){
 				var has_comentarios;
 				var has_ingredients;
 
-			var tiempo = localStorage.getItem('d_time');
+			var tiempo = app.keeper.getItem('d_time');
 			
 			$('.meal-name').removeClass('snack1');
 			$('.meal-name').addClass(tiempo);
@@ -152,7 +148,7 @@ $(window).on('load', function(){
 				console.log(is_public);
 			});
 
-			var ingredientes_list = localStorage.getItem('ingredientes');
+			var ingredientes_list = app.keeper.getItem('ingredientes');
 
 			console.log(ingredientes_list);
 			if(!ingredientes_list ){
@@ -167,10 +163,10 @@ $(window).on('load', function(){
 			*/
 			$('.ingred').click(function(){
 				console.log(is_public);
-				localStorage.setItem('_public', is_public);
-				localStorage.setItem('recipe_name', $('textarea[name="descripcion"]').val() );
-				localStorage.setItem('recipe_recipe', $('textarea[name="receta"]').val() );
-				localStorage.setItem('recipe_comment', $('textarea[name="comentario"]').val() );
+				app.keeper.setItem('_public', is_public);
+				app.keeper.setItem('recipe_name', $('textarea[name="descripcion"]').val() );
+				app.keeper.setItem('recipe_recipe', $('textarea[name="receta"]').val() );
+				app.keeper.setItem('recipe_comment', $('textarea[name="comentario"]').val() );
 
 				window.location.assign('ingredientes.html');
 			});//end click
@@ -180,7 +176,7 @@ $(window).on('load', function(){
 			$('.add').click(function () {
 
 
-				var arrIngredientes = localStorage.getItem('aidi_ingrediente');
+				var arrIngredientes = app.keeper.getItem('aidi_ingrediente');
 
 				console.log(typeof arrIngredientes);
 				console.log(" --- "+ JSON.parse(arrIngredientes) );
@@ -212,23 +208,23 @@ $(window).on('load', function(){
 				var json = {
 					"descripcion" : has_name,
 					"receta" : has_receta,
-					"coach" : localStorage.getItem('userId'),
+					"coach" : app.keeper.getItem('userId'),
 					"autorizado" : 0,
 					"publico" : is_public,
 					"comentarios" : has_comentarios,
 					"ingredientes" : sIngredientes
 				};
 
-				console.log('Id User ' + localStorage.getItem('userId'));
+				console.log('Id User ' + app.keeper.getItem('userId'));
 
 				console.log(JSON.stringify(json));
 
 				var response = apiRH.newDish(json);
 
 				if(response){
-					localStorage.removeItem('d_nombre');
-					localStorage.removeItem('d_comentario');
-					localStorage.removeItem('ingredientes');
+					app.keeper.removeItem('d_nombre');
+					app.keeper.removeItem('d_comentario');
+					app.keeper.removeItem('ingredientes');
 					
 					window.location.assign('platillos.html');
 				}
@@ -240,10 +236,10 @@ $(window).on('load', function(){
 
 			});//end click
 
-				var _public = localStorage.getItem('_public');
-				var recipe_name = localStorage.getItem('recipe_name');
-				var recipe_recipe = localStorage.getItem('recipe_recipe');
-				var recipe_comment = localStorage.getItem('recipe_comment');
+				var _public = app.keeper.getItem('_public');
+				var recipe_name = app.keeper.getItem('recipe_name');
+				var recipe_recipe = app.keeper.getItem('recipe_recipe');
+				var recipe_comment = app.keeper.getItem('recipe_comment');
 			if(recipe_name != "" || recipe_name != null || recipe_name !== undefined){
 				if (_public=="1") {
 					$('input[type="checkbox"]').prop('checked', false);
@@ -398,8 +394,8 @@ $(window).on('load', function(){
 				arrAux = JSON.stringify(arrAux);
 				arrAux_id = JSON.stringify(arrAux_id);
 				console.log(arrAux+" "+arrAux_id );
-				localStorage.setItem('ingredientes', arrAux);
-				localStorage.setItem('aidi_ingrediente', arrAux_id);
+				app.keeper.setItem('ingredientes', arrAux);
+				app.keeper.setItem('aidi_ingrediente', arrAux_id);
 				window.location.assign('crear-platillo.html');
 			});
 
@@ -409,9 +405,9 @@ $(window).on('load', function(){
 			});
 		}//END IF BODY HAS CLASS HAS INGREDIENTES
 
-/*
-	CREAR INGREDIENTES
-*/
+		/*
+			CREAR INGREDIENTES
+		*/
 		if($('body').hasClass('has-create-ingredient') ){
 			var i_nombre;
 			var category = -1;
@@ -526,63 +522,38 @@ $(window).on('load', function(){
 			$(this).addClass('active');
 		});
 
-	});
 
-});
-		/**
-		 * Validación de emails
-		 */
-		window.validateEmail = function (email) {
-			var regExp = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-			return regExp.test(email);
-		};
+		$(document).on('click', '.platillo-item', function() {
 
-		/**
-		 * Regresa todos los valores de un formulario como un associative array 
-		 */
-		window.getFormData = function (selector) {
-			var result = [],
-				data   = $(selector).serializeArray();
-
-			$.map(data, function (attr) {
-				result[attr.name] = attr.value;
-			});
-			return result;
-		}
-
-	});
+		    	var data_name = $(this).find('.hache').html();
+		    	var data_description = $(this).find('p').html();
+		    	var _id = $(this).attr('data');
 
 
-	$(document).on('click', '.platillo-item', function() {
-
-	    	var data_name = $(this).find('.hache').html();
-	    	var data_description = $(this).find('p').html();
-	    	var _id = $(this).attr('data');
+		    	app.keeper.setItem('dish_nombre', data_name);
+		    	app.keeper.setItem('dish_aidi', _id);
 
 
-	    	localStorage.setItem('dish_nombre', data_name);
-	    	localStorage.setItem('dish_aidi', _id);
+		    	if(!$('.alert_meal_description').is(':visible')){
+		    		$('.alert_meal_description').show();
+
+		    		$(".accept").attr('data', _id);
+
+		    		$('#meal_name').html(data_name);
+		    		$('#meal_description').html(data_description);
+		    		setTimeout(function() {$('.alert_meal_description').addClass('active');}, 200);
+		    		/*Anade el platillo a la lista de platillos en el dia*/
 
 
-	    	if(!$('.alert_meal_description').is(':visible')){
-	    		$('.alert_meal_description').show();
+		    	} else {
+		    		$('.alert_meal_description').removeClass('active');
+		    		setTimeout(function() {$('.alert_meal_description').hide();}, 800);
+		    	}
+		    	$('#blur').toggleClass('blurred');
 
-	    		$(".accept").attr('data', _id);
-
-	    		$('#meal_name').html(data_name);
-	    		$('#meal_description').html(data_description);
-	    		setTimeout(function() {$('.alert_meal_description').addClass('active');}, 200);
-	    		/*Anade el platillo a la lista de platillos en el dia*/
-
-
-	    	} else {
-	    		$('.alert_meal_description').removeClass('active');
-	    		setTimeout(function() {$('.alert_meal_description').hide();}, 800);
-	    	}
-	    	$('#blur').toggleClass('blurred');
+		});
 
 	});
-
 
 })(jQuery); //End function
 
