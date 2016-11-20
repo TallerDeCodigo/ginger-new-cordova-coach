@@ -317,6 +317,8 @@
 			}, 800);
 			app.check_or_renderContainer();
 			var data = this.gatherEnvironment(responsedata, 'Dietas');
+			var change_of_plan = app.keeper.getItem('change_of_plan');
+			data.controls = (change_of_plan && change_of_plan == true) ? true : false;
 			return this.switchView('diet-list', data, '.view', url, 'diet-list');
 		},
 		render_dietas_content : function(url){

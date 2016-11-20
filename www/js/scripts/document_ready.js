@@ -303,7 +303,9 @@ window.initializeEvents = function(){
 				});
 
 				$('.usuario-item').click(function(e){
-					app.showLoader();
+					setTimeout(function(){
+						app.showLoader();
+					}, 420);
 					var gingerId = $(this).data("gingerid");
 					app.keeper.setItem('user-selected', gingerId);
 					if(!$(e.target).hasClass('mensajes notificaciones'))
@@ -322,7 +324,7 @@ window.initializeEvents = function(){
 			
 			$('#switch_diet').click(function(){
 				var user_selected = app.keeper.getItem('user-selected');
-				console.log(user_selected);
+				app.keeper.setItem('change_of_plan', true);
 				return app.render_coach_dietas('lista-dietas.html');
 			});
 
@@ -531,10 +533,14 @@ window.initializeEvents = function(){
 				initDietActions();
 			}
 
-			$('.diet_element_hook').click(function(){
+			// Select diet to assign 
+			$('.diet_element_hook').click( function(){
 
-				var dietSelected = $(this).data("id");
-
+				var dietSelected = $(this).parent().data("id");
+				console.log(dietSelected);
+				var myClient = app.keeper.getItem('user-selected');
+				if(!myClient)
+					return false;
 				$('#blur').toggleClass('blurred');
 				if(!$('.overscreen5').is(':visible')){
 					console.log('entra popup');
@@ -545,29 +551,27 @@ window.initializeEvents = function(){
 					setTimeout(function() {$('.overscreen5').hide();}, 800);
 				}
 
+				$('#accept-assignation').click(function(){
+					
+					console.log('CLICK CHANGE: ' + dietSelected);
+					if(!myClient || myClient == '')
+						return app.toast("No has seleccionado un usuario para asignar la dieta");
 
-					$('#accept-assignation').click(function(){
-						
-						console.log('CLICK CHANGE: ' + dietSelected);
-						var myClient = JSON.parse( app.keeper.getItem('user-selected') );
-						if(!myClient || myClient == '')
-							return app.toast("No has seleccionado un usuario para asignar la dieta");
+					var params = {
+									dieta : dietSelected,
+									coach : _coach._id
+								};
 
-						var params = {
-										dieta : dietSelected,
-										coach : _coach._id
-									};
+					if(apiRH.updateClientDiet(myClient, params)){
+						app.keeper.removeItem('user-selected');
+						app.render_clientProfile('usuario.html', myClient);
+					}
+				});
 
-						if(apiRH.updateClientDiet(myClient, params)){
-							app.keeper.removeItem('user-selected');
-							app.render_clientProfile('usuario.html', myClient);
-						}
-					});
-
-					$('#cancel-assignation').click(function(){
-						$('.overscreen5').hide().removeClass('active');;
-						$('#blur').removeClass('blurred');
-					});
+				$('#cancel-assignation').click(function(){
+					$('.overscreen5').hide().removeClass('active');;
+					$('#blur').removeClass('blurred');
+				});
 
 			});
 			

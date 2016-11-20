@@ -3,7 +3,7 @@
 			<li class="each_diet_element" data-id="{{_id}}">
 				<h2 class="diet_element_hook">{{nombre}}</h2>
 				{{# descripcion}}<p>{{.}}</p>{{/ descripcion}}
-				<nav>
+				<nav class="diet-controls">
 					<a class="hook" data-resource="duplicate-diet" href="copiar-dieta.html">
 						<img class="btn_copy" data-id="{{_id}}" src="{{../cordova_full_path}}images/copy.png">
 					</a>
