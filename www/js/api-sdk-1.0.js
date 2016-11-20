@@ -1174,7 +1174,6 @@ function requestHandlerAPI(){
 					separator = (i ==client_profile.perfil.restricciones.length - 1) ? ", ": " ";
 					restrictionsConcat += catalogues.restricciones[i] + separator;
 				}
-			console.log(client_profile);
 			var _profile = 	{
 								name 				: client_profile.nombre,
 								last 				: client_profile.apellido,
@@ -1191,7 +1190,6 @@ function requestHandlerAPI(){
 								exercise_freq 		: client_profile.perfil.ejercicio,
 								restrictions		: (restrictionsConcat != '') ? restrictionsConcat : null
 							};
-			console.log(_profile);
 			return _profile;
 		};
 

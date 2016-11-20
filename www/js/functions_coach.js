@@ -17,58 +17,6 @@ $(window).on('load', function(){
 		var sex 					= [ 'Hombre', 'Mujer'];
 		var tipo_de_ingredientes 	= [ 'granosycereales', 'verduras', 'grasas', 'lacteos', 'proteinaanimal', 'leguminosas', 'nuecesysemillas', 'frutas', 'endulzantes', 'aderezosycondimentos', 'superfoods', 'liquidos'];
 
-		if($('.view').hasClass('client-profile') ){
-
-			var item 	= apiRH.getUserId();
-			var user 	= item;
-			var fecha 	= new Date();
-			var fecha2 	= fecha.getFullYear();
-			var fecha3 	= user.perfil.fechaNacimiento;
-			var edad 	=	fecha2-fecha3.slice(0, 4);
-
-			$('.cpur').html(user.nombre + ' ' + user.apellido);	
-			$('.user_dieta').html(user.dieta.nombre);
-			$('.user_sexo').html(sex[user.perfil.sexo]);
-			$('.user_edad').html(edad + " años");
-			$('.user_cp').html(user.cp);
-			$('.user_estatura').html(user.perfil.estatura + ' m');
-			$('.user_peso').html(user.perfil.peso + ' kg.');
-			$('.user_pesoideal').html(user.pesoDeseado + ' kg.');
-			$('.user_coachtype').html(coach_type[user.perfil.personalidad]);
-			$('.user_dpw').html(user.perfil.ejercicio + ' días por semana');
-
-			var separador = '';
-			
-			if(user.perfil.restricciones){
-				$('.user_restricciones').html('');
-				for (var i = 0; i < user.perfil.restricciones.length; i++) {
-				
-					if(i == user.perfil.restricciones.length -1){
-						separador = '';	
-					}else{
-						separador = ', ';
-					}
-					console.log(restricciones[user.perfil.restricciones[i]]);
-					$('.user_restricciones').append(restricciones[user.perfil.restricciones[i]] + separador);
-				};
-			}
-			
-			
-			$('.user_comentario').html(user.comentarios);
-
-			for (var i = 0; i < user.perfil.objetivo.length; i++) {
-				user.perfil.objetivo[i]
-				if(i == user.perfil.objetivo.length -1){
-					separador = '';	
-				}else{
-					separador = ', ';
-				}
-				$('.user_plan').append(objetivo[user.perfil.objetivo[i]] + separador);
-			};
-
-		}
-
-
 		
 		
 		////////////////////////////////////////////////////////////
@@ -577,20 +525,6 @@ $(window).on('load', function(){
 			$('.ing-category').removeClass('active');
 			$(this).addClass('active');
 		});
-		
-		
-
-		$('.bt-review').click(function(){
-			var user_selected = localStorage.getItem('user-selected');
-			user_selected = JSON.parse(user_selected)._id;
-			console.log(user_selected);
-
-			window.location.assign('lista-dietas.html');
-
-		});
-
-
-		
 
 	});
 

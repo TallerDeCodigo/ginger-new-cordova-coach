@@ -317,6 +317,19 @@ window.initializeEvents = function(){
 		}
 		
 
+		/* Client profile */
+		if( $('.view').hasClass('client-profile') ) {
+			
+			$('#switch_diet').click(function(){
+				var user_selected = app.keeper.getItem('user-selected');
+				console.log(user_selected);
+				return app.render_coach_dietas('lista-dietas.html');
+			});
+
+		}
+		
+
+
 		/* Chat list */
 		if( $('.view').hasClass('dialog_detail') ) {
 			

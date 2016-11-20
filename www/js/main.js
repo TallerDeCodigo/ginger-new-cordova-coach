@@ -379,7 +379,6 @@
 			return this.switchView('coach', data, '.view', url, 'coach-profile');
 		},
 		render_clientProfile : function( url, clientId ){
-			console.log("Render client profile");
 			setTimeout(function(){
 				app.showLoader();
 			}, 800);
@@ -388,7 +387,7 @@
 			app.initialize();
 			app.check_or_renderContainer();
 			var extra_data 	= apiRH.fetchClientProfile(clientId);	
-			var data 		= this.gatherEnvironment(extra_data, extra_data.nombre+''+extra_data.apellido);
+			var data 		= this.gatherEnvironment(extra_data, '');
 			return this.switchView('user-profile', data, '.view', url, 'client-profile');
 		},
 		render_comingSoon : function(url){
