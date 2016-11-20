@@ -17,16 +17,14 @@ $(window).on('load', function(){
 		var sex 					= [ 'Hombre', 'Mujer'];
 		var tipo_de_ingredientes 	= [ 'granosycereales', 'verduras', 'grasas', 'lacteos', 'proteinaanimal', 'leguminosas', 'nuecesysemillas', 'frutas', 'endulzantes', 'aderezosycondimentos', 'superfoods', 'liquidos'];
 
-		if($('.view').hasClass('has-user') ){
+		if($('.view').hasClass('client-profile') ){
 
-			var item = apiRH.getUserId();
-			var user = item;
-			var fecha = new Date();
-			var fecha2 = fecha.getFullYear();
-			var fecha3 = user.perfil.fechaNacimiento;
-
-			var edad=fecha2-fecha3.slice(0, 4);
-			console.log( edad.toString());			
+			var item 	= apiRH.getUserId();
+			var user 	= item;
+			var fecha 	= new Date();
+			var fecha2 	= fecha.getFullYear();
+			var fecha3 	= user.perfil.fechaNacimiento;
+			var edad 	=	fecha2-fecha3.slice(0, 4);
 
 			$('.cpur').html(user.nombre + ' ' + user.apellido);	
 			$('.user_dieta').html(user.dieta.nombre);
@@ -580,15 +578,7 @@ $(window).on('load', function(){
 			$(this).addClass('active');
 		});
 		
-		$('.usuario-item').click(function(e){
-
-			var gingerId = $(this).data("gingerid");
-			console.log(gingerId);
-			localStorage.setItem('user-selected', gingerId);
-			if(!$(e.target).hasClass('mensajes notificaciones'))
-				return app.render_clientProfile( null, gingerId );
-			console.log("Not this reality");
-		});
+		
 
 		$('.bt-review').click(function(){
 			var user_selected = localStorage.getItem('user-selected');
@@ -597,7 +587,7 @@ $(window).on('load', function(){
 
 			window.location.assign('lista-dietas.html');
 
-		});//end click
+		});
 
 
 		

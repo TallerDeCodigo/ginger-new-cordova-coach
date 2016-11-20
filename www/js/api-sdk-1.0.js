@@ -111,25 +111,8 @@ function requestHandlerAPI(){
 		 */
 		this.updateDiet = function (data){
 			
-			var req = {
-				method : 'PATCH',
-				url : api_base_url + 'tables/dieta/',
-				headers: {
-					'X-ZUMO-APPLICATION': 'ideIHnCMutWTPsKMBlWmGVtIPXROdc92',
-					'X-ZUMO-AUTH': apiRH.keeper.getItem('token'),
-					'Content-Type': 'application/json'
-				},
-				data : data
-			}
-
-			console.log(JSON.stringify(req));
-
 			var response = this.makePatchRequest('tables/dieta/', data);
-
-			console.log("Request Path Data Dieta");
-
-			console.log(response);  //llega aqui con la respuesta del servidor
-
+			console.log(response);
 			return (response) ? response : false;
 		};
 
@@ -170,8 +153,6 @@ function requestHandlerAPI(){
 		};
 
 
-
-			/*holkan*/
 		/**
 		 * CREATE DIET
 		 * */
@@ -200,6 +181,7 @@ function requestHandlerAPI(){
 		};
 
 		this.makeDiet = function(data){
+
 			var req = {
 				method : 'POST',
 				url : api_base_url + 'tables/dieta/',   //ESTO NO ES CORRECTO
@@ -222,40 +204,21 @@ function requestHandlerAPI(){
 			return (response) ? response : false;
 		};
 
+		/**
+		 * Save updates to a diet via patch method
+		 * @param Object data
+		 * @return Boolean
+		 */
 		this.saveDiet = function(data){
 
-			var aux = JSON.parse(data);
+			var dietObj = JSON.parse(data);
+			console.log(dietObj.__v);
+			delete dietObj.__v;
 
-			console.log(aux.__v);
-
-			delete aux.__v;
-
-			data = JSON.stringify(aux);
-
-			//console.log(JSON.stringify(aux));
-
-			var req = {
-				method : 'PATCH',
-				url : api_base_url + 'tables/dieta/'+ JSON.parse(data)._id,   //ESTO NO ES CORRECTO
-				headers: {
-					'X-ZUMO-APPLICATION': 'ideIHnCMutWTPsKMBlWmGVtIPXROdc92',
-					'X-ZUMO-AUTH': apiRH.keeper.getItem('token'),
-					'Content-Type': 'application/json'
-				},
-				data: data
-			}
-
-
-			console.log(req.data);
 			console.log(req);
-
-			var response = this.makePatchRequest('tables/dieta/'+ JSON.parse(data)._id, req);
-
-			console.log("Request PATCH Data Dieta");
-
-			console.log('RESPUESTA DEL SERVIDOR: ' + JSON.stringify(response));  //llega aqui con la respuesta del servidor
-
-			return (response) ? response : false;
+			var response = this.makePatchRequest('tables/dieta/' + dietObj._id, dietObj);
+			console.log('Response: ' + JSON.stringify(response));
+			return (response) ? true : false;
 		};
 
 		/**
@@ -638,6 +601,45 @@ function requestHandlerAPI(){
 		};
 
 		/* 
+		 * Executes a PATCH request
+		 * @param endpoint API endpoint to make the call to
+		 * @param data url encoded data
+		 * @param stringify
+		 * @return JSON encoded response
+		 * @see CORS
+		 */
+		this.makePatchRequest = function(endpoint, data, stringify){
+			
+			var result = {};
+			console.log("------------- PATCH  ------------");
+
+			var options = 	{
+								type 		: 'PATCH',
+								url			: window.api_base_url + endpoint,
+								data 		: JSON.stringify(data),
+								dataType 	: 'json',
+								async 		: false
+							};
+			console.log(options);
+
+			$.ajax(options)
+			 .always(function(){
+				setTimeout(function(){
+					app.hideLoader();
+				}, 2000);
+			})
+			 .done(function(response){
+				result = response;
+				console.log(result);
+			})
+			 .fail(function(e){
+				result = false;
+				console.log(JSON.stringify(e));
+			});
+			return result;
+		};
+
+		/* 
 		 * Executes a DELETE request
 		 * @param endpoint API endpoint to make the call to
 		 * @param data url encoded data
@@ -681,33 +683,6 @@ function requestHandlerAPI(){
 			});
 			return result;
 
-		};
-
-		this.makePatchRequest = function(endpoint, data){
-			
-			console.log("----------------------------");
-			console.log(data.data);
-			console.log("----------------------------");
-			sdk_app_context.showLoader();
-			var result = {};
-
-			$.ajax({
-			  type: 'PATCH',
-			  headers: data.headers,
-			  url: window.api_base_url+endpoint,
-			  data: data.data,
-			  dataType: 'json',
-			  async: false
-			})
-			 .done(function(response){
-				result = response;
-				sdk_app_context.hideLoader(response);
-			})
-			 .fail(function(e){
-				result = false;
-				console.log(JSON.stringify(e));
-			});
-			return result;
 		};
 
 		this.makePatch2Request = function(endpoint, data){
@@ -1141,6 +1116,14 @@ function requestHandlerAPI(){
 		
 	/**** More specific methods ****/
 
+
+		this.fetchDiet = function(diet_id){
+
+				var result = apiRH.getRequest('tables/dieta/'+diet_id);
+				return result;
+		};
+		
+
 		this.fetchCoachProfile = function(){
 
 			var count 	= 5;
@@ -1175,9 +1158,43 @@ function requestHandlerAPI(){
 		};
 
 		this.fetchClientProfile = function(clientId){
-			console.log("Fetch client profile");
-			var result = apiRH.getRequest("tables/cliente?_id="+clientId);
+
+			var personalidadesConcat = "";
+			var restrictionsConcat = "";
+			var separator = "";
+			var client_profile = apiRH.getRequest("tables/cliente?_id="+clientId);
+			
+			for(var i = 0; i < _coach.personalidad.length; i++){
+
+				separator = (i == _coach.personalidad.length - 1) ? "": ", ";
+				personalidadesConcat += catalogues.coach_type[i] + separator;
+			}
+			if(client_profile.perfil.restricciones)
+				for(i = 0; i < client_profile.perfil.restricciones; i++){
+					separator = (i ==client_profile.perfil.restricciones.length - 1) ? ", ": " ";
+					restrictionsConcat += catalogues.restricciones[i] + separator;
+				}
+			console.log(client_profile);
+			var _profile = 	{
+								name 				: client_profile.nombre,
+								last 				: client_profile.apellido,
+								objective 			: (personalidadesConcat != '') ? personalidadesConcat : null,
+								diet_name			: client_profile.dieta.nombre,
+								gender 				: catalogues.sex[client_profile.perfil.sexo],
+								age 				: client_profile.perfil.edad.real,
+								postal 				: client_profile.cp,
+								comments 			: client_profile.comentarios,
+								height 				: client_profile.perfil.estatura,
+								weight 				: client_profile.perfil.peso,
+								ideal_weight 		: client_profile.pesoDeseado,
+								coach_type 			: personalidadesConcat,
+								exercise_freq 		: client_profile.perfil.ejercicio,
+								restrictions		: (restrictionsConcat != '') ? restrictionsConcat : null
+							};
+			console.log(_profile);
+			return _profile;
 		};
+
 	
 		this.postNotification = function(userId, title, subtitle, content){
 			

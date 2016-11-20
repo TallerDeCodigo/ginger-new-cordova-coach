@@ -378,18 +378,18 @@
 			var data 		= this.gatherEnvironment(extra_data, 'Mi Perfil');
 			return this.switchView('coach', data, '.view', url, 'coach-profile');
 		},
-		render_clientProfile : function(url, clientId){
-
-			var extra_data = [];
-			window.is_home = false;
+		render_clientProfile : function( url, clientId ){
+			console.log("Render client profile");
 			setTimeout(function(){
 				app.showLoader();
 			}, 800);
+			var extra_data = [];
+			window.is_home = false;
+			app.initialize();
 			app.check_or_renderContainer();
 			var extra_data 	= apiRH.fetchClientProfile(clientId);	
-			var data 		= this.gatherEnvironment(extra_data, '');
-			console.log(data);
-			return this.switchView('user-profile', data, '.view', url, 'has-user');
+			var data 		= this.gatherEnvironment(extra_data, extra_data.nombre+''+extra_data.apellido);
+			return this.switchView('user-profile', data, '.view', url, 'client-profile');
 		},
 		render_comingSoon : function(url){
 
@@ -547,38 +547,6 @@
 				console.log(response);	
 			});
 		},
-		get_diet: function(dietId) {
-			var req = {
-				method : 'GET',
-				url : api_base_url + 'tables/dieta/' + dietId,  //definitr tabla
-				headers: {
-					'X-ZUMO-APPLICATION': 'ideIHnCMutWTPsKMBlWmGVtIPXROdc92',
-					'X-ZUMO-AUTH': localStorage.getItem('token'),
-					'Content-Type': 'application/json'
-				}
-			}
-
-			$.ajax({
-			  type: 'GET',
-			  headers: req.headers,
-			  url:  req.url,
-			  dataType: 'json',
-			  async: false
-			})
-			 .done(function(response){
-				result = response;
-				localStorage.setItem('dieta', response);
-				console.log(response);
-				sdk_app_context.hideLoader(response);
-			})
-			 .fail(function(e){
-				result = false;
-				console.log(JSON.stringify(e));
-			});
-
-			//console.log(result);
-			return result;
-		},//END GET DIET
 		restaFechas: function(f1,f2){
 			var aFecha1 = f1.split('-'); 
 			var aFecha2 = f2.split('/'); 

@@ -1,24 +1,27 @@
 	<header class="hwhite2">
 		<div class="toolbar">
-			<a href="lista-usuarios.html" class="back" ><img src="images/back.svg"></a>
-			<h2 class="titulo">{{header_title}}</h2>
+			<a href="lista-usuarios.html" class="back hook" data-resource="user-list" ><img src="images/back.svg"></a>
+			<h2 class="titulo">{{data.name}} {{data.last}}</h2>
 		</div>
 	</header>
-	<div class="nomb-usuario">
-		<h2 class="cpur"></h2>
-	</div>
 	<div class="profile-data">
+		<div class="profile circle-frame">
+			<img class="profile-pic" src="https://gingerfiles.blob.core.windows.net/users/{{me._id}}.png">
+		</div>
 		<ul>
-			<li><span>Objetivo: <strong class="user_plan">Rendimiento Físico</strong></span></li>
-			<li><span>Dieta: <strong class="user_dieta">Sólidos Vegetarianos</strong><div class="bt-review">CAMBIAR</div></span></li>
-			<li><span>Sexo: <strong class="user_sexo">Mujer</strong></span></li>
-			<li><span>Edad: <strong class="user_edad">27 años</strong></span></li>
-			<li><span>Código Postal: <strong class="user_cp">03180</strong></span></li>
-			<li><span>Altura: <strong class="user_estatura">1.70 m</strong></span></li>
-			<li><span>Peso: <strong class="user_peso">60 kg</strong></span></li>
-			<li><span>Peso Ideal: <strong class="user_pesoideal">60 kg</strong></span></li>
-			<li><span>Tipo de Coach: <strong class="user_coachtype">Analítico</strong></span></li>
-			<li><span>Frecuencia de Ejercicio: <strong class="user_dpw">1-3 días por semana</strong></span></li>
-			<li><span>Restricciones Alimenticias: <strong class="user_restricciones">Sin restricciones</strong></span></li>
+			<li><span>Objetivo: <strong class="user_plan">{{data.objective}}</strong></span></li>
+			<li><span>Dieta: <strong class="user_dieta">{{data.diet_name}}</strong>
+				<div class="bt-review">CAMBIAR</div></span>
+			</li>
+			<li><span>Sexo: <strong class="user_sexo">{{data.gender}}</strong></span></li>
+			<li><span>Edad: <strong class="user_edad">{{data.age}} años</strong></span></li>
+			<li><span>Código Postal: <strong class="user_cp">{{data.postal}}</strong></span></li>
+			<li><span>Altura: <strong class="user_estatura">{{data.height}} m</strong></span></li>
+			<li><span>Peso: <strong class="user_peso">{{data.weight}} kg</strong></span></li>
+			<li><span>Peso Ideal: <strong class="user_pesoideal">{{data.ideal_weight}} kg</strong></span></li>
+			<li><span>Tipo de Coach: <strong class="user_coachtype">{{data.coach_type}}</strong></span></li>
+			<li><span>Frecuencia de Ejercicio: <strong class="user_dpw">{{data.exercise_freq}} días por semana</strong></span></li>
+			<li><span>Restricciones Alimenticias: <strong class="user_restricciones">{{data.restrictions}} {{^ data.restrictions}}Ninguna{{/ data.restrictions}}</strong></span></li>
+			<li><span>Otras observaciones: <i >{{data.comments}}</i></span></li>
 		</ul>
 	</div>

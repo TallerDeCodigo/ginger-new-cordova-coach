@@ -356,7 +356,7 @@ li.persona {list-style:none;border-bottom:1px solid #cfcfcf;text-align:left;heig
 .list-usuarios ul li a.mensajes {right:15px;background:url(../images/msjs.svg); opacity: 0.35;}
 .list-usuarios ul li.active a.mensajes {opacity: 1;}
 
-/* PERFIL */
+/* PERFIL USER */
 
 .nomb-usuario {background:#f4f1f0;padding:2px 0px 10px;}
 .nomb-usuario h2 {font-weight:800;margin:0px;}
@@ -367,6 +367,12 @@ li.persona {list-style:none;border-bottom:1px solid #cfcfcf;text-align:left;heig
 .profile-data li span * {vertical-align:top;}
 .profile-data li span i {color:#8f8f8f;}
 .profile-data li.comentario {list-style:none;font-weight:100;}
+
+.client-profile .titulo{ color: #8041b7; }
+
+.circle-frame {position: absolute; border-radius: 50%; overflow: hidden; background:url('../images/Icon-60@3x.png') center; background-size: 100%!important; background-repeat: no-repeat;}
+.circle-frame img {width: auto; height: 105%; position: absolute; top: -9999px; bottom: -9999px; left: -9999px; right:-9999px;margin:auto;}
+.client-profile .profile.circle-frame { display: block; margin: 3rem auto; width: 32px; height: 32px; position: relative!important; width: 140px; height: 140px; background-size: auto;}
 
 /* FINANZAS */
 

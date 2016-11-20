@@ -283,7 +283,7 @@ window.initializeEvents = function(){
 					app.render_template("user-list-content", ".insert_content", responsedata);
 
 					/*** Start chat updating process ***/
-					return chatCore.fetchUnreadCount(_coach);
+					chatCore.fetchUnreadCount(_coach);
 				}
 			}else{
 				// Render template with new information
@@ -291,22 +291,34 @@ window.initializeEvents = function(){
 				app.render_template("user-list-content", ".insert_content", content);
 
 				/*** Start chat updating process ***/
-				return chatCore.fetchUnreadCount(_coach);
+				chatCore.fetchUnreadCount(_coach);
 			}
-			setTimeout(function(){
+
+			
+
+			setTimeout( function(){
+				
 				$('.notificaciones').on('click', function(){
 						app.render_comingSoon('proximamente.html');
 				});
-			}, 1000);
-			/*** Manually retry once ***/
-			// if(!response.users)
-			// 	response.users = apiRH.getUsuarios();
+
+				$('.usuario-item').click(function(e){
+					app.showLoader();
+					var gingerId = $(this).data("gingerid");
+					app.keeper.setItem('user-selected', gingerId);
+					if(!$(e.target).hasClass('mensajes notificaciones'))
+						return app.render_clientProfile( 'usuario.html', gingerId );
+				});
+
+			}, 0);
+
+			
 
 		}
 		
 
 		/* Chat list */
-		if($('.view').hasClass('dialog_detail')) {
+		if( $('.view').hasClass('dialog_detail') ) {
 			
 			if($('.view').hasClass('dialogLoad')){
 				console.log("Trigger load chat content");
@@ -584,6 +596,7 @@ window.initializeEvents = function(){
 			var idDelete;
 			var diaDelete;
 			var mealDelete;
+			var workspace = {};
 
 			console.log("Workspace dieta");
 
@@ -591,16 +604,15 @@ window.initializeEvents = function(){
 
 				var response = null;
 				var dieta_added = app.keeper.getItem('idDishSelected');
-				var contador_platillos = app.keeper.getItem('contador_platillos');
+				var contador_platillos = ( !workspace.dish_count ) ?  app.keeper.getItem('contador_platillos') : parseInt(workspace.dish_count);
 
 				console.log('Saving diet structure');
 				console.log(dieta_added);
-				console.log("contador :: "+app.keeper.getItem('contador_platillos'));
+				console.log("contador :: "+contador_platillos);
 
-				if( app.keeper.getItem('contador_platillos') >= 3 ){
+				if( contador_platillos && contador_platillos >= 3 ){
 
 						var myDietStructure = JSON.parse( app.keeper.getItem('dietaEdit') );
-						
 						console.log('ID DIETA DEFINIDO: ' + myDietStructure._id);
 						
 						if( myDietStructure._id ){
@@ -626,7 +638,7 @@ window.initializeEvents = function(){
 				}else {
 
 					if(!$('.overscreen_error').is(':visible')){
-						console.log('entra popup');
+
 						$('.overscreen_error').show();
 						setTimeout(function() {$('.overscreen_error').addClass('active');}, 200);
 					} else {
@@ -950,10 +962,9 @@ window.initializeEvents = function(){
 				});
 
 			}else{
-				console.log("here?");
-				var dieta = app.get_diet('?_id='+ app.keeper.getItem('dOperator'));
-				console.log('ID DIET: ' + dieta._id);
 
+				var dieta = apiRH.fetchDiet( app.keeper.getItem('dOperator') );
+				console.log('ID DIET: ' + dieta._id);
 				app.keeper.setItem('dietaEdit', JSON.stringify(dieta));
 
 				if(dieta){
@@ -998,12 +1009,12 @@ window.initializeEvents = function(){
 					});
 
 					var loscomentarios = [];
-					var i=0;
-					var j=0;
+					var i = 0;
+					var j = 0;
 
 					$.each( dieta.comentarios, function( key, value ) {
 						loscomentarios[i]=[];
-						j=0;
+						j = 0;
 						$.each( value, function( key, value ) {
 							loscomentarios[i][j]=value;
 							j++;
@@ -1011,8 +1022,8 @@ window.initializeEvents = function(){
 						i++;
 					});
 
-					for (var i=0; i<misPlatos.length; i++) {
-						misPlatos[i][4]="";
+					for (var i = 0; i < misPlatos.length; i++) {
+						misPlatos[i][4] = "";
 						for (var j = 0; j < loscomentarios.length; j++) {
 							if (misPlatos[i][0]==loscomentarios[j][2]&&misPlatos[i][4]=="") {
 								misPlatos[i][4]=loscomentarios[j][1];
@@ -1021,11 +1032,8 @@ window.initializeEvents = function(){
 					}
 
 					var dieta_array = [];
-
 					var dia_prueba=0;
-
 					var dias = [];
-
 					var arrDieta = dieta;
 
 					$.each( dieta.estructura, function( key, value ) {
@@ -1033,27 +1041,21 @@ window.initializeEvents = function(){
 						if(key == "domingo"){dia_prueba=1;} else if (key=="lunes") {dia_prueba=2;} else if (key=="martes") {dia_prueba=3;} else if (key=="miercoles") {dia_prueba=4;} else if (key=="jueves") {dia_prueba=5;} else if (key=="viernes") {dia_prueba=6;} else if (key=="sabado") {dia_prueba=7;}
 						
 						var level_refer = '#toda_la_dieta li:nth-of-type('+dia_prueba+') ';
-						
 						$.each( value, function( key, value ) {
 							// desayuno, snack, comida,...
 							var sec_level_refer = level_refer+'.acc-content.'+key+' ';
-							
 							var i=1;
-
 							$.each( value, function( key, value ) {
-								// tiempos (1,2,3..)
-								// console.log(key + " :::: 0" +value);
+
 								var third_level_ref = sec_level_refer+'div.platillo:nth-of-type('+i+')';
 								i++;	
 								$.each( value, function( key, value ) {
 
 									$.each( value, function( key, value ) {
-										// id_platillo, id_comentario
-										// console.log(key + " :::: " +value);
+
 										if (key == "platillo") {
 											for (var i = 0; i < misPlatos.length; i++) {
 												if (value==misPlatos[i][0]) {
-													// console.log(misPlatos[i][1]+"<"+misPlatos[i][2]+"<"+misPlatos[i][4]);
 
 													$(third_level_ref).attr("data", misPlatos[i][0]);
 													
@@ -1063,20 +1065,21 @@ window.initializeEvents = function(){
 													
 													if (misPlatos[i][2]!="") {
 														$(third_level_ref+' p.receta').html(misPlatos[i][2]);
-													} else {
+													}else {
 														$(third_level_ref+'p.receta').hide();
 													}
+													
 													if (misPlatos[i][4]!="") {
 														$(third_level_ref+' p.comentario').html(misPlatos[i][4]);
-													} else {
+													}else {
 														$(third_level_ref+' p.comentario').hide();
 													}
+													
 													if(misPlatos[i][3]!= ''){
 														$(third_level_ref+' p.los_ing').html(misPlatos[i][3]);
-														console.log('plato '+i+' sus ing'+misPlatos[i][3]);
-													}else{
-														;	
+														// console.log('plato '+i+' sus ing'+misPlatos[i][3]);
 													}
+
 												}
 											}
 										}

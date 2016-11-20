@@ -40,11 +40,11 @@
         "cordova-plugin-x-toast": {
             "PACKAGE_NAME": "com.ginger.coach"
         },
-        "phonegap-plugin-push": {
-            "SENDER_ID": "XXXXXXX",
+        "onesignal-cordova-plugin": {
             "PACKAGE_NAME": "com.ginger.coach"
         },
-        "onesignal-cordova-plugin": {
+        "phonegap-plugin-push": {
+            "SENDER_ID": "XXXXXXX",
             "PACKAGE_NAME": "com.ginger.coach"
         }
     },
