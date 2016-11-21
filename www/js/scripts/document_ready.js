@@ -562,8 +562,9 @@ window.initializeEvents = function(){
 									coach : _coach._id
 								};
 
-					if(apiRH.updateClientDiet(myClient, params)){
+					if( apiRH.updateClientDiet(myClient, params) ){
 						app.keeper.removeItem('user-selected');
+						app.keeper.removeItem('change_of_plan');
 						app.render_clientProfile('usuario.html', myClient);
 					}
 				});

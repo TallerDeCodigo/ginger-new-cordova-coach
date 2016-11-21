@@ -219,8 +219,9 @@
 				$('.rootContainer').html( html );
 			}
 		},
-		render_template : function(templateName, targetSelector, otherdata, keepLoader){
+		render_template : function(templateName, targetSelector, otherdata, keepLoader, append){
 			keepLoader = (typeof keepLoader == 'undefined' || !keepLoader) ? false : true;
+			append = (typeof append == 'undefined' || !append) ? false : true;
 			window.is_home = false;
 			var template = Handlebars.templates[templateName];
 			if(!template){
@@ -229,6 +230,8 @@
 			}
 			var data = this.gatherEnvironment(otherdata);
 			data.is_scrollable = false;
+			if(!append)
+				$(targetSelector).html('');
 			$(targetSelector).append(template(data));
 			if(!keepLoader)
 				setTimeout(function(){
@@ -318,7 +321,9 @@
 			app.check_or_renderContainer();
 			var data = this.gatherEnvironment(responsedata, 'Dietas');
 			var change_of_plan = app.keeper.getItem('change_of_plan');
-			data.controls = (change_of_plan && change_of_plan == true) ? true : false;
+			console.log("change of plan :: "+change_of_plan);
+			data.controls = (change_of_plan && change_of_plan == 'true') ? true : false;
+			console.log(data);
 			return this.switchView('diet-list', data, '.view', url, 'diet-list');
 		},
 		render_dietas_content : function(url){

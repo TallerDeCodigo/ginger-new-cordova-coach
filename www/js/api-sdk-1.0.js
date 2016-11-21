@@ -154,53 +154,21 @@ function requestHandlerAPI(){
 
 
 		/**
-		 * CREATE DIET
-		 * */
+		 * Create new diet from structure
+		 * @param Object data
+		 * @return Boolean
+		 */
+		this.createDiet = function(data){
 
-		 this.createDiet = function(data){
-			var req = {
-				method : 'POST',
-				url : api_base_url + 'api/create',   //ESTO NO ES CORRECTO
-				headers: {
-					'X-ZUMO-APPLICATION': 'ideIHnCMutWTPsKMBlWmGVtIPXROdc92',
-					'X-ZUMO-AUTH': apiRH.keeper.getItem('token'),
-					'Content-Type': 'application/json'
-				},
-				data: data
-			}
-
-			console.log(JSON.stringify(req));
-
-			var response = this.makeRequest('api/duplicate', req);
-
-			console.log("Request Copy Data Dieta");
-
-			console.log(response);  //llega aqui con la respuesta del servidor
-
+			var response = this.makeRequest('api/duplicate', data);
+			console.log(response);
 			return (response) ? response : false;
 		};
 
 		this.makeDiet = function(data){
 
-			var req = {
-				method : 'POST',
-				url : api_base_url + 'tables/dieta/',   //ESTO NO ES CORRECTO
-				headers: {
-					'X-ZUMO-APPLICATION': 'ideIHnCMutWTPsKMBlWmGVtIPXROdc92',
-					'X-ZUMO-AUTH': apiRH.keeper.getItem('token'),
-					'Content-Type': 'application/json'
-				},
-				data: JSON.parse(data)
-			}
-
-			console.log(JSON.stringify(req));
-
-			var response = this.makeRequest('tables/dieta/', req);
-
-			console.log("Request Copy Data Dieta");
-
-			console.log(response);  //llega aqui con la respuesta del servidor
-
+			var response = this.makeRequest('tables/dieta/', data);
+			console.log(response);
 			return (response) ? response : false;
 		};
 
@@ -302,38 +270,34 @@ function requestHandlerAPI(){
 		};
 
 
-		/*
-		 *
+		/**
 		 * Update Client Diet
-		 *
+		 * @param String client_id
+		 * @param Object data
+		 * @return JSON Object
 		 */
 		this.updateClientDiet = function (client_id, data){
-			
-			var req = {
-				method : 'PATCH',
-				url : api_base_url + 'tables/cliente/'+client_id,
-				headers: {
-					'X-ZUMO-APPLICATION': 'ideIHnCMutWTPsKMBlWmGVtIPXROdc92',
-					'X-ZUMO-AUTH': apiRH.keeper.getItem('token'),
-					'Content-Type': 'application/json'
-				},
-				data : data
-			}
 
-			var response = this.makePatch2Request('tables/cliente/'+client_id, req);
-
-			console.log('Response Update Client Diet: ' + JSON.stringify(response));  //llega aqui con la respuesta del servidor
-
-			apiRH.keeper.setItem('user-selected', JSON.stringify(response));
-
+			var response = this.makePatchRequest( 'tables/cliente/'+client_id, data);
+			console.log('Response Update Client Diet: ' + JSON.stringify(response));
 			return (response) ? response : false;
 		};
 
+		/**
+		 * Fetch finances from api
+		 * @param Integer month
+		 * @return JSON Object
+		 */
 		this.getFinanzas = function(mes){
+			
 			var response = this.getRequest('api/history/?coach=' + apiRH.keeper.getItem('userId') + '&mes=' + mes, null);
 			return (response) ? response : false;
 		};
 
+		/**
+		 * Fetch coach information
+		 * @return JSON Object
+		 */
 		this.getInfoCoach = function(){
 			
 			var response = this.getRequest('tables/coach?_id=' + apiRH.keeper.getItem('userId'), null);
@@ -685,39 +649,7 @@ function requestHandlerAPI(){
 
 		};
 
-		this.makePatch2Request = function(endpoint, data){
-			
-			console.log("----------------------------"); //llega a makerequest
-
-			console.log(data.data); //llega a makerequest
-
-			console.log("----------------------------"); //llega a makerequest
-			
-			sdk_app_context.showLoader();
-			
-			var result = {};
-
-			//console.log('datos: ' + data.data);
-
-			$.ajax({
-			  type: 'PATCH',
-			  headers: data.headers,
-			  url: window.api_base_url+endpoint,
-			  data: JSON.stringify(data.data),
-			  dataType: 'json',
-			  async: false
-			})
-			 .done(function(response){
-				result = response;
-				sdk_app_context.hideLoader(response);
-			})
-			 .fail(function(e){
-				result = false;
-				console.log(JSON.stringify(e));
-			});
-			return result;
-		};
-
+		
 		this.makeCopyDietReques = function(endpoint, data){
 			console.log(data.data); //llega a makerequest
 
