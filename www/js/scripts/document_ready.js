@@ -18,30 +18,23 @@ window.initializeEvents = function(){
 			$('.hook').on('click', function(e){
 				e.preventDefault();
 				app.showLoader();
-				if( $(this).data('resource') == "home" ){
-					app.showLoader();
+				if( $(this).data('resource') == "home" )
 					return app.render_home( $(this).attr('href') );
-				}
-				if( $(this).data('resource') == "chat-contacts" ){
-					app.showLoader();
+
+				if( $(this).data('resource') == "chat-contacts" )
 					return app.render_chat( $(this).attr('href') );
-				}
-				if( $(this).data('resource') == "user-list" ){
-					app.showLoader();
+
+				if( $(this).data('resource') == "user-list" )
 					return app.render_user_list( $(this).attr('href') );
-				}
-				if( $(this).data('resource') == "diet-list" ){
-					app.showLoader();
+
+				if( $(this).data('resource') == "diet-list" )
 					return app.render_coach_dietas( $(this).attr('href') );
-				}
-				if( $(this).data('resource') == "finanzas" ){
-					app.showLoader();
+
+				if( $(this).data('resource') == "finanzas" )
 					return app.render_finances_view( $(this).attr('href') );
-				}
-				if( $(this).data('resource') == "profile" ){
-					app.showLoader();
+
+				if( $(this).data('resource') == "profile" )
 					return app.render_myProfile( $(this).attr('href') );
-				}
 
 
 				if( $(this).data('resource') == "create-diet" )
@@ -49,14 +42,12 @@ window.initializeEvents = function(){
 				if( $(this).data('resource') == "duplicate-diet" )
 					return app.render_duplicate_diet($(this).attr('href'));
 				
-
 				e.stopPropagation();
 			});
 		};
 		initHooks();
 
 		if( $('#scroller').length ){
-			console.log("Has scroller");
 			new Swipe(document.getElementById('scroller'));
 			window.slider = new Swipe(document.getElementById('scroller'));
 		}
@@ -184,7 +175,7 @@ window.initializeEvents = function(){
 				if(month == base_month)
 					$('.btn_right').addClass('inactive');
 				
-				$('.btn-gre').click(function(){
+				$('#upload_receipt').click(function(){
 					console.log( 'Clicked upload receipt' );
 					app.get_file_from_device( 'receipt', 'gallery' );
 				});
@@ -229,7 +220,6 @@ window.initializeEvents = function(){
 				var d_nombre 		= $('input[name="nombre"]').val();
 				var d_comentario 	= $('input[name="comentario"]').val();
 
-				// Pero bueno está bien
 				app.keeper.setItem('d_nombre', d_nombre);
 				app.keeper.setItem('d_comentario', d_comentario);
 
@@ -459,7 +449,7 @@ window.initializeEvents = function(){
 		 *
 		 **/
 		if( $('.view').hasClass('diet-list') ){
-			//Request to Service
+			
 			var i = 0;
 			var idDelete = null;
 			var responsedata = [];
@@ -474,7 +464,6 @@ window.initializeEvents = function(){
 			var initDietActions = function(){
 
 				/*** Dieta operations ***/
-				
 				$('.btn_copy').click(function (e) {
 					app.keeper.setItem('dOperator', $(this).data('id'));
 				});
@@ -515,18 +504,10 @@ window.initializeEvents = function(){
 						$('#blur').toggleClass('blurred');
 					});
 
-				// $('.diet_element_hook').click(function () {
-				// 	console.log("Le hook");
-				// 	var idDietax = $(this).parent().find('.each_diet_element').data('id');
-				// 	app.keeper.setItem('dOperator', idDietax);
-				// 	app.keeper.setItem('proviene', 'lista');
-				// 	// app.render_diet();
-				// 	window.location.assign('dieta.html');
-				// });
 			};
 
 			if(!local_tmp || local_tmp.return !=  'diet-list' || (local_tmp.return ==  'diet-list' && diff_stamps >= 600) ){
-				console.log("Gonna get some data");
+				
 				var diets = null;
 				if( diets = apiRH.getDiets() ){
 
@@ -538,18 +519,15 @@ window.initializeEvents = function(){
 									};
 					app.render_template("diet-list-content", ".insert-content", responsedata);
 					app.keeper.setItem('temp-return', JSON.stringify(responsedata));
-					initHooks();
 					initDietActions();
 				}
 			}else{
 
 				var content = JSON.parse( app.keeper.getItem('temp-return') );
 				app.render_template("diet-list-content", ".insert-content", content);
-				initHooks();
 				initDietActions();
 			}
 
-			// Select diet to assign 
 			$('.diet_element_hook').click( function(){
 
 				var dietSelected = $(this).parent().data("id");
@@ -600,26 +578,21 @@ window.initializeEvents = function(){
 		/*** CREATE NEW DIET ***/
 		if( $('.view').hasClass('create-new-diet') ){
 
-			$('.btn-gre').click(function () {
-				app.showLoader();
-				var d_nombre 		= $('input[name="nombre"]').val();
-				var d_comentario 	= $('input[name="cometario"]').val();
-
-				app.keeper.setItem('d_nombre', d_nombre);
-				app.keeper.setItem('d_comentario', d_comentario);
-				d_nombre 		= app.keeper.getItem('d_nombre');
-				d_comentario 	= app.keeper.getItem('d_comentario'); 
-
-				console.log(d_nombre);
-				console.log(d_comentario);
-
-				if(d_nombre.length < 4)
-					return;
-				if(d_comentario.length < 4)
-					return;
-
-				return app.render_diet_edition('dieta.html', 'create');
+			$('#create_new_diet').click( function () {
 				
+				app.showLoader();
+				var formData 			= app.getFormData('#create_diet_form');
+				
+				if( formData.diet_name.length < 4 )
+					return app.toast("El nombre de la dieta debe ser mayor a 4 caracteres");
+
+				if( formData.diet_comment.length < 4 )
+					return app.toast("La descripción debe ser mayor a 4 caracteres");
+				
+				app.keeper.setItem('d_nombre', formData.diet_name);
+				app.keeper.setItem('d_comentario', formData.diet_comment);
+
+				return app.render_diet_edition( 'dieta.html', 'create' );
 			});
 
 		} // END create-new-diet
@@ -857,6 +830,7 @@ window.initializeEvents = function(){
 			 */
 
 			var dietaNew = {};
+			/*** Pass this into a catalogue ***/
 			var jsonNew = '{"nombre": "' +app.keeper.getItem('d_nombre') + '","descripcion":"' + app.keeper.getItem('d_comentario') + '", "estructura":{"domingo":{"desayuno":{},"snack1":{},"comida":{},"snack2":{},"cena":{}},"lunes":{"desayuno":{},"snack1":{},"comida":{},"snack2":{},"cena":{}},"martes":{"desayuno":{},"snack1":{},"comida":{},"snack2":{},"cena":{}},"miercoles":{"desayuno":{},"snack1":{},"comida":{},"snack2":{},"cena":{}},"jueves":{"desayuno":{},"snack1":{},"comida":{},"snack2":{},"cena":{}},"viernes":{"desayuno":{},"snack1":{},"comida":{},"snack2":{},"cena":{}},"sabado":{"desayuno":{},"snack1":{},"comida":{},"snack2":{},"cena":{}}},"perfil":{"sexo":0,"edad":0,"bmi":0,"objetivo":0}}';
 			
 			if( $('workspace-diet').hasClass('edit') != -1){
@@ -868,7 +842,6 @@ window.initializeEvents = function(){
 				dietaNew = JSON.parse(jsonNew);
 				app.keeper.setItem('contador_platillos', 0);
 				app.keeper.setItem('dietaEdit', jsonNew);
-
 				$('.platillo').hide();
 
 			} else if ( app.keeper.getItem('idDishSelected') || app.keeper.getItem('dietaEdit') ) {
@@ -1217,7 +1190,7 @@ window.initializeEvents = function(){
 				app.keeper.setItem('d_date', $(this).attr('date'));
 				console.log($(this).attr('data'));
 				console.log($(this).attr('date'));
-				window.location.assign('platillos.html');
+				app.render_dish_list('platillos.html');
 			});
 
 			$( ".accordion" ).accordion({collapsible:true,active:false,animate:300,heightStyle:"content"});

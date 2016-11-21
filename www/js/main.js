@@ -8,12 +8,13 @@
 
 	var app = {
 		app_context: this,
+		initialized: false,
 			// Application Constructor
 		initialize: function() {
 
 			this.bindEvents();
 			window.firstTime = true;
-			
+			app.initialized = true;
 			/* Initialize API request handler */
 			window.apiRH = new requestHandlerAPI().construct(app);
 			this.registerHelpers();
@@ -292,10 +293,10 @@
 		},
 		render_finances_view : function(url){
 
+			if(!app.initialized) app.initialize();
 			setTimeout(function(){
 				app.showLoader();
 			}, 800);
-
 			var responsedata 	= [];
 			var todayObj 		= new Date();
 			var month 			= todayObj.getMonth();
@@ -306,46 +307,31 @@
 			responsedata.this_day 		= todayObj.getDate();
 			
 			app.check_or_renderContainer();
-			
 			var data = this.gatherEnvironment( responsedata, "Finanzas");
 			return this.switchView( 'finanzas', data, '.view', url, 'finanzas', true );
 		},
 		render_coach_dietas : function(url){
 
 			window.is_home = false;
-			this.initialize();
-			var responsedata = [];
+			if(!app.initialized) app.initialize();
 			setTimeout(function(){
 				app.showLoader();
 			}, 800);
 			app.check_or_renderContainer();
-			var data = this.gatherEnvironment(responsedata, 'Dietas');
+			var data = this.gatherEnvironment([], 'Dietas');
 			var change_of_plan = app.keeper.getItem('change_of_plan');
-			console.log("change of plan :: "+change_of_plan);
 			data.controls = (change_of_plan && change_of_plan != '') ? false : true;
-			console.log(data);
-			return this.switchView('diet-list', data, '.view', url, 'diet-list');
-		},
-		render_dietas_content : function(url){
-
-			var responsedata = [];
-			window.is_home = false;
-			setTimeout(function(){
-				app.showLoader();
-			}, 800);
-			app.check_or_renderContainer();
-				responsedata = apiRH.getDiets();
-			var data = this.gatherEnvironment(responsedata, 'Dietas');
-			return this.switchView('diet-list', data, '.view', url, 'diet-list');
+			return this.switchView('diet-list', data, '.view', url, 'diet-list', true);
 		},
 		render_create_diet : function(url){
 
 			window.is_home = false;
+			if(!app.initialized)
+				app.initialize();
 			setTimeout(function(){
 				app.showLoader();
 			}, 800);
 			app.check_or_renderContainer();
-
 			var data = this.gatherEnvironment( [], 'Crear nueva dieta');
 			return this.switchView('create-diet', data, '.view', url, 'create-new-diet');
 		},
