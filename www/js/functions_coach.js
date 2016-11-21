@@ -25,76 +25,81 @@
 
 
 			var platos_privados = apiRH.listDishes(0);
-			console.log(platos_privados);
+
 			var i = 0;
 			$.each(platos_privados, function( key, value ) {
-
-				$('.list-dish.private').append('<li class="platillo-item" data="'+ platos_privados[i]._id +'" descripcion="' +  platos_privados[i].descripcion + '" receta="' + platos_privados[i].receta + '" > <h2 class="hache" data="'+ platos_privados[i].descripcion +'">' + platos_privados[i].descripcion + '</h2><p class="description">' + platos_privados[i].receta + '</p></li>');	
-
+				$('.list-dish.private').append('<li class="platillo-item" data="'+ platos_privados[i]._id +'" descripcion="' +  platos_privados[i].descripcion + '" receta="' + platos_privados[i].receta + '" > <h2 class="hache" data="'+ platos_privados[i].descripcion +'">' + platos_privados[i].descripcion + '</h2><p class="description">' + platos_privados[i].receta + '</p></li>');
 				i++;	
-
 			});
 
 			var platos_publicos = apiRH.listDishes(1);
-			console.log(platos_publicos);
 
 			i = 0;
 			$('.list-dish.public').html('');
 
 			$.each(platos_publicos, function( key, value ) {
-				$('.list-dish.public').append('<li class="platillo-item" data="'+ platos_publicos[i]._id +'"><h2 class="hache" data="'+ platos_publicos[i].descripcion +'" >' + platos_publicos[i].descripcion + '</h2><p class="description">' + platos_publicos[i].receta + '</p></li>');	
-
+				$('.list-dish.public').append('<li class="platillo-item" data="'+ platos_publicos[i]._id +'"><h2 class="hache" data="'+ platos_publicos[i].descripcion +'" >' + platos_publicos[i].descripcion + '</h2><p class="description">' + platos_publicos[i].receta + '</p></li>');
 				i++;	
-
 			});
 
 
 			$('.add').click(function () {
 				console.log('click');
-				//app.keeper.setItem('dishSelected', '');
+				app.keeper.setItem('dishSelected', '');
 
 			});
 
-			/* Este agrega el platillo  */
-			$('.accept').click(function(){
-				console.log("Accept");
-				$(this);
-			 	app.keeper.setItem('idDishSelected', $(this).attr('data') );
-			 	app.keeper.setItem('desDishSelected', $(this).parent().parent().find('h5').html() );
-			 	app.keeper.setItem('recetaDishSelected', $(this).parent().parent().find('p').html() );
+			$('li.platillo-item').click(function() {
+				$('li.platillo-item').removeClass('active');
+				$(this).addClass('active');
+			});
+			
+			$(document).on('click', '.platillo-item', function() {
 
-			 	console.log( app.keeper.getItem('idDishSelected') );
+				var _id 		= $(this).attr('data');
+				var data_name 	= $(this).find('.hache').html();
+				var data_description = ( $(this).find('p').html() != '') 
+									 ? $(this).find('p').html() 
+									 : "Sin receta";
 
+				app.keeper.setItem('dish_nombre', data_name);
+				app.keeper.setItem('dish_aidi', _id);
+
+				if(!$('.alert_meal_description').is(':visible')){
+					
+					$('.alert_meal_description').show();
+
+					$(".accept").attr('data', _id);
+
+					$('#meal_name').html(data_name);
+					$('#meal_description').html(data_description);
+					setTimeout(function() {$('.alert_meal_description').addClass('active');}, 200);
+					/*Anade el platillo a la lista de platillos en el dia*/
+				} else {
+					$('.alert_meal_description').removeClass('active');
+					setTimeout(function() {$('.alert_meal_description').hide();}, 800);
+				}
+				$('#blur').toggleClass('blurred');
+
+			});
+
+			$('#accept_add_dish').click(function(){
+				
+				app.keeper.setItem('idDishSelected', $(this).attr('data') );
+				app.keeper.setItem('desDishSelected', $(this).parent().parent().find('h5').html() );
+				app.keeper.setItem('recetaDishSelected', $(this).parent().parent().find('p').html() );
+				console.log( app.keeper.getItem('idDishSelected') );
 				$('.alert_meal_description').hide();
 				$('#blur').toggleClass('blurred');
 
-				window.location.assign('dieta.html');
+				return app.render_diet_edition("dieta.html");
 
 			});
 
-			$('.cancel').click(function(){
+			$('#cancel_add_dish').click(function(){
 				$('.alert_meal_description').hide();
 				$('#blur').toggleClass('blurred');
 			});
-
-
-			// $('.platillo-item').click(function(){
-			// 	var data = $(this).find($('.hache').attr('data') );
-			// 	var i=0;
-			// 	data = data.selector;
-			// 	console.log(data);
-
-			// 	if(!$('.alert_meal_description').is(':visible')){
-			// 		$('.alert_meal_description').show();
-			// 		$('#meal_name').html(data)
-			// 		setTimeout(function() {$('.alert_meal_description').addClass('active');}, 200);
-			// 	} else {
-			// 		$('.alert_meal_description').removeClass('active');
-			// 		setTimeout(function() {$('.alert_meal_description').hide();}, 800);
-			// 	}
-			// 	$('#blur').toggleClass('blurred');
-			// })
-
 
 		}
 
@@ -286,16 +291,16 @@
 					picker = Number($("#picker-up").parent().parent().find('input').val());
 					if (picker<99) {
 						picker=picker+1;
-			        	$("#picker-up").parent().parent().find('input').val(picker.toFixed(0));
-			        	$('input[name="picker"]').attr("value", picker);
+						$("#picker-up").parent().parent().find('input').val(picker.toFixed(0));
+						$('input[name="picker"]').attr("value", picker);
 					}
-			    }, 100);
-			    return false;
+				}, 100);
+				return false;
 			});
 
 			$("#picker-up").bind('touchend', function(){
-			    clearInterval(timeout);
-			    return false;
+				clearInterval(timeout);
+				return false;
 			});
 
 			$("#picker-dw").bind('touchstart', function(){
@@ -306,13 +311,13 @@
 						$("#picker-dw").parent().parent().find('input').val(picker.toFixed(0));
 						$('input[name="picker"]').attr("value", picker);
 					}
-			    }, 100);
-			    return false;
+				}, 100);
+				return false;
 			});
 
 			$("#picker-dw").bind('touchend', function(){
-			    clearInterval(timeout);
-			    return false;
+				clearInterval(timeout);
+				return false;
 			});
 
 			var almacen;
@@ -494,46 +499,12 @@
 			}		
 		});
 
-		$('li.platillo-item').click(function() {
-			$('li.platillo-item').removeClass('active');
-			$(this).addClass('active');
-		});
-
 		$('.ing-category').click(function() {
 			$('.ing-category').removeClass('active');
 			$(this).addClass('active');
 		});
 
 
-		$(document).on('click', '.platillo-item', function() {
-
-		    	var data_name = $(this).find('.hache').html();
-		    	var data_description = $(this).find('p').html();
-		    	var _id = $(this).attr('data');
-
-
-		    	app.keeper.setItem('dish_nombre', data_name);
-		    	app.keeper.setItem('dish_aidi', _id);
-
-
-		    	if(!$('.alert_meal_description').is(':visible')){
-		    		$('.alert_meal_description').show();
-
-		    		$(".accept").attr('data', _id);
-
-		    		$('#meal_name').html(data_name);
-		    		$('#meal_description').html(data_description);
-		    		setTimeout(function() {$('.alert_meal_description').addClass('active');}, 200);
-		    		/*Anade el platillo a la lista de platillos en el dia*/
-
-
-		    	} else {
-		    		$('.alert_meal_description').removeClass('active');
-		    		setTimeout(function() {$('.alert_meal_description').hide();}, 800);
-		    	}
-		    	$('#blur').toggleClass('blurred');
-
-		});
 
 	});
 
