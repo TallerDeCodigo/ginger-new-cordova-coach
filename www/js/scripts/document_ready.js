@@ -309,7 +309,7 @@ window.initializeEvents = function(){
 					var gingerId = $(this).data("gingerid");
 					app.keeper.setItem('user-selected', gingerId);
 					if(!$(e.target).hasClass('mensajes notificaciones'))
-						return app.render_clientProfile( 'usuario.html', gingerId );
+						return app.render_clientProfile( 'usuario.html' );
 				});
 
 			}, 0);
@@ -322,15 +322,27 @@ window.initializeEvents = function(){
 		/* Client profile */
 		if( $('.view').hasClass('client-profile') ) {
 			
-			$('#switch_diet').click(function(){
-				var user_selected = app.keeper.getItem('user-selected');
-				app.keeper.setItem('change_of_plan', true);
-				return app.render_coach_dietas('lista-dietas.html');
-			});
+			var clientId =  app.keeper.getItem('user-selected');
+			var responsedata 	= apiRH.fetchClientProfile(clientId);
+			if(responsedata){
+				
+				app.render_template("user-profile", ".view", responsedata);
+				
+				setTimeout( function(){
+				
+					$('#switch_diet').click(function(){
+						var user_selected = app.keeper.getItem('user-selected');
+						app.keeper.setItem('change_of_plan', true);
+						return app.render_coach_dietas('lista-dietas.html');
+					});
+					app.hideLoader();
+				}, 0);
+
+			}
+			
 
 		}
 		
-
 
 		/* Chat list */
 		if( $('.view').hasClass('dialog_detail') ) {
@@ -563,10 +575,12 @@ window.initializeEvents = function(){
 								};
 
 					if( apiRH.updateClientDiet(myClient, params) ){
-						app.keeper.removeItem('user-selected');
+						// app.keeper.removeItem('user-selected');
 						app.keeper.removeItem('change_of_plan');
-						app.render_clientProfile('usuario.html', myClient);
+						app.toast("La dieta se ha actualizado")
+						return app.render_clientProfile('usuario.html');
 					}
+					return app.render_clientProfile('usuario.html');
 				});
 
 				$('#cancel-assignation').click(function(){

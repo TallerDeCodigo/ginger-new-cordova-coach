@@ -111,7 +111,7 @@ function requestHandlerAPI(){
 		 */
 		this.updateDiet = function (data){
 			
-			var response = this.makePatchRequest('tables/dieta/', data);
+			var response = this.patchRequest('tables/dieta/', data);
 			console.log(response);
 			return (response) ? response : false;
 		};
@@ -184,7 +184,7 @@ function requestHandlerAPI(){
 			delete dietObj.__v;
 
 			console.log(req);
-			var response = this.makePatchRequest('tables/dieta/' + dietObj._id, dietObj);
+			var response = this.patchRequest('tables/dieta/' + dietObj._id, dietObj);
 			console.log('Response: ' + JSON.stringify(response));
 			return (response) ? true : false;
 		};
@@ -278,9 +278,9 @@ function requestHandlerAPI(){
 		 */
 		this.updateClientDiet = function (client_id, data){
 
-			var response = this.makePatchRequest( 'tables/cliente/'+client_id, data);
+			var response = this.patchRequest( 'tables/cliente/'+client_id, data);
 			console.log('Response Update Client Diet: ' + JSON.stringify(response));
-			return (response) ? response : false;
+			return (response) ? true : false;
 		};
 
 		/**
@@ -320,7 +320,7 @@ function requestHandlerAPI(){
 
 			console.log(JSON.stringify(req));
 
-			var response = this.makePatchRequest('tables/cliente/' + apiRH.keeper.getItem('userId'), req);
+			var response = this.patchRequest('tables/cliente/' + apiRH.keeper.getItem('userId'), req);
 
 			console.log("Request Path Data Cliente");
 
@@ -572,7 +572,7 @@ function requestHandlerAPI(){
 		 * @return JSON encoded response
 		 * @see CORS
 		 */
-		this.makePatchRequest = function(endpoint, data, stringify){
+		this.patchRequest = function(endpoint, data, stringify){
 			
 			var result = {};
 			console.log("------------- PATCH  ------------");
@@ -748,25 +748,25 @@ function requestHandlerAPI(){
 		 * @see API documentation
 		 * @todo Actually make the request via PATCH method
 		 */
-		this.patchRequest = function(endpoint, data){
-							sdk_app_context.showLoader();
-							var userInfo = {};
+		// this.patchRequest = function(endpoint, data){
+		// 					sdk_app_context.showLoader();
+		// 					var userInfo = {};
 
-							var xhr = new XMLHttpRequest();
-							xhr.open('POST', window.api_base_url+endpoint);
-							xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-							xhr.onload = function() {
-								console.log(xhr.status);
-								if (xhr.status === 200) {
-									var userInfo = JSON.parse(xhr.responseText);
-									console.log(userInfo);
-									sdk_app_context.hideLoader();
-								}
-							};
-							xhr.send(data);
-							/* ContentType is important to parse the data server side since PUT doesn't handle multipart form data */
-							 return userInfo;
-						};
+		// 					var xhr = new XMLHttpRequest();
+		// 					xhr.open('POST', window.api_base_url+endpoint);
+		// 					xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+		// 					xhr.onload = function() {
+		// 						console.log(xhr.status);
+		// 						if (xhr.status === 200) {
+		// 							var userInfo = JSON.parse(xhr.responseText);
+		// 							console.log(userInfo);
+		// 							sdk_app_context.hideLoader();
+		// 						}
+		// 					};
+		// 					xhr.send(data);
+		// 					/* ContentType is important to parse the data server side since PUT doesn't handle multipart form data */
+		// 					 return userInfo;
+		// 				};
 		/* 
 		 * Perform OAuth authentication 
 		 * @param provider String Values: 'facebook', 'twitter', 'google_plus'

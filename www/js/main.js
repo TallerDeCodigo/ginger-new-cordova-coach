@@ -322,7 +322,7 @@
 			var data = this.gatherEnvironment(responsedata, 'Dietas');
 			var change_of_plan = app.keeper.getItem('change_of_plan');
 			console.log("change of plan :: "+change_of_plan);
-			data.controls = (change_of_plan && change_of_plan == 'true') ? true : false;
+			data.controls = (change_of_plan && change_of_plan != '') ? false : true;
 			console.log(data);
 			return this.switchView('diet-list', data, '.view', url, 'diet-list');
 		},
@@ -385,17 +385,20 @@
 			var data 		= this.gatherEnvironment(extra_data, 'Mi Perfil');
 			return this.switchView('coach', data, '.view', url, 'coach-profile');
 		},
-		render_clientProfile : function( url, clientId ){
+		render_clientProfile : function( url ){
+			window.is_home = false;
+			if(!url)
+				app.initialize();
 			setTimeout(function(){
 				app.showLoader();
-			}, 800);
-			var extra_data = [];
-			window.is_home = false;
-			app.initialize();
+			}, 420);
+			var user_sel =  app.keeper.getItem('user-selected') 
+			if(	!user_sel || user_sel == '' ){
+				app.toast("No user selected");
+				return render_user_list('lista-usuarios.html');
+			}
 			app.check_or_renderContainer();
-			var extra_data 	= apiRH.fetchClientProfile(clientId);	
-			var data 		= this.gatherEnvironment(extra_data, '');
-			return this.switchView('user-profile', data, '.view', url, 'client-profile');
+			return this.switchView('empty-card', {}, '.view', url, 'client-profile', true);
 		},
 		render_comingSoon : function(url){
 
