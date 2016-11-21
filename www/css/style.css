@@ -426,7 +426,7 @@ a.create-diet {position:fixed;width:100%;height:45px;bottom:0px;z-index:9999999;
 
 .list-platos #scroller {width:100%;position:absolute;height:calc(100% - 148px);top:109px;left:0px;}
 .list-platos #scroller > ul {height:100%;position:absolute;}
-.list-platos #scroller > ul > li {position:relative;}
+.list-platos #scroller > ul > li {position:relative; height: 77vh;}
 .platillos-wrapper {position:absolute;width:100%;height:100%;overflow-y:scroll;left:0px;top:0px;}
 
 .platillos-wrapper ul {margin:0;}

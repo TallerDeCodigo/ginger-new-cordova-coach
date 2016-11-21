@@ -246,7 +246,7 @@ window.initializeEvents = function(){
 					app.keeper.removeItem('d_comentario');
 					app.keeper.removeItem('d_nombre');
 					app.keeper.setItem("dOperator", _newDiet._id);
-					return app.render_diet_edition('dieta.html');
+					return app.render_diet_edition('dieta.html', 'clone');
 				} else{
 					return app.toast("Error clonando la dieta, por favor intenta nuevamente.");
 				}
@@ -496,7 +496,6 @@ window.initializeEvents = function(){
 					$('#delete-diet').click(function(){
 
 						var response = apiRH.deleteDiet(idDelete);
-						console.log(response);
 						if(response){
 							$('.each_diet_element[data-id='+idDelete+']').remove();
 							app.keeper.removeItem('temp-return');
@@ -593,12 +592,11 @@ window.initializeEvents = function(){
 			
 		} // END diet-list
 
-		if($('.view').hasClass('create-new-diet')){
+		/*** CREATE NEW DIET ***/
+		if( $('.view').hasClass('create-new-diet') ){
 
 			$('.btn-gre').click(function () {
 				app.showLoader();
-				console.log('CREAR DIETA');
-
 				var d_nombre 		= $('input[name="nombre"]').val();
 				var d_comentario 	= $('input[name="cometario"]').val();
 
@@ -615,7 +613,7 @@ window.initializeEvents = function(){
 				if(d_comentario.length < 4)
 					return;
 
-				window.location.assign('dieta.html?method=create');
+				return app.render_diet_edition('dieta.html', 'create');
 				
 			});
 
@@ -771,24 +769,15 @@ window.initializeEvents = function(){
 			var dietaNew = {};
 			var jsonNew = '{"nombre": "' +app.keeper.getItem('d_nombre') + '","descripcion":"' + app.keeper.getItem('d_comentario') + '", "estructura":{"domingo":{"desayuno":{},"snack1":{},"comida":{},"snack2":{},"cena":{}},"lunes":{"desayuno":{},"snack1":{},"comida":{},"snack2":{},"cena":{}},"martes":{"desayuno":{},"snack1":{},"comida":{},"snack2":{},"cena":{}},"miercoles":{"desayuno":{},"snack1":{},"comida":{},"snack2":{},"cena":{}},"jueves":{"desayuno":{},"snack1":{},"comida":{},"snack2":{},"cena":{}},"viernes":{"desayuno":{},"snack1":{},"comida":{},"snack2":{},"cena":{}},"sabado":{"desayuno":{},"snack1":{},"comida":{},"snack2":{},"cena":{}}},"perfil":{"sexo":0,"edad":0,"bmi":0,"objetivo":0}}';
 			
-			if(window.location.href.search('editar') != -1){
+			if( $('workspace-diet').hasClass('edit') != -1){
 				app.keeper.setItem('contador_platillos', 1);
 			}
 
-			if(window.location.href.search('create') != -1 ){
-
-				app.keeper.setItem('contador_platillos', 0);
-
-				console.log(jsonNew);
-				
-				console.log('PARSE: ' + JSON.parse(jsonNew));	
+			if( $('workspace-diet').hasClass('create') != -1 ){
 
 				dietaNew = JSON.parse(jsonNew);
-
-				app.keeper.setItem('dietaEdit', JSON.stringify(dietaNew));
-
-				console.log('Todo: ' + dietaNew);
-
+				app.keeper.setItem('contador_platillos', 0);
+				app.keeper.setItem('dietaEdit', jsonNew);
 
 				$('.platillo').hide();
 
@@ -1133,20 +1122,11 @@ window.initializeEvents = function(){
 		} // ?????????????????? check this out
 
 			$('.add_dish').click(function(){
-				// if ($(this).parent().hasClass('desayuno')) {
-				// 	console.log('desayuno');
-				// }
-
-				// console.log($(this).parent().attr("class"));
-				// console.log($(this).parent().parent().parent().parent().attr("class"));
-
+				
 				app.keeper.setItem('d_time', $(this).attr('data'));
 				app.keeper.setItem('d_date', $(this).attr('date'));
-
 				console.log($(this).attr('data'));
 				console.log($(this).attr('date'));
-
-
 				window.location.assign('platillos.html');
 			});
 

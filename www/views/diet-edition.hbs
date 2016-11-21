@@ -10,8 +10,11 @@
 		<header class="hwhite2">
 			<div class="toolbar">
 				<a class="back"><img src="images/back.svg"></a>
-				<h2 class="titulo">Editar Dieta</h2>
-				<a id="save_working_diet" class="add">Guardar</a>
+				<h2 class="titulo">{{header_title}}</h2>
+				{{# data.editable}}
+
+				{{/ data.editable}}
+					<a id="save_working_diet" class="add">Guardar</a>
 			</div>
 		</header>
 		<div class="week">
@@ -1907,8 +1910,8 @@
 	<div class="overscreen_error" style="display:none">
 		<div class="ov-filler2"></div>
 		<div class="dialog">
-			<h5>Dieta incompleta.</h5>
-			<p>Por favor verifica que la dieta esté completa.</p>
+			<h5>Error en la dieta</h5>
+			<p>Por favor verifica que la dieta esté completa e intenta nuevamente.</p>
 			<div class="di-options">
 				<a id="aceptar_error" class="accept">Aceptar</a>
 			</div>

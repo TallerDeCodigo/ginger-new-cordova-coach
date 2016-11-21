@@ -190,16 +190,14 @@ function requestHandlerAPI(){
 		};
 
 		/**
-		 *
-		 * Platillos
-		 *
-		 **/
+		 * Fetch Platillos
+		 * @param Boolean is_public
+		 * @return Object / false otherwise
+		 */
+		this.listDishes = function( is_public ){
 
-		this.listDishes = function(publico){
-
-			var response = this.getRequest('tables/plato?coach=' + apiRH.keeper.getItem('userId') + '&publico=' + publico , null);
-			console.log("Request Data Dishes"+ JSON.stringify(response));
-
+			var response = this.getRequest('tables/plato?coach=' + app.keeper.getItem('userId') + '&publico=' + is_public , null);
+			// console.log("Request Data Dishes"+ JSON.stringify(response));
 			return (response) ? response : false;
 		};
 
@@ -209,7 +207,6 @@ function requestHandlerAPI(){
 		 * new dish
 		 *
 		 **/
-
 		this.newDish = function(data){
 			var req = {
 				method : 'post',

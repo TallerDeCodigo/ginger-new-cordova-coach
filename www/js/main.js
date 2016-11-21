@@ -361,7 +361,7 @@
 			var data = this.gatherEnvironment( [], 'Duplicar dieta');
 			return this.switchView('copy-diet', data, '.view', url, 'copy-diet');
 		},
-		render_diet_edition : function(url){
+		render_diet_edition : function(url, operation){
 
 			window.is_home = false;
 			this.initialize();
@@ -369,9 +369,9 @@
 				app.showLoader();
 			}, 800);
 			app.check_or_renderContainer();
-
-			var data = this.gatherEnvironment( [], 'Editar Dieta');
-			return this.switchView('diet-edition', data, '.view', url, 'workspace-diet dieta');
+			var section_name = (operation == 'create') ? 'Crear Dieta' : 'Editar Dieta';
+			var data = this.gatherEnvironment( [], section_name);
+			return this.switchView('diet-edition', data, '.view', url, 'workspace-diet dieta '+operation);
 		},
 		render_myProfile : function(url){
 

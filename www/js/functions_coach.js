@@ -21,51 +21,33 @@
 		//
 		////////////////////////////////////////////////////////////		
 
+		if( $('body').hasClass('has-dishes') ){
 
-		if($('body').hasClass('has-dishes') ){
 
-			//Request to dishes
-
-			var responsedata = apiRH.listDishes(0);
-
-			var dish = responsedata;
-
-			console.log(responsedata);
-
+			var platos_privados = apiRH.listDishes(0);
+			console.log(platos_privados);
 			var i = 0;
+			$.each(platos_privados, function( key, value ) {
 
-			$.each(dish, function( key, value ) {
-
-				$('.list-dish.private').append('<li class="platillo-item" data="'+ dish[i]._id +'" descripcion="' +  dish[i].descripcion + '" receta="' + dish[i].receta + '" > <h2 class="hache" data="'+ dish[i].descripcion +'">' + dish[i].descripcion + '</h2><p class="description">' + dish[i].receta + '</p></li>');	
+				$('.list-dish.private').append('<li class="platillo-item" data="'+ platos_privados[i]._id +'" descripcion="' +  platos_privados[i].descripcion + '" receta="' + platos_privados[i].receta + '" > <h2 class="hache" data="'+ platos_privados[i].descripcion +'">' + platos_privados[i].descripcion + '</h2><p class="description">' + platos_privados[i].receta + '</p></li>');	
 
 				i++;	
 
 			});
 
-			var responsedata = apiRH.listDishes(1);
+			var platos_publicos = apiRH.listDishes(1);
+			console.log(platos_publicos);
 
-			var i = 0;
-
+			i = 0;
 			$('.list-dish.public').html('');
 
-			$.each(responsedata, function( key, value ) {
-				$('.list-dish.public').append('<li class="platillo-item" data="'+ responsedata[i]._id +'"><h2 class="hache" data="'+ responsedata[i].descripcion +'" >' + responsedata[i].descripcion + '</h2><p class="description">' + responsedata[i].receta + '</p></li>');	
+			$.each(platos_publicos, function( key, value ) {
+				$('.list-dish.public').append('<li class="platillo-item" data="'+ platos_publicos[i]._id +'"><h2 class="hache" data="'+ platos_publicos[i].descripcion +'" >' + platos_publicos[i].descripcion + '</h2><p class="description">' + platos_publicos[i].receta + '</p></li>');	
 
 				i++;	
 
 			});
 
-			// $('.btn-platillo').click(function(){
-
-			// 	var is_public = $(this).attr('data');
-
-			// 	var responsedata = apiRH.listDishes(is_public);
-
-			// 	var i = 0;
-				
-				
-
-			// });
 
 			$('.add').click(function () {
 				console.log('click');
@@ -73,27 +55,7 @@
 
 			});
 
-			// $('.platillo-item').click(function(){
-			// 	var data = $(this).find($('.hache').attr('data') );
-			// 	var i=0;
-			// 	data = data.selector;
-			// 	console.log(data);
-
-			// 	if(!$('.alert_meal_description').is(':visible')){
-			// 		$('.alert_meal_description').show();
-			// 		$('#meal_name').html(data)
-			// 		setTimeout(function() {$('.alert_meal_description').addClass('active');}, 200);
-			// 	} else {
-			// 		$('.alert_meal_description').removeClass('active');
-			// 		setTimeout(function() {$('.alert_meal_description').hide();}, 800);
-			// 	}
-			// 	$('#blur').toggleClass('blurred');
-			// })
-
-			/*
-				Este agrega el platillo
-			*/
-
+			/* Este agrega el platillo  */
 			$('.accept').click(function(){
 				console.log("Accept");
 				$(this);
@@ -114,6 +76,25 @@
 				$('.alert_meal_description').hide();
 				$('#blur').toggleClass('blurred');
 			});
+
+
+			// $('.platillo-item').click(function(){
+			// 	var data = $(this).find($('.hache').attr('data') );
+			// 	var i=0;
+			// 	data = data.selector;
+			// 	console.log(data);
+
+			// 	if(!$('.alert_meal_description').is(':visible')){
+			// 		$('.alert_meal_description').show();
+			// 		$('#meal_name').html(data)
+			// 		setTimeout(function() {$('.alert_meal_description').addClass('active');}, 200);
+			// 	} else {
+			// 		$('.alert_meal_description').removeClass('active');
+			// 		setTimeout(function() {$('.alert_meal_description').hide();}, 800);
+			// 	}
+			// 	$('#blur').toggleClass('blurred');
+			// })
+
 
 		}
 
@@ -403,6 +384,7 @@
 				$('.overscreen5').hide();
 				$('#blur').toggleClass('blurred');
 			});
+
 		}//END IF BODY HAS CLASS HAS INGREDIENTES
 
 		/*
