@@ -55,7 +55,12 @@ window.initializeEvents = function(){
 		};
 		initHooks();
 
-		
+		if( $('#scroller').length ){
+			console.log("Has scroller");
+			new Swipe(document.getElementById('scroller'));
+			window.slider = new Swipe(document.getElementById('scroller'));
+		}
+
 		//-----------------------------
 		//
 		// Keyboard events for iOS
@@ -618,6 +623,91 @@ window.initializeEvents = function(){
 			});
 
 		} // END create-new-diet
+
+
+		////////////////////////////////////////////////////////////
+		//  PLATILLOS FUNCTIONS
+		////////////////////////////////////////////////////////////		
+		if( $('.view').hasClass('dish-list') ){
+
+
+			var platos_privados = apiRH.listDishes(0);
+
+			var i = 0;
+			$.each(platos_privados, function( key, value ) {
+				$('.list-dish.private').append('<li class="platillo-item" data="'+ platos_privados[i]._id +'" descripcion="' +  platos_privados[i].descripcion + '" receta="' + platos_privados[i].receta + '" > <h2 class="hache" data="'+ platos_privados[i].descripcion +'">' + platos_privados[i].descripcion + '</h2><p class="description">' + platos_privados[i].receta + '</p></li>');
+				i++;	
+			});
+
+			var platos_publicos = apiRH.listDishes(1);
+
+			i = 0;
+			$('.list-dish.public').html('');
+			$.each(platos_publicos, function( key, value ) {
+				$('.list-dish.public').append('<li class="platillo-item" data="'+ platos_publicos[i]._id +'"><h2 class="hache" data="'+ platos_publicos[i].descripcion +'" >' + platos_publicos[i].descripcion + '</h2><p class="description">' + platos_publicos[i].receta + '</p></li>');
+				i++;	
+			});
+
+
+			// $('.add').click(function () {
+			// 	console.log('click');
+			// 	app.keeper.setItem('dishSelected', '');
+
+			// });
+
+			$('li.platillo-item').click(function() {
+				$('li.platillo-item').removeClass('active');
+				$(this).addClass('active');
+			});
+			
+			$(document).on('click', '.platillo-item', function() {
+
+				var _id 		= $(this).attr('data');
+				var data_name 	= $(this).find('.hache').html();
+				var data_description = ( $(this).find('p').html() != '') 
+									 ? $(this).find('p').html() 
+									 : "Sin receta";
+
+				app.keeper.setItem('dish_nombre', data_name);
+				app.keeper.setItem('dish_aidi', _id);
+
+				if(!$('.alert_meal_description').is(':visible')){
+					
+					$('.alert_meal_description').show();
+
+					$(".accept").attr('data', _id);
+
+					$('#meal_name').html(data_name);
+					$('#meal_description').html(data_description);
+					setTimeout(function() {$('.alert_meal_description').addClass('active');}, 200);
+					/*Anade el platillo a la lista de platillos en el dia*/
+				} else {
+					$('.alert_meal_description').removeClass('active');
+					setTimeout(function() {$('.alert_meal_description').hide();}, 800);
+				}
+				$('#blur').toggleClass('blurred');
+
+			});
+
+			$('#accept_add_dish').click(function(){
+				
+				app.keeper.setItem('idDishSelected', $(this).attr('data') );
+				app.keeper.setItem('desDishSelected', $(this).parent().parent().find('h5').html() );
+				app.keeper.setItem('recetaDishSelected', $(this).parent().parent().find('p').html() );
+				$('.alert_meal_description').hide();
+				$('#blur').toggleClass('blurred');
+				return app.render_diet_edition("dieta.html");
+			});
+
+			$('#cancel_add_dish').click(function(){
+				$('.alert_meal_description').hide();
+				$('#blur').toggleClass('blurred');
+			});
+
+			app.hideLoader();
+
+		} // END DISH LIST
+
 
 		if( $('.view').hasClass('workspace-diet') ){
 

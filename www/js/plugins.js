@@ -393,6 +393,3 @@ Swipe.prototype = {
   }
 
 };
-
-new Swipe(document.getElementById('scroller'));
-var slider = new Swipe(document.getElementById('scroller'));

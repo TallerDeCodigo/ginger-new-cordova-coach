@@ -233,7 +233,7 @@ function requestHandlerAPI(){
 		 * Ingredientes
 		 */
 		 this.listIngredient = function(){
-			var response = this.getRequest('tables/ingrediente/?epp=999' , null);
+			var response = this.getRequest('tables/ingrediente?epp=999' , null);
 			console.log("Request Data Ingredients"+JSON.stringify(response));
 			return (response) ? response : false;
 		 };

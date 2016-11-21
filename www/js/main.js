@@ -373,6 +373,17 @@
 			var data = this.gatherEnvironment( [], section_name);
 			return this.switchView('diet-edition', data, '.view', url, 'workspace-diet dieta '+operation);
 		},
+		render_dish_list : function(url){
+
+			window.is_home = false;
+			this.initialize();
+			setTimeout(function(){
+				app.showLoader();
+			}, 800);
+			app.check_or_renderContainer();
+			var data = this.gatherEnvironment( [], 'Lista de Platillos');
+			return this.switchView('dish-list', data, '.view', url, 'dish-list');
+		},
 		render_myProfile : function(url){
 
 			var extra_data = [];
