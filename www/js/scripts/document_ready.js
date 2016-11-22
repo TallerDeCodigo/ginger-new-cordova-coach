@@ -598,9 +598,9 @@ window.initializeEvents = function(){
 		} // END create-new-diet
 
 
-		////////////////////////////////////////////////////////////
-		//  PLATILLOS FUNCTIONS
-		////////////////////////////////////////////////////////////		
+	////////////////////////////////////////////////////////////
+	//  PLATILLOS FUNCTIONS
+	////////////////////////////////////////////////////////////		
 		if( $('.view').hasClass('dish-list') ){
 
 
@@ -621,13 +621,6 @@ window.initializeEvents = function(){
 				i++;	
 			});
 
-
-			// $('.add').click(function () {
-			// 	console.log('click');
-			// 	app.keeper.setItem('dishSelected', '');
-
-			// });
-
 			$('li.platillo-item').click(function() {
 				$('li.platillo-item').removeClass('active');
 				$(this).addClass('active');
@@ -637,18 +630,15 @@ window.initializeEvents = function(){
 
 				var _id 		= $(this).attr('data');
 				var data_name 	= $(this).find('.hache').html();
-				var data_description = ( $(this).find('p').html() != '') 
-									 ? $(this).find('p').html() 
-									 : "Sin receta";
-
-				app.keeper.setItem('dish_nombre', data_name);
-				app.keeper.setItem('dish_aidi', _id);
-
+				var data_description = 	( $(this).find('p').html() != '') 
+									 	? $(this).find('p').html() 
+									 	: "Sin receta";
+				// TODO: Replace with modal template loading		
 				if(!$('.alert_meal_description').is(':visible')){
 					
 					$('.alert_meal_description').show();
 
-					$(".accept").attr('data', _id);
+					$(".accept").data('id', _id);
 
 					$('#meal_name').html(data_name);
 					$('#meal_description').html(data_description);
@@ -664,7 +654,7 @@ window.initializeEvents = function(){
 
 			$('#accept_add_dish').click(function(){
 				
-				app.keeper.setItem('idDishSelected', $(this).attr('data') );
+				app.keeper.setItem('idDishSelected', $(this).data('id') );
 				app.keeper.setItem('desDishSelected', $(this).parent().parent().find('h5').html() );
 				app.keeper.setItem('recetaDishSelected', $(this).parent().parent().find('p').html() );
 				$('.alert_meal_description').hide();
@@ -677,7 +667,9 @@ window.initializeEvents = function(){
 				$('#blur').toggleClass('blurred');
 			});
 
-			app.hideLoader();
+			setTimeout(function(){
+				app.hideLoader();
+			}, 0);
 
 		} // END DISH LIST
 
@@ -828,7 +820,6 @@ window.initializeEvents = function(){
 			/*
 				CREATING A NEW DIET
 			 */
-
 			var dietaNew = {};
 			/*** Pass this into a catalogue ***/
 			var jsonNew = '{"nombre": "' +app.keeper.getItem('d_nombre') + '","descripcion":"' + app.keeper.getItem('d_comentario') + '", "estructura":{"domingo":{"desayuno":{},"snack1":{},"comida":{},"snack2":{},"cena":{}},"lunes":{"desayuno":{},"snack1":{},"comida":{},"snack2":{},"cena":{}},"martes":{"desayuno":{},"snack1":{},"comida":{},"snack2":{},"cena":{}},"miercoles":{"desayuno":{},"snack1":{},"comida":{},"snack2":{},"cena":{}},"jueves":{"desayuno":{},"snack1":{},"comida":{},"snack2":{},"cena":{}},"viernes":{"desayuno":{},"snack1":{},"comida":{},"snack2":{},"cena":{}},"sabado":{"desayuno":{},"snack1":{},"comida":{},"snack2":{},"cena":{}}},"perfil":{"sexo":0,"edad":0,"bmi":0,"objetivo":0}}';
@@ -846,45 +837,40 @@ window.initializeEvents = function(){
 
 			} else if ( app.keeper.getItem('idDishSelected') || app.keeper.getItem('dietaEdit') ) {
 
-				/*** SAVE DIET DUPLICATE ***/
-				var dish_count = 0;
-				// Fetch diet copy from local memory
 				dietaNew = JSON.parse( app.keeper.getItem('dietaEdit') );
+				var dish_count = 0;
+				var dish_selected = app.keeper.getItem('idDishSelected');
 
-			// IS THIS EVEN USEFUL??? ? ? ? ? 
-			// IS THIS EVEN USEFUL??? ? ? ? ? 
-			// IS THIS EVEN USEFUL??? ? ? ? ? 
-				if ( app.keeper.getItem('idDishSelected') ) {
+				// ADD DISH 'CALLBACK'
+				if ( dish_selected ) {
 					
+					console.log("El dish selecto :: "+dish_selected);
 					var i = 0;
+					var rv = {};
 					var guardar1 = [];
 					var guardar2 = [];
+					var week_day =  app.keeper.getItem('d_weekday');
+					var meal_time = app.keeper.getItem('d_time');
 
-					$.each(dietaNew["estructura"][app.keeper.getItem('d_date')][app.keeper.getItem('d_time')], function( key, value ) {
+					$.each( dietaNew["estructura"][week_day][meal_time], function( key, value ) {
 						guardar1[i] = key;
 						guardar2[i] = value;
 						i++;
 					});
 
 					guardar1[i] = i;
-					guardar2[i] = {"a":{"platillo":app.keeper.getItem('idDishSelected'),"descripcion":app.keeper.getItem('desDishSelected'),"receta":app.keeper.getItem('recetaDishSelected')}};
-					var rv = {};
-					for (var j = 0; j < guardar1.length; ++j) {
+					guardar2[i] = {"a":{"platillo": dish_selected,"descripcion": app.keeper.getItem('desDishSelected'),"receta": app.keeper.getItem('recetaDishSelected')}};
+					for (var j = 0; j < guardar1.length; j++) {
 						var agregar = j+1;
 						rv[agregar] = guardar2[j];
 					}
-					dietaNew["estructura"][app.keeper.getItem('d_date')][app.keeper.getItem('d_time')]= rv;
+					dietaNew["estructura"][week_day][meal_time]= rv;
 					app.keeper.setItem('dietaEdit', JSON.stringify(dietaNew));
-
+					console.log(dietaNew);
 					app.keeper.removeItem('idDishSelected');
-
-					var contador_platillos = dish_count;
-
-					contador_platillos++;
-					console.log(contador_platillos);
-					app.keeper.setItem('contador_platillos', contador_platillos);
-					console.log("Aqui no pasa o si?");
-					console.log(JSON.stringify(dietaNew));					
+					dish_count++;
+					console.log(dish_count);
+					app.keeper.setItem('contador_platillos', dish_count);
 				}
 
 				var referer = false;
@@ -1187,9 +1173,7 @@ window.initializeEvents = function(){
 			$('.add_dish').click(function(){
 				
 				app.keeper.setItem('d_time', $(this).attr('data'));
-				app.keeper.setItem('d_date', $(this).attr('date'));
-				console.log($(this).attr('data'));
-				console.log($(this).attr('date'));
+				app.keeper.setItem('d_weekday', $(this).data('weekday'));
 				app.render_dish_list('platillos.html');
 			});
 
@@ -1207,7 +1191,6 @@ window.initializeEvents = function(){
 			$('.list-platos #scroller > ul > li').css("height",alto-148); 
 			$('#toda_la_dieta > li').css("height",alto-100);
 			$('.iosm #toda_la_dieta > li').css("height",alto-120);
-
 		});
 
 

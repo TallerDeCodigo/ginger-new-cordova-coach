@@ -384,7 +384,6 @@
 
 		}//end if has Class
 		
-
 		$(".acc-selector").click(function(){
 			if ($(this).hasClass('ui-state-active')) {
 				if ($(this).hasClass('desayuno')) {$(this).parent().parent().animate({scrollTop:0}, 300);}
@@ -401,9 +400,9 @@
 		});
 
 		$('h6.ingred').click(function() {
-			if ($(this).find('a').html()=="+") {
+			if ( $(this).find('a').html() == "+" ) {
 				$(this).find('a').html('-');
-			} else {
+			}else{
 				$(this).find('a').html('+');
 			}		
 		});

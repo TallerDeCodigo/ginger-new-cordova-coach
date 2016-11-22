@@ -146,7 +146,6 @@ Swipe.prototype = {
     // set new index to allow for expression arguments
     if (this.index != index) {
     	$('.ui-state-active').trigger('click');
-    	console.log('cambio');
     }
 
     this.index = index;
@@ -164,7 +163,6 @@ Swipe.prototype = {
     
     // return current index position
     return this.index;
-
   },
 
   uno: function(delay) {
