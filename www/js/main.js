@@ -242,7 +242,10 @@
 		render_login : function(url){
 
 			window.is_home = false;
-			app.showLoader();
+			if(!app.initialized) app.initialize();
+			setTimeout(function(){
+				app.showLoader();
+			}, 420);
 			app.check_or_renderContainer();
 			var data = this.gatherEnvironment();
 			data.is_scrollable = false;
@@ -250,19 +253,22 @@
 		},
 		render_home : function(url){
 
-			console.log("Render home");
 			window.is_home = true;
-			app.showLoader();
+			if(!app.initialized) app.initialize();
+			setTimeout(function(){
+				app.showLoader();
+			}, 420);
 			app.check_or_renderContainer();
 			var data = this.gatherEnvironment();
 			data.is_scrollable = false;
 			return this.switchView('home', data, '.view', url, 'home-menu', false, false);
 		},
 		render_user_list : function(url){
+			window.is_home = false;
+			if(!app.initialized) app.initialize();
 			setTimeout(function(){
 				app.showLoader();
-			}, 220);
-			window.is_home = false;
+			}, 420);
 			app.check_or_renderContainer();
 			var data = this.gatherEnvironment( [], 'Usuarios' );
 			return this.switchView('user-list', data, '.view', url, 'list-usuarios');
@@ -271,9 +277,10 @@
 
 			var responsedata = [];
 			window.is_home = false;
+			if(!app.initialized) app.initialize();
 			setTimeout(function(){
 				app.showLoader();
-			}, 800);
+			}, 420);
 			app.check_or_renderContainer();
 			var data = this.gatherEnvironment(responsedata, 'Chat');
 			return this.switchView('chat-contacts', data, '.view', url, 'has-chat-list', true);
@@ -282,9 +289,10 @@
 
 			var responsedata = [];
 			window.is_home = false;
+			if(!app.initialized) app.initialize();
 			setTimeout(function(){
 				app.showLoader();
-			}, 800);			
+			}, 420);			
 			app.check_or_renderContainer();
 			var data = this.gatherEnvironment(responsedata, 'Chat');
 			var dialogClass = (dialogId) ? "dialogLoad" : "";
@@ -296,7 +304,7 @@
 			if(!app.initialized) app.initialize();
 			setTimeout(function(){
 				app.showLoader();
-			}, 800);
+			}, 420);
 			var responsedata 	= [];
 			var todayObj 		= new Date();
 			var month 			= todayObj.getMonth();
@@ -316,7 +324,7 @@
 			if(!app.initialized) app.initialize();
 			setTimeout(function(){
 				app.showLoader();
-			}, 800);
+			}, 420);
 			app.check_or_renderContainer();
 			var data = this.gatherEnvironment([], 'Dietas');
 			var change_of_plan = app.keeper.getItem('change_of_plan');
@@ -326,11 +334,10 @@
 		render_create_diet : function(url){
 
 			window.is_home = false;
-			if(!app.initialized)
-				app.initialize();
+			if(!app.initialized) app.initialize();
 			setTimeout(function(){
 				app.showLoader();
-			}, 800);
+			}, 420);
 			app.check_or_renderContainer();
 			var data = this.gatherEnvironment( [], 'Crear nueva dieta');
 			return this.switchView('create-diet', data, '.view', url, 'create-new-diet');
@@ -338,10 +345,10 @@
 		render_duplicate_diet : function(url){
 
 			window.is_home = false;
-			app.initialize();
+			if(!app.initialized) app.initialize();
 			setTimeout(function(){
 				app.showLoader();
-			}, 800);
+			}, 420);
 			app.check_or_renderContainer();
 
 			var data = this.gatherEnvironment( [], 'Duplicar dieta');
@@ -350,10 +357,10 @@
 		render_diet_edition : function(url, operation){
 
 			window.is_home = false;
-			this.initialize();
+			if(!app.initialized) app.initialize();
 			setTimeout(function(){
 				app.showLoader();
-			}, 800);
+			}, 420);
 			app.check_or_renderContainer();
 			var section_name = (operation == 'create') ? 'Crear Dieta' : 'Editar Dieta';
 			var data = this.gatherEnvironment( [], section_name);
@@ -362,10 +369,10 @@
 		render_dish_list : function(url){
 
 			window.is_home = false;
-			this.initialize();
+			if(!app.initialized) app.initialize();
 			setTimeout(function(){
 				app.showLoader();
-			}, 800);
+			}, 420);
 			app.check_or_renderContainer();
 			var data = this.gatherEnvironment( [], 'Lista de Platillos');
 			return this.switchView('dish-list', data, '.view', url, 'dish-list');
@@ -374,18 +381,19 @@
 
 			var extra_data = [];
 			window.is_home = false;
+			if(!app.initialized) app.initialize();
 			setTimeout(function(){
 				app.showLoader();
-			}, 800);
+			}, 420);
 			app.check_or_renderContainer();
 			var extra_data 	= apiRH.fetchCoachProfile();	
 			var data 		= this.gatherEnvironment(extra_data, 'Mi Perfil');
 			return this.switchView('coach', data, '.view', url, 'coach-profile');
 		},
 		render_clientProfile : function( url ){
+			
 			window.is_home = false;
-			if(!url)
-				app.initialize();
+			if(!app.initialized) app.initialize();
 			setTimeout(function(){
 				app.showLoader();
 			}, 420);
@@ -401,9 +409,10 @@
 
 			var extra_data = [];
 			window.is_home = false;
+			if(!app.initialized) app.initialize();
 			setTimeout(function(){
 				app.showLoader();
-			}, 800);
+			}, 420);
 			app.check_or_renderContainer();
 			var data = this.gatherEnvironment( extra_data, 'Próximamente' );
 			return this.switchView( 'coming-soon', data, '.view', url, 'coming-soon' );
