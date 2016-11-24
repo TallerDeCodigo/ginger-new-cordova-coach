@@ -10,7 +10,7 @@ function submit_handler(form) {
 
 function setupMsgScrollHandler() {
 	var msgWindow = $('.col-md-8 .list-group.pre-scrollable');
-	var msgList = $('#messages-list');
+	var msgList = $('#messages-pool');
 
 	msgList.scroll(function() {
 		if (msgWindow.scrollTop() == msgWindow.height() - msgList.height()){
@@ -132,7 +132,7 @@ function retrieveChatMessages(dialog, beforeDateSent){
 
 					var messageHtml = buildMessageHTML(messageText, messageSenderId, messageDateSent, messageAttachmentFileId, messageId);
 					console.log(messageHtml);
-					$('#messages-list').prepend(messageHtml);
+					$('#messages-pool').prepend(messageHtml);
 
 					// Show delivered statuses
 					if (item.read_ids.length > 1 && messageSenderId === currentUser.id) {
@@ -143,12 +143,12 @@ function retrieveChatMessages(dialog, beforeDateSent){
 						$('#read_'+messageId).fadeOut(200);
 					}
 
-					if (i > 5) {$('body').scrollTop($('#messages-list').prop('scrollHeight'));}
+					if (i > 5) {$('body').scrollTop($('#messages-pool').prop('scrollHeight'));}
 				});
 			}
 			setTimeout(function(){
 				app.hideLoader();
-				$('body').scrollTop($('#messages-list').prop('scrollHeight'));
+				$('body').scrollTop($('#messages-pool').prop('scrollHeight'));
 			}, 2400);
 		}else{
 			console.log(err);
@@ -234,10 +234,10 @@ function showMessage(userId, msg, attachmentFileId) {
 	var userLogin = getUserLoginById(userId);
 	var messageHtml = buildMessageHTML(msg.body, userId, new Date(), attachmentFileId, msg.id);
 
-	$('#messages-list').append(messageHtml);
+	$('#messages-pool').append(messageHtml);
 
 	// scroll to bottom
-	var mydiv = $('#messages-list');
+	var mydiv = $('#messages-pool');
 	console.log("Scrollheight ::: "+mydiv.prop('scrollHeight'));
 	mydiv.scrollTop(mydiv.prop('scrollHeight'));
 }
@@ -304,11 +304,11 @@ function showUserIsTypingView(isTyping, userId, dialogId) {
 		} else if (userId != currentUser.id) {
 			var userLogin = getUserLoginById(userId);
 			var typingUserHtml = buildTypingUserHtml(userId, userLogin);
-			$('#messages-list').append(typingUserHtml);
+			$('#messages-pool').append(typingUserHtml);
 		}
 
 		// scroll to bottom
-		var mydiv = $('#messages-list');
+		var mydiv = $('#messages-pool');
 		mydiv.scrollTop(mydiv.prop('scrollHeight'));
 	}
 }

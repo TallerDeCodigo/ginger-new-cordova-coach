@@ -136,9 +136,9 @@ h4 {margin:10px 0px 12px;font-weight:700;font-size:130%;color:#333;}
 
 .openkeyboard .htrans{position: absolute; top: 0;}
 .openkeyboard .hwhite2{position: absolute!important;}
-.openkeyboard .escribir.foot-chat{position: absolute;}
+.openkeyboard .escribir.message-bar{position: absolute;}
 .openkeyboard #container{display: block; overflow: hidden;min-height: 0; }
-.openkeyboard #messages-list.content.list-group{width: 100%; position: absolute; bottom: 0; padding-bottom: 8rem; background-color: #e9ebee;}
+.openkeyboard #messages-pool.content.list-group{width: 100%; position: absolute; bottom: 0; padding-bottom: 8rem; background-color: #e9ebee;}
 .openkeyboard .overscreen3.active{position: absolute;}
 
 	/*Scroll fix*/
@@ -223,15 +223,30 @@ h4 {margin:10px 0px 12px;font-weight:700;font-size:130%;color:#333;}
 /*General Form*/
 form label.error{ display: block; text-align: left; margin-left: 2.5rem; color: rgba(189, 12, 12, 0.8); }
 
+
+
+/* CHAT CONTAINER */
+.chat-container ul {margin:0; padding-bottom: 44px;}
+	.persona {list-style:none;border-bottom:1px solid #cfcfcf;text-align:left;height:70px;position:relative;padding:18px 68px 0px 72px;}
+	.persona .circle-frame {width:50px;height:50px;left:11px;top:10px;}
+	.persona h5 {white-space:nowrap;text-overflow:ellipsis;overflow:hidden;}
+	.persona p {white-space:nowrap;text-overflow:ellipsis;overflow:hidden;font-size:90%;}
+	.persona div.leido, .persona div.no-leido {position:absolute;right:11px;top:18px;text-align:right;}
+
+
+.persona div.leido:before {position:absolute;width:16px;height:16px;background:url(../images/leido.svg);background-size:100% auto;left:-19px;top:0px;content:"";}
+.persona div.no-leido:before {position:absolute;width:16px;height:16px;background:url(../images/noleido.svg);background-size:100% auto;left:-19px;top:0px;content:"";}
+
+
 /* CHAT */
-.foot-chat {position:fixed;background:#f5f1f0;width:100%;bottom:0px;padding:6px 70px 2px 40px;border-top:1px solid #CCC;}
-.foot-chat a {position:absolute;}
+.message-bar {position:fixed;background:#f5f1f0;width:100%;bottom:0px;padding:6px 70px 2px 40px;border-top:1px solid #CCC;}
+.message-bar a {position:absolute;}
 .attach {left:10px;bottom:4px;}
 .attach img {width:22px;height:auto;}
 input.send ,
 .cpur.send.btn-default {position:absolute;border-style:none; outline:none;background:none;right:4px;bottom:5px;height:27px;width:61px;line-height:27px;font-weight:700;}
 
-.foot-chat textarea {width:100%;resize:none;outline:none;border:1px solid #CCC;border-radius:3px;padding:4px 5px 1px;}
+.message-bar textarea {width:100%;resize:none;outline:none;border:1px solid #CCC;border-radius:3px;padding:4px 5px 1px;}
 
 .incoming,
 .outgoing {-webkit-box-shadow: 2px 0px 7px 0px rgba(168,168,168,0.35); -moz-box-shadow: 2px 0px 7px 0px rgba(168,168,168,0.35); box-shadow: 2px 0px 7px 0px rgba(168,168,168,0.35);}
@@ -319,18 +334,6 @@ p.los_ing {margin-left:32px;margin-bottom:9px;}
 
 a.add_dish {width:100%;text-align:center;line-height:44px;font-size:125%;display:block;}
 
-/* LISTA CHATS */
-
-.list-chat ul {margin:0;padding-bottom:44px;}
-li.persona {list-style:none;border-bottom:1px solid #cfcfcf;text-align:left;height:70px;position:relative;padding:18px 68px 0px 72px;}
-.persona .circle-frame {width:50px;height:50px;left:11px;top:10px;}
-.persona h5 {white-space:nowrap;text-overflow:ellipsis;overflow:hidden;}
-.persona p {white-space:nowrap;text-overflow:ellipsis;overflow:hidden;font-size:90%;}
-.persona div.leido, .persona div.no-leido {position:absolute;right:11px;top:18px;text-align:right;}
-
-
-.persona div.leido:before {position:absolute;width:16px;height:16px;background:url(../images/leido.svg);background-size:100% auto;left:-19px;top:0px;content:"";}
-.persona div.no-leido:before {position:absolute;width:16px;height:16px;background:url(../images/noleido.svg);background-size:100% auto;left:-19px;top:0px;content:"";}
 
 /* LISTA DIETAS */
 

@@ -196,14 +196,14 @@ function triggerDialog(dialogId){
 
 	$('.list-group-item.active .badge').text(0).delay(250).fadeOut(500);
 
-	$('#messages-list').html('');
+	$('#messages-pool').html('');
 
 	$('#dialogs-list').hide();
-	$('#messages-list').show();
+	$('#messages-pool').show();
 	$('.menu-bar').hide();
 	$('.escribir').show();
 
-	// $('#messages-list').scrollTop($('#messages-list').prop('scrollHeight'));
+	// $('#messages-pool').scrollTop($('#messages-pool').prop('scrollHeight'));
 	$('#mensaje-chat').focus();
 	setTimeout(function() {
 		$('#mensaje-chat').focusout();
@@ -222,7 +222,7 @@ function triggerDialog(dialogId){
 		$('h2.titulo').trigger('click');
 	}, 3000);
 	setTimeout(function() {
-		$('#messages-list').css('opacity','1');
+		$('#messages-pool').css('opacity','1');
 		$('.escribir').css('opacity','1');
 	}, 3000);
 

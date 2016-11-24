@@ -273,17 +273,16 @@
 			var data = this.gatherEnvironment( [], 'Usuarios' );
 			return this.switchView('user-list', data, '.view', url, 'list-usuarios');
 		},
-		render_chat : function(url){
+		render_chat_container : function(url){
 
-			var responsedata = [];
 			window.is_home = false;
 			if(!app.initialized) app.initialize();
 			setTimeout(function(){
 				app.showLoader();
 			}, 420);
 			app.check_or_renderContainer();
-			var data = this.gatherEnvironment(responsedata, 'Chat');
-			return this.switchView('chat-contacts', data, '.view', url, 'has-chat-list', true);
+			var data 	= this.gatherEnvironment([], 'Chat');
+			return this.switchView('chat-container', data, '.view', url, 'chat-container', true);
 		},
 		render_chat_dialog : function(url, dialogId){
 
@@ -297,7 +296,7 @@
 			var data = this.gatherEnvironment(responsedata, 'Chat');
 			var dialogClass = (dialogId) ? "dialogLoad" : "";
 			window.dialogNow = (dialogId) ? dialogId : null;
-			return this.switchView('chat-dialog', data, '.view', url, 'list-chat dialog_detail '+dialogClass);
+			return this.switchView('chat-dialog', data, '.view', url, 'chat-container dialog_detail '+dialogClass);
 		},
 		render_finances_view : function(url){
 

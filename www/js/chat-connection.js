@@ -1,9 +1,9 @@
 //"use strict";
 
-var currentUser;
+
 
 function connectToChat(user) {
-  
+  var currentUser;
   console.log("Attempting to connect to chat api");
 
   QB.createSession({email: user.login, password: user.pass}, function(err, res) {

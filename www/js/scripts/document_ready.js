@@ -22,7 +22,7 @@ window.initializeEvents = function(){
 					return app.render_home( $(this).attr('href') );
 
 				if( $(this).data('resource') == "chat-contacts" )
-					return app.render_chat( $(this).attr('href') );
+					return app.render_chat_container( $(this).attr('href') );
 
 				if( $(this).data('resource') == "user-list" )
 					return app.render_user_list( $(this).attr('href') );
@@ -35,6 +35,10 @@ window.initializeEvents = function(){
 
 				if( $(this).data('resource') == "profile" )
 					return app.render_myProfile( $(this).attr('href') );
+
+
+				if( $(this).data('resource') == "chat-dialog" )
+					return app.render_chat_dialog( $(this).attr('href') );
 
 
 				if( $(this).data('resource') == "create-diet" )
@@ -67,19 +71,10 @@ window.initializeEvents = function(){
 			Keyboard.disableScrollingInShrinkView(false);
 		}
 
-		if($('.view').hasClass("has-chat-list")){
-			/*** Fix keyboard chat specifics ***/
-			console.log("Keyboard has-chat-list");
-			if(typeof Keyboard != 'undefined'){
-				Keyboard.shrinkView(true);
-				Keyboard.disableScrollingInShrinkView(true);
-			}
-		}
-
 		var fixWithKeyboard = function(){
 			console.log("Fixin keyboard");
 			$('body').addClass("openkeyboard");
-			if($('.view').hasClass("has-chat-list")){
+			if($('.view').hasClass("chat-contact-list")){
 
 				calculate = (!calculate) ? document.documentElement.clientHeight : calculate;
 				console.log('calculate ::: '+calculate);		
@@ -89,6 +84,16 @@ window.initializeEvents = function(){
 				return;
 			}
 			
+		}
+
+		/*** Fix keyboard for chat views ***/
+		if($('.view').hasClass("chat-contact-list")){
+			/*** Fix keyboard chat specifics ***/
+			console.log("Keyboard chat-contact-list");
+			if(typeof Keyboard != 'undefined'){
+				Keyboard.shrinkView(true);
+				Keyboard.disableScrollingInShrinkView(true);
+			}
 		}
 
 		window.openKeyboard = false;
@@ -106,7 +111,7 @@ window.initializeEvents = function(){
 			console.log('keyboardDidHide');
 			window.openKeyboard = false;
 			$('body').removeClass("openkeyboard");
-			$('body').scrollTop($('#messages-list').prop('scrollHeight'));
+			$('body').scrollTop($('#messages-pool').prop('scrollHeight'));
 			$('.escribir').css('bottom', 0);
 		});
 
@@ -379,9 +384,25 @@ window.initializeEvents = function(){
 
 		} // END CLASS coach-profile
 
-		if( $('.view').hasClass('has-chat-list') ){
+
+		if( $('.view').hasClass('chat-container') ){
+			
+			var loginfo = { login : _coach.mail, pass : _coach.chatPassword };
+
+			if( !$('#contacts-list').length ){
+				chatCore.fetchDialogList();
+				return;
+			}
+			
+
+			// chatCore;
+			// app.switchView('chat-contacts', '.view', users_response);
+
+		} // END CLASS chat-container
+
+
+		if( $('.view').hasClass('contacts-list') ){
 				
-				var loginfo = { login : _coach.mail, pass : _coach.chatPassword };
 				connectToChat(loginfo);
 
 				var users_response = [];
@@ -391,11 +412,15 @@ window.initializeEvents = function(){
 
 				$('.btnDialogs').click(function () {
 					
-					app.keeper.setItem('idQBOX', $(this).attr('data'));
-					if ($(this).attr('data') == $('.los_chats:nth-of-type(1)').attr('data')) {
+					var qbox_id = $(this).data('qbox');
+					var gingerid = $(this).data('gingerid');
+
+					app.keeper.setItem('idQBOX', qbox_id);
+					app.keeper.setItem('idGinger', gingerid);
+					if ( qbox_id == $('.los_chats:nth-of-type(1)').data('qbox') ) {
 						console.log('ya existe');
 					} else {
-						createNewDialog();
+						chatCore.createNewDialog();
 					}
 				});
 
@@ -412,42 +437,35 @@ window.initializeEvents = function(){
 
 				$('.back').click(function(){
 
-					if($('#messages-list').is(':visible') ){
-						console.log('lista_chat visible');
+					if($('#messages-pool').is(':visible') ){
+
 						var event = new CustomEvent("keyboardDidHide", { "detail": "Forced hide keyboard event" });
 						document.dispatchEvent(event);
 						$('.escribir').hide();
 						$('#dialogs-list').show();
-						$('#messages-list').hide();
+						$('#messages-pool').hide();
 						$('.menu-bar').show();
-					}else if($('.lista_chat').is(':visible') ) {
-						app.render_home();
+					}else{
+						return app.render_home();
 					}
 				});
 
-				$('#btn_contacts').click(function(){
-					$('#dialogs-list').hide();
-					$('#contacts-list').show();
-				});
+				// $('#btn_contacts').click(function(){
+				// 	$('#dialogs-list').hide();
+				// 	$('#contacts-list').show();
+				// });
 
-				$('#btn_chats').click(function(){
-					$('#dialogs-list').show();
-					$('#contacts-list').hide();
-				});
+				// $('#btn_chats').click(function(){
+				// 	$('#dialogs-list').show();
+				// 	$('#contacts-list').hide();
+				// });
 
-				$('#mensaje-chat').focus(function() {
-					if(this.innerHTML=='Mensaje') {this.innerHTML='';}
-				});
 				app.hideLoader();
 
-		} // END has-chat-list
+		} // END chat-contact-list
 
 
-		/**
-		 *
-		 * Lista de Dietas de Coach
-		 *
-		 **/
+		/**** Coach diet list ****/
 		if( $('.view').hasClass('diet-list') ){
 			
 			var i = 0;
