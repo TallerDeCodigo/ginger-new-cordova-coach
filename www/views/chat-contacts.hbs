@@ -7,7 +7,7 @@
 	</header>
 	<ul class="lista_chat" id="contacts-list">
 		{{# data.items}}
-			<a class='btnDialogs' data-gingerid="" data-qbox="{{jid}}" >
+			<a class='btnDialogs' data-gingerid="" data-qbox="{{user_id}}" data-dialog="{{_id}}" >
 				<li class='persona' >
 					<div class='circle-frame'>
 						<img src='{{../cordova_full_path}}images/Icon-60@3x.png'>
@@ -19,13 +19,13 @@
 	</ul>
 
 	<footer class="menu-bar hwhite2">
-		<a id="btn_chats">
+		<a id="btn_chats" class="footer_buttons active">
 			<img src="{{cordova_full_path}}images/menu/chat.svg">
 			<span>chat</span>
 		</a>
 		<a id="btn_contacts" class="hook" data-resource="user-list" href="lista-usuarios.html">
 			<img src="{{cordova_full_path}}images/menu/contacts.svg">
-			<span>contactos</span>
+			<span>perfiles</span>
 		</a>
 	</footer>
 		

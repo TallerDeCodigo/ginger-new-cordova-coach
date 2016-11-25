@@ -1,14 +1,22 @@
+	<header class="hwhite2">
+		<div class="toolbar">
+			<a class="back hook" data-resource="main-menu" href="home.html">
+				<img class="full {{cordova_full_path}}" src="{{cordova_full_path}}images/back.svg">
+			</a>
+			<h2 class="titulo">{{data.header_title}}</h2>
+		</div>
+	</header>
 
-		<ul class="lista_chat" id="dialogs-list">	
-		</ul>
-		
-		<footer class="message-bar escribir" style="display:none; opacity:0;">
-			<form class="form-inline" onsubmit="return chatCore.submit_handler(this)">
-				<input type="file" capture="camera" accept="image/*" name="galeria" id="load-img" style="z-index:-1; position:absolute; ">
-				<a href="#" class="attach" onclick="$('#load-img').click();">
-					<img src="{{cordova_full_path}}images/attach.svg">
-				</a>
-				<textarea id="chat-message" rows="1" placeholder="Mensaje"></textarea>
-				<button  type="submit" class="btn btn-default send cpur" onclick="return clickSendMessage()">Enviar</button>
-			</form>
-		</footer>
+	<ul class="lista_chat" id="dialogs-list">
+	</ul>
+	
+	<footer class="message-bar escribir" style="display:none; opacity:0;">
+		<form class="form-inline" onsubmit="return chatCore.submit_handler(this)">
+			<input type="file" capture="camera" accept="image/*" name="galeria" id="load-img" style="z-index:-1; position:absolute; ">
+			<a href="#" class="attach" onclick="$('#load-img').click();">
+				<img src="{{cordova_full_path}}images/attach.svg">
+			</a>
+			<textarea id="chat-message" rows="1" placeholder="Mensaje"></textarea>
+			<button  type="submit" class="btn btn-default send cpur" onclick="return clickSendMessage()">Enviar</button>
+		</form>
+	</footer>

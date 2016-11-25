@@ -4,22 +4,26 @@
 
 	chatCore.isInitialized = false;
 	chatCore.token = null;
+	chatCore.currentUser = null;
 
 	chatCore.init = function(elCoach){
 		console.log("Initializing instant messaging api");
 		if(chatCore.isInitialized)
 			return this;
 		chatCore.access = 	{ 	
-							email: elCoach.mail, 
-							password: elCoach.chatPassword
-						};
+								email: elCoach.mail, 
+								password: elCoach.chatPassword
+							};
 		QB.createSession( chatCore.access,  function(err, res) {
+								if(err)
+									return app.toast("Can't connect to chat service, if the problem persists contact support");
 
 								if (res) {
-									chatCore.token 		= res.token;
-									chatCore.user_id 	= res.user_id;
-									chatCore.obj 		= res;
-									chatCore.isInitialized = true;
+									chatCore.token 			= res.token;
+									chatCore.user_id 		= res.user_id;
+									chatCore.obj 			= res;
+									chatCore.isInitialized 	= true;
+									chatCore.currentUser 	= elCoach;
 									return res;
 								}
 						} );
@@ -28,15 +32,11 @@
 
 	chatCore.connectToChat = function(elCoach) {
 		 
-		// mergeUsers([{user: user}]);
-
 		QB.chat.connect({ 	
 							email: elCoach.mail, 
 							password: elCoach.chatPassword
 						}, 
 						 function(err, roster) {
-
-								// app.keeper.setItem('idSender', user.id);
 
 								if (err) {
 									console.log(err);
@@ -112,6 +112,7 @@
 					
 					if (err)
 						console.log(err);
+
 					console.log(resDialogs);
 					var occupantsIds = [];
 					var i = 0;
@@ -144,7 +145,7 @@
 		}, 420);
 	};
 
-	chatCore.fetchDialogList = function(){
+	chatCore.fetchContactList = function(){
 
 		if(!chatCore.isInitialized)
 			chatCore.init(window._coach);
@@ -164,20 +165,34 @@
 					var unread_count 	= item.unread_messages_count;
 					var $foundElement 	= $('*[data-chatId="'+user_id+'"]');
 					var exists_in_list 	= $foundElement.length;
-					// $foundElement.addClass('active')
-					// 				.find('.mensajes')
-					// 								 .text(unread_count)
-					// 								 .on('click', function(e){
-					// 									return app.render_chat_dialog(null, $(e.currentTarget).data('dialogid'));
-					// 								});
 				});
 				resDialogs.header_title = "Chat";
 				console.log(resDialogs);
-				return app.render_template('chat-contacts', '.chat-container', resDialogs);
+				app.render_template('chat-contacts', '.chat-container', resDialogs);
+				return chatCore.initContactListEvents();
 			}
 
 		});
 		return false;
+	};
+
+	chatCore.initContactListEvents = function(){
+
+		$('.btnDialogs').click(function () {
+
+			var qbox_id 	= $(this).data('qbox');
+			var gingerid 	= $(this).data('gingerid');
+			var dialog 		= $(this).data('dialog');
+			app.keeper.setItem('idQBOX', qbox_id);
+			app.keeper.setItem('idGinger', gingerid);
+			return chatCore.retrieveChatMessages(dialog);
+			// chatCore.joinToNewDialogAndShow(dialogObject);
+			// if ( qbox_id == $('.los_chats:nth-of-type(1)').data('qbox') ) {
+			// 	console.log('ya existe');
+			// } else {
+			// 	chatCore.createNewDialog();
+			// }
+		});
 	};
 
 	/*** Populate dialog once screen has loaded ***/
@@ -369,27 +384,130 @@
 
 	chatCore.joinToNewDialogAndShow = function(itemDialog) {
 
-		var dialogId = itemDialog._id;
-		var dialogName = itemDialog.name;
-		var dialogLastMessage = itemDialog.last_message;
-		var dialogUnreadMessagesCount = itemDialog.unread_messages_count;
-		var dialogIcon = getDialogIcon(itemDialog.type);
+		var dialogId 					= itemDialog._id;
+		var dialogName 					= itemDialog.name;
+		var dialogLastMessage 			= itemDialog.last_message;
+		var dialogUnreadMessagesCount 	= itemDialog.unread_messages_count;
+		var dialogIcon 					= getDialogIcon(itemDialog.type);
+		var dialogTime 					= itemDialog.updated_at;
 
-		// join if it's a group dialog
+		/*** Join if it's a group dialog ***/
 		if (itemDialog.type != 3) {
 			QB.chat.muc.join(itemDialog.xmpp_room_jid, function() {
 				 console.log("Joined dialog: " + dialogId);
 			});
 			opponentLogin = null;
 		} else {
-			opponentId = QB.chat.helpers.getRecipientId(itemDialog.occupants_ids, currentUser.id);
-			opponentLogin = getUserLoginById(opponentId);
-			dialogName = chatName = 'Dialog -  with ' + dialogName + 'with id '+opponentId;
+			opponentId 		= QB.chat.helpers.getRecipientId(itemDialog.occupants_ids, chatCore.currentUser.id);
+			opponentLogin 	= getUserLoginById(opponentId);
+			dialogName 		= chatName = 'Dialog -  with ' + dialogName + 'with id ' + opponentId;
+			console.log(dialogName);
 		}
 
-		// show it
-		var dialogHtml = buildDialogHtml(dialogId, dialogUnreadMessagesCount, dialogIcon, dialogName, dialogLastMessage);
-		$('#dialogs-list').prepend(dialogHtml);
+		var dialogHtml = chatCore.buildDialogHtml(dialogId, dialogUnreadMessagesCount, dialogIcon, dialogName, dialogLastMessage, dialogTime);
+		console.log(dialogHtml);
+		// $('#dialogs-list').prepend(dialogHtml);
+	}
+
+	chatCore.retrieveChatMessages = function(dialogId, beforeDateSent){
+		var dialogsMessages = [];
+		
+		app.showLoader();
+		var data = {header_title: "Chat"};
+		app.render_template('chat-messages', '.chat-container', data);
+		
+		console.log('retrieveChatMessages');
+		var params 	= 	{
+							chat_dialog_id: dialogId,
+							sort_desc: 'date_sent',
+							limit: 25 // TODO: change to smaller limit as soon as we connect previous messages handler
+						};
+		console.log(params);
+
+		/** if we would like to load the previous history **/
+		if(beforeDateSent)
+			params.date_sent = {lt: beforeDateSent};
+		
+		QB.chat.message.list(params, function(err, messages) {
+			
+				console.log(messages);
+				if(! messages || messages.items.length === 0)
+					return app.toast("No hay mensajes que mostrar");
+				
+				console.log("Render the view");
+				app.render_template('dialog-messages', '#dialogs-list', messages);
+			// 		messages.items.forEach(function(item, i, arr) {
+
+			// 			dialogsMessages.splice(0, 0, item); 
+			// 			//console.log(dialogsMessages.splice(0, 0, item));
+
+			// 			console.log('>>>>' + JSON.stringify(item));
+
+			// 			var messageId = item._id;
+			// 			var messageText = item.message;
+			// 			var messageSenderId = item.sender_id;
+
+			// 			console.log('idMensaje ' + messageSenderId);
+			// 			var messageDateSent = new Date(item.date_sent*1000);
+			// 			// var messageSenderLogin = getUserLoginById(messageSenderId);
+			// 			console.log(messageSenderId);
+
+
+			// 			// send read status
+			// 			if (item.read_ids.indexOf(currentUser.id) === -1) {
+			// 				sendReadStatus(messageSenderId, messageId, currentDialog._id);
+			// 			}
+
+			// 			var messageAttachmentFileId = null;
+			// 			if (item.hasOwnProperty("attachments")) {
+			// 				if(item.attachments.length > 0) {
+			// 					messageAttachmentFileId = item.attachments[0].id;
+			// 				}
+			// 			}
+
+			// 			var messageHtml = buildMessageHTML(messageText, messageSenderId, messageDateSent, messageAttachmentFileId, messageId);
+			// 			console.log(messageHtml);
+			// 			$('#messages-pool').prepend(messageHtml);
+
+			// 			// Show delivered statuses
+			// 			if (item.read_ids.length > 1 && messageSenderId === currentUser.id) {
+			// 				$('#delivered_'+messageId).fadeOut(100);
+			// 				$('#read_'+messageId).fadeIn(200);
+			// 			} else if (item.delivered_ids.length > 1 && messageSenderId === currentUser.id) {
+			// 				$('#delivered_'+messageId).fadeIn(100);
+			// 				$('#read_'+messageId).fadeOut(200);
+			// 			}
+
+			// 			if (i > 5) {$('body').scrollTop($('#messages-pool').prop('scrollHeight'));}
+			// 		});
+			// 	}
+			// 	setTimeout(function(){
+			// 		app.hideLoader();
+			// 		$('body').scrollTop($('#messages-pool').prop('scrollHeight'));
+			// 	}, 2400);
+			// }else{
+			// 	console.log(err);
+
+		});
+		
+		// $(".load-msg").delay(100).fadeOut(500);
+		// setTimeout(function(){ window.scrollTo(0,document.body.scrollHeight);  }, 1);
+	};
+
+
+	chatCore.buildDialogHtml = function(dialogId, dialogUnreadMessagesCount, dialogIcon, dialogName, dialogLastMessage, dialogTime, opponentId) {
+		// var UnreadMessagesCountShow = '<span class="badge">'+dialogUnreadMessagesCount+'</span>';
+		// UnreadMessagesCountHide = '<span class="badge" style="display: none;">'+dialogUnreadMessagesCount+'</span>';
+		var hora = dialogTime.slice(11,16) 
+		var UnreadMessagesCountShow = '<div class="no-leido">';
+		UnreadMessagesCountHide = '<div class="leido">';
+
+		var isMessageSticker = ""; //stickerpipe.isSticker(dialogLastMessage);
+
+		//var dialogHtml ='<a href="#" class="list-group-item inactive" id='+'"'+dialogId+'"'+' onclick="triggerDialog('+"'"+dialogId+"'"+')">'+(dialogUnreadMessagesCount === 0 ? UnreadMessagesCountHide : UnreadMessagesCountShow)+'<h4 class="list-group-item-heading">'+ dialogIcon+'&nbsp;&nbsp;&nbsp;' +'<span>'+dialogName+'</span>' +'</h4>'+'<p class="list-group-item-text last-message">'+(dialogLastMessage === null ?  "" : (isMessageSticker ? 'Sticker' : dialogLastMessage))+'</p>'+'</a>';
+		
+		var dialogHtml = '<a href="#" class="los_chats list-group-item inactive" id='+'"'+dialogId+'"'+' data="' + opponentId + '" onclick="triggerDialog('+"'"+dialogId+"'"+');" ><li class="persona"><div class="circle-frame"><img src="images/Icon-60@3x.png"></div><h5>'+dialogName+'</h5><p>'+(dialogLastMessage === null ?  "" : (isMessageSticker ? 'Sticker' : dialogLastMessage))+'</p>'+(dialogUnreadMessagesCount === 0 ? UnreadMessagesCountHide : UnreadMessagesCountShow)+hora+'</div></li><a/>';
+		return dialogHtml;
 	}
 
 	chatCore.notifyOccupants = function(dialogOccupants, dialogId, notificationType) {
@@ -469,23 +587,23 @@
 	}
 
 
-	function setupAllListeners() {
-	  QB.chat.onDisconnectedListener    = onDisconnectedListener;
-	  QB.chat.onReconnectListener       = onReconnectListener;
-	  QB.chat.onMessageListener         = onMessage;
-	  QB.chat.onSystemMessageListener   = onSystemMessageListener;
-	  QB.chat.onDeliveredStatusListener = onDeliveredStatusListener;
-	  QB.chat.onReadStatusListener      = onReadStatusListener;
-	  setupIsTypingHandler();
+	chatCore.setupAllListeners = function() {
+		QB.chat.onDisconnectedListener    = onDisconnectedListener;
+		QB.chat.onReconnectListener       = onReconnectListener;
+		QB.chat.onMessageListener         = onMessage;
+		QB.chat.onSystemMessageListener   = onSystemMessageListener;
+		QB.chat.onDeliveredStatusListener = onDeliveredStatusListener;
+		QB.chat.onReadStatusListener      = onReadStatusListener;
+		setupIsTypingHandler();
 	}
 
 	// reconnection listeners
 	function onDisconnectedListener(){
-	  console.log("onDisconnectedListener");
+		console.log("onDisconnectedListener");
 	}
 
 	function onReconnectListener(){
-	  console.log("onReconnectListener");
+		console.log("onReconnectListener");
 	}
 
 	chatCore.submit_handler = function(form) {

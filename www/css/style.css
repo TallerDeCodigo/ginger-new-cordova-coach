@@ -264,6 +264,13 @@ input.send ,
 .content.list-group .list-group-item:last-of-type div{margin-bottom: 50px}
 .content.list-group{padding-bottom: 7rem; position: relative; z-index: 5; min-height: 85vh; background-color: #e9ebee;}
 
+.btnDialogs{display: block;}
+
+.footer_buttons{}
+.footer_buttons.active{ width: 26px; color: #6e6eed!important; }
+.footer_buttons.active>span{}
+.footer_buttons.active>img{}
+
 /* DIETA */
 
 .week {position:fixed;width:100%;z-index:99999999;background:#FFF;top:50px;padding:0px 2%;}

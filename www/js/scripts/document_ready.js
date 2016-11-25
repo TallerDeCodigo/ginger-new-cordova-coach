@@ -390,7 +390,8 @@ window.initializeEvents = function(){
 			var loginfo = { login : _coach.mail, pass : _coach.chatPassword };
 
 			if( !$('#contacts-list').length ){
-				chatCore.fetchDialogList();
+				chatCore.fetchContactList();
+				
 				return;
 			}
 			
@@ -410,19 +411,19 @@ window.initializeEvents = function(){
 				console.log(users_response);
 				app.render_template('chat-dialogs', '.insert_contacts', users_response);
 
-				$('.btnDialogs').click(function () {
+				// $('.btnDialogs').click(function () {
 					
-					var qbox_id = $(this).data('qbox');
-					var gingerid = $(this).data('gingerid');
+				// 	var qbox_id = $(this).data('qbox');
+				// 	var gingerid = $(this).data('gingerid');
 
-					app.keeper.setItem('idQBOX', qbox_id);
-					app.keeper.setItem('idGinger', gingerid);
-					if ( qbox_id == $('.los_chats:nth-of-type(1)').data('qbox') ) {
-						console.log('ya existe');
-					} else {
-						chatCore.createNewDialog();
-					}
-				});
+				// 	app.keeper.setItem('idQBOX', qbox_id);
+				// 	app.keeper.setItem('idGinger', gingerid);
+				// 	if ( qbox_id == $('.los_chats:nth-of-type(1)').data('qbox') ) {
+				// 		console.log('ya existe');
+				// 	} else {
+				// 		chatCore.createNewDialog();
+				// 	}
+				// });
 
 				$('.attach').click(function(){
 					$('input[name="galeria"]').trigger('click');
@@ -435,20 +436,20 @@ window.initializeEvents = function(){
 					$('.escribir').show();
 				});
 
-				$('.back').click(function(){
+				// $('.back').click(function(){
 
-					if($('#messages-pool').is(':visible') ){
+				// 	if($('#messages-pool').is(':visible') ){
 
-						var event = new CustomEvent("keyboardDidHide", { "detail": "Forced hide keyboard event" });
-						document.dispatchEvent(event);
-						$('.escribir').hide();
-						$('#dialogs-list').show();
-						$('#messages-pool').hide();
-						$('.menu-bar').show();
-					}else{
-						return app.render_home();
-					}
-				});
+				// 		var event = new CustomEvent("keyboardDidHide", { "detail": "Forced hide keyboard event" });
+				// 		document.dispatchEvent(event);
+				// 		$('.escribir').hide();
+				// 		$('#dialogs-list').show();
+				// 		$('#messages-pool').hide();
+				// 		$('.menu-bar').show();
+				// 	}else{
+				// 		return app.render_home();
+				// 	}
+				// });
 
 				// $('#btn_contacts').click(function(){
 				// 	$('#dialogs-list').hide();
