@@ -24,6 +24,7 @@
 									chatCore.obj 			= res;
 									chatCore.isInitialized 	= true;
 									chatCore.currentUser 	= elCoach;
+									app.keeper.setItem('idSender', res.user_id);
 									return res;
 								}
 						} );
@@ -179,19 +180,21 @@
 	chatCore.initContactListEvents = function(){
 
 		$('.btnDialogs').click(function () {
-
+			app.showLoader();
 			var qbox_id 	= $(this).data('qbox');
 			var gingerid 	= $(this).data('gingerid');
 			var dialog 		= $(this).data('dialog');
 			app.keeper.setItem('idQBOX', qbox_id);
 			app.keeper.setItem('idGinger', gingerid);
-			return chatCore.retrieveChatMessages(dialog);
+			chatCore.retrieveChatMessages(dialog);
+
 			// chatCore.joinToNewDialogAndShow(dialogObject);
 			// if ( qbox_id == $('.los_chats:nth-of-type(1)').data('qbox') ) {
 			// 	console.log('ya existe');
 			// } else {
 			// 	chatCore.createNewDialog();
 			// }
+			return;
 		});
 	};
 
@@ -416,7 +419,6 @@
 		var data = {header_title: "Chat"};
 		app.render_template('chat-messages', '.chat-container', data);
 		
-		console.log('retrieveChatMessages');
 		var params 	= 	{
 							chat_dialog_id: dialogId,
 							sort_desc: 'date_sent',
@@ -428,58 +430,54 @@
 		if(beforeDateSent)
 			params.date_sent = {lt: beforeDateSent};
 		
-		QB.chat.message.list(params, function(err, messages) {
+		QB.chat.message.list(params, function(err, response) {
 			
-				console.log(messages);
-				if(! messages || messages.items.length === 0)
-					return app.toast("No hay mensajes que mostrar");
-				
-				console.log("Render the view");
-				app.render_template('dialog-messages', '#dialogs-list', messages);
-			// 		messages.items.forEach(function(item, i, arr) {
+			console.log(response);
+			if(! response || response.items.length === 0)
+				return app.toast("No hay mensajes que mostrar");
 
-			// 			dialogsMessages.splice(0, 0, item); 
-			// 			//console.log(dialogsMessages.splice(0, 0, item));
+			setTimeout(function(){
 
-			// 			console.log('>>>>' + JSON.stringify(item));
+				response.items.forEach(function(item, i, arr) {
 
-			// 			var messageId = item._id;
-			// 			var messageText = item.message;
-			// 			var messageSenderId = item.sender_id;
+					// dialogsMessages.splice(0, 0, item); 
+					//console.log(dialogsMessages.splice(0, 0, item));
 
-			// 			console.log('idMensaje ' + messageSenderId);
-			// 			var messageDateSent = new Date(item.date_sent*1000);
-			// 			// var messageSenderLogin = getUserLoginById(messageSenderId);
-			// 			console.log(messageSenderId);
+					// console.log('>>>>' + JSON.stringify(item));
 
+					var messageId 		= item._id;
+					var messageText 	= item.message;
+					var messageSenderId = item.sender_id;
+					var messageDateSent = new Date(item.date_sent*1000);
 
-			// 			// send read status
-			// 			if (item.read_ids.indexOf(currentUser.id) === -1) {
-			// 				sendReadStatus(messageSenderId, messageId, currentDialog._id);
-			// 			}
+					item.sender = ( app.keeper.getItem('idSender') == item.sender_id )? 'outgoing' : 'incoming';  
+					// if (item.read_ids.indexOf(currentUser.id) === -1) {
+					// 	chatCore.sendReadStatus(messageSenderId, messageId, currentDialog._id);
+					// }
 
-			// 			var messageAttachmentFileId = null;
-			// 			if (item.hasOwnProperty("attachments")) {
-			// 				if(item.attachments.length > 0) {
-			// 					messageAttachmentFileId = item.attachments[0].id;
-			// 				}
-			// 			}
+					// var messageAttachmentFileId = null;
+					// if (item.hasOwnProperty("attachments")) {
+					// 	if(item.attachments.length > 0) {
+					// 		messageAttachmentFileId = item.attachments[0].id;
+					// 	}
+					// }
 
-			// 			var messageHtml = buildMessageHTML(messageText, messageSenderId, messageDateSent, messageAttachmentFileId, messageId);
-			// 			console.log(messageHtml);
-			// 			$('#messages-pool').prepend(messageHtml);
+					
+					// // Show delivered statuses
+					// if (item.read_ids.length > 1 && messageSenderId === currentUser.id) {
+					// 	$('#delivered_'+messageId).fadeOut(100);
+					// 	$('#read_'+messageId).fadeIn(200);
+					// } else if (item.delivered_ids.length > 1 && messageSenderId === currentUser.id) {
+					// 	$('#delivered_'+messageId).fadeIn(100);
+					// 	$('#read_'+messageId).fadeOut(200);
+					// }
 
-			// 			// Show delivered statuses
-			// 			if (item.read_ids.length > 1 && messageSenderId === currentUser.id) {
-			// 				$('#delivered_'+messageId).fadeOut(100);
-			// 				$('#read_'+messageId).fadeIn(200);
-			// 			} else if (item.delivered_ids.length > 1 && messageSenderId === currentUser.id) {
-			// 				$('#delivered_'+messageId).fadeIn(100);
-			// 				$('#read_'+messageId).fadeOut(200);
-			// 			}
-
-			// 			if (i > 5) {$('body').scrollTop($('#messages-pool').prop('scrollHeight'));}
-			// 		});
+					// if (i > 5) {$('body').scrollTop($('#messages-pool').prop('scrollHeight'));}
+				});
+				app.render_template('dialog-messages', '#dialogs-list', response);
+				$('#dialogs-list').scrollTop( $('#dialogs-list').height() );
+				return;
+			}, 0);
 			// 	}
 			// 	setTimeout(function(){
 			// 		app.hideLoader();
@@ -493,6 +491,15 @@
 		// $(".load-msg").delay(100).fadeOut(500);
 		// setTimeout(function(){ window.scrollTo(0,document.body.scrollHeight);  }, 1);
 	};
+
+	chatCore.sendReadStatus = function(userId, messageId, dialogId) {
+		var params = {
+			messageId: messageId,
+			userId: userId,
+			dialogId: dialogId
+		};
+		QB.chat.sendReadStatus(params);
+	}
 
 
 	chatCore.buildDialogHtml = function(dialogId, dialogUnreadMessagesCount, dialogIcon, dialogName, dialogLastMessage, dialogTime, opponentId) {

@@ -1,5 +1,22 @@
-	
-	hola
+	{{# data.items}}
+		<li class="list-group-item" id="{{_id}}" onclick="clickToAddMsg('{{_id}}')">
+			<div class="{{sender}}">
+				<p>
+					{{# attachmentFileId}}
+						<a href="http://api.quickblox.com/blobs/{{attachmentFileId}}/download.xml?token={{token}}">
+							<img src="http://api.quickblox.com/blobs/{{attachmentFileId}}/download.xml?token={{token}}" alt="attachment" class="attachments img-responsive" />
+						</a>
+					{{/ attachmentFileId}}
+					{{# messageAttach}}
+						{{.}}
+					{{/ messageAttach}}
+					{{message}}
+				</p>
+			</div>
+		</li>
+		<li class="clearfix"></li>
+	{{/ data.items}}
+
 	{{# is_read}}
 		<img class="icon-small" src="{{cordova_full_path}}images/read.jpg" alt="" id="read_{{../_id}}">
 	{{/ is_read}}
@@ -12,23 +29,3 @@
 		<div class="message-sticker-container"></div>
 	{{/ isMessageSticker}}
 	
-	{{!-- var sender = (localStorage.getItem('idSender') == messageSenderId)?'outgoing':'incoming'; --}}
-	{{# items}}
-		<div class="list-group-item" id="{{_id}}" onclick="clickToAddMsg('{{_id}}')">'+
-			<div class="{{sender}}">
-				item
-				<p>
-					{{# attachmentFileId}}
-						<a href="http://api.quickblox.com/blobs/'+attachmentFileId+'/download.xml?token='+token+'">
-							<img src="http://api.quickblox.com/blobs/'+attachmentFileId+'/download.xml?token='+token+'" alt="attachment" class="attachments img-responsive" />
-						</a>
-					{{/ attachmentFileId}}
-					{{# messageAttach}}
-						{{.}}
-					{{/ messageAttach}}
-					{{message}}
-				</p>
-			</div>
-		</div>
-		<div class="clearfix"></div>
-	{{/ items}}

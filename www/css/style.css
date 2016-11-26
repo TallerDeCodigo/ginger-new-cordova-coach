@@ -239,14 +239,10 @@ form label.error{ display: block; text-align: left; margin-left: 2.5rem; color: 
 
 
 /* CHAT */
-.message-bar {position:fixed;background:#f5f1f0;width:100%;bottom:0px;padding:6px 70px 2px 40px;border-top:1px solid #CCC;}
-.message-bar a {position:absolute;}
-.attach {left:10px;bottom:4px;}
-.attach img {width:22px;height:auto;}
-input.send ,
-.cpur.send.btn-default {position:absolute;border-style:none; outline:none;background:none;right:4px;bottom:5px;height:27px;width:61px;line-height:27px;font-weight:700;}
 
-.message-bar textarea {width:100%;resize:none;outline:none;border:1px solid #CCC;border-radius:3px;padding:4px 5px 1px;}
+
+/* _ _ _ _  _ _ _ _ */
+.chat-container .lista_chat{ list-style: none; height: calc( 100vh - 70px ); overflow: scroll;}
 
 .incoming,
 .outgoing {-webkit-box-shadow: 2px 0px 7px 0px rgba(168,168,168,0.35); -moz-box-shadow: 2px 0px 7px 0px rgba(168,168,168,0.35); box-shadow: 2px 0px 7px 0px rgba(168,168,168,0.35);}
@@ -259,6 +255,15 @@ input.send ,
 .withimg {overflow:hidden;}
 .outgoing p, .incoming p {margin:0;padding:7px 11px 7px 11px;}
 .outgoing img, .incoming img {margin:0;width:100%;margin-bottom:-4px;}
+
+.message-bar {position:fixed;background:#f5f1f0;width:100%;bottom:0px;padding:6px 70px 2px 40px;border-top:1px solid #CCC;}
+.message-bar a {position:absolute;}
+.message-bar input[type=file]{ z-index:-1; position:absolute; }
+.message-bar textarea {width:100%;resize:none;outline:none;border:1px solid #CCC;border-radius:3px;padding:4px 5px 1px;}
+.attach {left:10px;bottom:4px;}
+.attach img {width:22px;height:auto;}
+input.send ,
+.cpur.send.btn-default {position:absolute;border-style:none; outline:none;background:none;right:4px;bottom:5px;height:27px;width:61px;line-height:27px;font-weight:700;}
 
 .chat section {padding-bottom:50px;}
 .content.list-group .list-group-item:last-of-type div{margin-bottom: 50px}

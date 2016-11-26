@@ -236,6 +236,7 @@
 			data.is_scrollable = false;
 			if(!append)
 				$(targetSelector).html('');
+			console.log(data);
 			$(targetSelector).append(template(data));
 			if(!keepLoader)
 				setTimeout(function(){
