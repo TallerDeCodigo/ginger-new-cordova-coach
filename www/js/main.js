@@ -471,7 +471,7 @@
 															 .animate(	{
 																			'margin-left': "0",
 																			opacity: 1
-																		}, 360);
+																		}, 640);
 				}
 				
 			});

@@ -385,7 +385,7 @@ window.initializeEvents = function(){
 		} // END CLASS coach-profile
 
 
-		if( $('.view').hasClass('chat-container') ){
+		if( $('.view').hasClass('chat-container') && !$('.view').hasClass('chat-dialog-messages') ){
 			
 			var loginfo = { login : _coach.mail, pass : _coach.chatPassword };
 
@@ -400,9 +400,14 @@ window.initializeEvents = function(){
 			// app.switchView('chat-contacts', '.view', users_response);
 
 		} // END CLASS chat-container
+		
+
+		if( $('.view').hasClass('chat-dialog-messages') ){
+			console.log("Chat dialog messages");
+		} // END CLASS 'chat-dialog-messages'
 
 
-		if( $('.view').hasClass('contacts-list') ){
+		if( $('.view').hasClass('contacts-list') && !$('.view').hasClass('chat-dialog-messages') ){
 				
 				connectToChat(loginfo);
 
@@ -435,6 +440,7 @@ window.initializeEvents = function(){
 					$('.menu-bar').hide();
 					$('.escribir').show();
 				});
+
 
 				// $('.back').click(function(){
 

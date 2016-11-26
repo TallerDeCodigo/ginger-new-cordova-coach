@@ -242,7 +242,7 @@ form label.error{ display: block; text-align: left; margin-left: 2.5rem; color: 
 
 
 /* _ _ _ _  _ _ _ _ */
-.chat-container .lista_chat{ list-style: none; height: calc( 100vh - 70px ); overflow: scroll;}
+.chat-container .lista_chat{ list-style: none; height: calc( 100vh - 80px ); overflow: scroll;}
 
 .incoming,
 .outgoing {-webkit-box-shadow: 2px 0px 7px 0px rgba(168,168,168,0.35); -moz-box-shadow: 2px 0px 7px 0px rgba(168,168,168,0.35); box-shadow: 2px 0px 7px 0px rgba(168,168,168,0.35);}

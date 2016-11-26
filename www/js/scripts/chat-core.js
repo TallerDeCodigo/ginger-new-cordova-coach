@@ -25,6 +25,7 @@
 									chatCore.isInitialized 	= true;
 									chatCore.currentUser 	= elCoach;
 									app.keeper.setItem('idSender', res.user_id);
+									// chatCore.connectToChat(elCoach);
 									return res;
 								}
 						} );
@@ -32,24 +33,19 @@
 	};
 
 	chatCore.connectToChat = function(elCoach) {
-		 
-		QB.chat.connect({ 	
-							email: elCoach.mail, 
-							password: elCoach.chatPassword
-						}, 
+		console.log("Connect to chat");
+		QB.chat.connect(chatCore.access, 
 						 function(err, roster) {
 
-								if (err) {
-									console.log(err);
-								} else {
-									console.log(roster);
+							if (err) {
+								console.log(err);
+							} else {
+								console.log(roster);
 
-									// retrieveChatDialogs();
-								
-									// setupAllListeners();
-								
-									// setupMsgScrollHandler();
-								}
+								// retrieveChatDialogs();
+								// chatCore.setupAllListeners();						
+								// setupMsgScrollHandler();
+							}
 						});
 	}
 
@@ -153,6 +149,7 @@
 
 		QB.chat.dialog.list( null, function(err, resDialogs) {
 			var i = 0;
+			var name = "Chat";
 			if (err) 
 				return console.log(err);
 
@@ -160,14 +157,15 @@
 
 				resDialogs.items.forEach(function(item, i, arr) {
 					console.log(item);
-					var dialogId 		= item._id;
-					dialogs[dialogId] 	= item;
-					var user_id 		= item.user_id;
-					var unread_count 	= item.unread_messages_count;
-					var $foundElement 	= $('*[data-chatId="'+user_id+'"]');
-					var exists_in_list 	= $foundElement.length;
+					// var dialogId 		= item._id;
+					// dialogs[dialogId] 	= item;
+					// var user_id 		= item.user_id;
+					// var unread_count 	= item.unread_messages_count;
+					// var $foundElement 	= $('*[data-chatId="'+user_id+'"]');
+					// var exists_in_list 	= $foundElement.length;
+					// name = item.name;
 				});
-				resDialogs.header_title = "Chat";
+				resDialogs.header_title = name;
 				console.log(resDialogs);
 				app.render_template('chat-contacts', '.chat-container', resDialogs);
 				return chatCore.initContactListEvents();
@@ -187,7 +185,9 @@
 			app.keeper.setItem('idQBOX', qbox_id);
 			app.keeper.setItem('idGinger', gingerid);
 			chatCore.retrieveChatMessages(dialog);
-
+			$('#opponent_name').text($(this).find('h5').text());
+			$('.view').addClass('chat-dialog-messages');
+			initializeEvents();
 			// chatCore.joinToNewDialogAndShow(dialogObject);
 			// if ( qbox_id == $('.los_chats:nth-of-type(1)').data('qbox') ) {
 			// 	console.log('ya existe');
@@ -474,8 +474,14 @@
 
 					// if (i > 5) {$('body').scrollTop($('#messages-pool').prop('scrollHeight'));}
 				});
+				/*** Render messages list and init events ***/
 				app.render_template('dialog-messages', '#dialogs-list', response);
 				$('#dialogs-list').scrollTop( $('#dialogs-list').height() );
+
+
+				setTimeout(function(){
+					app.hideLoader();
+				}, 420);
 				return;
 			}, 0);
 			// 	}
