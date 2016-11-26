@@ -223,9 +223,10 @@
 				$('.rootContainer').html( html );
 			}
 		},
-		render_template : function(templateName, targetSelector, otherdata, keepLoader, append){
+		render_template : function(templateName, targetSelector, otherdata, keepLoader, append, leNiceTransition){
 			keepLoader = (typeof keepLoader == 'undefined' || !keepLoader) ? false : true;
 			append = (typeof append == 'undefined' || !append) ? false : true;
+			leNiceTransition = (typeof leNiceTransition == 'undefined') ? true : leNiceTransition;
 			window.is_home = false;
 			var template = Handlebars.templates[templateName];
 			if(!template){
@@ -237,7 +238,22 @@
 			if(!append)
 				$(targetSelector).html('');
 			console.log(data);
-			$(targetSelector).append(template(data));
+			if(!leNiceTransition){
+
+				$(targetSelector).html( template(data) ).css({ "opacity": 0, "display": "block"})
+														 .animate(	{
+															opacity: 1
+														}, 640);
+			}else{
+
+				$(targetSelector).html( template(data) ).css("opacity", 1)
+														 .css("display", "block")
+														 .css("margin-left", "20px")
+														 .animate(	{
+																		'margin-left': "0",
+																		opacity: 1
+																	}, 320);
+			}
 			if(!keepLoader)
 				setTimeout(function(){
 					app.hideLoader();
