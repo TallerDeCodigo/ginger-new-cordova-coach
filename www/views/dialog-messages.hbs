@@ -2,11 +2,11 @@
 		<li class="list-group-item" id="{{_id}}" onclick="clickToAddMsg('{{_id}}')">
 			<div class="{{sender}}">
 				<p>
-					{{# attachmentFileId}}
-						<a href="http://api.quickblox.com/blobs/{{attachmentFileId}}/download.xml?token={{token}}">
-							<img src="http://api.quickblox.com/blobs/{{attachmentFileId}}/download.xml?token={{token}}" alt="attachment" class="attachments img-responsive" />
+					{{# has_attachments}}
+						<a href="http://api.quickblox.com/blobs/{{attachmentFileId}}/download.xml?token={{../data.token}}">
+							<img src="http://api.quickblox.com/blobs/{{attachmentFileId}}/download.xml?token={{../data.token}}" alt="attachment" class="attachments img-responsive" />
 						</a>
-					{{/ attachmentFileId}}
+					{{/ has_attachments}}
 					{{# messageAttach}}
 						{{.}}
 					{{/ messageAttach}}
@@ -16,7 +16,7 @@
 		</li>
 		<li class="clearfix"></li>
 	{{/ data.items}}
-
+	
 	{{# is_read}}
 		<img class="icon-small" src="{{cordova_full_path}}images/read.jpg" alt="" id="read_{{../_id}}">
 	{{/ is_read}}

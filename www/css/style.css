@@ -226,13 +226,13 @@ form label.error{ display: block; text-align: left; margin-left: 2.5rem; color: 
 
 
 /* CHAT CONTAINER */
-.chat-container ul {margin:0; padding-bottom: 44px;}
+.chat-container .lista_chat{margin:0; padding-bottom: 44px; list-style: none; height: calc( 100vh - 80px ); overflow: scroll; background-color: #e9ebee;}
+	.lista_chat.no_bg{background: transparent;}
 	.persona {list-style:none;border-bottom:1px solid #cfcfcf;text-align:left;height:70px;position:relative;padding:18px 68px 0px 72px;}
 	.persona .circle-frame {width:50px;height:50px;left:11px;top:10px;}
-	.persona h5 {white-space:nowrap;text-overflow:ellipsis;overflow:hidden;}
-	.persona p {white-space:nowrap;text-overflow:ellipsis;overflow:hidden;font-size:90%;}
+	.persona h5 {white-space:nowrap;text-overflow:ellipsis;overflow:hidden; margin-top: 0;}
+	.persona p { white-space: nowrap; text-overflow: ellipsis; overflow: hidden; font-size: 90%; margin: 0.5rem 0 0 0; color: #636363;}
 	.persona div.leido, .persona div.no-leido {position:absolute;right:11px;top:18px;text-align:right;}
-
 
 .persona div.leido:before {position:absolute;width:16px;height:16px;background:url(../images/leido.svg);background-size:100% auto;left:-19px;top:0px;content:"";}
 .persona div.no-leido:before {position:absolute;width:16px;height:16px;background:url(../images/noleido.svg);background-size:100% auto;left:-19px;top:0px;content:"";}
@@ -242,7 +242,6 @@ form label.error{ display: block; text-align: left; margin-left: 2.5rem; color: 
 
 
 /* _ _ _ _  _ _ _ _ */
-.chat-container .lista_chat{ list-style: none; height: calc( 100vh - 80px ); overflow: scroll;}
 
 .incoming,
 .outgoing {-webkit-box-shadow: 2px 0px 7px 0px rgba(168,168,168,0.35); -moz-box-shadow: 2px 0px 7px 0px rgba(168,168,168,0.35); box-shadow: 2px 0px 7px 0px rgba(168,168,168,0.35);}

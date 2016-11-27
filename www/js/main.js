@@ -240,15 +240,15 @@
 			console.log(data);
 			if(!leNiceTransition){
 
-				$(targetSelector).html( template(data) ).css({ "opacity": 0, "display": "block"})
+				$(targetSelector).append( template(data) ).css({ "opacity": 0, "display": "block"})
 														 .animate(	{
 															opacity: 1
 														}, 640);
 			}else{
 
-				$(targetSelector).html( template(data) ).css("opacity", 1)
+				$(targetSelector).append( template(data) ).css("opacity", 1)
 														 .css("display", "block")
-														 .css("margin-left", "20px")
+														 .css("margin-left", "12px")
 														 .animate(	{
 																		'margin-left': "0",
 																		opacity: 1

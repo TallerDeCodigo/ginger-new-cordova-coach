@@ -389,22 +389,18 @@ window.initializeEvents = function(){
 			
 			var loginfo = { login : _coach.mail, pass : _coach.chatPassword };
 
-			if( !$('#contacts-list').length ){
-				chatCore.fetchContactList();
-				
-				return;
-			}
-			
-
-			// chatCore;
-			// app.switchView('chat-contacts', '.view', users_response);
-
+			if( !$('#contacts-list').length )
+				return chatCore.fetchContactList();
+		
 		} // END CLASS chat-container
 		
 
+
 		if( $('.view').hasClass('chat-dialog-messages') ){
 			console.log("Chat dialog messages");
+			
 		} // END CLASS 'chat-dialog-messages'
+
 
 
 		if( $('.view').hasClass('contacts-list') && !$('.view').hasClass('chat-dialog-messages') ){
@@ -416,20 +412,6 @@ window.initializeEvents = function(){
 				console.log(users_response);
 				app.render_template('chat-dialogs', '.insert_contacts', users_response);
 
-				// $('.btnDialogs').click(function () {
-					
-				// 	var qbox_id = $(this).data('qbox');
-				// 	var gingerid = $(this).data('gingerid');
-
-				// 	app.keeper.setItem('idQBOX', qbox_id);
-				// 	app.keeper.setItem('idGinger', gingerid);
-				// 	if ( qbox_id == $('.los_chats:nth-of-type(1)').data('qbox') ) {
-				// 		console.log('ya existe');
-				// 	} else {
-				// 		chatCore.createNewDialog();
-				// 	}
-				// });
-
 				$('.attach').click(function(){
 					$('input[name="galeria"]').trigger('click');
 				});
@@ -440,32 +422,6 @@ window.initializeEvents = function(){
 					$('.menu-bar').hide();
 					$('.escribir').show();
 				});
-
-
-				// $('.back').click(function(){
-
-				// 	if($('#messages-pool').is(':visible') ){
-
-				// 		var event = new CustomEvent("keyboardDidHide", { "detail": "Forced hide keyboard event" });
-				// 		document.dispatchEvent(event);
-				// 		$('.escribir').hide();
-				// 		$('#dialogs-list').show();
-				// 		$('#messages-pool').hide();
-				// 		$('.menu-bar').show();
-				// 	}else{
-				// 		return app.render_home();
-				// 	}
-				// });
-
-				// $('#btn_contacts').click(function(){
-				// 	$('#dialogs-list').hide();
-				// 	$('#contacts-list').show();
-				// });
-
-				// $('#btn_chats').click(function(){
-				// 	$('#dialogs-list').show();
-				// 	$('#contacts-list').hide();
-				// });
 
 				app.hideLoader();
 

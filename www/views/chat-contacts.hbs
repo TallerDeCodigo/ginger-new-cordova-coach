@@ -5,14 +5,15 @@
 			<h2 class="titulo">{{data.header_title}}</h2>
 		</div>
 	</header>
-	<ul class="lista_chat" id="contacts-list">
+	<ul class="lista_chat no_bg" id="contacts-list">
 		{{# data.items}}
 			<a class='btnDialogs' data-gingerid="" data-qbox="{{user_id}}" data-dialog="{{_id}}" >
 				<li class='persona' >
 					<div class='circle-frame'>
 						<img src='{{../cordova_full_path}}images/Icon-60@3x.png'>
 					</div>
-					<h5 style='margin-top:10px'>{{name}}</h5>
+					<h5>{{name}}</h5>
+					<p class="last_message">{{last_message}}</p>
 				</li>
 			</a>
 		{{/ data.items}}

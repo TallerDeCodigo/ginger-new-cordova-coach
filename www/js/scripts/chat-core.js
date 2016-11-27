@@ -2,9 +2,14 @@
 /*** Attempt to get chat methods in to order ***/
 	window.chatCore = [];
 
-	chatCore.isInitialized = false;
-	chatCore.token = null;
-	chatCore.currentUser = null;
+	chatCore.isInitialized 	= false;
+	chatCore.token 			= null;
+	chatCore.user_id 		= null;
+	chatCore.currentUser 	= null;
+	chatCore.opponentId 	= null;
+	chatCore.currentDialog 	= null;
+	chatCore.dialogs 		= [];
+	chatCore.occupantsIds 	= [];
 
 	chatCore.init = function(elCoach){
 		console.log("Initializing instant messaging api");
@@ -25,7 +30,7 @@
 									chatCore.isInitialized 	= true;
 									chatCore.currentUser 	= elCoach;
 									app.keeper.setItem('idSender', res.user_id);
-									// chatCore.connectToChat(elCoach);
+									chatCore.connectToChat(elCoach);
 									return res;
 								}
 						} );
@@ -34,71 +39,85 @@
 
 	chatCore.connectToChat = function(elCoach) {
 		console.log("Connect to chat");
-		QB.chat.connect(chatCore.access, 
+
+		var params 	= {jid: elCoach.jid, password: elCoach.chatPassword};
+		QB.chat.connect(params, 
 						 function(err, roster) {
 
 							if (err) {
 								console.log(err);
 							} else {
 								console.log(roster);
-
 								// retrieveChatDialogs();
-								// chatCore.setupAllListeners();						
+								chatCore.setupAllListeners();						
 								// setupMsgScrollHandler();
 							}
 						});
 	}
 
-	
+	/**
+	 * Trigger send message to dialog
+	 */
 	chatCore.clickSendMessage = function() {
 
-		console.log('click send message');
 		var currentText = $('#chat-message').val().trim();
-		console.log(currentText);
 		if (currentText.length === 0)
 			return false;
 
 		// $('#chat-message').val('').focus();
-		$('#chat-message').val('').focus();
-		chatCore.sendMessage(currentText, null);
-		$('#container').scrollTop($('#container').prop('scrollHeight'));
+		$('#chat-message').val('');
+		chatCore.submitMessage(currentText, null);
+		$('#dialogs-list').scrollTop( $('#dialogs-list').prop('scrollTop')+25 );
 	}
 
-	chatCore.sendMessage = function( text, attachmentFileId ) {
-
+	/**
+	 * Send message into chat dialog
+	 * @param String text
+	 * @param Int attachmentFileId
+	 * @see currentDialog ()
+	 */
+	chatCore.submitMessage = function( text, attachmentFileId ) {
+		
+		currentUser 	= [];
+		currentUser.id 	= app.keeper.getItem('idSender');
 		var msg = {
-			type 		: currentDialog.type === 3 ? 'chat' : 'groupchat',
-			body 		: text,
-			extension 	: {
-							save_to_history: 1,
-						},
-			senderId 	: currentUser.id,
-			markable 	: 1
-		};
+					type 		: 'chat',
+					body 		: text,
+					extension 	: {
+									save_to_history: 1,
+								},
+					senderId 	: currentUser.id,
+					markable 	: 1
+				};
 
-		if(attachmentFileId !== null){
+		if(attachmentFileId !== null)
 			msg["extension"]["attachments"] = [{id: attachmentFileId, type: 'photo'}];
-		}
 
-		if (currentDialog.type === 3) {
-			opponentId = QB.chat.helpers.getRecipientId(currentDialog.occupants_ids, currentUser.id);
-			QB.chat.send(opponentId, msg);
+		/*** 1 to 1 chat ***/
+		if (chatCore.currentDialog.type === 3) {
+
+			chatCore.opponentId = QB.chat.helpers.getRecipientId( chatCore.currentDialog.occupants_ids, currentUser.id );
+			QB.chat.send(chatCore.opponentId, msg);
 
 			if(attachmentFileId === null){
-				showMessage(currentUser.id, msg);
+				chatCore.showMessage(chatCore.currentUser.id, msg);
 			} else {
-				showMessage(currentUser.id, msg, attachmentFileId);
+				chatCore.showMessage(chatCore.currentUser.id, msg, attachmentFileId);
 			}
 		} else {
-			QB.chat.send(currentDialog.xmpp_room_jid, msg);
+			QB.chat.send(window._coach.jid, text);
 		}
 
-		clearTimeout(isTypingTimerId);
-		isTypingTimeoutCallback();
-
-		dialogsMessages.push(msg);
+		// clearTimeout(isTypingTimerId);
+		// isTypingTimeoutCallback();
+		chatCore.dialogsMessages.push(msg);
 	}
 
+	/**
+	 * Fetch unread messages count
+	 * TODO: Separate view changes from logic here
+	 * @return void
+	 */
 	chatCore.fetchUnreadCount = function(){
 
 		setTimeout(function(){
@@ -142,6 +161,10 @@
 		}, 420);
 	};
 
+	/**
+	 * Fetch contact list (List of active chats)
+	 * @see app.render_template, initContactListEvents
+	 */
 	chatCore.fetchContactList = function(){
 
 		if(!chatCore.isInitialized)
@@ -151,21 +174,24 @@
 			var i = 0;
 			var name = "Chat";
 			if (err) 
-				return console.log(err);
+				return app.toast("Error: no fue posible consultar los mensajes.");
 
 			if(resDialogs){
 
 				resDialogs.items.forEach(function(item, i, arr) {
-					console.log(item);
-					// var dialogId 		= item._id;
-					// dialogs[dialogId] 	= item;
-					// var user_id 		= item.user_id;
-					// var unread_count 	= item.unread_messages_count;
-					// var $foundElement 	= $('*[data-chatId="'+user_id+'"]');
-					// var exists_in_list 	= $foundElement.length;
-					// name = item.name;
+				
+					var dialogId = item._id;
+					chatCore.dialogs[dialogId] = item;
+
+					item.occupants_ids.map(function(userId) {
+						chatCore.occupantsIds.push(userId);
+					});
+					var date = new Date(item.updated_at);
+					// item.last_read 	= date.;
 				});
+				chatCore.occupantsIds 	= jQuery.unique(chatCore.occupantsIds);
 				resDialogs.header_title = name;
+				resDialogs.token 		= chatCore.token;
 				console.log(resDialogs);
 				app.render_template('chat-contacts', '.chat-container', resDialogs);
 				return chatCore.initContactListEvents();
@@ -175,16 +201,22 @@
 		return false;
 	};
 
+	/**
+	 * Initialize events for chat contact list
+	 */
 	chatCore.initContactListEvents = function(){
 
 		$('.btnDialogs').click(function () {
-			app.showLoader();
+			setTimeout(function(){
+				app.showLoader();
+			}, 420);
 			var qbox_id 	= $(this).data('qbox');
 			var gingerid 	= $(this).data('gingerid');
-			var dialog 		= $(this).data('dialog');
+			var dialogId 		= $(this).data('dialog');
 			app.keeper.setItem('idQBOX', qbox_id);
 			app.keeper.setItem('idGinger', gingerid);
-			chatCore.retrieveChatMessages(dialog);
+			chatCore.currentDialog = chatCore.dialogs[dialogId];
+			chatCore.retrieveChatMessages(chatCore.currentDialog);
 			$('#opponent_name').text($(this).find('h5').text());
 			$('.view').addClass('chat-dialog-messages');
 			initializeEvents();
@@ -196,6 +228,81 @@
 			// }
 			return;
 		});
+
+		chatCore.dialogsMessages = $('#dialogs-list');
+		console.log(chatCore);
+	};
+
+
+// ___________________________________________________//
+
+	chatCore.retrieveChatMessages = function(dialog, beforeDateSent){
+
+		var dialogsMessages = [];
+		var data = {header_title: "Chat"};
+		app.render_template('chat-messages', '.chat-container', data, true);
+		
+		var params 	= 	{
+							chat_dialog_id: dialog._id,
+							sort_desc: 'date_sent',
+							limit: 25 // TODO: change to smaller limit as soon as we connect previous messages handler
+						};
+
+		/** if we would like to load the previous history **/
+		if(beforeDateSent)
+			params.date_sent = {lt: beforeDateSent};
+		
+		QB.chat.message.list(params, function(err, response) {
+			
+			if(! response || response.items.length === 0)
+				return app.toast("No hay mensajes que mostrar");
+
+			setTimeout(function(){
+
+				response.items.forEach(function(item, i, arr) {
+
+					var messageId 		= item._id;
+					var messageText 	= item.message;
+					var messageSenderId = item.sender_id;
+					var messageDateSent = new Date(item.date_sent*1000);
+					item.sender = ( app.keeper.getItem('idSender') == item.sender_id )? 'outgoing' : 'incoming';  
+					// if (item.read_ids.indexOf(currentUser.id) === -1) {
+					// 	chatCore.sendReadStatus(messageSenderId, messageId, currentDialog._id);
+					// }
+
+					var messageAttachmentFileId = null;
+					if (item.hasOwnProperty("attachments")) {
+						if(item.attachments.length > 0) {
+							item.has_attachments 	= true;
+							item.message 			= "";
+							item.attachmentFileId 	= item.attachments[0].id;
+						}
+					}
+
+					// // Show delivered statuses
+					// if (item.read_ids.length > 1 && messageSenderId === currentUser.id) {
+					// 	$('#delivered_'+messageId).fadeOut(100);
+					// 	$('#read_'+messageId).fadeIn(200);
+					// } else if (item.delivered_ids.length > 1 && messageSenderId === currentUser.id) {
+					// 	$('#delivered_'+messageId).fadeIn(100);
+					// 	$('#read_'+messageId).fadeOut(200);
+					// }
+
+				});
+				/*** Render messages list and init events ***/
+				response.items.reverse();
+				response.token = chatCore.token;
+				app.render_template('dialog-messages', '#dialogs-list', response, true);
+
+				setTimeout(function(){
+					$('#dialogs-list').animate({ scrollTop : $('#dialogs-list').height()*20 } );
+					return app.hideLoader();
+				}, 800);
+
+			}, 0);
+
+		});
+		
 	};
 
 	/*** Populate dialog once screen has loaded ***/
@@ -412,91 +519,7 @@
 		// $('#dialogs-list').prepend(dialogHtml);
 	}
 
-	chatCore.retrieveChatMessages = function(dialogId, beforeDateSent){
-		var dialogsMessages = [];
-		
-		app.showLoader();
-		var data = {header_title: "Chat"};
-		app.render_template('chat-messages', '.chat-container', data);
-		
-		var params 	= 	{
-							chat_dialog_id: dialogId,
-							sort_desc: 'date_sent',
-							limit: 25 // TODO: change to smaller limit as soon as we connect previous messages handler
-						};
-		console.log(params);
-
-		/** if we would like to load the previous history **/
-		if(beforeDateSent)
-			params.date_sent = {lt: beforeDateSent};
-		
-		QB.chat.message.list(params, function(err, response) {
-			
-			console.log(response);
-			if(! response || response.items.length === 0)
-				return app.toast("No hay mensajes que mostrar");
-
-			setTimeout(function(){
-
-				response.items.forEach(function(item, i, arr) {
-
-					// dialogsMessages.splice(0, 0, item); 
-					//console.log(dialogsMessages.splice(0, 0, item));
-
-					// console.log('>>>>' + JSON.stringify(item));
-
-					var messageId 		= item._id;
-					var messageText 	= item.message;
-					var messageSenderId = item.sender_id;
-					var messageDateSent = new Date(item.date_sent*1000);
-
-					item.sender = ( app.keeper.getItem('idSender') == item.sender_id )? 'outgoing' : 'incoming';  
-					// if (item.read_ids.indexOf(currentUser.id) === -1) {
-					// 	chatCore.sendReadStatus(messageSenderId, messageId, currentDialog._id);
-					// }
-
-					// var messageAttachmentFileId = null;
-					// if (item.hasOwnProperty("attachments")) {
-					// 	if(item.attachments.length > 0) {
-					// 		messageAttachmentFileId = item.attachments[0].id;
-					// 	}
-					// }
-
-					
-					// // Show delivered statuses
-					// if (item.read_ids.length > 1 && messageSenderId === currentUser.id) {
-					// 	$('#delivered_'+messageId).fadeOut(100);
-					// 	$('#read_'+messageId).fadeIn(200);
-					// } else if (item.delivered_ids.length > 1 && messageSenderId === currentUser.id) {
-					// 	$('#delivered_'+messageId).fadeIn(100);
-					// 	$('#read_'+messageId).fadeOut(200);
-					// }
-
-					// if (i > 5) {$('body').scrollTop($('#messages-pool').prop('scrollHeight'));}
-				});
-				/*** Render messages list and init events ***/
-				app.render_template('dialog-messages', '#dialogs-list', response);
-				$('#dialogs-list').scrollTop( $('#dialogs-list').height() );
-
-
-				setTimeout(function(){
-					app.hideLoader();
-				}, 420);
-				return;
-			}, 0);
-			// 	}
-			// 	setTimeout(function(){
-			// 		app.hideLoader();
-			// 		$('body').scrollTop($('#messages-pool').prop('scrollHeight'));
-			// 	}, 2400);
-			// }else{
-			// 	console.log(err);
-
-		});
-		
-		// $(".load-msg").delay(100).fadeOut(500);
-		// setTimeout(function(){ window.scrollTo(0,document.body.scrollHeight);  }, 1);
-	};
+	
 
 	chatCore.sendReadStatus = function(userId, messageId, dialogId) {
 		var params = {
@@ -599,26 +622,96 @@
 	  users = $.extend(users, newUsers);
 	}
 
-
+	/**
+	 * Setup all chat listeners
+	 */
 	chatCore.setupAllListeners = function() {
-		QB.chat.onDisconnectedListener    = onDisconnectedListener;
-		QB.chat.onReconnectListener       = onReconnectListener;
-		QB.chat.onMessageListener         = onMessage;
-		QB.chat.onSystemMessageListener   = onSystemMessageListener;
-		QB.chat.onDeliveredStatusListener = onDeliveredStatusListener;
-		QB.chat.onReadStatusListener      = onReadStatusListener;
-		setupIsTypingHandler();
+
+		QB.chat.onMessageListener         = chatCore.onMessage;
+		// QB.chat.onDisconnectedListener    = chatCore.onDisconnectedListener;
+		// QB.chat.onReconnectListener       = chatCore.onReconnectListener;
+		// QB.chat.onSystemMessageListener   = chatCore.onSystemMessageListener;
+		// QB.chat.onDeliveredStatusListener = chatCore.onDeliveredStatusListener;
+		// QB.chat.onReadStatusListener      = chatCore.onReadStatusListener;
+		// setupIsTypingHandler();
+	};
+
+	/**
+	 * On message listener
+	 * @param Int userId
+	 * @param String msg
+	 */
+	chatCore.onMessage = function(userId, msg) {
+		console.log("onMessage");
+		console.log(msg);
+		if (chatCore.isMessageForCurrentDialog(userId, msg.dialog_id)){
+			dialogsMessages.push(msg);
+
+			if (msg.markable === 1)
+				sendReadStatus(userId, msg.id, msg.dialog_id);
+
+			var messageAttachmentFileId = null;
+			if (msg.extension.hasOwnProperty("attachments"))
+				if(msg.extension.attachments.length > 0) {
+					messageAttachmentFileId = msg.extension.attachments[0].id;
+				}
+
+			chatCore.showMessage(userId, msg, messageAttachmentFileId);
+		}
 	}
 
-	// reconnection listeners
-	function onDisconnectedListener(){
+	chatCore.showMessage = function(userId, msg, attachmentFileId) {
+
+		var userLogin = getUserLoginById(userId);
+		var myData = 	{
+							items: [
+										{
+											_id 			: msg.id,
+											has_attachments	: false,
+											attachmentFileId: null,
+											sender 			: ( app.keeper.getItem('idSender') == msg.senderId ) ? 'outgoing' : 'incoming',
+											message 		: msg.body
+										}
+									],
+							token: chatCore.token
+						};
+
+		app.render_template('dialog-messages', '#dialogs-list', myData, false, true);
+		setTimeout(function(){
+
+			return $('#dialogs-list').scrollTop($('#dialogs-list').scrollTop()+500);
+		}, 240);
+	}
+
+	/**
+	 * Validate incoming message
+	 * @param Int userId
+	 * @param Int dialogId
+	 * @return Boolean
+	 */
+	chatCore.isMessageForCurrentDialog = function(userId, dialogId) {
+		var result = false;
+		if (dialogId == chatCore.currentDialog._id || (dialogId === null && chatCore.currentDialog.type == 3 && chatCore.opponentId == userId)) {
+			result = true;
+		}
+		return result;
+	}
+
+	/**
+	 * Reconnection listeners
+	 */
+	chatCore.onDisconnectedListener = function(){
 		console.log("onDisconnectedListener");
-	}
+	};
 
-	function onReconnectListener(){
+	chatCore.onReconnectListener = function(){
 		console.log("onReconnectListener");
-	}
+	};
 
+
+	/**
+	 * Fake submit handler
+	 */
 	chatCore.submit_handler = function(form) {
 		return false;
-	}
+	};
