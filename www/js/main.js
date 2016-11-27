@@ -425,6 +425,28 @@
 			var data = this.gatherEnvironment( [], '' );
 			return this.switchView('empty-card', data, '.view', url, 'client-profile', true);
 		},
+		render_about : function(url){
+
+			window.is_home = false;
+			if(!app.initialized) app.initialize();
+			setTimeout(function(){
+				app.showLoader();
+			}, 420);
+			app.check_or_renderContainer();
+			var data = this.gatherEnvironment( [], 'Acerca de' );
+			return this.switchView( 'about', data, '.view', url, 'about' );
+		},
+		render_support : function(url){
+
+			window.is_home = false;
+			if(!app.initialized) app.initialize();
+			setTimeout(function(){
+				app.showLoader();
+			}, 420);
+			app.check_or_renderContainer();
+			var data = this.gatherEnvironment( [], 'Soporte' );
+			return this.switchView( 'support', data, '.view', url, 'support' );
+		},
 		render_comingSoon : function(url){
 
 			var extra_data = [];

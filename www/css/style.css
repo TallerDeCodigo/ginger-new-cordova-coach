@@ -594,10 +594,9 @@ p.small{margin-bottom:0;}
 .bg_content div{margin-top:30px;}
 
 /*.bg_blur_soporte{background: url(../images/backsoporte.png);background-size:100%; background-repeat: no-repeat;-webkit-filter: blur(5px); background-position:center; padding:20px 0px 10px 0px;position:absolute;top:0;bottom:0;left:0;right:0; z-index:-99;height:100%;}*/
-#soporte{font-size: 2rem}
 
-.soporte{background: url(../images/backsoporte.png);background-repeat:no-repeat;background-position: center;background-size: 100%; }
-
+.support{background: url(../images/backsoporte.png);background-repeat:no-repeat;background-position: center;background-size: 100%; }
+.support>p{font-size: 2rem;}
 
 a:focus img {
     border: 0;

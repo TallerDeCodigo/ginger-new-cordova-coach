@@ -32,6 +32,12 @@ window.initializeEvents = function(){
 
 				if( $(this).data('resource') == "finanzas" )
 					return app.render_finances_view( $(this).attr('href') );
+				
+				if( $(this).data('resource') == "about" )
+					return app.render_about( $(this).attr('href') );
+				
+				if( $(this).data('resource') == "support" )
+					return app.render_support( $(this).attr('href') );
 
 				if( $(this).data('resource') == "profile" )
 					return app.render_myProfile( $(this).attr('href') );
