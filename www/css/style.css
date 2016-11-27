@@ -122,6 +122,13 @@ a {text-decoration:none;color:inherit;}
 .first-section {position:relative;top:49px;}
 input, textarea {font-family:'Kohi';font-weight:100;-webkit-appearance:none;}
 ::-webkit-scrollbar {display:none;}
+/* Disable selection/copy in UIWebView */
+*:not(input):not(textarea) {
+	-webkit-user-select: none;  
+  	-moz-user-select: none;    
+  	-ms-user-select: none;      
+  	user-select: none; 
+}
 
 h2 {margin:10px 0px 0px;font-weight:100;font-size:140%;}
 h4 {margin:10px 0px 12px;font-weight:700;font-size:130%;color:#333;}
@@ -134,12 +141,15 @@ h4 {margin:10px 0px 12px;font-weight:700;font-size:130%;color:#333;}
 
 .btn-gre {position:relative;display:inline-block;border-radius:2px;text-align:center;color:#FFF;font-weight:800;background:#43c2a7;font-size:125%;letter-spacing:0.035em;padding:6px 13px;margin:0px 0px 0px;}
 
+.fake-bar{display: none; width: 100%; height: 20px; background-color: #FFF; position: fixed; top: 0; left: 0;}
+.openkeyboard .fake-bar{display: block; }
 .openkeyboard .htrans{position: absolute; top: 0;}
 .openkeyboard .hwhite2{position: absolute!important;}
-.openkeyboard .escribir.message-bar{position: absolute;}
-.openkeyboard #container{display: block; overflow: hidden;min-height: 0; }
-.openkeyboard #messages-pool.content.list-group{width: 100%; position: absolute; bottom: 0; padding-bottom: 8rem; background-color: #e9ebee;}
+.openkeyboard .escribir{position: absolute;}
+.openkeyboard #container{display: block; overflow: hidden; min-height: 0; }
+/*.openkeyboard #messages-pool.content.list-group{width: 100%; position: absolute; bottom: 0; padding-bottom: 8rem; background-color: #e9ebee;}*/
 .openkeyboard .overscreen3.active{position: absolute;}
+
 
 	/*Scroll fix*/
 	.diet-list.view,

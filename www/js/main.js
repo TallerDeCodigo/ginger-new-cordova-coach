@@ -422,7 +422,8 @@
 				return render_user_list('lista-usuarios.html');
 			}
 			app.check_or_renderContainer();
-			return this.switchView('empty-card', {}, '.view', url, 'client-profile', true);
+			var data = this.gatherEnvironment( [], '' );
+			return this.switchView('empty-card', data, '.view', url, 'client-profile', true);
 		},
 		render_comingSoon : function(url){
 

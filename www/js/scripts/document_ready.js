@@ -73,13 +73,14 @@ window.initializeEvents = function(){
 
 		var fixWithKeyboard = function(){
 			console.log("Fixin keyboard");
+			console.log( document.documentElement.clientHeight);
 			$('body').addClass("openkeyboard");
-			if($('.view').hasClass("chat-contact-list")){
+			if( $('.view').hasClass("chat-dialog-messages") ){
 
 				calculate = (!calculate) ? document.documentElement.clientHeight : calculate;
 				console.log('calculate ::: '+calculate);		
 				$('#container').animate({ height: calculate+"px"}, 240, 'swing', function(){
-					$('.escribir').slideToggle('fast');
+					$('#dialogs-list').scrollTop($('#dialogs-list').scrollTop()+700);
 				});
 				return;
 			}
@@ -87,9 +88,9 @@ window.initializeEvents = function(){
 		}
 
 		/*** Fix keyboard for chat views ***/
-		if($('.view').hasClass("chat-contact-list")){
+		if($('.view').hasClass("chat-dialog-messages")){
 			/*** Fix keyboard chat specifics ***/
-			console.log("Keyboard chat-contact-list");
+			console.log("Keyboard chat-dialog-messages");
 			if(typeof Keyboard != 'undefined'){
 				Keyboard.shrinkView(true);
 				Keyboard.disableScrollingInShrinkView(true);
@@ -101,7 +102,6 @@ window.initializeEvents = function(){
 		/* Keyboard shown event */
 		window.addEventListener('keyboardDidShow', function () {
 			console.log('keyboardDidShow');
-			$('.escribir').hide();
 			window.openKeyboard = true;
 			return fixWithKeyboard();
 		});
@@ -279,7 +279,7 @@ window.initializeEvents = function(){
 									};
 					app.keeper.setItem('temp-return', JSON.stringify(responsedata));
 					flag = true;
-
+					console.log(responsedata);
 					app.render_template("user-list-content", ".insert_content", responsedata);
 
 					/*** Start chat updating process ***/
@@ -288,6 +288,7 @@ window.initializeEvents = function(){
 			}else{
 				// Render template with new information
 				var content = JSON.parse( app.keeper.getItem('temp-return') );
+				console.log(content);
 				app.render_template("user-list-content", ".insert_content", content);
 
 				/*** Start chat updating process ***/
@@ -398,7 +399,7 @@ window.initializeEvents = function(){
 
 		if( $('.view').hasClass('chat-dialog-messages') ){
 			console.log("Chat dialog messages");
-			
+
 		} // END CLASS 'chat-dialog-messages'
 
 

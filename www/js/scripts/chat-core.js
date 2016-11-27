@@ -64,8 +64,8 @@
 		if (currentText.length === 0)
 			return false;
 
-		// $('#chat-message').val('').focus();
-		$('#chat-message').val('');
+		$('#chat-message').val('').focus();
+		// $('#chat-message').val('');
 		chatCore.submitMessage(currentText, null);
 		$('#dialogs-list').scrollTop( $('#dialogs-list').prop('scrollTop')+25 );
 	}
@@ -134,12 +134,12 @@
 					var i = 0;
 					resDialogs.items.forEach(function(item, i, arr) {
 
-						var dialogId = item._id;
-						dialogs[dialogId] = item;
-						var user_id = item.user_id;
-						var unread_count = item.unread_messages_count;
-						var $foundElement = $('*[data-chatid="'+user_id+'"]');
-						var exists_in_list = $foundElement.length;
+						var dialogId 		= item._id;
+						var user_id 		= item.user_id;
+						var unread_count	= item.unread_messages_count;
+						var $foundElement 	= $('*[data-chatid="'+user_id+'"]');
+						var exists_in_list 	= $foundElement.length;
+						dialogs[dialogId] 	= item;
 
 						$foundElement.addClass('active')
 									  .data('chatid', dialogId);
@@ -220,12 +220,6 @@
 			$('#opponent_name').text($(this).find('h5').text());
 			$('.view').addClass('chat-dialog-messages');
 			initializeEvents();
-			// chatCore.joinToNewDialogAndShow(dialogObject);
-			// if ( qbox_id == $('.los_chats:nth-of-type(1)').data('qbox') ) {
-			// 	console.log('ya existe');
-			// } else {
-			// 	chatCore.createNewDialog();
-			// }
 			return;
 		});
 
@@ -680,7 +674,7 @@
 		setTimeout(function(){
 
 			return $('#dialogs-list').scrollTop($('#dialogs-list').scrollTop()+500);
-		}, 240);
+		}, 200);
 	}
 
 	/**
