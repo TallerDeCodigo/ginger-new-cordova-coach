@@ -279,7 +279,6 @@ window.initializeEvents = function(){
 									};
 					app.keeper.setItem('temp-return', JSON.stringify(responsedata));
 					flag = true;
-					console.log(responsedata);
 					app.render_template("user-list-content", ".insert_content", responsedata);
 
 					/*** Start chat updating process ***/
@@ -288,7 +287,6 @@ window.initializeEvents = function(){
 			}else{
 				// Render template with new information
 				var content = JSON.parse( app.keeper.getItem('temp-return') );
-				console.log(content);
 				app.render_template("user-list-content", ".insert_content", content);
 
 				/*** Start chat updating process ***/
