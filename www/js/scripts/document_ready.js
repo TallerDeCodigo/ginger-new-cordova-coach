@@ -357,9 +357,9 @@ window.initializeEvents = function(){
 						app.keeper.setItem('change_of_plan', true);
 						return app.render_coach_dietas('lista-dietas.html');
 					});
-					initializeEvents();
+					initHooks();
 					app.hideLoader();
-				}, 0);
+				}, 200);
 
 			}
 			
