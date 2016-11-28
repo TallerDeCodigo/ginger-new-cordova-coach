@@ -458,13 +458,15 @@ window.initializeEvents = function(){
 
 				/*** Dieta operations ***/
 				$('.btn_copy').click(function (e) {
+
 					app.keeper.setItem('dOperator', $(this).data('id'));
 				});
 
 				$('.btn_edit').click(function (e) {
+
 					e.preventDefault();
-					console.log("edit");
 					app.keeper.setItem('dOperator', $(this).data('id'));
+					return app.render_diet_edition('dieta.html', 'edit')
 				});
 
 				$('.btn_delete').click(function () {
@@ -694,11 +696,15 @@ window.initializeEvents = function(){
 						if( myDietStructure._id ){
 
 							response = apiRH.saveDiet(myDietStructure);
-							console.log(response);
+							if(response)
+								return app.toast("Tu dieta ha sido actualizada correctamente.");
+							return app.toast("Hubo un error editando la dieta. No se guardaron los cambios.");
 						}
 						else{
 							response = apiRH.makeDiet(myDietStructure);	
-							console.log(response);
+							if(response)
+								return app.toast("Tu dieta ha sido creada correctamente.");
+							return app.toast("Hubo un error creando tu dieta.");
 						}
 
 						if(response){			
@@ -817,12 +823,12 @@ window.initializeEvents = function(){
 			/*** Pass this into a catalogue ***/
 			var jsonNew = '{"nombre": "' +app.keeper.getItem('d_nombre') + '","descripcion":"' + app.keeper.getItem('d_comentario') + '", "estructura":{"domingo":{"desayuno":{},"snack1":{},"comida":{},"snack2":{},"cena":{}},"lunes":{"desayuno":{},"snack1":{},"comida":{},"snack2":{},"cena":{}},"martes":{"desayuno":{},"snack1":{},"comida":{},"snack2":{},"cena":{}},"miercoles":{"desayuno":{},"snack1":{},"comida":{},"snack2":{},"cena":{}},"jueves":{"desayuno":{},"snack1":{},"comida":{},"snack2":{},"cena":{}},"viernes":{"desayuno":{},"snack1":{},"comida":{},"snack2":{},"cena":{}},"sabado":{"desayuno":{},"snack1":{},"comida":{},"snack2":{},"cena":{}}},"perfil":{"sexo":0,"edad":0,"bmi":0,"objetivo":0}}';
 			
-			if( $('workspace-diet').hasClass('edit') != -1){
+			if( $('.workspace-diet').hasClass('edit') ){
 				app.keeper.setItem('contador_platillos', 1);
 			}
 
-			if( $('workspace-diet').hasClass('create') != -1 ){
-
+			if( $('.workspace-diet').hasClass('create') ){
+				console.log("create");
 				dietaNew = JSON.parse(jsonNew);
 				app.keeper.setItem('contador_platillos', 0);
 				app.keeper.setItem('dietaEdit', jsonNew);
@@ -1023,10 +1029,11 @@ window.initializeEvents = function(){
 
 			}else{
 
+				/*** Edit diet from OperatorId ***/
 				var dieta = apiRH.fetchDiet( app.keeper.getItem('dOperator') );
 				console.log('ID DIET: ' + dieta._id);
 				app.keeper.setItem('dietaEdit', JSON.stringify(dieta));
-				console.log("Operator?");
+
 				if(dieta){
 					var comm_id;
 					var platillo_id;
@@ -1038,6 +1045,8 @@ window.initializeEvents = function(){
 					var ingredientes;
 					var misPlatos = [];
 					var i = 0;
+
+					app.keeper.setItem( 'contador_platillos', platillos.length );
 
 					$.each( dieta.platillos, function( key, value ) {
 						
@@ -1098,7 +1107,7 @@ window.initializeEvents = function(){
 
 					$.each( dieta.estructura, function( key, value ) {
 
-						if(key == "domingo"){dia_prueba=1;} else if (key=="lunes") {dia_prueba=2;} else if (key=="martes") {dia_prueba=3;} else if (key=="miercoles") {dia_prueba=4;} else if (key=="jueves") {dia_prueba=5;} else if (key=="viernes") {dia_prueba=6;} else if (key=="sabado") {dia_prueba=7;}
+						if(key == "domingo"){dia_prueba = 1;} else if (key == "lunes") {dia_prueba = 2;} else if (key == "martes") {dia_prueba=3;} else if (key=="miercoles") {dia_prueba=4;} else if (key=="jueves") {dia_prueba=5;} else if (key=="viernes") {dia_prueba=6;} else if (key=="sabado") {dia_prueba=7;}
 						
 						var level_refer = '#toda_la_dieta li:nth-of-type('+dia_prueba+') ';
 						$.each( value, function( key, value ) {
@@ -1122,7 +1131,7 @@ window.initializeEvents = function(){
 													$(third_level_ref + ' nav svg').attr("data", misPlatos[i][0]);
 
 													$(third_level_ref+' h5').html(misPlatos[i][1]);
-													
+													console.log(misPlatos[i][1]);
 													if (misPlatos[i][2]!="") {
 														$(third_level_ref+' p.receta').html(misPlatos[i][2]);
 													}else {
@@ -1156,7 +1165,8 @@ window.initializeEvents = function(){
 						  $(this).remove();
 						}
 					});
-				
+					
+					app.hideLoader();
 			}//end if
 
 
@@ -1164,8 +1174,8 @@ window.initializeEvents = function(){
 
 			$('.add_dish').click(function(){
 				
-				app.keeper.setItem('d_time', $(this).attr('data'));
-				app.keeper.setItem('d_weekday', $(this).data('weekday'));
+				app.keeper.setItem( 'd_time', $(this).data('time') );
+				app.keeper.setItem( 'd_weekday', $(this).data('weekday') );
 				app.render_dish_list('platillos.html');
 			});
 

@@ -177,14 +177,12 @@ function requestHandlerAPI(){
 		 * @param Object data
 		 * @return Boolean
 		 */
-		this.saveDiet = function(data){
-
-			var dietObj = JSON.parse(data);
+		this.saveDiet = function(dietObj){
+			console.log(dietObj);
 			console.log(dietObj.__v);
 			delete dietObj.__v;
 
-			console.log(req);
-			var response = this.patchRequest('tables/dieta/' + dietObj._id, dietObj);
+			var response = this.patchRequest('tables/dieta/' + dietObj._id, dietObj, false);
 			console.log('Response: ' + JSON.stringify(response));
 			return (response) ? true : false;
 		};
@@ -576,6 +574,7 @@ function requestHandlerAPI(){
 
 			var options = 	{
 								type 		: 'PATCH',
+								headers		: apiRH.headers,
 								url			: window.api_base_url + endpoint,
 								data 		: JSON.stringify(data),
 								dataType 	: 'json',
@@ -1048,7 +1047,8 @@ function requestHandlerAPI(){
 
 		this.fetchDiet = function(diet_id){
 
-				var result = apiRH.getRequest('tables/dieta/'+diet_id);
+				var result = apiRH.getRequest('tables/dieta?_id='+diet_id);
+				console.log(result);
 				return result;
 		};
 		
