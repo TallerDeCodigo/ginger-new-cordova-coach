@@ -258,6 +258,7 @@ window.initializeEvents = function(){
 					app.keeper.removeItem('d_comentario');
 					app.keeper.removeItem('d_nombre');
 					app.keeper.setItem("dOperator", _newDiet._id);
+					// app.keeper.setItem("dietaEdit", _newDiet);
 					return app.render_diet_edition('dieta.html', 'clone');
 				} else{
 					return app.toast("Error clonando la dieta, por favor intenta nuevamente.");
@@ -828,7 +829,7 @@ window.initializeEvents = function(){
 				$('.platillo').hide();
 
 			} else if ( app.keeper.getItem('idDishSelected') || app.keeper.getItem('dietaEdit') ) {
-
+				console.log("Edito modo");
 				dietaNew = JSON.parse( app.keeper.getItem('dietaEdit') );
 				var dish_count = 0;
 				var dish_selected = app.keeper.getItem('idDishSelected');
@@ -866,7 +867,6 @@ window.initializeEvents = function(){
 				}
 
 				var referer = false;
-
 				if (dietaNew._id) {
 
 					var i 	= 0;
@@ -1026,7 +1026,7 @@ window.initializeEvents = function(){
 				var dieta = apiRH.fetchDiet( app.keeper.getItem('dOperator') );
 				console.log('ID DIET: ' + dieta._id);
 				app.keeper.setItem('dietaEdit', JSON.stringify(dieta));
-
+				console.log("Operator?");
 				if(dieta){
 					var comm_id;
 					var platillo_id;
