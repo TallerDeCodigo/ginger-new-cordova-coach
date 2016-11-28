@@ -422,7 +422,7 @@
 				return render_user_list('lista-usuarios.html');
 			}
 			app.check_or_renderContainer();
-			var data = this.gatherEnvironment( [], '' );
+			var data = this.gatherEnvironment( [], 'Cargando perfil...' );
 			return this.switchView('empty-card', data, '.view', url, 'client-profile', true);
 		},
 		render_about : function(url){
@@ -614,21 +614,20 @@
 			return dias;
 		},
 		renderFinancesContent: function(month){
+			console.log(month);
 			setTimeout(function(){
 				app.showLoader();
 			}, 420);
-			console.log("Renderings finances content");
+			console.log("Rendering finances content");
 			var responsedata = [];
 			responsedata.total_amount 	= 0;
 			responsedata.total_days 	= 0;
 			window.is_home 	= false;
-			var todayObj 	= new Date();
-			var month 		= todayObj.getMonth();
-			
+			// var todayObj 	= new Date();
+			// var month 		= todayObj.getMonth();
 			responsedata.clients 		= apiRH.getFinanzas( month );
-			responsedata.this_month 	= catalogues.months[month];
-			responsedata.this_day 		= todayObj.getDate();
-
+			responsedata.this_month 	= window.catalogues.months[month];
+			// responsedata.this_day 		= todayObj.getDate();
 			responsedata.clients.forEach(function(client){
 				responsedata.total_amount 	+= Math.round(client.amount_this_month * 100) / 100;
 				responsedata.total_days 	+= client.days_this_month;

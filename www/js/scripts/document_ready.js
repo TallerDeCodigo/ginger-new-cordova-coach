@@ -173,50 +173,56 @@ window.initializeEvents = function(){
 
 		if( $('.view').hasClass('finanzas') ){
 
+			var meses 		= window.catalogues.months;
+			var todayObj 	= new Date();
+			var base_month 	= todayObj.getMonth();
+			var month 		= (!window.temp_month) ? todayObj.getMonth() : temp_month;
+			console.log(todayObj.getDate());
+			
 			window.adjustFinanzas = function(){
-
-				var meses 	= catalogues.months;
-				var todayObj 	= new Date();
-				var base_month 	= todayObj.getMonth();
-				var month 		= (!window.temp_month) ? todayObj.getMonth() : temp_month;
-
-				
-
-				$('.btn_right').removeClass('inactive');
-				if(month == base_month)
-					$('.btn_right').addClass('inactive');
 				
 				$('#upload_receipt').click(function(){
 					console.log( 'Clicked upload receipt' );
 					app.get_file_from_device( 'receipt', 'gallery' );
 				});
-
-				$('.btn_right').click( function(){
-
-					month++;
-					month = (month > 11) ? 0 : month;
-					window.temp_month = month;
-					console.log(month);
-					if(month == base_month)
-						$(this).addClass('inactive');
-					return app.renderFinancesContent(month);
-				});
-
-				$('.btn_left').click( function(){
-
-					month--;
-					month = (month < 0) ? 11 : month;
-					window.temp_month = month;
-					console.log(month);
-					if(month != base_month)
-						$('.btn_right').removeClass('inactive');
-					return app.renderFinancesContent(month);
-				});
+				
+				app.renderFinancesContent(month);
+				
 				setTimeout(function(){
-					/*** Fetch dynamic content ***/ 
-					app.renderFinancesContent(month);
-					// app.hideLoader();
-				}, 1200);
+					console.log("setting events");
+					$('.btn_right').removeClass('inactive');
+					
+					if(month == base_month)
+						$('.btn_right').addClass('inactive');
+					
+					$('.btn_right').click( function(){
+
+						setTimeout(function(){
+							app.showLoader();
+						}, 420);
+						month++;
+						month = (month > 11) ? 0 : month;
+						window.temp_month = month;
+						if(month == base_month)
+							$(this).addClass('inactive');
+						app.renderFinancesContent(month+1);
+						return initializeEvents();
+					});
+
+					$('.btn_left').click( function(){
+
+						setTimeout(function(){
+							app.showLoader();
+						}, 420);
+						month--;
+						month = (month < 0) ? 11 : month;
+						window.temp_month = month;
+						if(month != base_month)
+							$('.btn_right').removeClass('inactive');
+						app.renderFinancesContent(month+1);
+						return initializeEvents();
+					});
+				}, 800);
 			};
 			adjustFinanzas();
 

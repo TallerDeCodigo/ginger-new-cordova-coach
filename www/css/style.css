@@ -105,7 +105,7 @@ h1   { font-size:24px; font-size:2.4rem; } /* =24px */
 /* .view{width: 100%; min-height: 100vh; height: 100%; margin-top: -9.5vh; padding-top: 70px;} */
 
 /* View anti-margin fix */
-.view.login{ height: 100vh; margin-top: -9.5vh; padding-top: 9.5vh;}
+.view.login{ height: 100vh; margin-top: -70px; padding-top: 70px;}
 .view.finanzas{ overflow: auto;}
 
 
@@ -587,7 +587,7 @@ nav.set-public span {font-size:30%;display:block;font-weight:800;}
 #logo{background:url(../images/logo.svg);background-repeat:no-repeat;background-position: center;height:100px;}
 #logo_soporte{background:url(../images/logo.svg);background-repeat:no-repeat;background-position: center;height:100px;margin-top:30%;}
 .small{font-size: 1.5rem}
-.bg_blur{background: url(../images/bgabout.png);background-repeat: no-repeat;-webkit-filter: blur(5px); background-position:center; padding:20px 0px 10px 0px;position:absolute;top:55%;z-index:-99;bottom:16%;}
+.bg_blur{background: url(../images/bgabout.png);background-repeat: no-repeat;-webkit-filter: blur(5px); background-position:center; padding:20px 0px 10px 0px; position: absolute; top: 55%; z-index: -99; bottom: 16%; left: 0;}
 .bg_content{background-color:rgba(255,255,255,0.001);padding:30px 0px 35px 0px;color:#666;position:absolute;top:52%;bottom:13%;}
 p.small{margin-bottom:0;}
 .smaller{font-size: 1.2rem}
