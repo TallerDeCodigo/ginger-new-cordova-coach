@@ -139,7 +139,11 @@
 						var unread_count	= item.unread_messages_count;
 						var $foundElement 	= $('*[data-chatid="'+user_id+'"]');
 						var exists_in_list 	= $foundElement.length;
-						dialogs[dialogId] 	= item;
+
+						chatCore.dialogs[dialogId] = item;
+						item.occupants_ids.map(function(userId) {
+							chatCore.occupantsIds.push(userId);
+						});
 
 						$foundElement.addClass('active')
 									  .data('chatid', dialogId);
@@ -147,12 +151,12 @@
 						$foundElement.find('.mensajes')
 											 .text(unread_count)
 											 .on('click', function(e){
-												console.log($(e.currentTarget).data('dialogid'));
 												return app.render_chat_dialog(null, $(e.currentTarget).data('dialogid'));
 											 });
 						$foundElement.find('.chat_unread')
 									  .attr('data-dialogid', item._id);
 					});
+					chatCore.occupantsIds 	= jQuery.unique(chatCore.occupantsIds);
 					app.hideLoader();
 				});
 				return;
@@ -217,7 +221,7 @@
 			app.keeper.setItem('idGinger', gingerid);
 			chatCore.currentDialog = chatCore.dialogs[dialogId];
 			chatCore.retrieveChatMessages(chatCore.currentDialog);
-			$('#opponent_name').text($(this).find('h5').text());
+			$('#opponent_name').text(chatCore.currentDialog.name);
 			$('.view').addClass('chat-dialog-messages');
 			initializeEvents();
 			return;

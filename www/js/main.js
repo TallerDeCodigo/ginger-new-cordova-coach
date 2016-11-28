@@ -306,17 +306,14 @@
 		},
 		render_chat_dialog : function(url, dialogId){
 
-			var responsedata = [];
-			window.is_home = false;
 			if(!app.initialized) app.initialize();
 			setTimeout(function(){
 				app.showLoader();
 			}, 420);			
 			app.check_or_renderContainer();
-			var data = this.gatherEnvironment(responsedata, 'Chat');
-			var dialogClass = (dialogId) ? "dialogLoad" : "";
-			window.dialogNow = (dialogId) ? dialogId : null;
-			return this.switchView('chat-dialog', data, '.view', url, 'chat-container dialog_detail '+dialogClass);
+			var data = this.gatherEnvironment([], 'Chat');
+			window.dialogNow 	= (dialogId) ? dialogId : null;
+			return this.switchView('chat-messages', data, '.view', url, 'chat-container dialog_detail chat-dialog-messages');
 		},
 		render_finances_view : function(url){
 

@@ -322,8 +322,7 @@ window.initializeEvents = function(){
 					}, 420);
 					var gingerId = $(this).data("gingerid");
 					app.keeper.setItem('user-selected', gingerId);
-					if(!$(e.target).hasClass('mensajes notificaciones'))
-						return app.render_clientProfile( 'usuario.html' );
+					return app.render_clientProfile( 'usuario.html' );
 				});
 
 			}, 0);
@@ -357,18 +356,6 @@ window.initializeEvents = function(){
 
 		}
 		
-
-		/* Chat list */
-		if( $('.view').hasClass('dialog_detail') ) {
-			
-			if($('.view').hasClass('dialogLoad')){
-				console.log("Trigger load chat content");
-				if(!dialogNow)
-					console.log("Too bad for you");
-				triggerDialog(dialogNow);
-			}
-
-		}
 		
 		/*Coach Profile*/
 		if($('.view').hasClass('coach-profile')) {
@@ -409,37 +396,61 @@ window.initializeEvents = function(){
 		} // END CLASS chat-container
 		
 
+		// if( $('.view').hasClass('contacts-list') && !$('.view').hasClass('chat-dialog-messages') ){
+				
+		// 		connectToChat(loginfo);
 
-		if( $('.view').hasClass('chat-dialog-messages') ){
-			console.log("Chat dialog messages");
+		// 		var users_response = [];
+		// 			users_response.users = apiRH.getUsuarios();
+		// 		console.log(users_response);
+		// 		app.render_template('chat-dialogs', '.insert_contacts', users_response);
 
+		// 		$('.attach').click(function(){
+		// 			$('input[name="galeria"]').trigger('click');
+		// 		});
+
+		// 		$('.list-group-item').click(function(){
+
+		// 			$('#dialog-list').hide();
+		// 			$('.menu-bar').hide();
+		// 			$('.escribir').show();
+		// 		});
+
+		// 		app.hideLoader();
+
+		// } // END chat-contact-list
+
+
+		if( $('.view').hasClass('dialog_detail') ){
+			
+			console.log("Autoload data");
+
+			setTimeout(function(){
+				app.showLoader();
+			}, 420);
+			if(!window.dialogNow)
+				return;
+			chatCore.currentDialog = chatCore.dialogs[window.dialogNow];
+			chatCore.retrieveChatMessages(chatCore.currentDialog);
+			$('#opponent_name').text(chatCore.currentDialog.name);
+			/*** Add class to fix keyboard ***/
+			$('.view').removeClass('dialog_detail');
+			$('.view').addClass('chat-dialog-messages');
+			return initializeEvents();
 		} // END CLASS 'chat-dialog-messages'
 
 
+		// /* Chat messages list */
+		// if( $('.view').hasClass('dialog_detail') ) {
+			
+		// 	if($('.view').hasClass('dialogLoad')){
+		// 		console.log("Trigger load chat content");
+		// 		if(!dialogNow)
+		// 			console.log("Too bad for you");
+		// 		triggerDialog(dialogNow);
+		// 	}
 
-		if( $('.view').hasClass('contacts-list') && !$('.view').hasClass('chat-dialog-messages') ){
-				
-				connectToChat(loginfo);
-
-				var users_response = [];
-					users_response.users = apiRH.getUsuarios();
-				console.log(users_response);
-				app.render_template('chat-dialogs', '.insert_contacts', users_response);
-
-				$('.attach').click(function(){
-					$('input[name="galeria"]').trigger('click');
-				});
-
-				$('.list-group-item').click(function(){
-
-					$('#dialog-list').hide();
-					$('.menu-bar').hide();
-					$('.escribir').show();
-				});
-
-				app.hideLoader();
-
-		} // END chat-contact-list
+		// }
 
 
 		/**** Coach diet list ****/
