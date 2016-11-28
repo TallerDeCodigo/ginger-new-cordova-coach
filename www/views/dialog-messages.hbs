@@ -7,10 +7,12 @@
 							<img src="http://api.quickblox.com/blobs/{{attachmentFileId}}/download.xml?token={{../data.token}}" alt="attachment" class="attachments img-responsive" />
 						</a>
 					{{/ has_attachments}}
+					{{^ has_attachments}}
+						{{message}}
+					{{/ has_attachments}}
 					{{# messageAttach}}
 						{{.}}
 					{{/ messageAttach}}
-					{{message}}
 				</p>
 			</div>
 		</li>

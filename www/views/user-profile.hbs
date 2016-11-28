@@ -1,12 +1,14 @@
 	<header class="hwhite2">
 		<div class="toolbar">
-			<a href="lista-usuarios.html" class="back hook" data-resource="user-list" ><img src="{{cordova_full_path}}images/back.svg"></a>
+			<a href="lista-usuarios.html" class="back hook" data-resource="user-list" >
+				<img src="{{cordova_full_path}}images/back.svg">
+			</a>
 			<h2 class="titulo">{{data.name}} {{data.last}}</h2>
 		</div>
 	</header>
 	<div class="profile-data">
 		<div class="profile circle-frame">
-			<img class="profile-pic" src="https://gingerfiles.blob.core.windows.net/users/{{me._id}}.png">
+			<!-- <img class="profile-pic" src="https://gingerfiles.blob.core.windows.net/users/{{me._id}}.png"> -->
 		</div>
 		<ul>
 			<li><span>Objetivo: <strong class="user_plan">{{data.objective}}</strong></span></li>

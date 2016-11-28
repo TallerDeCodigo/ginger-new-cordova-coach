@@ -141,7 +141,7 @@ h4 {margin:10px 0px 12px;font-weight:700;font-size:130%;color:#333;}
 
 .btn-gre {position:relative;display:inline-block;border-radius:2px;text-align:center;color:#FFF;font-weight:800;background:#43c2a7;font-size:125%;letter-spacing:0.035em;padding:6px 13px;margin:0px 0px 0px;}
 
-.fake-bar{display: none; width: 100%; height: 20px; background-color: #FFF; position: fixed; top: 0; left: 0;}
+.fake-bar{display: none; width: 100%; height: 20px; background-color: #FFF; opacity: 0; position: fixed; top: 0; left: 0;}
 .openkeyboard .fake-bar{display: block; }
 .openkeyboard .htrans{position: absolute; top: 0;}
 .openkeyboard .hwhite2{position: absolute!important;}

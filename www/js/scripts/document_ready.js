@@ -96,10 +96,19 @@ window.initializeEvents = function(){
 		/*** Fix keyboard for chat views ***/
 		if($('.view').hasClass("chat-dialog-messages")){
 			/*** Fix keyboard chat specifics ***/
-			console.log("Keyboard chat-dialog-messages");
+			console.log("Keyboard shrinkView");
 			if(typeof Keyboard != 'undefined'){
 				Keyboard.shrinkView(true);
 				Keyboard.disableScrollingInShrinkView(true);
+			}
+		}
+		/*** Fix keyboard for login ***/
+		if($('.view').hasClass("login")){
+			/*** Fix keyboard chat specifics ***/
+			console.log("Keyboard shrinkView");
+			if(typeof Keyboard != 'undefined'){
+				Keyboard.shrinkView(true);
+				Keyboard.disableScrollingInShrinkView(false);
 			}
 		}
 
@@ -348,6 +357,7 @@ window.initializeEvents = function(){
 						app.keeper.setItem('change_of_plan', true);
 						return app.render_coach_dietas('lista-dietas.html');
 					});
+					initializeEvents();
 					app.hideLoader();
 				}, 0);
 
@@ -396,29 +406,15 @@ window.initializeEvents = function(){
 		} // END CLASS chat-container
 		
 
-		// if( $('.view').hasClass('contacts-list') && !$('.view').hasClass('chat-dialog-messages') ){
-				
-		// 		connectToChat(loginfo);
+		if( $('.view').hasClass('chat-dialog-messages') ){
+				console.log("Chat messages ese");
+				$("#load-img").change(function(){
+					var inputFile = $("input[type=file]")[0].files[0];
+					
+					return chatCore.clickSendAttachments(inputFile);
+				});
 
-		// 		var users_response = [];
-		// 			users_response.users = apiRH.getUsuarios();
-		// 		console.log(users_response);
-		// 		app.render_template('chat-dialogs', '.insert_contacts', users_response);
-
-		// 		$('.attach').click(function(){
-		// 			$('input[name="galeria"]').trigger('click');
-		// 		});
-
-		// 		$('.list-group-item').click(function(){
-
-		// 			$('#dialog-list').hide();
-		// 			$('.menu-bar').hide();
-		// 			$('.escribir').show();
-		// 		});
-
-		// 		app.hideLoader();
-
-		// } // END chat-contact-list
+		} // END chat-contact-list
 
 
 		if( $('.view').hasClass('dialog_detail') ){

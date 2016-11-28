@@ -68,7 +68,7 @@
 		// $('#chat-message').val('');
 		chatCore.submitMessage(currentText, null);
 		$('#dialogs-list').scrollTop( $('#dialogs-list').prop('scrollTop')+25 );
-	}
+	};
 
 	/**
 	 * Send message into chat dialog
@@ -90,7 +90,7 @@
 					markable 	: 1
 				};
 
-		if(attachmentFileId !== null)
+		if(attachmentFileId)
 			msg["extension"]["attachments"] = [{id: attachmentFileId, type: 'photo'}];
 
 		/*** 1 to 1 chat ***/
@@ -99,7 +99,7 @@
 			chatCore.opponentId = QB.chat.helpers.getRecipientId( chatCore.currentDialog.occupants_ids, currentUser.id );
 			QB.chat.send(chatCore.opponentId, msg);
 
-			if(attachmentFileId === null){
+			if(!attachmentFileId){
 				chatCore.showMessage(chatCore.currentUser.id, msg);
 			} else {
 				chatCore.showMessage(chatCore.currentUser.id, msg, attachmentFileId);
@@ -111,7 +111,23 @@
 		// clearTimeout(isTypingTimerId);
 		// isTypingTimeoutCallback();
 		chatCore.dialogsMessages.push(msg);
-	}
+	};
+
+	chatCore.clickSendAttachments = function(inputFile) {
+
+		app.showLoader();
+		QB.content.createAndUpload({name: inputFile.name, file: inputFile, type: inputFile.type, size: inputFile.size, 'public': false}, function(err, response){
+			if (err) {
+				console.log(err);
+			} else {
+
+				var uploadedFile = response;
+				chatCore.submitMessage('[attachment]', uploadedFile.id);
+				$('input[type=file]').val('');
+				app.hideLoader();
+			}
+		});
+	};
 
 	/**
 	 * Fetch unread messages count
@@ -177,8 +193,10 @@
 		QB.chat.dialog.list( null, function(err, resDialogs) {
 			var i = 0;
 			var name = "Chat";
-			if (err) 
+			if (err){
+				app.hideLoader();
 				return app.toast("Error: no fue posible consultar los mensajes.");
+			}
 
 			if(resDialogs){
 
@@ -198,6 +216,7 @@
 				resDialogs.token 		= chatCore.token;
 				console.log(resDialogs);
 				app.render_template('chat-contacts', '.chat-container', resDialogs);
+				initializeEvents();
 				return chatCore.initContactListEvents();
 			}
 
@@ -659,21 +678,21 @@
 	}
 
 	chatCore.showMessage = function(userId, msg, attachmentFileId) {
-
+		console.log(attachmentFileId);
 		var userLogin = getUserLoginById(userId);
 		var myData = 	{
 							items: [
 										{
 											_id 			: msg.id,
-											has_attachments	: false,
-											attachmentFileId: null,
+											has_attachments	: (typeof attachmentFileId !== 'undefined' && attachmentFileId !== null) ? true : false,
+											attachmentFileId: attachmentFileId,
 											sender 			: ( app.keeper.getItem('idSender') == msg.senderId ) ? 'outgoing' : 'incoming',
 											message 		: msg.body
 										}
 									],
 							token: chatCore.token
 						};
-
+		console.log(myData);
 		app.render_template('dialog-messages', '#dialogs-list', myData, false, true);
 		setTimeout(function(){
 
