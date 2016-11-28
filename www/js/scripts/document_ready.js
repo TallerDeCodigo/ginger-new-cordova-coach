@@ -315,6 +315,8 @@ window.initializeEvents = function(){
 				});
 
 				$('.usuario-item').click(function(e){
+					if( $(e.target).hasClass('notificaciones') || $(e.target).hasClass('mensajes') )
+						return false;
 					setTimeout(function(){
 						app.showLoader();
 					}, 420);
