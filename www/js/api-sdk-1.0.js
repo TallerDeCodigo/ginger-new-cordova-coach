@@ -1091,7 +1091,7 @@ function requestHandlerAPI(){
 			var personalidadesConcat = "";
 			var restrictionsConcat = "";
 			var separator = "";
-			var client_profile = apiRH.getRequest("tables/cliente?_id="+clientId);
+			var client_profile = apiRH.getRequest("tables/cliente?min=true&_id="+clientId);
 			
 			for(var i = 0; i < _coach.personalidad.length; i++){
 

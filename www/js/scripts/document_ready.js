@@ -567,9 +567,13 @@ window.initializeEvents = function(){
 					if( apiRH.updateClientDiet(myClient, params) ){
 						// app.keeper.removeItem('user-selected');
 						app.keeper.removeItem('change_of_plan');
-						app.toast("La dieta se ha actualizado")
+						app.toast("La dieta se ha actualizado");
+						$('#blur').removeClass('blurred');
 						return app.render_clientProfile('usuario.html');
 					}
+					app.keeper.removeItem('change_of_plan');
+					app.toast("No se pudo cambiar la dieta, intenta nuevamente.");
+					$('#blur').removeClass('blurred');
 					return app.render_clientProfile('usuario.html');
 				});
 

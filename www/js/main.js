@@ -237,7 +237,6 @@
 			data.is_scrollable = false;
 			if(!append)
 				$(targetSelector).html('');
-			console.log(data);
 			if(!leNiceTransition){
 
 				$(targetSelector).append( template(data) ).css({ "opacity": 0, "display": "block"})
@@ -291,7 +290,7 @@
 			}, 420);
 			app.check_or_renderContainer();
 			var data = this.gatherEnvironment( [], 'Usuarios' );
-			return this.switchView('user-list', data, '.view', url, 'list-usuarios');
+			return this.switchView('user-list', data, '.view', url, 'list-usuarios', true);
 		},
 		render_chat_container : function(url){
 
