@@ -326,11 +326,9 @@ window.initializeEvents = function(){
 				$('.usuario-item').click(function(e){
 					if( $(e.target).hasClass('notificaciones') || $(e.target).hasClass('mensajes') )
 						return false;
-					setTimeout(function(){
-						app.showLoader();
-					}, 420);
+					app.showLoader();
 					var gingerId = $(this).data("gingerid");
-					app.keeper.setItem('user-selected', gingerId);
+					app.keeper.setItem('carry-user', gingerId);
 					return app.render_clientProfile( 'usuario.html' );
 				});
 
@@ -344,26 +342,22 @@ window.initializeEvents = function(){
 		/* Client profile */
 		if( $('.view').hasClass('client-profile') ) {
 			
-			var clientId =  app.keeper.getItem('user-selected');
+			var clientId 		= app.keeper.getItem('carry-user');
 			var responsedata 	= apiRH.fetchClientProfile(clientId);
-			if(responsedata){
-				
+
+			if(responsedata)			
 				app.render_template("user-profile", ".view", responsedata);
-				
-				setTimeout( function(){
-				
-					$('#switch_diet').click(function(){
-						var user_selected = app.keeper.getItem('user-selected');
-						app.keeper.setItem('change_of_plan', true);
-						return app.render_coach_dietas('lista-dietas.html');
-					});
-					initHooks();
-					app.hideLoader();
-				}, 200);
-
-			}
 			
-
+			setTimeout( function(){
+			
+				$('#switch_diet').click(function(){
+					var user_selected = app.keeper.getItem('carry-user');
+					app.keeper.setItem('change_of_plan', true);
+					return app.render_coach_dietas('lista-dietas.html');
+				});
+				
+			}, 200);
+			
 		}
 		
 		
@@ -536,7 +530,7 @@ window.initializeEvents = function(){
 
 				var dietSelected = $(this).parent().data("id");
 				console.log(dietSelected);
-				var myClient = app.keeper.getItem('user-selected');
+				var myClient = app.keeper.getItem('carry-user');
 				if(!myClient)
 					return false;
 				$('#blur').toggleClass('blurred');
@@ -561,7 +555,7 @@ window.initializeEvents = function(){
 								};
 
 					if( apiRH.updateClientDiet(myClient, params) ){
-						// app.keeper.removeItem('user-selected');
+						// app.keeper.removeItem('carry-user');
 						app.keeper.removeItem('change_of_plan');
 						app.toast("La dieta se ha actualizado");
 						$('#blur').removeClass('blurred');

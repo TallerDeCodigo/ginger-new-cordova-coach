@@ -429,7 +429,7 @@ function requestHandlerAPI(){
 
 		this.getUserId = function(){
 
-			var users = JSON.parse(apiRH.keeper.getItem('user-selected'));
+			var users = JSON.parse(apiRH.keeper.getItem('carry-user'));
 			var response = this.getRequest('tables/cliente?_id=' + users._id, req);
 			console.log("Response Data Clientes ::: "+response);
 			return (response) ? response : false;
@@ -1012,9 +1012,7 @@ function requestHandlerAPI(){
 
 
 
-							/*
-								IMPLEMENTACION DE LA CAMARA 
-							*/
+		/* IMPLEMENTACION DE LA CAMARA  */
 		/**
 		 * @param String destination Upload destination Options: "profile", "event"
 		 * @param String source Source to get media file from Options: "camera", "gallery"

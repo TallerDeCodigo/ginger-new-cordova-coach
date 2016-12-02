@@ -411,15 +411,15 @@
 			if(!app.initialized) app.initialize();
 			setTimeout(function(){
 				app.showLoader();
-			}, 420);
-			var user_sel =  app.keeper.getItem('user-selected') 
+			}, 220);
+			var user_sel =  app.keeper.getItem('carry-user') 
 			if(	!user_sel || user_sel == '' ){
 				app.toast("No user selected");
-				return render_user_list('lista-usuarios.html');
+				return this.render_user_list('lista-usuarios.html');
 			}
 			app.check_or_renderContainer();
 			var data = this.gatherEnvironment( [], 'Cargando perfil...' );
-			return this.switchView('empty-card', data, '.view', url, 'client-profile', true);
+			return this.switchView( 'empty-card', data, '.view', url, 'client-profile', true );
 		},
 		render_about : function(url){
 

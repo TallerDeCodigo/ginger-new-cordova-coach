@@ -38,7 +38,7 @@
             "type": "registry",
             "id": "cordova-plugin-device"
         },
-        "is_top_level": false,
+        "is_top_level": true,
         "variables": {}
     },
     "cordova-plugin-camera": {
@@ -119,6 +119,22 @@
         "source": {
             "type": "registry",
             "id": "onesignal-cordova-plugin"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-media-capture": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-media-capture"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-media": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-media"
         },
         "is_top_level": true,
         "variables": {}
