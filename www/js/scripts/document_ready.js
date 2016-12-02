@@ -276,7 +276,7 @@ window.initializeEvents = function(){
 					app.keeper.removeItem('d_nombre');
 					app.keeper.setItem("dOperator", _newDiet._id);
 					// app.keeper.setItem("dietaEdit", _newDiet);
-					return app.render_diet_edition('dieta.html', 'clone');
+					return app.render_diet_workspace('dieta.html', 'clone');
 				} else{
 					return app.toast("Error clonando la dieta, por favor intenta nuevamente.");
 				}
@@ -469,7 +469,6 @@ window.initializeEvents = function(){
 
 				/*** Dieta operations ***/
 				$('.btn_copy').click(function (e) {
-
 					app.keeper.setItem('dOperator', $(this).data('id'));
 				});
 
@@ -477,7 +476,7 @@ window.initializeEvents = function(){
 
 					e.preventDefault();
 					app.keeper.setItem('dOperator', $(this).data('id'));
-					return app.render_diet_edition('dieta.html', 'edit')
+					return app.render_diet_workspace('dieta.html', 'edit')
 				});
 
 				$('.btn_delete').click(function () {
@@ -538,9 +537,17 @@ window.initializeEvents = function(){
 
 				var dietSelected = $(this).parent().data("id");
 				console.log(dietSelected);
-				var myClient = app.keeper.getItem('carry-user');
-				if(!myClient)
-					return false;
+				var myClient 	= app.keeper.getItem('carry-user');
+				var myClient 	= (myClient && myClient !== "") ? myClient : null;
+				var changePlan 	= app.keeper.getItem('change_of_plan');
+				var changePlan 	= (changePlan && changePlan !== "") ? changePlan : null;
+
+				/** TODO: Check view only method ***/
+				if( !changePlan || !myClient ){
+					app.keeper.setItem('dOperator', dietSelected);
+					return app.render_diet_workspace('dieta.html', 'view-only');
+				}
+
 				$('#blur').toggleClass('blurred');
 				if(!$('.overscreen5').is(':visible')){
 					console.log('entra popup');
@@ -602,7 +609,7 @@ window.initializeEvents = function(){
 				app.keeper.setItem('d_nombre', formData.diet_name);
 				app.keeper.setItem('d_comentario', formData.diet_comment);
 
-				return app.render_diet_edition( 'dieta.html', 'create' );
+				return app.render_diet_workspace( 'dieta.html', 'create' );
 			});
 
 		} // END create-new-diet
@@ -669,7 +676,7 @@ window.initializeEvents = function(){
 				app.keeper.setItem('recetaDishSelected', $(this).parent().parent().find('p').html() );
 				$('.alert_meal_description').hide();
 				$('#blur').toggleClass('blurred');
-				return app.render_diet_edition("dieta.html");
+				return app.render_diet_workspace("dieta.html");
 			});
 
 			$('#cancel_add_dish').click(function(){

@@ -11,10 +11,9 @@
 			<div class="toolbar">
 				<a class="back"><img src="{{cordova_full_path}}images/back.svg"></a>
 				<h2 class="titulo">{{header_title}}</h2>
-				{{# data.editable}}
-
-				{{/ data.editable}}
+				{{^ view_only}}
 					<a id="save_working_diet" class="add">Guardar</a>
+				{{/ view_only}}
 			</div>
 		</header>
 		<div class="week">

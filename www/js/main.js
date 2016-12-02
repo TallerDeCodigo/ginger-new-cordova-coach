@@ -369,7 +369,7 @@
 			var data = this.gatherEnvironment( [], 'Duplicar dieta');
 			return this.switchView('copy-diet', data, '.view', url, 'copy-diet');
 		},
-		render_diet_edition : function(url, operation){
+		render_diet_workspace : function(url, operation){
 
 			window.is_home = false;
 			if(!app.initialized) app.initialize();
@@ -377,8 +377,22 @@
 				app.showLoader();
 			}, 420);
 			app.check_or_renderContainer();
-			var section_name = (operation == 'create') ? 'Crear Dieta' : 'Editar Dieta';
+			var section_name = '';
+			switch(operation){
+				case 'create':
+				section_name = 'Crear Dieta';
+				break;
+				case 'edit':
+				section_name = 'Editar Dieta';
+				break;
+				case 'view-only':
+				section_name = 'Ver Dieta';
+				break;
+				default:
+				break;
+			};
 			var data = this.gatherEnvironment( [], section_name);
+			data.view_only = (operation == 'view-only') ? true: false;
 			return this.switchView('diet-edition', data, '.view', url, 'workspace-diet dieta '+operation);
 		},
 		render_dish_list : function(url){
