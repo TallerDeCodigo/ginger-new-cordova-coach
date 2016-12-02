@@ -1,0 +1,79 @@
+	<header class="hwhite2">
+		<div class="toolbar">
+			<a class="back hook" data-resource="ingredients-list" href="ingredientes.html">
+				<img src="{{cordova_full_path}}images/back.svg"></a>
+			<h2 class="titulo">Crear Ingrediente</h2>
+			<a class="add">Guardar</a>
+		</div>
+	</header>
+	<div class="name_ingrediente">
+		<input type="text" name="name_ingrediente" placeholder="Nombre del Ingrediente">
+	</div>
+	<div class="ing-categorias">
+		<h3>Categoría</h3>
+		<div class="ing-category" value="0">
+			<img src="{{cordova_full_path}}images/ingredientes/__wheat1@3x.png">
+			<h5>Granos y cereales</h5>
+		</div>
+		<div class="ing-category active" value="1">
+			<img src="{{cordova_full_path}}images/ingredientes/verduras.png">
+			<h5>Verduras</h5>
+		</div>
+		<div class="ing-category" value="2">
+			<img src="{{cordova_full_path}}images/ingredientes/aceites1@3x.png">
+			<h5>Grasas</h5>
+		</div>
+		<div class="ing-category" value="3">
+			<img src="{{cordova_full_path}}images/ingredientes/_milk1@3x.png">
+			<h5>Lácteos</h5>
+		</div>
+		<div class="ing-category" value="4">
+			<img src="{{cordova_full_path}}images/ingredientes/_meat1@3x.png">
+			<h5>Proteína animal </h5>
+		</div>
+		<div class="ing-category" value="5">
+			<img src="{{cordova_full_path}}images/ingredientes/_carrot1@3x.png">
+			<h5>Leguminosas</h5>
+		</div>
+		<div class="ing-category" value="6">
+			<img src="{{cordova_full_path}}images/ingredientes/nueces.png">
+			<h5>Nueces y semillas</h5>
+		</div>
+		<div class="ing-category" value="7">
+			<img src="{{cordova_full_path}}images/ingredientes/frutas.png">
+			<h5>Frutas</h5>
+		</div>
+		<div class="ing-category" value="8">
+			<img src="{{cordova_full_path}}images/ingredientes/malteada.png">
+			<h5>Endulzantes</h5>
+		</div>
+		<div class="ing-category" value="9">
+			<img src="{{cordova_full_path}}images/ingredientes/condimentos.png">
+			<h5>Aderezos y condimentos</h5>
+		</div>
+		<div class="ing-category" value="10">
+			<img src="{{cordova_full_path}}images/ingredientes/superfoods.png">
+			<h5>Superfood</h5>
+		</div>
+		<div class="ing-category" value="11">
+			<img src="{{cordova_full_path}}images/ingredientes/liquidos.png">
+			<h5>Líquidos</h5>
+		</div>
+		<h3>Tipo</h3>
+		<div  class="btn-state" data="0">Sólido</div>
+		<div  class="btn-state" data="1">Líquido</div>
+		<h3>Requiere medida</h3>
+		<div class="siono yes" data="1">Sí</div>
+		<div class="siono not" data="0">No</div>
+	</div>
+	<div class="overscreen5" style="display:none">
+		<div class="ov-filler2"></div>
+		<div class="dialog">
+			<h5>Ingrediente</h5>
+			<p>¿Estás seguro de crear este ingrediente?</p>
+			<div class="di-options">
+				<a id="aceptar" class="accept">Aceptar</a>
+				<a id="cancelar" class="cancel">Cancelar</a>
+			</div>
+		</div>
+	</div>

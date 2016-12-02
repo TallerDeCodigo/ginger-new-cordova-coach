@@ -392,6 +392,39 @@
 			var data = this.gatherEnvironment( [], 'Lista de Platillos');
 			return this.switchView('dish-list', data, '.view', url, 'dish-list');
 		},
+		render_create_dish : function(url){
+
+			window.is_home = false;
+			if(!app.initialized) app.initialize();
+			setTimeout(function(){
+				app.showLoader();
+			}, 420);
+			app.check_or_renderContainer();
+			var data = this.gatherEnvironment( [], 'Crear Platillo');
+			return this.switchView('create-dish', data, '.view', url, 'create-dish');
+		},
+		render_ingredients : function(url){
+
+			window.is_home = false;
+			if(!app.initialized) app.initialize();
+			setTimeout(function(){
+				app.showLoader();
+			}, 420);
+			app.check_or_renderContainer();
+			var data = this.gatherEnvironment( [], 'Ingredientes');
+			return this.switchView('ingredients', data, '.view', url, 'ingredients');
+		},
+		render_create_ingredient : function(url){
+
+			window.is_home = false;
+			if(!app.initialized) app.initialize();
+			setTimeout(function(){
+				app.showLoader();
+			}, 420);
+			app.check_or_renderContainer();
+			var data = this.gatherEnvironment( [], 'Crear Ingrediente');
+			return this.switchView('create-ingredient', data, '.view', url, 'create-ingredient');
+		},
 		render_myProfile : function(url){
 
 			var extra_data = [];

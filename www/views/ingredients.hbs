@@ -1,0 +1,135 @@
+	<div class="subcontainer">
+		<header class="hwhite2">
+			<div class="toolbar">
+				<a class="back hook" data-resource="create-dish" href="crear-platillo.html">
+					<img src="{{cordova_full_path}}images/back.svg">
+				</a>
+				<h2 class="titulo">{{header_title}}</h2>
+				<a class="add">Agregar</a>
+			</div>
+		</header>
+		<div class="accordion1">
+			<div class="acc1-selector">
+				<img src="{{cordova_full_path}}images/ingredientes/__wheat1@3x.png">
+				<h5>Granos y cereales</h5>
+			</div>
+			<div class="acc1-content">
+				<ul class="lista_ingredientes granosycereales">
+					<!-- aqui se llena -->
+				</ul>
+			</div>
+			<div class="acc1-selector">
+				<img src="{{cordova_full_path}}images/ingredientes/verduras.png">
+				<h5>Verduras</h5>
+			</div>
+			<div class="acc1-content">
+				<ul class="lista_ingredientes verduras">
+				</ul>
+			</div>
+			<div class="acc1-selector">
+				<img src="{{cordova_full_path}}images/ingredientes/aceites1@3x.png">
+				<h5>Grasas</h5>
+			</div>
+			<div class="acc1-content">
+				<ul class="lista_ingredientes grasas">
+				</ul>
+			</div>
+			<div class="acc1-selector">
+				<img src="{{cordova_full_path}}images/ingredientes/_milk1@3x.png">
+				<h5>Lácteos</h5>
+			</div>
+			<div class="acc1-content">
+				<ul class="lista_ingredientes lacteos">
+				</ul>
+			</div>
+			<div class="acc1-selector">
+				<img src="{{cordova_full_path}}images/ingredientes/_meat1@3x.png">
+				<h5>Proteína Animal</h5>
+			</div>
+			<div class="acc1-content">
+				<ul class="lista_ingredientes proteinaanimal">
+				</ul>
+			</div>
+			<div class="acc1-selector">
+				<img src="{{cordova_full_path}}images/ingredientes/_carrot1@3x.png">
+				<h5>Leguminosas</h5>
+			</div>
+			<div class="acc1-content">
+				<ul class="lista_ingredientes leguminosas">
+				</ul>
+			</div>
+			<div class="acc1-selector">
+				<img src="{{cordova_full_path}}images/ingredientes/nueces.png">
+				<h5>Nueces y semillas</h5>
+			</div>
+			<div class="acc1-content">
+				<ul class="lista_ingredientes nuecesysemillas">
+				</ul>
+			</div>
+			<div class="acc1-selector">
+				<img src="{{cordova_full_path}}images/ingredientes/frutas.png">
+				<h5>Frutas</h5>
+			</div>
+			<div class="acc1-content">
+				<ul class="lista_ingredientes frutas">
+				</ul>
+			</div>
+			<div class="acc1-selector">
+				<img src="{{cordova_full_path}}images/ingredientes/malteada.png">
+				<h5>Endulzantes</h5>
+			</div>
+			<div class="acc1-content">
+				<ul class="lista_ingredientes endulzantes">
+				</ul>
+			</div>
+			<div class="acc1-selector">
+				<img src="{{cordova_full_path}}images/ingredientes/condimentos.png">
+				<h5>Aderezos y condimentos</h5>
+			</div>
+			<div class="acc1-content">
+				<ul class="lista_ingredientes aderezosycondimentos">
+				</ul>
+			</div>
+			<div class="acc1-selector">
+				<img src="{{cordova_full_path}}images/ingredientes/superfoods.png">
+				<h5>Superfood</h5>
+			</div>
+			<div class="acc1-content">
+				<ul class="lista_ingredientes superfoods">
+				</ul>
+			</div>
+			<div class="acc1-selector">
+				<img src="{{cordova_full_path}}images/ingredientes/liquidos.png">
+				<h5>Líquidos</h5>
+			</div>
+			<div class="acc1-content">
+				<ul class="lista_ingredientes liquidos">
+				</ul>
+			</div>
+		</div>
+		<div class="overscreen2" style="display:none">
+			<div id="picker">
+				<div class="arrows-vertical">
+					<img id="picker-up" src="{{cordova_full_path}}images/leftarrow.png">
+					<img id="picker-dw" src="{{cordova_full_path}}images/rightarrow.png">
+				</div>
+				<div class="box-input-2">
+					<input type="text" name="picker" value="1" maxlength="2" onkeypress='return event.charCode >= 46 && event.charCode <= 57'>
+				</div>
+				<div class="btn-gre establish" style="float:right;margin-right:10%;margin-top:13px;">AGREGAR</div>
+			</div>
+		</div>
+		
+		<a class="boton-under hook" data-resource="create-ingredient" href="crear-ingrediente.html">Crear Ingrediente</a>
+	</div>
+	<div class="overscreen5" style="display:none">
+		<div class="ov-filler2"></div>
+		<div class="dialog">
+			<h5>Ingrediente</h5>
+			<p>¿Estás seguro de querer agregar este ingrediente?</p>
+			<div class="di-options">
+				<a id="aceptar" class="accept">Aceptar</a>
+				<a id="cancelar" class="cancel">Cancelar</a>
+			</div>
+		</div>
+	</div>

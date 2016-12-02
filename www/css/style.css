@@ -344,9 +344,9 @@ div.acc-content {width:100%;background:#FFF;text-align:left;}
 
 .platillo textarea {color:#3f3f3f;width:100%;border:none;border-bottom:1px solid #b4b1b0;resize:none;padding:0px 4px;outline:none;}
 .name_platillo {font-size:115%;font-weight:bold;}
-.create-platillo .receta {background:url(../images/cook.svg) no-repeat;background-position:11px center;padding:8px 10px 0px 50px;}
+.create-dish .receta {background:url(../images/cook.svg) no-repeat;background-position:11px center;padding:8px 10px 0px 50px;}
 .receta textarea {font-size:95%;font-weight:300;}
-.create-platillo .comentario {background:url(../images/comment.svg) no-repeat;background-position:11px center;padding:8px 10px 0px 50px;}
+.create-dish .comentario {background:url(../images/comment.svg) no-repeat;background-position:11px center;padding:8px 10px 0px 50px;}
 .comentario textarea {font-size:95%;font-weight:300;}
 
 h6.ingred {margin:11px 5px 8px;}
@@ -457,10 +457,10 @@ a.create-diet {position:fixed;width:100%;height:45px;bottom:0px;z-index:9999999;
 .platillos-wrapper ul li.platillo-item {list-style:none;border-bottom:1px solid #cfcfcf;text-align:left;min-height:50px;position:relative;padding:5px 15px;}
 .platillos-wrapper ul li.platillo-item.active {background:#43c2a7;color:#FFF;}
 .platillos-wrapper ul li:last-of-type {border:none;}
-.platillos-wrapper ul li h2 {margin-top:0px;}
-.platillos-wrapper ul li p {font-size:95%;height:32px;overflow:hidden;margin-top:2px;}
+.platillos-wrapper ul li h2 { margin-top: 0px; font-size: 120%; font-weight: 300; letter-spacing: 0.6px; margin-bottom: 1rem; }
+.platillos-wrapper ul li p { font-size: 95%; overflow: hidden; margin-top: 2px; color: #909090; line-height: 2rem; letter-spacing: 0.6px; font-weight: 100; }
 
-.boton-under {position:fixed;width:100%;height:40px;left:0px;bottom:0px;font-size:120%;background:#FFF;border-top:1px solid #cfcfcf;line-height:40px;color:#6633cc;font-weight:100;}
+.boton-under {position:fixed; width:100%;height:40px;left:0px;bottom:0px;font-size:120%;background:#FFF;border-top:1px solid #cfcfcf;line-height:40px;color:#6633cc;font-weight:100;}
 
 /* INGREDIENTES */
 
@@ -510,18 +510,18 @@ a.create-diet {position:fixed;width:100%;height:45px;bottom:0px;z-index:9999999;
 
 /* CREAR PLATILLO */
 
-.create-platillo .meal-name {color:#FFF;padding:18px 0px;}
-.create-platillo .meal-name h1 {margin:0; text-transform: uppercase;}
-.create-platillo .platillo {text-align:left;border:none;margin-top:13px;padding-left:5px;padding-right:5px;}
-.create-platillo .platillo .receta, .create-platillo .platillo .comentario {margin-top:15px;padding-right:12px;}
-.create-platillo .platillo .name_platillo {width:65%;margin-left:3%;}
-.create-platillo .platillo h6 {margin-left:10px;margin-top:15px;}
-.create-platillo .platillo p {margin-left:37px;}
+.create-dish .meal-name {color:#FFF;padding:18px 0px;}
+.create-dish .meal-name h1 {margin:0; text-transform: uppercase;}
+.create-dish .platillo {text-align:left;border:none;margin-top:13px;padding-left:5px;padding-right:5px;}
+.create-dish .platillo .receta, .create-dish .platillo .comentario {margin-top:15px;padding-right:12px;}
+.create-dish .platillo .name_platillo {width:65%;margin-left:3%;}
+.create-dish .platillo h6 {margin-left:10px;margin-top:15px;}
+.create-dish .platillo p {margin-left:37px;}
 
 nav.set-public {float:right;text-align:center;width:30%;margin:5px 0px 0px 0px;}
 nav.set-public span {font-size:30%;display:block;font-weight:800;}
-.create-platillo input[type=checkbox]:not(old) {width:20px;height:20px;padding:0;opacity:1;background:url(../images/radio2.png) no-repeat;background-size:100% auto;outline:none;background-position:0px 0px;}
-.create-platillo input[type=checkbox]:not(old):checked {background-position:0px -20px;}
+.create-dish input[type=checkbox]:not(old) {width:20px;height:20px;padding:0;opacity:1;background:url(../images/radio2.png) no-repeat;background-size:100% auto;outline:none;background-position:0px 0px;}
+.create-dish input[type=checkbox]:not(old):checked {background-position:0px -20px;}
 
 
 /* PERFIL COACH */

@@ -1,162 +1,69 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 	<head>
 		<meta charset="utf-8">
 		<title>Ginger Coach</title>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, maximum-scale=1, minimum-scale=1, height=device-height">
 		<meta http-equiv="cleartype" content="on">
+	    <script type="text/javascript" src="js/bower_components/handlebars/handlebars.min.js"></script>
+	    <script type="text/javascript" src="js/bower_components/jquery/dist/jquery.min.js"></script>
+	    <script type='text/javascript' src="js/jquery-ui.min.js"></script>
+	    <script type='text/javascript' src="js/jquery-touch.min.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/quickblox/2.1.2/quickblox.min.js"></script>
 		<link rel="stylesheet" type="text/css" href="css/style.css">
-	    <script type="text/javascript" src="cordova.js"></script>
-	    <script type="text/javascript" src="js/bower_components/handlebars/handlebars.runtime.min.js"></script>
-	    <script src="js/jquery-1.12.2.min.js"></script>
-	    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
-	    <script src="js/jquery-touch.min.js"></script>
-	    <script type="text/javascript" src="js/functions_coach.js"></script>
-		<script type='text/javascript' src='js/plugins.js'></script>
-		<script type='text/javascript' src='js/api-sdk-1.0.js'></script>
-		<script type="text/javascript" src="js/oauth.js"></script>
-		<script src="js/main.js"></script>
 	</head>
-	<body class="has-ingredients iosm">
-	<div id="container" class="list-ingredientes">
-		<header class="hwhite2">
-			<div class="toolbar">
-				<a href="crear-platillo.html" class="back"><img src="images/back.svg"></a>
-				<h2 class="titulo">Ingredientes</h2>
-				<a class="add">Agregar</a>
-			</div>
-		</header>
-		<div class="accordion1">
-			<div class="acc1-selector">
-				<img src="images/ingredientes/__wheat1@3x.png">
-				<h5>Granos y cereales</h5>
-			</div>
-			<div class="acc1-content">
-				<ul class="lista_ingredientes granosycereales">
-					<!-- aqui se llena -->
-				</ul>
-			</div>
-			<div class="acc1-selector">
-				<img src="images/ingredientes/verduras.png">
-				<h5>Verduras</h5>
-			</div>
-			<div class="acc1-content">
-				<ul class="lista_ingredientes verduras">
-				</ul>
-			</div>
-			<div class="acc1-selector">
-				<img src="images/ingredientes/aceites1@3x.png">
-				<h5>Grasas</h5>
-			</div>
-			<div class="acc1-content">
-				<ul class="lista_ingredientes grasas">
-				</ul>
-			</div>
-			<div class="acc1-selector">
-				<img src="images/ingredientes/_milk1@3x.png">
-				<h5>Lácteos</h5>
-			</div>
-			<div class="acc1-content">
-				<ul class="lista_ingredientes lacteos">
-				</ul>
-			</div>
-			<div class="acc1-selector">
-				<img src="images/ingredientes/_meat1@3x.png">
-				<h5>Proteína Animal</h5>
-			</div>
-			<div class="acc1-content">
-				<ul class="lista_ingredientes proteinaanimal">
-				</ul>
-			</div>
-			<div class="acc1-selector">
-				<img src="images/ingredientes/_carrot1@3x.png">
-				<h5>Leguminosas</h5>
-			</div>
-			<div class="acc1-content">
-				<ul class="lista_ingredientes leguminosas">
-				</ul>
-			</div>
-			<div class="acc1-selector">
-				<img src="images/ingredientes/nueces.png">
-				<h5>Nueces y semillas</h5>
-			</div>
-			<div class="acc1-content">
-				<ul class="lista_ingredientes nuecesysemillas">
-				</ul>
-			</div>
-			<div class="acc1-selector">
-				<img src="images/ingredientes/frutas.png">
-				<h5>Frutas</h5>
-			</div>
-			<div class="acc1-content">
-				<ul class="lista_ingredientes frutas">
-				</ul>
-			</div>
-			<div class="acc1-selector">
-				<img src="images/ingredientes/malteada.png">
-				<h5>Endulzantes</h5>
-			</div>
-			<div class="acc1-content">
-				<ul class="lista_ingredientes endulzantes">
-				</ul>
-			</div>
-			<div class="acc1-selector">
-				<img src="images/ingredientes/condimentos.png">
-				<h5>Aderezos y condimentos</h5>
-			</div>
-			<div class="acc1-content">
-				<ul class="lista_ingredientes aderezosycondimentos">
-				</ul>
-			</div>
-			<div class="acc1-selector">
-				<img src="images/ingredientes/superfoods.png">
-				<h5>Superfood</h5>
-			</div>
-			<div class="acc1-content">
-				<ul class="lista_ingredientes superfoods">
-				</ul>
-			</div>
-			<div class="acc1-selector">
-				<img src="images/ingredientes/liquidos.png">
-				<h5>Líquidos</h5>
-			</div>
-			<div class="acc1-content">
-				<ul class="lista_ingredientes liquidos">
-				</ul>
-			</div>
+	<body class="iosm preventEvents" >
+		<div id="container" class="rootContainer">
+			
 		</div>
-		<div class="overscreen2" style="display:none">
-			<div id="picker">
-				<div class="arrows-vertical">
-					<img id="picker-up" src="images/leftarrow.png">
-					<img id="picker-dw" src="images/rightarrow.png">
-				</div>
-				<div class="box-input-2">
-					<input type="text" name="picker" value="1" maxlength="2" onkeypress='return event.charCode >= 46 && event.charCode <= 57'>
-				</div>
-				<div class="btn-gre establish" style="float:right;margin-right:10%;margin-top:13px;">AGREGAR</div>
-			</div>
-		</div>
-		
-		<a href="crear-ingrediente.html" class="boton-under">Crear Ingrediente</a>
-	</div>
-	<div class="overscreen5" style="display:none">
-		<div class="ov-filler2"></div>
-		<div class="dialog">
-			<h5>Ingrediente</h5>
-			<p>¿Estás seguro de querer agregar este ingrediente?</p>
-			<div class="di-options">
-				<a id="aceptar" class="accept">Aceptar</a>
-				<a id="cancelar" class="cancel">Cancelar</a>
-			</div>
-		</div>
-	</div>
-	<script type='text/javascript' src='js/plugins.js'></script>
 	</body>
+	<script type='text/javascript' src='js/plugins.js'></script>
+	<script type='text/javascript' src='js/api-sdk-1.0.js'></script>
+	<script type="text/javascript" src="js/main.js"></script>
+	<script type="text/javascript" src="cordova.js"></script>
+	<script type="text/javascript" src="js/oauth.js"></script>
+	<!-- Load necesary templates -->
+	<script type="text/javascript" src="views/compiled/container.js"></script>
+	<script type="text/javascript" src="views/compiled/login.js"></script>
+	<script type="text/javascript" src="views/compiled/empty-card.js"></script>
+	<script type="text/javascript" src="views/compiled/home.js"></script>
+	<script type="text/javascript" src="views/compiled/diet-list.js"></script>
+	<script type="text/javascript" src="views/compiled/diet-list-content.js"></script>
+	<script type="text/javascript" src="views/compiled/ingredients.js"></script>
+	<script type="text/javascript" src="views/compiled/create-ingredient.js"></script>
+	<script type="text/javascript" src="views/compiled/copy-diet.js"></script>
+	<script type="text/javascript" src="views/compiled/diet-edition.js"></script>
+	<script type="text/javascript" src="views/compiled/dish-list.js"></script>
+	<script type="text/javascript" src="views/compiled/user-list.js"></script>
+	<script type="text/javascript" src="views/compiled/user-list-content.js"></script>
+	<script type="text/javascript" src="views/compiled/user-profile.js"></script>
+	<script type="text/javascript" src="views/compiled/coach.js"></script>
+	<script type="text/javascript" src="views/compiled/about.js"></script>
+	<script type="text/javascript" src="views/compiled/support.js"></script>
+	<script type="text/javascript" src="views/compiled/finanzas.js"></script>
+	<script type="text/javascript" src="views/compiled/finanzas-content.js"></script>
+	<script type="text/javascript" src="views/compiled/chat-container.js"></script>
+	<script type="text/javascript" src="views/compiled/chat-contacts.js"></script>
+	<script type="text/javascript" src="views/compiled/chat-messages.js"></script>
+	<script type="text/javascript" src="views/compiled/dialog-messages.js"></script>
+	<script type="text/javascript" src="views/compiled/create-diet.js"></script>
+	<script type="text/javascript" src="views/compiled/coming-soon.js"></script>
+	
 	<script type="text/javascript">
-		/* Initialize app object and perform initial login check */
-		window.is_home = false;
-		app.initialize();
+		app.render_ingredients();
 	</script>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.6.0/jquery.nicescroll.min.js" type="text/javascript"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timeago/1.4.1/jquery.timeago.min.js" type="text/javascript"></script>
+	<script type="text/javascript" src="libs/stickerpipe/js/stickerpipe.js"></script>
+	<script type="text/javascript" src="js/scripts/chat-core.js"></script>
+	<script type="text/javascript" src="js/chat-config.js"></script>
+	<script type="text/javascript" src="js/chat-connection.js"></script>
+	<script type="text/javascript" src="js/chat-messages.js"></script>
+	<script type="text/javascript" src="js/chat-ui-helpers.js"></script>
+	<script type="text/javascript" src="js/chat-dialogs.js"></script>
+	<script type="text/javascript" src="js/chat-users.js"></script>
+	<script type="text/javascript" src="js/functions_coach.js"></script>
+	<script type="text/javascript" src="js/scripts/document_ready.js"></script>
 </html>
 
