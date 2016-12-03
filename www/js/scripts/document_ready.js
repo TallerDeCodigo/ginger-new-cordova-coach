@@ -469,7 +469,9 @@ window.initializeEvents = function(){
 
 				/*** Dieta operations ***/
 				$('.btn_copy').click(function (e) {
+					e.preventDefault();
 					app.keeper.setItem('dOperator', $(this).data('id'));
+					return app.render_duplicate_diet('copiar-dieta.html');
 				});
 
 				$('.btn_edit').click(function (e) {
@@ -518,9 +520,9 @@ window.initializeEvents = function(){
 
 					flag = true;
 					responsedata =  {
-										return 		: 'diet-list',
-										return_stamp: new Date().getTime(),
-										diets 		: diets
+										return 		 : 'diet-list',
+										return_stamp : new Date().getTime(),
+										diets 		 : diets
 									};
 					app.render_template("diet-list-content", ".insert-content", responsedata);
 					app.keeper.setItem('temp-return', JSON.stringify(responsedata));
