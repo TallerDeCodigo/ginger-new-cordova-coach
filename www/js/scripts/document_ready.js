@@ -438,19 +438,6 @@ window.initializeEvents = function(){
 		} // END CLASS 'chat-dialog-messages'
 
 
-		// /* Chat messages list */
-		// if( $('.view').hasClass('dialog_detail') ) {
-			
-		// 	if($('.view').hasClass('dialogLoad')){
-		// 		console.log("Trigger load chat content");
-		// 		if(!dialogNow)
-		// 			console.log("Too bad for you");
-		// 		triggerDialog(dialogNow);
-		// 	}
-
-		// }
-
-
 		/**** Coach diet list ****/
 		if( $('.view').hasClass('diet-list') ){
 			
