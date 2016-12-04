@@ -285,28 +285,25 @@ window.initializeEvents = function(){
 		/* User List */
 		if( $('.view').hasClass('list-usuarios') ) {
 			
-			var flag = false;
-			var local_tmp =  null;
-			local_tmp = app.pop_cache_slot('user-list');
-			
-			if( local_tmp ){
-				local_tmp = (local_tmp && local_tmp != '') ? local_tmp : null;
-				flag = (local_tmp) ? true : false;
-				var diff_stamps = (local_tmp) 	
-									? (new Date().getTime() - local_tmp.stamp)/1000
+			var myFoo =  null;
+			myFoo = app.pop_cache_slot('user-list');
+
+			if( myFoo ){
+				myFoo = (myFoo && myFoo != '') ? myFoo : null;
+				var diff_stamps = (myFoo) 	
+									? (new Date().getTime() - myFoo.stamp)/1000
 									: 0;
-				app.render_template("user-list-content", ".insert_content", local_tmp.data);
+				app.render_template("user-list-content", ".insert_content", myFoo.data);
 			}
 
-			if( !local_tmp  || (typeof local_tmp['user-list'] !==  'undefined' && diff_stamps >= 600) ){
+			if( !myFoo  || (typeof myFoo['user-list'] !==  'undefined' && diff_stamps >= 600) ){
 				
 				if(users = apiRH.getUsuarios()){
 
-					local_tmp =  {  users: users };
-					console.log(local_tmp);
-					app.push_cache_slot('user-list', local_tmp);
-					app.render_template("user-list-content", ".insert_content", local_tmp);
-					flag = true;
+					myFoo =  {  users: users };
+					console.log(myFoo);
+					app.push_cache_slot('user-list', myFoo);
+					app.render_template("user-list-content", ".insert_content", myFoo);
 				}
 			}
 
@@ -430,15 +427,12 @@ window.initializeEvents = function(){
 		/**** Coach diet list ****/
 		if( $('.view').hasClass('diet-list') ){
 			
+			var myFoo =  null;
 			var i = 0;
 			var idDelete = null;
 			var responsedata = [];
-			var local_tmp = app.keeper.getItem('temp-return');
-				local_tmp = (local_tmp != '') ? JSON.parse( local_tmp ) : null;
-			var diff_stamps = (local_tmp) 	? (new Date().getTime() - local_tmp.return_stamp)/1000
-											: 0;
-			var flag = (local_tmp) ? true : false;
-			
+
+			myFoo = app.pop_cache_slot('diet-list');
 			app.keeper.removeItem('dietaEdit');
 
 			var initDietActions = function(){
@@ -475,7 +469,7 @@ window.initializeEvents = function(){
 						var response = apiRH.deleteDiet(idDelete);
 						if(response){
 							$('.each_diet_element[data-id='+idDelete+']').remove();
-							app.keeper.removeItem('temp-return');
+							app.clean_cache_slot('diet-list');
 						}
 						$('.overscreen4').hide();
 						$('#blur').toggleClass('blurred');
@@ -489,28 +483,29 @@ window.initializeEvents = function(){
 
 			};
 
-			if(!local_tmp || local_tmp.return !=  'diet-list' || (local_tmp.return ==  'diet-list' && diff_stamps >= 600) ){
-				
-				var diets = null;
-				if( diets = apiRH.getDiets() ){
 
-					flag = true;
-					responsedata =  {
-										return 		 : 'diet-list',
-										return_stamp : new Date().getTime(),
-										diets 		 : diets
-									};
-					app.render_template("diet-list-content", ".insert-content", responsedata);
-					app.keeper.setItem('temp-return', JSON.stringify(responsedata));
-					initDietActions();
-				}
-			}else{
-
-				var content = JSON.parse( app.keeper.getItem('temp-return') );
-				app.render_template("diet-list-content", ".insert-content", content);
-				initDietActions();
+			if( myFoo ){
+				myFoo = (myFoo && myFoo != '') ? myFoo : null;
+				console.log(myFoo.data);
+				var diff_stamps = (myFoo) 	
+									? (new Date().getTime() - myFoo.stamp)/1000
+									: 0;
+				app.render_template("diet-list-content", ".insert_content", myFoo.data);
 			}
 
+			if( !myFoo  || (typeof myFoo['diet-list'] !==  'undefined' && diff_stamps >= 600) ){
+				var diets = null;
+				console.log("Very arty");
+				if( diets = apiRH.getDiets() ){
+					myFoo =  {  diets: diets };
+					console.log(myFoo);
+					app.push_cache_slot('diet-list', myFoo);
+					app.render_template("diet-list-content", ".insert_content", myFoo);
+				}
+			}
+
+			initDietActions();
+			
 			$('.diet_element_hook').click( function(){
 
 				var dietSelected = $(this).parent().data("id");
