@@ -137,10 +137,6 @@ window.initializeEvents = function(){
 			$('body').scrollTop($('#messages-pool').prop('scrollHeight'));
 			$('.escribir').css('bottom', 0);
 		});
-
-		/*** Initializing chat api if not already did ***/
-		if(!chatCore.isInitialized && loggedIn)
-			chatCore.init(_coach);
 		
 		if($('.view').hasClass('login')){
 			
@@ -291,34 +287,37 @@ window.initializeEvents = function(){
 			
 			var response = [];
 			var flag = false;
+			var local_tmp =  null;
 
-			var local_tmp = app.keeper.getItem('temp-return');
-				local_tmp = (local_tmp != '') ? JSON.parse( local_tmp ) : null;
-			var flag = (local_tmp) ? true : false;
-			var diff_stamps = (local_tmp) 	? (new Date().getTime() - local_tmp.return_stamp)/1000
-											: 0;
+			if( response = app.pop_cache_slot('user-list') ){
+				
+				local_tmp = (local_tmp && local_tmp != '') ? JSON.parse( local_tmp ) : null;
+				flag = (local_tmp) ? true : false;
+				var diff_stamps = (local_tmp) 	
+									? (new Date().getTime() - local_tmp.return_stamp)/1000
+									: 0;
+			}
 
-			if( !local_tmp || local_tmp.return !=  'user-list' || (local_tmp.return ==  'user-list' && diff_stamps >= 600) ){
-				var diets = null;
+			if( !local_tmp  || local_tmp.return !=  'user-list' 
+							|| (local_tmp.return ==  'user-list'  && diff_stamps >= 600) ){
+				
 				if(users = apiRH.getUsuarios()){
 
-					responsedata =  {
-										return 		: 'user-list',
-										return_stamp: new Date().getTime(),
-										users 		: users
-									};
-					app.keeper.setItem('temp-return', JSON.stringify(responsedata));
+					response =  {
+									return 		: 'user-list',
+									return_stamp: new Date().getTime(),
+									users 		: users
+								};
+					app.push_cache_slot('user-list', response);
+					app.render_template("user-list-content", ".insert_content", response);
 					flag = true;
-					app.render_template("user-list-content", ".insert_content", responsedata);
-
 					/*** Start chat updating process ***/
 					chatCore.fetchUnreadCount(_coach);
 				}
 			}else{
-				// Render template with new information
-				var content = JSON.parse( app.keeper.getItem('temp-return') );
-				app.render_template("user-list-content", ".insert_content", content);
 
+				app.push_cache_slot('user-list', response);
+				app.render_template("user-list-content", ".insert_content", response);
 				/*** Start chat updating process ***/
 				chatCore.fetchUnreadCount(_coach);
 			}
@@ -473,10 +472,10 @@ window.initializeEvents = function(){
 					idDelete = $(this).data('id');
 					if(!$('.overscreen4').is(':visible')){
 						$('.overscreen4').show();
-						setTimeout(function() {$('.overscreen4').addClass('active');}, 200);
+						setTimeout(function() { $('.overscreen4').addClass('active'); }, 200);
 					} else {
 						$('.overscreen4').removeClass('active');
-						setTimeout(function() {$('.overscreen4').hide();}, 800);
+						setTimeout(function() { $('.overscreen4').hide(); }, 800);
 					}
 					$('#blur').toggleClass('blurred');
 				});

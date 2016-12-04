@@ -25,7 +25,7 @@
 			var is_current 	= localStorage.getItem('valido');
 
 			window.cordova_full_path = "";
-			window.is_home = false;
+			window.is_home 			 = false;
 
 			/*** TODO: Get this shit into a catalogue ***/
 			window.catalogues 						= [];
@@ -166,6 +166,13 @@
 			app.receivedEvent('mobileinit');
 			console.log("mobileinit");
 		},
+		// Method runs everytime sdk checks for a container loaded, basically every render of a view
+		onSoftInit: function() {
+			
+			/*** Initializing chat api if not already did ***/
+			if(!chatCore.isInitialized && loggedIn)
+				chatCore.init(_coach);
+		},
 		// Update DOM on a Received Event
 		receivedEvent: function(id) {
 			if(id == 'deviceready' && typeof navigator.splashscreen != 'undefined'){
@@ -222,6 +229,8 @@
 				var html = container_template();
 				$('.rootContainer').html( html );
 			}
+			/*** Soft init method ***/
+			this.onSoftInit();
 		},
 		render_template : function(templateName, targetSelector, otherdata, keepLoader, append, leNiceTransition){
 			keepLoader = (typeof keepLoader == 'undefined' || !keepLoader) ? false : true;
@@ -510,6 +519,39 @@
 		},
 		hideLoader: function(){
 			$('#spinner').hide();
+		},
+		push_cache_slot: function(slot_name, value){
+			
+			var local_tmp = app.keeper.getItem('temp-return');
+			var new_push  = {
+								stamp 		: new Date().getTime(),
+								slot_name 	: value,
+								name 		: slot_name
+							};
+				
+			local_tmp = (local_tmp && local_tmp != '') 
+									? JSON.parse( local_tmp ).push(new_push)
+									: { slot_name : new_push };
+
+			app.keeper.setItem('temp-return', JSON.stringify(local_tmp));
+			return;
+		},
+		pop_cache_slot: function(slot_name){
+
+			var local_tmp = app.keeper.getItem('temp-return');
+			local_tmp = (local_tmp && local_tmp != '') ? JSON.parse( local_tmp ) : null;
+			console.log(local_tmp);
+			if( local_tmp && !typeof local_tmp[slot_name])
+				return local_tmp[slot_name];
+			return false;
+		},
+		clean_cache_slot: function(slot_name){
+			var local_tmp = app.keeper.getItem('temp-return');
+			local_tmp = (local_tmp && local_tmp != '') ? JSON.parse( local_tmp ) : null;
+				
+			if(typeof local_tmp[slot_name])
+				delete local_tmp[slot_name];
+			return false;
 		},
 		toast: function(message, bottom){
 			try{
