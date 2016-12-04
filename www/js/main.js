@@ -393,6 +393,9 @@
 				case 'create':
 				section_name = 'Crear Dieta';
 				break;
+				case 'clone':
+				section_name = 'Duplicar Dieta';
+				break;
 				case 'edit':
 				section_name = 'Editar Dieta';
 				break;
@@ -552,8 +555,11 @@
 			var local_tmp = app.keeper.getItem('temp-return');
 			local_tmp = (local_tmp && local_tmp != '') ? JSON.parse( local_tmp ) : null;
 				
-			if(typeof local_tmp[slot_name])
+			if(typeof local_tmp[slot_name]){
 				delete local_tmp[slot_name];
+				app.keeper.setItem('temp-return', JSON.stringify(local_tmp));
+				return;
+			}
 			return false;
 		},
 		toast: function(message, bottom){

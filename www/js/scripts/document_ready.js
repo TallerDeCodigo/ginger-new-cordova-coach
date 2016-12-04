@@ -691,27 +691,27 @@ window.initializeEvents = function(){
 						if( myDietStructure._id ){
 
 							response = apiRH.saveDiet(myDietStructure);
-							if(response)
-								return app.toast("Tu dieta ha sido actualizada correctamente.");
-							return app.toast("Hubo un error editando la dieta. No se guardaron los cambios.");
+							if(!response){
+								app.keeper.removeItem('dietaEdit');
+								return app.toast("Hubo un error editando la dieta. No se guardaron los cambios.");
+								// return app.render_coach_dietas('dietas.html');
+							}
+							app.clean_cache_slot('diet-list');
+							app.toast("Se han guardado los cambios a la dieta.");
+							return app.render_coach_dietas('dietas.html');
 						}
 						else{
+							console.log("Nunca entro");
 							response = apiRH.makeDiet(myDietStructure);	
-							if(response)
-								return app.toast("Tu dieta ha sido creada correctamente.");
+							if(response){
+								app.keeper.removeItem('dietaEdit');
+								app.toast("Tu dieta ha sido creada correctamente.");
+								app.clean_cache_slot('diet-list');
+								return app.render_coach_dietas('dietas.html');
+							}
 							return app.toast("Hubo un error creando tu dieta.");
 						}
 
-						if(response){			
-							if (app.keeper.getItem('proviene') == "lista") {
-								app.keeper.removeItem('dietaEdit');
-								app.keeper.removeItem('proviene');
-								return app.render_coach_dietas('dietas.html');
-							} else {
-								app.keeper.removeItem('dietaEdit');
-								return app.render_coach_dietas('dietas.html');
-							}
-						}
 				}else {
 
 					if(!$('.overscreen_error').is(':visible')){
@@ -795,21 +795,6 @@ window.initializeEvents = function(){
 				$('#blur').toggleClass('blurred');
 			});
 
-			$('.back').click(function(){
-
-				app.keeper.removeItem('dietaEdit');
-				if ( app.keeper.getItem('proviene') == 'lista' ) {
-					app.keeper.removeItem('proviene');
-					return app.render_coach_dietas('dietas.html');
-				} else {
-					if( app.keeper.getItem('contador_platillos') )
-						app.keeper.removeItem('contador_platillos');
-					return app.render_coach_dietas('dietas.html');
-					// window.location.assign('dietas.html');
-				}
-			});
-
-			
 
 			/*
 				CREATING A NEW DIET
