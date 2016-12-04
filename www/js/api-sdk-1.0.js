@@ -166,8 +166,8 @@ function requestHandlerAPI(){
 		};
 
 		this.makeDiet = function(data){
-
-			var response = this.makeRequest('tables/dieta/', data);
+			console.log(data);
+			var response = this.makeRequest('tables/dieta/', {data: data});
 			console.log(response);
 			return (response) ? response : false;
 		};

@@ -1,8 +1,10 @@
 	<div id="container" class="list-platos">
 		<header class="hwhite2">
 			<div class="toolbar">
-				<a href="dieta.html" class="back"><img src="images/back.svg"></a>
-				<h2 class="titulo">Lista de Platillos</h2>
+				<a class="back hook" data-resource="diet-workspace" data-method="edit" href="dieta.html">
+					<img src="images/back.svg">
+				</a>
+				<h2 class="titulo">{{header_title}}</h2>
 			</div>
 		</header>
 		<div class="priv-public">
@@ -25,7 +27,7 @@
 				</li>
 			</ul>
 		</div>		
-		<a href="crear-platillo.html" class="boton-under">Crear Platillo</a>
+		<a class="boton-under hook" data-resource="create-dish" href="crear-platillo.html">Crear Platillo</a>
 	</div>
 
 	<div class="alert_meal_description" style="display:none">

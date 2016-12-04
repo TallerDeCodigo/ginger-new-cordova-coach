@@ -45,6 +45,9 @@ window.initializeEvents = function(){
 					return app.render_chat_dialog( $(this).attr('href') );
 
 
+				if( $(this).data('resource') == "diet-workspace" )
+					return app.render_diet_workspace( $(this).attr('href'), $(this).data('method'));
+
 				if( $(this).data('resource') == "diet-list" )
 					return app.render_coach_dietas( $(this).attr('href') );
 				if( $(this).data('resource') == "create-diet" )
@@ -616,7 +619,7 @@ window.initializeEvents = function(){
 				$(this).addClass('active');
 			});
 			
-			$(document).on('click', '.platillo-item', function() {
+			$('.platillo-item').click( function() {
 
 				var _id 		= $(this).attr('data');
 				var data_name 	= $(this).find('.hache').html();
@@ -649,7 +652,7 @@ window.initializeEvents = function(){
 				app.keeper.setItem('recetaDishSelected', $(this).parent().parent().find('p').html() );
 				$('.alert_meal_description').hide();
 				$('#blur').toggleClass('blurred');
-				return app.render_diet_workspace("dieta.html");
+				return app.render_diet_workspace("dieta.html", "edit");
 			});
 
 			$('#cancel_add_dish').click(function(){
@@ -687,7 +690,7 @@ window.initializeEvents = function(){
 
 						var myDietStructure = JSON.parse( app.keeper.getItem('dietaEdit') );
 						console.log('ID DIETA DEFINIDO: ' + myDietStructure._id);
-						
+						app.keeper.removeItem('live_dishCount');
 						if( myDietStructure._id ){
 
 							response = apiRH.saveDiet(myDietStructure);
@@ -819,7 +822,10 @@ window.initializeEvents = function(){
 				dietaNew = JSON.parse( app.keeper.getItem('dietaEdit') );
 				var dish_count = 0;
 				var dish_selected = app.keeper.getItem('idDishSelected');
-
+				var live_dish_count = ( app.keeper.getItem('live_dishCount') !== "") 
+														? app.keeper.getItem('live_dishCount')
+														: 0;
+				console.log(live_dish_count);
 				// ADD DISH 'CALLBACK'
 				if ( dish_selected ) {
 					
@@ -847,9 +853,10 @@ window.initializeEvents = function(){
 					app.keeper.setItem('dietaEdit', JSON.stringify(dietaNew));
 					console.log(dietaNew);
 					app.keeper.removeItem('idDishSelected');
-					dish_count++;
-					console.log(dish_count);
-					app.keeper.setItem('contador_platillos', dish_count);
+					live_dish_count++;
+					console.log(live_dish_count);
+					app.keeper.setItem('live_dishCount', live_dish_count);
+					workspace.dish_count = live_dish_count;
 				}
 
 				var referer = false;
@@ -1146,14 +1153,13 @@ window.initializeEvents = function(){
 						}
 					});
 					
-					app.hideLoader();
-			}//end if
+				}//end if dieta
 
-
-		} // ?????????????????? check this out
+				app.hideLoader();
+			}
 
 			$('.add_dish').click(function(){
-				
+				console.log("Adding dish");
 				app.keeper.setItem( 'd_time', $(this).data('time') );
 				app.keeper.setItem( 'd_weekday', $(this).data('weekday') );
 				app.render_dish_list('platillos.html');
