@@ -168,10 +168,12 @@
 		},
 		// Method runs everytime sdk checks for a container loaded, basically every render of a view
 		onSoftInit: function() {
-			
+
 			/*** Initializing chat api if not already did ***/
 			if(!chatCore.isInitialized && loggedIn)
-				chatCore.init(_coach);
+				setTimeout(function(){
+					chatCore.init(_coach);
+				}, 800);
 		},
 		// Update DOM on a Received Event
 		receivedEvent: function(id) {
@@ -520,18 +522,20 @@
 		hideLoader: function(){
 			$('#spinner').hide();
 		},
+		// Cache Slot methods
 		push_cache_slot: function(slot_name, value){
 			
 			var local_tmp = app.keeper.getItem('temp-return');
-			var new_push  = {
-								stamp 		: new Date().getTime(),
-								slot_name 	: value,
-								name 		: slot_name
-							};
+			var new_push  = {};
+				new_push[slot_name] =  {
+											'name' 	: slot_name,
+											'stamp' : new Date().getTime(),
+											'data' 	: value
+										};
 				
 			local_tmp = (local_tmp && local_tmp != '') 
-									? JSON.parse( local_tmp ).push(new_push)
-									: { slot_name : new_push };
+									? $.extend( JSON.parse( local_tmp ), new_push )
+									: new_push;
 
 			app.keeper.setItem('temp-return', JSON.stringify(local_tmp));
 			return;
@@ -540,8 +544,7 @@
 
 			var local_tmp = app.keeper.getItem('temp-return');
 			local_tmp = (local_tmp && local_tmp != '') ? JSON.parse( local_tmp ) : null;
-			console.log(local_tmp);
-			if( local_tmp && !typeof local_tmp[slot_name])
+			if( local_tmp && typeof local_tmp[slot_name] !== 'undefined' )
 				return local_tmp[slot_name];
 			return false;
 		},

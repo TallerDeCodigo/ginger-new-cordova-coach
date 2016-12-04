@@ -10,14 +10,34 @@
 	chatCore.currentDialog 	= null;
 	chatCore.dialogs 		= [];
 	chatCore.occupantsIds 	= [];
+	chatCore.QBApp = {
+					appId: 20019,
+					authKey: 'wX-b8q-hSn3AArS',
+					authSecret: 'aCyMHpfYQNNZD8K'
+				};
+
+	chatCore.config = {
+					chatProtocol: {
+						active: 2
+					},
+					debug: {
+						mode: 1,
+						file: null
+					}
+				};
 
 	chatCore.init = function(elCoach){
+
 		console.log("Initializing instant messaging api");
 		if(chatCore.isInitialized)
 			return this;
+
+		/* INIT QUICKBLOX */
+		QB.init(chatCore.QBApp.appId, chatCore.QBApp.authKey, chatCore.QBApp.authSecret, chatCore.config);
+
 		chatCore.access = 	{ 	
-								email: elCoach.mail, 
-								password: elCoach.chatPassword
+								email: 		elCoach.mail, 
+								password: 	elCoach.chatPassword
 							};
 		QB.createSession( chatCore.access,  function(err, res) {
 								if(err)
@@ -38,8 +58,8 @@
 	};
 
 	chatCore.connectToChat = function(elCoach) {
-		console.log("Connect to chat");
 
+		console.log("Spin dialing...");
 		var params 	= {jid: elCoach.jid, password: elCoach.chatPassword};
 		QB.chat.connect(params, 
 						 function(err, roster) {

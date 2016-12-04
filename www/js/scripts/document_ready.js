@@ -285,44 +285,34 @@ window.initializeEvents = function(){
 		/* User List */
 		if( $('.view').hasClass('list-usuarios') ) {
 			
-			var response = [];
 			var flag = false;
 			var local_tmp =  null;
-
-			if( response = app.pop_cache_slot('user-list') ){
-				
-				local_tmp = (local_tmp && local_tmp != '') ? JSON.parse( local_tmp ) : null;
+			local_tmp = app.pop_cache_slot('user-list');
+			
+			if( local_tmp ){
+				local_tmp = (local_tmp && local_tmp != '') ? local_tmp : null;
 				flag = (local_tmp) ? true : false;
 				var diff_stamps = (local_tmp) 	
-									? (new Date().getTime() - local_tmp.return_stamp)/1000
+									? (new Date().getTime() - local_tmp.stamp)/1000
 									: 0;
+				app.render_template("user-list-content", ".insert_content", local_tmp.data);
 			}
 
-			if( !local_tmp  || local_tmp.return !=  'user-list' 
-							|| (local_tmp.return ==  'user-list'  && diff_stamps >= 600) ){
+			if( !local_tmp  || (typeof local_tmp['user-list'] !==  'undefined' && diff_stamps >= 600) ){
 				
 				if(users = apiRH.getUsuarios()){
 
-					response =  {
-									return 		: 'user-list',
-									return_stamp: new Date().getTime(),
-									users 		: users
-								};
-					app.push_cache_slot('user-list', response);
-					app.render_template("user-list-content", ".insert_content", response);
+					local_tmp =  {  users: users };
+					console.log(local_tmp);
+					app.push_cache_slot('user-list', local_tmp);
+					app.render_template("user-list-content", ".insert_content", local_tmp);
 					flag = true;
-					/*** Start chat updating process ***/
-					chatCore.fetchUnreadCount(_coach);
 				}
-			}else{
-
-				app.push_cache_slot('user-list', response);
-				app.render_template("user-list-content", ".insert_content", response);
-				/*** Start chat updating process ***/
-				chatCore.fetchUnreadCount(_coach);
 			}
 
-			
+			/*** Start chat updating process ***/
+			chatCore.fetchUnreadCount(_coach);
+
 
 			setTimeout( function(){
 				
