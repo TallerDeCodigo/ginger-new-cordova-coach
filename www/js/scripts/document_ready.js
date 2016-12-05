@@ -677,7 +677,9 @@ window.initializeEvents = function(){
 			var workspace = {};
 
 			console.log("Workspace dieta");
-
+			$( ".accordion" ).accordion({collapsible:true,active:false,animate:300,heightStyle:"content"});
+			$( ".accordion1" ).accordion({collapsible:true,active:false,animate:200,heightStyle:"content"});
+			
 			$('#save_working_diet').click( function(){
 
 				var response = null;
@@ -1177,8 +1179,6 @@ window.initializeEvents = function(){
 				app.render_dish_list('platillos.html');
 			});
 
-			$( ".accordion" ).accordion({collapsible:true,active:false,animate:300,heightStyle:"content"});
-			$( ".accordion1" ).accordion({collapsible:true,active:false,animate:200,heightStyle:"content"});
 			
 		} // END workspace-diet
 
@@ -1461,29 +1461,73 @@ window.initializeEvents = function(){
 		/* CREATE INGREDIENT */
 		if( $('.view').hasClass('create-ingredient') ){
 
+			var i_nombre;
+			var category 	= -1;
+			var tipo 		= -1;	
+			var medida 		= -1;
+			
+			$('.add').click(function(){
+
+				if(!$('.overscreen5').is(':visible')){
+					console.log('entra popup');
+					$('.overscreen5').show();
+					setTimeout(function() {$('.overscreen5').addClass('active');}, 200);
+				} else {
+					$('.overscreen5').removeClass('active');
+					setTimeout(function() {$('.overscreen5').hide();}, 800);
+				}
+				$('#blur').toggleClass('blurred');
+			});
+
+				$('#aceptar').click(function(){
+					
+					i_nombre 	= $('input[name="name_ingrediente"]').val();
+					
+					if(i_nombre.length < 2) 
+						return;
+					if(category == -1) 
+						return;
+					if(tipo == -1) 
+						return;
+					if(medida  == -1) 
+						return;
+
+					var new_Ingredient =  {	
+								"nombre" 	: i_nombre,
+								"categoria" : category,
+								"tipo" 	 	: tipo,
+								"contable" 	: medida
+							};
+
+					var response = apiRH.newIngredient(new_Ingredient);
+					console.log(response);
+					if(!response)
+						return app.toast('Error creando ingrediente');
+						
+					return app.render_ingredients('ingredientes.html');	
+				});
+
+				$('#cancelar').click(function(){
+					$('.overscreen5').hide();
+					$('#blur').toggleClass('blurred');
+				});
+
 			$('.ing-category').click(function() {
 				$('.ing-category').removeClass('active');
 				$(this).addClass('active');
-			});
-
-			$('.ing-category').click(function(){
 				category = $(this).attr('value');
-				console.log(category);
 			});
 
 			$('.btn-state').click(function(){
 				$('.btn-state').removeClass('active');
 				$(this).addClass('active');
 				tipo = $(this).attr('data');
-				console.log(tipo);
 			});
 
 			$('.siono').click(function(){
 				$('.siono').removeClass('active');
 				$(this).addClass('active');
-
 				medida = $(this).attr('data');
-				console.log(medida);
 			});
 			
 		} // END create-ingredient
