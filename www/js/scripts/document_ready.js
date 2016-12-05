@@ -54,10 +54,12 @@ window.initializeEvents = function(){
 					return app.render_create_diet($(this).attr('href'));
 				if( $(this).data('resource') == "duplicate-diet" )
 					return app.render_duplicate_diet($(this).attr('href'));
+				
 				if( $(this).data('resource') == "dish-list" )
 					return app.render_dish_list($(this).attr('href'));
 				if( $(this).data('resource') == "create-dish" )
 					return app.render_create_dish($(this).attr('href'));
+				
 				if( $(this).data('resource') == "ingredients-list" )
 					return app.render_ingredients($(this).attr('href'));
 				if( $(this).data('resource') == "create-ingredient" )
@@ -1171,48 +1173,36 @@ window.initializeEvents = function(){
 		} // END workspace-diet
 
 
-		if($('.view').hasClass('ingredients') ){
-
-			var spinner = $( "#spinner" ).spinner();
-			
-			$( ".accordion1" ).accordion({collapsible:true,active:false,animate:200,heightStyle:"content"});
-
-			var responsedata = apiRH.listIngredient();
-
-			var ingrediente = responsedata;
-
-			console.log(responsedata);
-
+		/*** INGREDIENTS LIST ***/
+		if( $('.view').hasClass('ingredients') ){
 
 			var i = 0;
 			var j = 0;
-
-			var arrAux = [];
-			var arrAux_id = [];
-			var arrIng = [];
+			var picker;
+			var almacen;
+			var temp;
+			var arrAux 		= [];
+			var arrAux_id 	= [];
+			var arrIng 		= [];
 			var arrCantidad = [];
+			var tipo_de_ingredientes = window.catalogues.tipo_de_ingredientes; 
+			var myIngredients = apiRH.listIngredient();
+			
+			$( ".accordion1" ).accordion({collapsible:true,active:false,animate:200,heightStyle:"content"});
 
-			$.each(ingrediente, function( key, value ) {
+			$.each(myIngredients, function( key, value ) {
 
-			   $('.' + tipo_de_ingredientes[value.categoria] + '').append('<li><span class="cantidad"></span><span class="ingred-name" >'+ value.nombre +'</span><input type="checkbox" name="pan" value="'+ value.nombre +'" data="'+value._id+'"></li>');	
-				 
-							
+			   	$('.' + tipo_de_ingredientes[value.categoria] + '').append('<li><span class="cantidad"></span><span class="ingred-name" >'+ value.nombre +'</span><input type="checkbox" name="pan" value="'+ value.nombre +'" data="'+value._id+'"></li>');	
 				console.log(tipo_de_ingredientes[value.categoria]);
-
 				console.log(key + '::' + value.categoria);
-
-				
 				j++;	
 
 			});
 
-			var countChecked = function() {
-			  var n = $( "input:checked" );
-			  console.log(n);
-			};
-
-
-			var picker;
+			// var countChecked = function() {
+			//   var n = $( "input:checked" );
+			//   console.log(n);
+			// };
 
 			$("#picker-up").bind('touchstart', function(){
 				timeout = setInterval(function(){
@@ -1248,17 +1238,14 @@ window.initializeEvents = function(){
 				return false;
 			});
 
-			var almacen;
-			var temp;
-
 			$('input[type="checkbox"]').change(function(){
-				countChecked();
+				
+				// countChecked();
 				var value 	= $(this).val();
 				var aidi 	= $(this).attr("data");
 
-				if(!$(this).is(':checked')){
-					// arrAux_id.splice(aidi);
-					// arrCantidad.splice(aidi);
+				if( !$(this).is(':checked') ){
+
 					arrCantidad.indexOf(aidi);
 					console.log(arrCantidad.indexOf(aidi));
 					$(this).parent().find('.cantidad').html('');
@@ -1286,7 +1273,6 @@ window.initializeEvents = function(){
 				$('input[name=picker]').val('1');
 				arrAux_id.push(temp);
 				arrCantidad.push({id: temp, cantidad: v});
-				// console.log(arrCantidad);
 			});
 
 			$('.add ').click(function(){
@@ -1300,8 +1286,6 @@ window.initializeEvents = function(){
 					setTimeout(function() {$('.overscreen5').hide();}, 800);
 				}
 				$('#blur').toggleClass('blurred');
-
-				
 			});
 
 			$('#aceptar').click(function(){
@@ -1310,7 +1294,7 @@ window.initializeEvents = function(){
 				console.log(arrAux+" "+arrAux_id );
 				app.keeper.setItem('ingredientes', arrAux);
 				app.keeper.setItem('aidi_ingrediente', arrAux_id);
-				window.location.assign('crear-platillo.html');
+				app.render_create_dish('crear-platillo.html');
 			});
 
 			$('#cancelar').click(function(){
@@ -1318,21 +1302,19 @@ window.initializeEvents = function(){
 				$('#blur').toggleClass('blurred');
 			});
 
-		}//END INGREDIENTS
+			app.hideLoader();
+
+		} // END Ingredients
 
 
-		/*
-			HAS CREAR PLATILLO
-		*/
+		/* CREATE DISH */
+		if( $('.view').hasClass('create-dish') ){
 
-		if($('.view').hasClass('create-dish')){
-
-				var is_public;
-				var has_name;
-				var has_receta;
-				var has_comentarios;
-				var has_ingredients;
-
+			var is_public;
+			var has_name;
+			var has_receta;
+			var has_comentarios;
+			var has_ingredients;
 			var tiempo = app.keeper.getItem('d_time');
 			
 			$('.meal-name').removeClass('snack1');
@@ -1364,13 +1346,23 @@ window.initializeEvents = function(){
 				MANDA LOS DATOS DE ESTA PANTALLA A LA SIGUIENTE.
 			*/
 			$('.ingred').click(function(){
+				var is_public = $('input[name="public"]').val();
 				console.log(is_public);
+				is_public = (is_public == 1) ? true: false;
+				console.log(is_public);
+
+				if ( $(this).find('a').html() == "+" ) {
+					$(this).find('a').html('-');
+				}else{
+					$(this).find('a').html('+');
+				}
+
 				app.keeper.setItem('_public', is_public);
-				app.keeper.setItem('recipe_name', $('textarea[name="descripcion"]').val() );
+				app.keeper.setItem('recipe_name', 	$('textarea[name="descripcion"]').val() );
 				app.keeper.setItem('recipe_recipe', $('textarea[name="receta"]').val() );
 				app.keeper.setItem('recipe_comment', $('textarea[name="comentario"]').val() );
 
-				window.location.assign('ingredientes.html');
+				return app.render_ingredients('ingredientes.html');
 			});//end click
 
 			
@@ -1455,6 +1447,18 @@ window.initializeEvents = function(){
 
 
 		} // END create-dish
+
+		/* CREATE INGREDIENT */
+		if( $('.view').hasClass('create-ingredient') ){
+
+			$('.view').removeClass('full_noscroll');
+
+			$('.ing-category').click(function() {
+				$('.ing-category').removeClass('active');
+				$(this).addClass('active');
+			});
+
+		} // END create-ingredient
 
 
 		$(window).on("load resize",function(){

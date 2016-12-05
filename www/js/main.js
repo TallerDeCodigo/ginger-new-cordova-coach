@@ -443,7 +443,8 @@
 			}, 420);
 			app.check_or_renderContainer();
 			var data = this.gatherEnvironment( [], 'Ingredientes');
-			return this.switchView('ingredients', data, '.view', url, 'ingredients');
+			data.is_scrollable = true;
+			return this.switchView('ingredients', data, '.view', url, 'ingredients', true);
 		},
 		render_create_ingredient : function(url){
 
@@ -454,6 +455,7 @@
 			}, 420);
 			app.check_or_renderContainer();
 			var data = this.gatherEnvironment( [], 'Crear Ingrediente');
+			data.is_scrollable = true;
 			return this.switchView('create-ingredient', data, '.view', url, 'create-ingredient');
 		},
 		render_myProfile : function(url){
