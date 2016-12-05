@@ -527,6 +527,9 @@ nav.set-public span {font-size:30%;display:block;font-weight:800;}
 .create-dish input[type=checkbox]:not(old) {width:20px;height:20px;padding:0;opacity:1;background:url(../images/radio2.png) no-repeat;background-size:100% auto;outline:none;background-position:0px 0px;}
 .create-dish input[type=checkbox]:not(old):checked {background-position:0px -20px;}
 
+/*CREATE INGREDIENT*/
+.view.ingredients,
+.view.create-ingredient{overflow: auto; padding: 0 0 2rem 0;}
 
 /* PERFIL COACH */
 
