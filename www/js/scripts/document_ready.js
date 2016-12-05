@@ -1461,13 +1461,31 @@ window.initializeEvents = function(){
 		/* CREATE INGREDIENT */
 		if( $('.view').hasClass('create-ingredient') ){
 
-			$('.view').removeClass('full_noscroll');
-
 			$('.ing-category').click(function() {
 				$('.ing-category').removeClass('active');
 				$(this).addClass('active');
 			});
 
+			$('.ing-category').click(function(){
+				category = $(this).attr('value');
+				console.log(category);
+			});
+
+			$('.btn-state').click(function(){
+				$('.btn-state').removeClass('active');
+				$(this).addClass('active');
+				tipo = $(this).attr('data');
+				console.log(tipo);
+			});
+
+			$('.siono').click(function(){
+				$('.siono').removeClass('active');
+				$(this).addClass('active');
+
+				medida = $(this).attr('data');
+				console.log(medida);
+			});
+			
 		} // END create-ingredient
 
 
