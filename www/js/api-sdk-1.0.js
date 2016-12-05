@@ -182,7 +182,7 @@ function requestHandlerAPI(){
 			console.log(dietObj.__v);
 			delete dietObj.__v;
 
-			var response = this.patchRequest('tables/dieta/' + dietObj._id, dietObj, false);
+			var response = this.patchRequest('tables/dieta/' + dietObj._id, dietObj);
 			console.log('Response: ' + JSON.stringify(response));
 			return (response) ? true : false;
 		};
@@ -201,29 +201,12 @@ function requestHandlerAPI(){
 
 
 		/**
-		 *
-		 * new dish
+		 * Insert new dish
 		 *
 		 **/
-		this.newDish = function(data){
-			var req = {
-				method : 'post',
-				url : api_base_url + 'tables/plato',	//definitr tabla
-				headers: {
-					'X-ZUMO-APPLICATION': 'ideIHnCMutWTPsKMBlWmGVtIPXROdc92',
-					'X-ZUMO-AUTH': apiRH.keeper.getItem('token'),
-					'Content-Type': 'application/json'
-				},
-				data : data
-			}
-			console.log(req);
-
-			var response = this.makeRequest('tables/plato', req);
-
-			console.log("Request Data Cliente");
-
-			console.log(response);  //llega aqui con la respuesta del servidor
-
+		this.makeDish = function(data){
+		
+			var response = this.makeRequest('tables/plato', {data: data});
 			return (response) ? response : false;
 		};
 

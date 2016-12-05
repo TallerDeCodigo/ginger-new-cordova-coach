@@ -290,6 +290,8 @@
 			}, 420);
 			app.check_or_renderContainer();
 			app.keeper.removeItem('live_dishCount');
+			app.keeper.removeItem('idDishSelected');
+			app.keeper.removeItem('dietaEdit');
 			var data = this.gatherEnvironment();
 			data.is_scrollable = false;
 			return this.switchView('home', data, '.view', url, 'home-menu', false, false);

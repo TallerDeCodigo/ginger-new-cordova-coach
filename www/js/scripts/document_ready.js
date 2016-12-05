@@ -704,7 +704,6 @@ window.initializeEvents = function(){
 							return app.render_coach_dietas('dietas.html');
 						}
 						else{
-							console.log("Nunca entro");
 							response = apiRH.makeDiet(myDietStructure);	
 							if(response){
 								app.keeper.removeItem('dietaEdit');
@@ -820,11 +819,11 @@ window.initializeEvents = function(){
 			} else if ( app.keeper.getItem('idDishSelected') || app.keeper.getItem('dietaEdit') ) {
 				console.log("Edito modo");
 				dietaNew = JSON.parse( app.keeper.getItem('dietaEdit') );
-				var dish_count = 0;
+				console.log(dietaNew);
 				var dish_selected = app.keeper.getItem('idDishSelected');
-				var live_dish_count = ( app.keeper.getItem('live_dishCount') !== "") 
+				var live_dish_count = ( !dietaNew.platillos.length && app.keeper.getItem('live_dishCount') !== "") 
 														? app.keeper.getItem('live_dishCount')
-														: 0;
+														: dietaNew.platillos.length;
 				console.log(live_dish_count);
 				// ADD DISH 'CALLBACK'
 				if ( dish_selected ) {
@@ -832,11 +831,12 @@ window.initializeEvents = function(){
 					console.log("El dish selecto :: "+dish_selected);
 					var i = 0;
 					var rv = {};
-					var guardar1 = [];
-					var guardar2 = [];
-					var week_day =  app.keeper.getItem('d_weekday');
+					var guardar1  = [];
+					var guardar2  = [];
+					var week_day  =  app.keeper.getItem('d_weekday');
 					var meal_time = app.keeper.getItem('d_time');
-
+					if(!dietaNew["estructura"][week_day])
+						dietaNew["estructura"][week_day] = [];
 					$.each( dietaNew["estructura"][week_day][meal_time], function( key, value ) {
 						guardar1[i] = key;
 						guardar2[i] = value;
@@ -1380,9 +1380,6 @@ window.initializeEvents = function(){
 
 				var arrIngredientes = app.keeper.getItem('aidi_ingrediente');
 
-				console.log(typeof arrIngredientes);
-				console.log(" --- "+ JSON.parse(arrIngredientes) );
-
 				is_public 			= $('input[type="checkbox"]').val();
 				has_name 			= $('textarea[name="descripcion"]').val();
 				has_receta 			= $('textarea[name="receta"]').val();
@@ -1391,18 +1388,19 @@ window.initializeEvents = function(){
 
 				console.log(typeof has_ingredients);
 
-				var sIngredientes = '[';
-				for (var i = 0; i < has_ingredients.length; i++) {
-					console.log(has_ingredients[i]);
-					if(i < has_ingredients.length-1)
-						sIngredientes = sIngredientes + '{"_id" :"' + has_ingredients[i] + '"},';
-					else
-						sIngredientes = sIngredientes + '{"_id" : "'  + has_ingredients[i] + '"}';
+				var sIngredientes = [];
+				if(has_ingredients){
 
+					for (var i = 0; i < has_ingredients.length; i++) {
+						console.log(has_ingredients[i]);
+						sIngredientes.push( { _id: has_ingredients[i] } );
+						// if(i < has_ingredients.length-1)
+						// else
+						// 	$.extend( sIngredientes, { _id: has_ingredients[i] } )
+						// 	sIngredientes = sIngredientes + '{"_id" : "'  + has_ingredients[i] + '"}';
+
+					}
 				}
-
-				sIngredientes = eval(sIngredientes + ']');
-
 				console.log('CADENA: ' + JSON.stringify(sIngredientes));
 
 				console.log(is_public+" "+has_name+" "+ has_receta +" "+ has_comentarios +" "+ arrIngredientes);
@@ -1421,20 +1419,19 @@ window.initializeEvents = function(){
 
 				console.log(JSON.stringify(json));
 
-				var response = apiRH.newDish(json);
-
+				var response = apiRH.makeDish(json);
+				console.log(response);
 				if(response){
 					app.keeper.removeItem('d_nombre');
 					app.keeper.removeItem('d_comentario');
 					app.keeper.removeItem('ingredientes');
-					
-					window.location.assign('platillos.html');
+					app.toast("Tu platillo se ha creado exitosamente")
+					return app.render_dish_list('platillos.html');
 				}
 				else{
-					alert('error new dish');
+					app.toast('Error creando el platillo');
 				}
 				
-
 
 			});//end click
 
