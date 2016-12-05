@@ -40,10 +40,8 @@ window.initializeEvents = function(){
 				if( $(this).data('resource') == "profile" )
 					return app.render_myProfile( $(this).attr('href') );
 
-
 				if( $(this).data('resource') == "chat-dialog" )
 					return app.render_chat_dialog( $(this).attr('href') );
-
 
 				if( $(this).data('resource') == "diet-workspace" )
 					return app.render_diet_workspace( $(this).attr('href'), $(this).data('method'));
@@ -1203,10 +1201,7 @@ window.initializeEvents = function(){
 			$.each(myIngredients, function( key, value ) {
 
 			   	$('.' + tipo_de_ingredientes[value.categoria] + '').append('<li><span class="cantidad"></span><span class="ingred-name" >'+ value.nombre +'</span><input type="checkbox" name="pan" value="'+ value.nombre +'" data="'+value._id+'"></li>');	
-				console.log(tipo_de_ingredientes[value.categoria]);
-				console.log(key + '::' + value.categoria);
-				j++;	
-
+				j++;
 			});
 
 			// var countChecked = function() {
@@ -1288,14 +1283,13 @@ window.initializeEvents = function(){
 			$('.add ').click(function(){
 
 				if(!$('.overscreen5').is(':visible')){
-					console.log('entra popup');
 					$('.overscreen5').show();
 					setTimeout(function() {$('.overscreen5').addClass('active');}, 200);
 				} else {
 					$('.overscreen5').removeClass('active');
 					setTimeout(function() {$('.overscreen5').hide();}, 800);
 				}
-				$('#blur').toggleClass('blurred');
+				$('#blur').removeClass('blurred');
 			});
 
 			$('#aceptar').click(function(){
@@ -1476,7 +1470,7 @@ window.initializeEvents = function(){
 					$('.overscreen5').removeClass('active');
 					setTimeout(function() {$('.overscreen5').hide();}, 800);
 				}
-				$('#blur').toggleClass('blurred');
+				$('#blur').removeClass('blurred');
 			});
 
 				$('#aceptar').click(function(){
