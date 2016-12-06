@@ -1029,7 +1029,6 @@ function requestHandlerAPI(){
 		this.fetchDiet = function(diet_id){
 
 				var result = apiRH.getRequest('tables/dieta?_id='+diet_id);
-				console.log(result);
 				return result;
 		};
 		

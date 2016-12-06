@@ -850,23 +850,27 @@ window.initializeEvents = function(){
 					var rv = {};
 					var guardar1  = [];
 					var guardar2  = [];
-					var week_day  =  app.keeper.getItem('d_weekday');
+					var week_day  = app.keeper.getItem('d_weekday');
 					var meal_time = app.keeper.getItem('d_time');
 					if(!dietaNew["estructura"][week_day])
 						dietaNew["estructura"][week_day] = [];
 					$.each( dietaNew["estructura"][week_day][meal_time], function( key, value ) {
 						guardar1[i] = key;
 						guardar2[i] = value;
+						console.log("key :: "+key+"value :: "+value);
 						i++;
 					});
 
 					guardar1[i] = i;
 					guardar2[i] = {"a":{"platillo": dish_selected,"descripcion": app.keeper.getItem('desDishSelected'),"receta": app.keeper.getItem('recetaDishSelected')}};
+					// var elPlatillo = { _id: dish_selected, app.keeper.getItem('desDishSelected'), app.keeper.getItem('recetaDishSelected') ];
+					// console.log(elPlatillo);
 					for (var j = 0; j < guardar1.length; j++) {
 						var agregar = j+1;
 						rv[agregar] = guardar2[j];
 					}
 					dietaNew["estructura"][week_day][meal_time]= rv;
+					// dietaNew["platillos"].push(elPlatillo);
 					app.keeper.setItem('dietaEdit', JSON.stringify(dietaNew));
 					console.log(dietaNew);
 					app.keeper.removeItem('idDishSelected');

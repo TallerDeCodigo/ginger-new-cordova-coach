@@ -168,9 +168,9 @@
 		},
 		// Method runs everytime sdk checks for a container loaded, basically every render of a view
 		onSoftInit: function() {
-
+			console.log("softInit");
 			/*** Initializing chat api if not already did ***/
-			if(!chatCore.isInitialized && loggedIn)
+			if(!chatCore.isInitialized && window.is_home)
 				setTimeout(function(){
 					chatCore.init(_coach);
 				}, 800);
