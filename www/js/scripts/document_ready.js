@@ -347,10 +347,15 @@ window.initializeEvents = function(){
 			
 			setTimeout( function(){
 			
-				$('#switch_diet').click(function(){
+				$('#switch_diet').click( function(){
 					var user_selected = app.keeper.getItem('carry-user');
 					app.keeper.setItem('change_of_plan', true);
 					return app.render_coach_dietas('lista-dietas.html');
+				});
+
+				$('.back.hook').click( function(e){
+					e.preventDefault();
+					return app.render_user_list( $(this).attr('href') );
 				});
 				
 			}, 200);
@@ -1264,9 +1269,7 @@ window.initializeEvents = function(){
 					// arrAux_id.push(aidi);
 					$('.overscreen2').show();
 				}
-				almacen = $(this).parent().find('.cantidad');	
-				
-				console.log(arrAux_id);
+				almacen = $(this).parent().find('.cantidad');					
 			});
 
 			$('.establish').click(function(){
@@ -1303,7 +1306,7 @@ window.initializeEvents = function(){
 
 			$('#cancelar').click(function(){
 				$('.overscreen5').hide();
-				$('#blur').toggleClass('blurred');
+				$('#blur').removeClass('blurred');
 			});
 
 			app.hideLoader();
