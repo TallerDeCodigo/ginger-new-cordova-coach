@@ -503,7 +503,6 @@ window.initializeEvents = function(){
 
 			if( !myFoo  || (typeof myFoo['diet-list'] !==  'undefined' && diff_stamps >= 600) ){
 				var diets = null;
-				console.log("Very arty");
 				if( diets = apiRH.getDiets() ){
 					myFoo =  {  diets: diets };
 					console.log(myFoo);
@@ -1072,8 +1071,10 @@ window.initializeEvents = function(){
 
 							if (key=="ingredientes") {
 								
-								var ing = ' ';
+								var ing = '';
 								$.each(value, function(key, value){
+									console.log(key);
+									console.log(value);
 									if(value._id != null){
 										ing = ing + value._id.nombre;
 									}	
@@ -1154,6 +1155,7 @@ window.initializeEvents = function(){
 													
 													if(misPlatos[i][3]!= ''){
 														$(third_level_ref+' p.los_ing').html(misPlatos[i][3]);
+														console.log(misPlatos[i]);
 														// console.log('plato '+i+' sus ing'+misPlatos[i][3]);
 													}
 
@@ -1213,44 +1215,57 @@ window.initializeEvents = function(){
 				j++;
 			});
 
-			// var countChecked = function() {
-			//   var n = $( "input:checked" );
-			//   console.log(n);
-			// };
-
-			$("#picker-up").bind('touchstart', function(){
-				timeout = setInterval(function(){
+			$("#picker-up").bind('touchstart touchend', apiRH.stickyTouchHandler);
+			$("#picker-up").bind('mousedown', function(e){
+				if (apiRH.clickTimer == null) {
+		        	apiRH.clickTimer = setTimeout(function () {
+			            apiRH.clickTimer = null;
+			        }, 320)
+			    } else {
+			        clearTimeout(apiRH.clickTimer);
+			        apiRH.clickTimer = null;
+			        e.preventDefault();
+			        e.stopPropagation();
+			        return false;
+			    }
+				apiRH.timeout = setInterval(function(){
 					picker = Number($("#picker-up").parent().parent().find('input').val());
 					if (picker<99) {
 						picker=picker+1;
 						$("#picker-up").parent().parent().find('input').val(picker.toFixed(0));
 						$('input[name="picker"]').attr("value", picker);
 					}
-				}, 100);
+					return false;
+				}, apiRH.timer);
 				return false;
-			});
+			})
+			 .bind('mouseup', apiRH.clearTimeoutLogic);
 
-			$("#picker-up").bind('touchend', function(){
-				clearInterval(timeout);
-				return false;
-			});
-
-			$("#picker-dw").bind('touchstart', function(){
-				timeout = setInterval(function(){
+			$("#picker-dw").bind('touchstart touchend', apiRH.stickyTouchHandler);
+			$("#picker-dw").bind('mousedown', function(e){
+				if (apiRH.clickTimer == null) {
+		        	apiRH.clickTimer = setTimeout(function () {
+			            apiRH.clickTimer = null;
+			        }, 320)
+			    } else {
+			        clearTimeout(apiRH.clickTimer);
+			        apiRH.clickTimer = null;
+			        e.preventDefault();
+			        e.stopPropagation();
+			        return false;
+			    }
+				apiRH.timeout = setInterval(function(){
 					picker = Number($("#picker-dw").parent().parent().find('input').val());
 					if (picker>1) {
 						picker=picker-1;
 						$("#picker-dw").parent().parent().find('input').val(picker.toFixed(0));
 						$('input[name="picker"]').attr("value", picker);
 					}
-				}, 100);
+					return false;
+				}, apiRH.timer);
 				return false;
-			});
-
-			$("#picker-dw").bind('touchend', function(){
-				clearInterval(timeout);
-				return false;
-			});
+			})
+			 .bind('mouseup', apiRH.clearTimeoutLogic);
 
 			$('input[type="checkbox"]').change(function(){
 				

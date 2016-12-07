@@ -1121,5 +1121,60 @@ function requestHandlerAPI(){
 			});
 		};
 
+		/* MEASUREMENT CONTROLS */
+		this.timeout;
+		this.timeoutFlag = null;
+		this.timer 		 = 200;
+		this.clickTimer  = null;
+
+		this.stickyTouchHandler = function(event) {
+
+			/*** Exit if trashy event ***/
+			if(!event.originalEvent && !event.originalEvent.changedTouches)
+				return false;
+
+		    var touches = event.originalEvent.changedTouches,
+		        first = touches[0],
+		        type = "";
+		    switch(event.type) {
+		        case "touchstart": 
+		        	type = "mousedown"; 	
+		        	break;
+		        case "touchmove":  
+		        	type = "mousemove"; 	
+		        	break;        
+		        case "touchend":   
+		        	type = "mouseup"; 	
+		        	break;
+		        default: 
+		        	break;
+		    }
+
+		    var simulatedEvent = document.createEvent("MouseEvent");
+		    simulatedEvent.initMouseEvent(type, true, true, window, 1, 
+		                              first.screenX, first.screenY, 
+		                              first.clientX, first.clientY, false, 
+		                              false, false, false, 0/*left*/, null);
+		    first.target.dispatchEvent(simulatedEvent);
+		    event.preventDefault();
+		    return true;
+		}
+
+		this.clearTimeoutLogic = function(){
+			console.log("Clear timeout logic");
+			if(apiRH.timeoutFlag){
+				clearInterval(apiRH.timeout);
+		 	}else{
+		 		setTimeout(function(){
+		 			clearInterval(apiRH.timeout);
+		 			apiRH.timeoutFlag = false;
+		 			return true;
+		 		}, apiRH.timer);
+		 	}
+			apiRH.timeoutFlag = false;
+			return false;
+		}
+
 
 	}
+
