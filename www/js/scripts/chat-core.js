@@ -699,7 +699,7 @@
 
 	chatCore.showMessage = function(userId, msg, attachmentFileId) {
 		console.log(attachmentFileId);
-		var userLogin = getUserLoginById(userId);
+		// var userLogin = getUserLoginById(userId);
 		var myData = 	{
 							items: [
 										{

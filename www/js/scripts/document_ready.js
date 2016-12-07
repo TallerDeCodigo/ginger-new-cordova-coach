@@ -1230,7 +1230,7 @@ window.initializeEvents = function(){
 			    }
 				apiRH.timeout = setInterval(function(){
 					picker = Number($("#picker-up").parent().parent().find('input').val());
-					if (picker<99) {
+					if (picker < 99) {
 						picker=picker+1;
 						$("#picker-up").parent().parent().find('input').val(picker.toFixed(0));
 						$('input[name="picker"]').attr("value", picker);
