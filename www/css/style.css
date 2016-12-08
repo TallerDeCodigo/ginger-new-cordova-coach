@@ -595,7 +595,7 @@ nav.set-public span {font-size:30%;display:block;font-weight:800;}
 #logo_soporte{background:url(../images/logo.svg);background-repeat:no-repeat;background-position: center;height:100px;margin-top:30%;}
 .small{font-size: 1.5rem}
 .bg_blur{background: url(../images/bgabout.png);background-repeat: no-repeat;-webkit-filter: blur(5px); background-position:center; padding:20px 0px 10px 0px; position: absolute; top: 55%; z-index: -99; bottom: 16%; left: 0;}
-.bg_content{background-color:rgba(255,255,255,0.001);padding:30px 0px 35px 0px;color:#666;position:absolute;top:52%;bottom:13%;}
+.bg_content{ background-color: rgba(255,255,255,0.001); padding: 30px 0px 35px 0px; color:#666; position: absolute; top: 52%; bottom: 13%; left: 0;}
 p.small{margin-bottom:0;}
 .smaller{font-size: 1.2rem}
 .bg_content div{margin-top:30px;}
