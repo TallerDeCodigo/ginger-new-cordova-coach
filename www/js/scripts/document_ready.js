@@ -172,8 +172,8 @@ window.initializeEvents = function(){
 							apiRH.headers['X-ZUMO-AUTH'] = login_response;
 							var coachInfo = apiRH.getInfoCoach();
 							if(coachInfo){
-								var coachInfo 	= JSON.parse( app.keeper.getItem('user') );
-								window._coach 	= (coachInfo) ? coachInfo : null;
+								var _coach 	= JSON.parse( app.keeper.getItem('user') );
+								window._coach 	= (_coach) ? _coach : null;
 								return app.render_home();
 							}
 							
