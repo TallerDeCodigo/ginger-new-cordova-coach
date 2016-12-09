@@ -837,9 +837,9 @@ window.initializeEvents = function(){
 				dietaNew = JSON.parse( app.keeper.getItem('dietaEdit') );
 				console.log(dietaNew);
 				var dish_selected = app.keeper.getItem('idDishSelected');
-				var live_dish_count = ( !dietaNew.platillos.length && app.keeper.getItem('live_dishCount') !== "") 
+				var live_dish_count = ( (!dietaNew.platillos || !dietaNew.platillos.length) && app.keeper.getItem('live_dishCount') !== "") 
 														? app.keeper.getItem('live_dishCount')
-														: dietaNew.platillos.length;
+														: 0;
 				console.log(live_dish_count);
 				// ADD DISH 'CALLBACK'
 				if ( dish_selected ) {
@@ -1485,14 +1485,12 @@ window.initializeEvents = function(){
 			$('.add').click(function(){
 
 				if(!$('.overscreen5').is(':visible')){
-					console.log('entra popup');
 					$('.overscreen5').show();
 					setTimeout(function() {$('.overscreen5').addClass('active');}, 200);
 				} else {
 					$('.overscreen5').removeClass('active');
 					setTimeout(function() {$('.overscreen5').hide();}, 800);
 				}
-				$('#blur').removeClass('blurred');
 			});
 
 				$('#aceptar').click(function(){
@@ -1525,7 +1523,6 @@ window.initializeEvents = function(){
 
 				$('#cancelar').click(function(){
 					$('.overscreen5').hide();
-					$('#blur').toggleClass('blurred');
 				});
 
 			$('.ing-category').click(function() {
