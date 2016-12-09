@@ -30,10 +30,10 @@
 			/*** TODO: Get this shit into a catalogue ***/
 			window.catalogues 						= [];
 			window.catalogues.months 				= [ 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre' ];
+			window.catalogues.sex 					= [ 'Hombre', 'Mujer'];
 			window.catalogues.coach_type 			= [ 'Estricto', 'Innovador', 'Animador', 'Tradicional'];
 			window.catalogues.restricciones 		= [ 'Huevo', 'Pollo', 'Pescado', 'Mariscos', 'Lacteos', 'Carne' ];
-			window.catalogues.objetivo 				= [ 'adelgazar','detox','bienestar','rendimiento' ];
-			window.catalogues.sex 					= [ 'Hombre', 'Mujer'];
+			window.catalogues.objective 			= [ 'Bajar de peso','Detox','Sentirse Mejor','Rendimiento Físico' ];
 			window.catalogues.tipo_de_ingredientes 	= [ 'granosycereales', 'verduras', 'grasas', 'lacteos', 'proteinaanimal', 'leguminosas', 'nuecesysemillas', 'frutas', 'endulzantes', 'aderezosycondimentos', 'superfoods', 'liquidos'];
 
 			window.loggedIn = false;

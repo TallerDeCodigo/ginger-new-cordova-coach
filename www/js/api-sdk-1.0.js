@@ -1071,8 +1071,10 @@ function requestHandlerAPI(){
 			var personalidadesConcat = "";
 			var restrictionsConcat = "";
 			var separator = "";
-			var client_profile = apiRH.getRequest("tables/cliente?_id="+clientId);
-			
+			var client_profile = apiRH.getRequest("tables/cliente?_id="+clientId);			
+			var objective 	= (client_profile.perfil.objetivo !== false) 
+							?  catalogues.objective[client_profile.perfil.objetivo]
+							: "Sin Objetivo";
 			for(var i = 0; i < _coach.personalidad.length; i++){
 
 				separator = (i == _coach.personalidad.length - 1) ? "": ", ";
@@ -1086,7 +1088,7 @@ function requestHandlerAPI(){
 			var _profile = 	{
 								name 				: client_profile.nombre,
 								last 				: client_profile.apellido,
-								objective 			: (personalidadesConcat != '') ? personalidadesConcat : null,
+								objective 			: objective,
 								diet_name			: client_profile.dieta.nombre,
 								gender 				: catalogues.sex[client_profile.perfil.sexo],
 								age 				: client_profile.perfil.edad.real,

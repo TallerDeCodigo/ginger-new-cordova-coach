@@ -401,8 +401,8 @@ a.add_dish {width:100%;text-align:center;line-height:44px;font-size:125%;display
 /* FINANZAS */
 
 .finanzas .btn-gre {margin:15px 0px 10px;}
-.finanzas .btn_right.inactive,
-.finanzas .btn_left.inactive {opacity: 0.35; pointer-events: none;}
+.finanzas .btn_right.inactive img,
+.finanzas .btn_left.inactive img {opacity: 0.35; pointer-events: none;}
 .finanzas p.acumulado {color:#7f4cb9;font-size:95%;font-weight:800;margin-bottom:2px;}
 .finanzas p.cantidad {color:#7f4cb9;font-size:200%;font-weight:700;margin-bottom:2px;}
 .finanzas p.status {color:#43c2a7;font-size:140%;font-weight:700;letter-spacing:0.2em;margin-bottom:30px;}
